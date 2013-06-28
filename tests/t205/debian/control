@@ -1,0 +1,14 @@
+Source: foo
+Section: python
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends-Indep: python
+Standards-Version: 3.9.1
+
+Package: python-foo
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}
+Description: example 5 - namespace feature
+ exemple package #5 - dropping __init__.py file from binary package and
+ recreating it at install time (and removing at in remove time)

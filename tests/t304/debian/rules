@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_install:
+	dh_install
+	DH_VERBOSE=1 ../../dh_python3
+	DH_VERBOSE=1 ../../dh_python3 /usr/share/bar
+	DH_VERBOSE=1 ../../dh_python3 /usr/share/baz32 --shebang '/usr/bin/python3.2 -OO'
+
+clean:
+	dh_clean

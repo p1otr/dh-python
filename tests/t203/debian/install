@@ -1,0 +1,2 @@
+# private module in architecture dependent dir
+lib/foo.py /usr/lib/python-foo/

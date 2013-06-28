@@ -1,0 +1,5 @@
+foo (0.1.1) unstable; urgency=low
+
+  * Initial release
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 27 Mar 2011 21:09:27 +0200

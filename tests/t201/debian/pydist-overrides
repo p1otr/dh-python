@@ -1,0 +1,5 @@
+Mako python-mako (>= 0.2)
+SQLAlchemy python-sqlalchemy (>= 0.6)
+Foo python-foo; PEP386 s/^/2:/
+Bar python-bar
+Baz

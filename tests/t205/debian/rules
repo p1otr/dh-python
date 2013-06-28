@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_auto_build:
+
+override_dh_auto_install:
+	set -e;\
+	cd debian/python-foo/usr/share/pyshared/;\
+	echo "keep_this_one\nremove_this_one" > foo.egg-info/namespace_packages.txt;\
+	echo "True" > keep_this_one/__init__.py;\
+	touch remove_this_one/__init__.py remove_this_one/foo.py bar/baz/spam.py
+
+
+override_dh_pysupport:
+	DH_VERBOSE=1 ../../dh_python2 --namespace foo --namespace bar.baz --namespace bar
+
+clean:
+	dh_clean

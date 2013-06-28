@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_pysupport:
+	find debian/ -name jquery.js -exec \
+	ln -fs /usr/share/javascript/jquery/jquery.js '{}' \;
+	find debian/ -name foo -type d -exec \
+	ln -s /tmp/ '{}/absolute_link_to_tmp' \;
+	find debian/ -name foo -type d -exec \
+	ln -s .. '{}/link_to_parent_dir' \;
+	DH_VERBOSE=1 ../../dh_python2\
+		--depends 'SQLAlchemy >= 0.6.1'\
+		--recommends Mako\
+		--suggests 'Foo >= 0.1rc2'\
+		--suggests 'bar >= 1.0'

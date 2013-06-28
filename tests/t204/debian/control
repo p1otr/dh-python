@@ -1,0 +1,16 @@
+Source: foo
+Section: misc
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends-Indep: python
+Standards-Version: 3.9.1
+
+Package: foo
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}
+Recommends: ${python:Recommends}
+Suggests: ${python:Suggests}
+Enhances: ${python:Enhances}
+Description: example 4 - private directory
+ exemple package #4 - private directory

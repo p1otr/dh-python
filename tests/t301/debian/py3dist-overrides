@@ -1,0 +1,5 @@
+Mako python3-mako (>= 0.2)
+SQLAlchemy python3-sqlalchemy (>= 0.6)
+Foo python3-foo
+Bar python3-bar
+Baz

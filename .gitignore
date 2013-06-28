@@ -1,0 +1,13 @@
+debian/dh-python/
+.pc
+.coverage
+__pycache__
+pydist/cache/
+*\.1
+*\.pyc
+*\.deb
+*\.changes
+*\.log
+*\.debhelper
+*\.substvars
+*/*/debian/files

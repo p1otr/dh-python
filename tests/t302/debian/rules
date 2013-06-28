@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_install:
+	dh_install
+	# install also as private extension
+	dh_install debian/python3-foo/usr/local/lib/python3*/dist-packages/foo/bar*.so \
+		/usr/lib/python3-foo/
+	DH_VERBOSE=1 ../../dh_python3
+
+override_dh_auto_build:
+	for ver in $(DEBPYTHON3_SUPPORTED); do\
+	  python$$ver setup.py build; done
+
+override_dh_auto_install:
+	for ver in $(DEBPYTHON3_SUPPORTED); do\
+	  python$$ver setup.py install --root=debian/python3-foo;\
+	done
+
+override_dh_auto_clean:

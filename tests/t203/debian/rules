@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+DPY=$(DEBPYTHON_DEFAULT)
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_pysupport:
+	# install also as private extension
+	dh_install debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/bar.so \
+		/usr/lib/python-foo/
+	# ... and under versioned name with a symlink
+	cp debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/bar.so \
+	   debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/spam.so.0
+	dh_link /usr/lib/python${DPY}/dist-packages/foo/spam.so.0 \
+		/usr/lib/python${DPY}/dist-packages/foo/spam.so
+	# ... and with multiple symlinks
+	cp debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/bar.so \
+	   debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1.2
+	dh_link /usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1.2 \
+		/usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1
+	dh_link /usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1 \
+		/usr/lib/python${DPY}/dist-packages/foo/baz.so
+	# ... second style of multiple symlinks
+	cp debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/bar.so \
+	   debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0
+	dh_link /usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0 \
+		/usr/lib/python${DPY}/dist-packages/foo/quux.so.0
+	dh_link /usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0 \
+		/usr/lib/python${DPY}/dist-packages/foo/quux.so
+	# ... and complex multiple symlinks
+	DH_VERBOSE=1 ../../dh_python2

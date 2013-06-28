@@ -1,0 +1,3 @@
+foo.py /usr/share/pyshared/
+__init__.py /usr/share/pyshared/bar/
+bar.py /usr/share/pyshared/bar/

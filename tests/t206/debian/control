@@ -1,0 +1,20 @@
+Source: foo
+Section: misc
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends-Indep: python
+Standards-Version: 3.9.1
+X-Python-Version: 2.5
+
+Package: foo
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}
+Recommends: ${python:Recommends}
+Suggests: ${python:Suggests}
+Enhances: ${python:Enhances}
+Description: example 6 - private directory with hardcoded Python version
+ exemple package #6 - private directories that support:
+  * python2.4 hardcoded via `dh_python2 -V 2.4`
+  * python2.5 due to X-Python-Version: 2.5
+  * python2.6 hardcoded via shebang

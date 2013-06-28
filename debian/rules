@@ -1,0 +1,12 @@
+#! /usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_test:
+	# FIXME
+
+override_dh_auto_install:
+	DESTDIR=debian/dh-python PREFIX=/usr make install manpages
+
+# TODO: invoke ./dh_python3

@@ -1,0 +1,19 @@
+Source: foo
+Section: python
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 7.0.50~), python-all-dev
+Standards-Version: 3.9.1
+X-Python-Version: >= 2.6
+
+Package: python-foo
+Architecture: any
+Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Recommends: ${python:Recommends}
+Suggests: ${python:Suggests}
+Enhances: ${python:Enhances}
+Breaks: ${python:Breaks}
+Provides: ${python:Provides}
+XB-Python-Version: ${python:Versions}
+Description: foo to rule them all
+ exemple package #3 - Python extension

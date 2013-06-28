@@ -1,0 +1,4 @@
+/usr/share/pyshared/bar/baz
+/usr/share/pyshared/foo.egg-info
+/usr/share/pyshared/keep_this_one
+/usr/share/pyshared/remove_this_one

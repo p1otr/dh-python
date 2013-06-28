@@ -1,0 +1,21 @@
+Source: foo
+Section: python
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends-Indep: python-all
+Standards-Version: 3.9.0
+XS-Python-Version: >= 2.4
+
+Package: python-foo
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}
+Recommends: ${python:Recommends}
+Suggests: ${python:Suggests}
+Enhances: ${python:Enhances}
+Breaks: foo,
+ ${python:Breaks}
+Provides: ${python:Provides}
+XB-Python-Version: ${python:Versions}
+Description: foo to rule them all
+ exemple package #1

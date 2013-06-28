@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_auto_install:
+	python3 setup.py install --root=debian/python3-foo/
+
+override_dh_install:
+	dh_install
+	find debian/ -name jquery.js -exec \
+	ln -fs /usr/share/javascript/jquery/jquery.js '{}' \;
+	DH_VERBOSE=1 ../../dh_python3\
+		--depends 'SQLAlchemy >= 0.6.1'\
+		--recommends Mako\
+		--suggests 'Foo >= 0.1'\
+		--suggests 'bar >= 1.0'
+
+clean:
+	rm -rf build
+	dh clean
+
+override_dh_auto_build:
+
+override_dh_auto_clean:
+	#python3 setup.py clean

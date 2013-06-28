@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_pysupport:
+	DH_VERBOSE=1 ../../dh_python2
+	DH_VERBOSE=1 ../../dh_python2 /usr/share/bar25
+	DH_VERBOSE=1 ../../dh_python2 /usr/share/baz24 -V 2.4
+
+clean:
+	dh_clean

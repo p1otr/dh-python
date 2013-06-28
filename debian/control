@@ -1,0 +1,27 @@
+Source: dh-python
+Section: python
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 9), python3-minimal
+Standards-Version: 3.9.4
+Vcs-Git: git://git.debian.org/users/piotr/dh-python.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/piotr/dh-python.git;a=summary
+X-Python3-Version: >= 3.2
+
+Package: dh-python
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
+Breaks:
+# due to /usr/bin/dh_python2 and debhelper files
+ python (<< 2.7.3-14~),
+# due to /usr/bin/dh_python3 and debhelper files
+ python3 (<< 3.3.0-4~)
+Replaces: python (<< 2.7.3-14~), python3 (<< 3.3.0-4~)
+Description: Debian helper tools for packaging Python libraries and applications
+ This package contains:
+  * pybuild - invokes various build systems for requested Python versions in
+    order to build modules and extensions
+  * dh_python2 - calculates Python 2.X dependencies for Debian packages,
+    adds maintainer scripts to byte compile files, etc.
+  * dh_python3 - calculates Python 3.X dependencies for Debian packages,
+    adds maintainer scripts to byte compile files, etc.

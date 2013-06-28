@@ -1,0 +1,7 @@
+foo.py /usr/share/foo/
+baz.py /usr/share/foo/
+spam.py /usr/share/foo/
+bar.py /usr/share/bar/
+spam.py /usr/share/bar/
+baz.py /usr/share/baz24/
+spam.py /usr/share/baz24/

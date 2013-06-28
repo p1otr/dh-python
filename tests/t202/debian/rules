@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_pysupport:
+	DH_VERBOSE=1 ../../dh_python2
+
+clean:
+	dh_clean

@@ -1,0 +1,13 @@
+Source: foo
+Section: misc
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends-Indep: python
+Standards-Version: 3.9.3
+
+Package: foo
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}
+Description: example 7 - shebangs
+ exemple package #7 - shebang related tests

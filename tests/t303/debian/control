@@ -1,0 +1,12 @@
+Source: foo
+Section: python
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 7.0.50~), python3-all-dev
+Standards-Version: 3.9.1
+
+Package: python3-foo
+Architecture: all
+Depends: ${python3:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: package with public Python 3 modules
+ exemple package #4 - fix_locations test

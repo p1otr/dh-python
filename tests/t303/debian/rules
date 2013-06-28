@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_install:
+	dh_install
+	DH_VERBOSE=1 ../../dh_python3
+
+override_dh_auto_build:
+override_dh_auto_test:
+
+override_dh_auto_install:
+	set -e; for ver in $(DEBPYTHON3_SUPPORTED); do\
+	  mkdir -p debian/python3-foo/usr/lib/python$$ver/site-packages/;\
+	  echo "print('foo')" > debian/python3-foo/usr/lib/python$$ver/site-packages/foo.py;\
+	done
+
+override_dh_auto_clean:
