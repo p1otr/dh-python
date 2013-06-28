@@ -192,16 +192,31 @@ def parse_pydep(impl, fname):
         ver = None
 
     result = []
+    modified = optional_section = False
+    processed = []
     with open(fname, 'r', encoding='utf-8') as fp:
         for line in fp:
             line = line.strip()
-            # ignore all optional sections
+            if not line or line.startswith('#'):
+                processed.append(line)
+                continue
             if line.startswith('['):
-                break
-            if line:
-                dependency = guess_dependency(impl, line, ver)
-                if dependency:
-                    result.append(dependency)
+                optional_section = True
+            if optional_section:
+                processed.append(line)
+                continue
+            dependency = guess_dependency(impl, line, ver)
+            if dependency:
+                result.append(dependency)
+                if 'setuptools' in line.lower():
+                    modified = True
+                else:
+                    processed.append(line)
+            else:
+                processed.append(line)
+    if modified:
+        with open(fname, 'w') as fp:
+            fp.writelines(i + '\n' for i in processed)
     return result
 
 
