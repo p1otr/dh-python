@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
 Build-Depends: debhelper (>= 9), python3-minimal
 Standards-Version: 3.9.4
-Vcs-Git: git://git.debian.org/users/piotr/dh-python.git
+Vcs-Git: git://anonscm.debian.org/users/piotr/dh-python.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/piotr/dh-python.git;a=summary
 X-Python3-Version: >= 3.2
 
