@@ -8,5 +8,4 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	DESTDIR=debian/dh-python PREFIX=/usr make install manpages
-
-# TODO: invoke ./dh_python3
+	./dh_python3
