@@ -65,6 +65,11 @@ OVERRIDES_FILE_NAMES = {
     'cpython3': 'debian/py3dist-overrides',
     'pypy': 'debian/pypydist-overrides',
 }
+DPKG_SEARCH_TPLS = {
+    'cpython2': "*/%s-?*\.egg-info | grep '/python2\../\|/pyshared/'",
+    'cpython3': '*python3/*/{}-?*\.egg-info',
+    'pypy': '*pypy/*/{}-?\.egg-info'
+}
 
 
 def validate(fpath):
@@ -163,7 +168,7 @@ def guess_dependency(impl, req, version=None):
                 return item['dependency']
 
     # try dpkg -S
-    query = "'*python3/*/%s-?*\.egg-info'" % ci_regexp(safe_name(name))  # TODO: .dist-info
+    query = DPKG_SEARCH_TPLS[impl].format(ci_regexp(safe_name(name)))
 
     log.debug("invoking dpkg -S %s", query)
     process = Popen("/usr/bin/dpkg -S %s" % query,
