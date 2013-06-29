@@ -347,8 +347,12 @@ def scan(package, dname=None, options=None):
                     # /(s)bin or /usr/(s)bin or /usr/games
                     bin_dir = root
 
-        # handle some EGG related data (.egg-info dirs)
         for name in dirs:
+            if name == '__pycache__':
+                rmtree(join(root, name))
+                dirs.remove(name)
+                continue
+            # handle EGG related data (.egg-info dirs)
             if name.endswith('.egg-info'):
                 if dbg_package and options.clean_dbg_pkg:
                     rmtree(join(root, name))
@@ -356,9 +360,14 @@ def scan(package, dname=None, options=None):
                     continue
                 clean_name = clean_egg_name(name)
                 if clean_name != name:
-                    log.info('renaming %s to %s', name, clean_name)
-                    os.rename(join(root, name), join(root, clean_name))
-                    dirs[dirs.index(name)] = clean_name
+                    if exists(join(root, clean_name)):
+                        log.info('removing %s (%s is already available)', name, clean_name)
+                        rmtree(join(root, name))
+                        dirs[dirs.index(name)] = clean_name
+                    else:
+                        log.info('renaming %s to %s', name, clean_name)
+                        os.rename(join(root, name), join(root, clean_name))
+                        dirs[dirs.index(name)] = clean_name
         if root.endswith('.egg-info'):
             if 'requires.txt' in file_names:
                 r['requires.txt'].add(join(root, 'requires.txt'))
@@ -449,8 +458,13 @@ def scan(package, dname=None, options=None):
             if fn.endswith('.egg-info'):
                 clean_name = clean_egg_name(fn)
                 if clean_name != fn:
-                    log.info('renaming %s to %s', fn, clean_name)
-                    os.rename(join(root, fn), join(root, clean_name))
+                    if exists(join(root, clean_name)):
+                        log.info('removing %s (%s is already available)',
+                                 fn, clean_name)
+                        os.remove(join(root, fn))
+                    else:
+                        log.info('renaming %s to %s', fn, clean_name)
+                        os.rename(join(root, fn), join(root, clean_name))
                 continue
             # search for scripts in bin dirs
             if bin_dir:
@@ -641,7 +655,7 @@ def main():
             ps = package.split('-', 1)
             if len(ps) > 1 and ps[0] == 'python':
                 dh.addsubstvar(package, 'python:Provides',
-                               ', '.join("python%s-%s" % (str(i), ps[1])
+                               ', '.join("python%s-%s" % (i, ps[1])
                                for i in sorted(stats['public_vers'])))
 
         pyclean_added = False  # invoke pyclean only once in maintainer script
