@@ -10,8 +10,12 @@ override_dh_install:
 override_dh_auto_build:
 override_dh_auto_test:
 
+comma:=,
+empty:=
+space:= $(empty) $(empty)
+PYTHONS=$(subst $(comma),$(space),$(DEBPYTHON3_SUPPORTED))
 override_dh_auto_install:
-	set -e; for ver in $(DEBPYTHON3_SUPPORTED); do\
+	set -e; for ver in $(PYTHONS); do\
 	  mkdir -p debian/python3-foo/usr/lib/python$$ver/site-packages/;\
 	  echo "print('foo')" > debian/python3-foo/usr/lib/python$$ver/site-packages/foo.py;\
 	done
