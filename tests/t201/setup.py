@@ -1,12 +1,9 @@
 #! /usr/bin/python
 # -*- coding: UTF-8 -*-
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    exit()
+from distutils.core import setup
 
 setup(name='Foo',
-      version=0.1,
+      version='0.1',
       description="Foo to rule them all",
       long_description="TODO",
       keywords='foo bar baz',
@@ -15,8 +12,7 @@ setup(name='Foo',
       url='http://www.debian.org/',
       license='MIT',
       package_dir={'': 'lib'},
-      packages=find_packages('lib/'),
+      packages=['foo'],
       package_data = {'foo': ['jquery.js']},
       zip_safe=False,
-      install_requires = ['Mako', 'SQLAlchemy >=0.5', 'Baz [extras]'],
 )
