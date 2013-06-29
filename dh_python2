@@ -366,6 +366,17 @@ def scan(package, dname=None, options=None):
                         fext not in ('so', 'h'):
                     os.remove(join(root, fn))
                     continue
+                # assume all extensions were build for cPython
+                if fext == 'so':
+                    new_fn = interpreter.check_extname(fn, version)
+                    if new_fn:
+                        new_fpath = join(root, new_fn)
+                        if exists(new_fpath):
+                            log.warn('destination file exist, '
+                                     'cannot rename %s to %s', fn, new_fn)
+                        else:
+                            log.warn('renaming %s to %s', fn, new_fn)
+                            os.rename(fpath, new_fpath)
 
             elif private_dir:
                 if exists(fpath) and fext != 'so':

@@ -46,9 +46,10 @@ EXTFILE_RE = re.compile(r'''
             -
             (?P<ver>\d{2})
             (?P<flags>[a-z]*?)
-        )
+        )?
         (?:
-            -(?P<multiarch>[^/]*?)
+            (?:(?<!\.)-)?  # minus sign only if soabi is defined
+            (?P<multiarch>[^/]*?)
         )?
     ))?
     (?P<debug>_d)?
@@ -299,19 +300,6 @@ class Interpreter:
         return join(fdir, '__pycache__', "%s.%s.py%s" %
                     (fname[:-3], self.magic_tag(version), last_char))
 
-    def ext_file(self, name, version=None):
-        """Return extension name with soname and multiarch tags."""
-        version = Version(version or self.version)
-        soabi, multiarch = self._get_config(version)
-        result = name.split('.', 1)[0]
-        if soabi:
-            result += '.{}'.format(soabi)
-            if multiarch:
-                result += '-{}'.format(multiarch)
-        if self.debug and self.impl == 'cpython2':
-            result += '_d'
-        return '{}.so'.format(result)
-
     def magic_number(self, version=None):
         """Return magic number."""
         version = Version(version or self.version)
@@ -397,7 +385,12 @@ class Interpreter:
             result = "{}.{}".format(result, info['soabi'] or soabi)
             if info['multiarch'] or multiarch:
                 result = "{}-{}".format(result, info['multiarch'] or multiarch)
+        # uncomment next two lines to enable multiarch renaming in Python 2.7
+        #elif i.impl == 'cpython2' and i.version == '2.7':
+        #    result = "{}.{}".format(result, info['multiarch'] or multiarch)
 
+        if self.debug and self.impl == 'cpython2':
+            result += '_d'
         result += '.so'
         if fname == result:
             return
