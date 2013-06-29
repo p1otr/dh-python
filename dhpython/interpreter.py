@@ -22,6 +22,7 @@ import logging
 import os
 import re
 from os.path import join, split
+from dhpython import OLD_SITE_DIRS
 
 SHEBANG_RE = re.compile(r'''
     (?:\#!\s*){0,1}  # shebang prefix
@@ -212,7 +213,10 @@ class Interpreter:
         >>> i.sitedir(version=Version('3.2'))
         '/usr/lib/python3/dist-packages/'
         """
-        version = Version(version or self.version)
+        try:
+            version = Version(version or self.version)
+        except Exception as err:
+            raise ValueError("cannot find valid version: %s" % err)
         if self.impl == 'pypy':
             path = '/usr/lib/pypy/dist-packages/'
         elif version << Version('2.6'):
@@ -228,6 +232,31 @@ class Interpreter:
             path = "debian/%s%s" % (package, path)
 
         return path
+
+    def old_sitedirs(self, package=None, version=None, gdb=False):
+        """Return deprecated paths to site-packages directories."""
+        try:
+            version = Version(version or self.version)
+        except Exception as err:
+            raise ValueError("cannot find valid version: %s" % err)
+        result = []
+        for item in OLD_SITE_DIRS.get(self.impl, []):
+            if isinstance(item, str):
+                result.append(item.format(version))
+            else:
+                res = item(version)
+                if res is not None:
+                    result.append(res)
+
+        if gdb:
+            result = ['/usr/lib/debug{}'.format(i) for i in result]
+            if self.impl.startswith('cpython'):
+                result.append('/usr/lib/debug/usr/lib/pyshared/python{}'.format(version))
+        if package:
+            result = ['debian/{}{}'.format(package, i) for i in result]
+
+        return result
+
 
     def cache_file(self, fpath, version=None):
         """Given path to a .py file, return path to its .pyc/.pyo file.

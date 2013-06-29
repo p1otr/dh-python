@@ -27,6 +27,27 @@ MINPYCDEP = {'cpython2': 'python (>= 2.6.6-3)',
              'cpython3': 'python3 (>= 3.2.3-3~)',
              'pypy': 'pypy'}
 
+# Interpreter site-directories
+OLD_SITE_DIRS = {
+    'cpython2': [
+        '/usr/local/lib/python{}/site-packages',
+        '/usr/local/lib/python{}/dist-packages',
+        '/var/lib/python-support/python{}',
+        '/usr/lib/pymodules/python{}',
+        lambda version: '/usr/lib/python{}/site-packages'.format(version)
+                        if version >= '2.6' else None],
+    'cpython3': [
+        '/usr/local/lib/python{}/site-packages',
+        '/usr/local/lib/python{}/dist-packages',
+        '/usr/lib/python{}/site-packages',
+        '/usr/lib/python{}/dist-packages',
+        '/var/lib/python-support/python{}',
+        '/usr/lib/pymodules/python{}'],
+    'pypy': [
+        '/usr/local/lib/pypy/site-packages',
+        '/usr/local/lib/pypy/dist-packages',
+        '/usr/lib/pypy/site-packages']}
+
 # PyDist related
 PYDIST_DIRS = {
     'cpython2': '/usr/share/python/dist/',

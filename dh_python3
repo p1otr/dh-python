@@ -56,17 +56,8 @@ def fix_locations(package):
     for version in SUPPORTED:
         interpreter.version = version
 
-        to_check = [i % version for i in (
-                    'usr/local/lib/python%s/site-packages',
-                    'usr/local/lib/python%s/dist-packages',
-                    'usr/lib/python%s/site-packages',
-                    'usr/lib/python%s/dist-packages',
-                    'var/lib/python-support/python%s',
-                    'usr/lib/pymodules/python%s')]
-        dstdir = interpreter.sitedir(package=package)
-
-        for location in to_check:
-            srcdir = "debian/%s/%s" % (package, location)
+        dstdir = interpreter.sitedir(package)
+        for srcdir in interpreter.old_sitedirs(package):
             if isdir(srcdir):
                 # TODO: what about relative symlinks?
                 log.debug('moving files from %s to %s', srcdir, dstdir)
@@ -76,12 +67,8 @@ def fix_locations(package):
                     os.rmdir(parent_dir)
 
         # do the same with debug locations
-        dbg_to_check = ['usr/lib/debug/%s' % i for i in to_check]
-        dbg_to_check.append("usr/lib/debug/usr/lib/pyshared/python%s" % version)
-        dstdir = interpreter.sitedir(gdb=True, package=package)
-
-        for location in dbg_to_check:
-            srcdir = "debian/%s/%s" % (package, location)
+        dstdir = interpreter.sitedir(package, gdb=True)
+        for srcdir in interpreter.old_sitedirs(package, gdb=True):
             if isdir(srcdir):
                 log.debug('moving files from %s to %s', srcdir, dstdir)
                 share_files(srcdir, dstdir, package.endswith('-dbg'))

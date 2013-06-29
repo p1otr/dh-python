@@ -69,22 +69,13 @@ def fix_locations(package):
     for version in SUPPORTED:
         interpreter.version = version
 
-        to_check = [i % version for i in (
-                    'usr/local/lib/python%s/site-packages',
-                    'usr/local/lib/python%s/dist-packages',
-                    'var/lib/python-support/python%s',
-                    'usr/lib/pymodules/python%s')]
-        if version >= '2.6':
-            to_check.append("usr/lib/python%s/site-packages" % version)
         dstdir = interpreter.sitedir(package)
-
-        for location in to_check:
-            srcdir = "debian/%s/%s" % (package, location)
+        for srcdir in interpreter.old_sitedirs(package):
             if isdir(srcdir):
                 if version in found_versions:
                     log.error('files for version %s '
                               'found in two locations:\n %s\n %s',
-                              version, location, found_versions[version])
+                              version, srcdir, found_versions[version])
                     exit(2)
                 log.info('Python %s should install files in %s. '
                          'Did you forget "--install-layout=deb"?',
@@ -94,15 +85,11 @@ def fix_locations(package):
                 # TODO: what about relative symlinks?
                 log.debug('moving files from %s to %s', srcdir, dstdir)
                 os.renames(srcdir, dstdir)
-                found_versions[version] = location
+                found_versions[version] = srcdir
 
         # do the same with debug locations
-        dbg_to_check = ['usr/lib/debug/%s' % i for i in to_check]
-        dbg_to_check.append("usr/lib/debug/usr/lib/pyshared/python%s" % version)
-        dstdir = interpreter.sitedir(gdb=True, package=package)
-
-        for location in dbg_to_check:
-            srcdir = "debian/%s/%s" % (package, location)
+        dstdir = interpreter.sitedir(package, gdb=True)
+        for srcdir in interpreter.old_sitedirs(package, gdb=True):
             if isdir(srcdir):
                 if not isdir(dstdir):
                     os.makedirs(dstdir)
