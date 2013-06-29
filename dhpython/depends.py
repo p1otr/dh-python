@@ -19,14 +19,9 @@
 # THE SOFTWARE.
 
 import logging
-from dhpython import PKG_PREFIX_MAP
+from dhpython import PKG_PREFIX_MAP, MINPYCDEP
 from dhpython.pydist import parse_pydep, guess_dependency
 from dhpython.version import default, supported, VersionRange
-
-# minimum version required for py3compile/py3clean:
-MINPYCDEP = {'cpython2': 'python (>= 2.6.6-3)',
-             'cpython3': 'python3 (>= 3.2.3-3~)',
-             'pypy': 'pypy'}
 
 log = logging.getLogger(__name__)
 

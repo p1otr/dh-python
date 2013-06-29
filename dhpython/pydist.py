@@ -24,7 +24,8 @@ import os
 import re
 from os.path import exists, isdir, join
 from subprocess import PIPE, Popen
-from dhpython import PKG_PREFIX_MAP
+from dhpython import PKG_PREFIX_MAP, PYDIST_DIRS, PYDIST_OVERRIDES_FNAMES,\
+    PYDIST_DPKG_SEARCH_TPLS
 from dhpython.version import get_requested_versions, Version
 from dhpython.tools import memoize
 
@@ -55,21 +56,6 @@ REQUIRES_RE = re.compile(r'''
         (?P<version>(\w|[-.])+)
     )?
     ''', re.VERBOSE)
-PYDIST_DIRS = {
-    'cpython2': '/usr/share/python/dist/',
-    'cpython3': '/usr/share/python3/dist/',
-    'pypy': '/usr/share/pypy/dist/',
-}
-OVERRIDES_FILE_NAMES = {
-    'cpython2': 'debian/pydist-overrides',
-    'cpython3': 'debian/py3dist-overrides',
-    'pypy': 'debian/pypydist-overrides',
-}
-DPKG_SEARCH_TPLS = {
-    'cpython2': "*/%s-?*\.egg-info | grep '/python2\../\|/pyshared/'",
-    'cpython3': '*python3/*/{}-?*\.egg-info',
-    'pypy': '*pypy/*/{}-?\.egg-info'
-}
 
 
 def validate(fpath):
@@ -93,7 +79,7 @@ def load(impl):
     :param impl: interpreter implementation, f.e. cpython2, cpython3, pypy
     :type impl: str
     """
-    fname = OVERRIDES_FILE_NAMES.get(impl)
+    fname = PYDIST_OVERRIDES_FNAMES.get(impl)
     if exists(fname):
         to_check = [fname]  # first one!
     else:
@@ -168,7 +154,7 @@ def guess_dependency(impl, req, version=None):
                 return item['dependency']
 
     # try dpkg -S
-    query = DPKG_SEARCH_TPLS[impl].format(ci_regexp(safe_name(name)))
+    query = PYDIST_DPKG_SEARCH_TPLS[impl].format(ci_regexp(safe_name(name)))
 
     log.debug("invoking dpkg -S %s", query)
     process = Popen("/usr/bin/dpkg -S %s" % query,
@@ -297,5 +283,5 @@ def _translate(version, rules, standard):
         else:
             log.warn('unknown rule ignored: %s', rule)
     if standard == 'PEP386':
-        version = PRE_VER_RE.sub('~\g<1>', version)
+        version = PRE_VER_RE.sub(r'~\g<1>', version)
     return version

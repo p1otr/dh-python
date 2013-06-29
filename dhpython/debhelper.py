@@ -21,31 +21,9 @@
 import logging
 from os import makedirs, chmod
 from os.path import exists, join, dirname
+from dhpython import PKG_NAME_TPLS, RT_LOCATIONS, RT_TPLS
 
 log = logging.getLogger(__name__)
-PKG_NAME_TPLS = {
-    'cpython2': ('python-', 'python2.'),
-    'cpython3': ('python3-', 'python3.'),
-    'pypy': ('pypy-',)
-}
-RT_LOCATIONS = {
-    'cpython2': '/usr/share/python/runtime.d/',
-    'cpython3': '/usr/share/python3/runtime.d/',
-    'pypy': '/usr/share/pypy/runtime.d/',
-}
-RT_TPLS = {
-    'cpython2': '''
-if [ "$1" = rtupdate ]; then
-\tpyclean {pkg_arg} {dname}
-\tpycompile {pkg_arg} {args} {dname}
-fi''',
-    'cpython3': '''
-if [ "$1" = rtupdate ]; then
-\tpy3clean {pkg_arg} {dname}
-\tpy3compile {pkg_arg} {args} {dname}
-fi''',
-    'pypy': ''
-}
 
 
 class DebHelper:
