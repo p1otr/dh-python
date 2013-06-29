@@ -35,7 +35,8 @@ sys.path.insert(1, '/usr/share/dh-python/')
 from dhpython.debhelper import DebHelper
 from dhpython.depends import Dependencies
 from dhpython.interpreter import Interpreter
-from dhpython.version import supported, default, Version, VersionRange, \
+from dhpython.fs import fix_locations
+from dhpython.version import supported, default, VersionRange, \
     get_requested_versions
 from dhpython.pydist import validate as validate_pydist
 from dhpython.tools import relative_symlink,\
@@ -52,48 +53,6 @@ log = logging.getLogger(__name__)
 os.umask(0o22)
 DEFAULT = default('cpython2')
 SUPPORTED = supported('cpython2')
-
-# naming conventions used in the file:
-# * vrange - version range, pair of max and min versions
-# * fn - file name (without path)
-# * fpath - file path
-
-
-### FILES ######################################################
-def fix_locations(package):
-    """Move files to the right location."""
-    dbg_package = package.endswith('-dbg')
-    interpreter = Interpreter('python-dbg' if dbg_package else 'python')
-    found_versions = {}
-    for version in SUPPORTED:
-        interpreter.version = version
-
-        dstdir = interpreter.sitedir(package)
-        for srcdir in interpreter.old_sitedirs(package):
-            if isdir(srcdir):
-                if version in found_versions:
-                    log.error('files for version %s '
-                              'found in two locations:\n %s\n %s',
-                              version, srcdir, found_versions[version])
-                    exit(2)
-                log.info('Python %s should install files in %s. '
-                         'Did you forget "--install-layout=deb"?',
-                         version, interpreter.sitedir())
-                if not isdir(dstdir):
-                    os.makedirs(dstdir)
-                # TODO: what about relative symlinks?
-                log.debug('moving files from %s to %s', srcdir, dstdir)
-                os.renames(srcdir, dstdir)
-                found_versions[version] = srcdir
-
-        # do the same with debug locations
-        dstdir = interpreter.sitedir(package, gdb=True)
-        for srcdir in interpreter.old_sitedirs(package, gdb=True):
-            if isdir(srcdir):
-                if not isdir(dstdir):
-                    os.makedirs(dstdir)
-                log.debug('moving files from %s to %s', srcdir, dstdir)
-                os.renames(srcdir, dstdir)
 
 
 ### SHARING FILES ##############################################
@@ -414,7 +373,7 @@ def scan(package, dname=None, options=None):
                     continue
 
             elif private_dir:
-                if exists(fpath):
+                if exists(fpath) and fext != 'so':
                     mode = os.stat(fpath)[ST_MODE]
                     if mode & S_IXUSR or mode & S_IXGRP or mode & S_IXOTH:
                         if (options.no_shebang_rewrite or
@@ -639,7 +598,7 @@ def main():
             except Exception as err:
                 log.error("%s.pyremove: %s", package, err)
                 exit(5)
-            fix_locations(package)
+            fix_locations(package, interpreter, SUPPORTED)
         stats = scan(package, private_dir, options)
         if not private_dir:
             share(package, stats, options)

@@ -25,9 +25,8 @@ import logging
 import os
 import re
 import sys
-from filecmp import cmp as cmpfile
 from optparse import OptionParser, SUPPRESS_HELP
-from os.path import isdir, islink, exists, join, split
+from os.path import islink, exists, join, split
 from shutil import rmtree, copy as fcopy
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 sys.path.insert(1, '/usr/share/dh-python/')
@@ -36,6 +35,7 @@ from dhpython.depends import Dependencies
 from dhpython.interpreter import Interpreter, EXTFILE_RE
 from dhpython.version import supported, default, Version, VersionRange
 from dhpython.pydist import validate as validate_pydist
+from dhpython.fs import fix_locations
 from dhpython.tools import fix_shebang, clean_egg_name
 from dhpython.option import Option
 
@@ -46,72 +46,6 @@ log = logging.getLogger(__name__)
 os.umask(0o22)
 DEFAULT = default('cpython3')
 SUPPORTED = supported('cpython3')
-
-
-### FILES ######################################################
-def fix_locations(package):
-    """Move files to the right location."""
-    dbg_package = package.endswith('-dbg')
-    interpreter = Interpreter('python-dbg' if dbg_package else 'python')
-    for version in SUPPORTED:
-        interpreter.version = version
-
-        dstdir = interpreter.sitedir(package)
-        for srcdir in interpreter.old_sitedirs(package):
-            if isdir(srcdir):
-                # TODO: what about relative symlinks?
-                log.debug('moving files from %s to %s', srcdir, dstdir)
-                share_files(srcdir, dstdir, package.endswith('-dbg'))
-                parent_dir = '/'.join(srcdir.split('/')[:-1])
-                if exists(parent_dir) and not os.listdir(parent_dir):
-                    os.rmdir(parent_dir)
-
-        # do the same with debug locations
-        dstdir = interpreter.sitedir(package, gdb=True)
-        for srcdir in interpreter.old_sitedirs(package, gdb=True):
-            if isdir(srcdir):
-                log.debug('moving files from %s to %s', srcdir, dstdir)
-                share_files(srcdir, dstdir, package.endswith('-dbg'))
-                parent_dir = '/'.join(srcdir.split('/')[:-1])
-                if exists(parent_dir) and not os.listdir(parent_dir):
-                    os.rmdir(parent_dir)
-
-
-def share_files(srcdir, dstdir, dbg_package=False):
-    """Try to move as many files from srcdir to dstdir as possible."""
-    for i in os.listdir(srcdir):
-        fpath1 = join(srcdir, i)
-        if i.rsplit('.', 1)[-1] == 'so':
-            # try to rename extension here as well (in :meth:`scan` info about
-            # Python version is gone)
-            public_dir = PUBLIC_DIR_RE.match(srcdir)
-            if public_dir:
-                ver = public_dir.groups()[0]
-                # note that if ver is empty, default Python version will be used
-                tmp = "python%s-dbg" if dbg_package else "python%s"
-                interpreter = Interpreter(tmp % ver)
-                fpath1_orig = fpath1
-                new_name = interpreter.check_extname(i)
-                if new_name:
-                    fpath1 = join(srcdir, new_name)
-                if exists(fpath1):
-                    log.warn('destination file exist, '
-                             'cannot rename %s to %s', fpath1_orig, fpath1)
-                else:
-                    log.warn('renaming %s to %s', fpath1_orig, fpath1)
-                    os.rename(fpath1_orig, fpath1)
-        fpath2 = join(dstdir, i)
-        if not exists(fpath2):
-            os.renames(fpath1, fpath2)
-            continue
-        if isdir(fpath1):
-            share_files(fpath1, fpath2, dbg_package)
-        elif cmpfile(fpath1, fpath2, shallow=False):
-            os.remove(fpath1)
-        # XXX: check symlinks
-
-    if exists(srcdir) and not os.listdir(srcdir):
-        os.rmdir(srcdir)
 
 
 ### PACKAGE DETAILS ############################################
@@ -243,7 +177,7 @@ def scan(package, dname=None, options=None):
                             os.rename(fpath, new_fpath)
 
             elif private_dir:
-                if exists(fpath):
+                if exists(fpath) and fext != 'so':
                     mode = os.stat(fpath)[ST_MODE]
                     if mode & S_IXUSR or mode & S_IXGRP or mode & S_IXOTH:
                         if (options.no_shebang_rewrite or
@@ -422,7 +356,7 @@ def main():
             interpreter.debug = True
 
         if not private_dir:
-            fix_locations(package)
+            fix_locations(package, interpreter, SUPPORTED)
         stats = scan(package, private_dir, options)
 
         dependencies = Dependencies(package, 'cpython3')
