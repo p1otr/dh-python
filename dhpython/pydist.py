@@ -24,14 +24,13 @@ import os
 import re
 from os.path import exists, isdir, join
 from subprocess import PIPE, Popen
-from dhpython import PKG_PREFIX_MAP, PYDIST_DIRS, PYDIST_OVERRIDES_FNAMES,\
-    PYDIST_DPKG_SEARCH_TPLS
+from dhpython import PKG_PREFIX_MAP, PUBLIC_DIR_RE,\
+    PYDIST_DIRS, PYDIST_OVERRIDES_FNAMES, PYDIST_DPKG_SEARCH_TPLS
 from dhpython.version import get_requested_versions, Version
 from dhpython.tools import memoize
 
 log = logging.getLogger(__name__)
 
-PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d(?:.\d+)?)/(site|dist)-packages')
 PYDIST_RE = re.compile(r"""
     (?P<name>[A-Za-z][A-Za-z0-9_.\-]*)             # Python distribution name
     \s*
@@ -184,7 +183,7 @@ def guess_dependency(impl, req, version=None):
 
 
 def parse_pydep(impl, fname):
-    public_dir = PUBLIC_DIR_RE.match(fname)
+    public_dir = PUBLIC_DIR_RE[impl].match(fname)
     if public_dir and len(public_dir.group(1)) != 1:
         ver = public_dir.group(1)
     else:

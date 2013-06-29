@@ -37,8 +37,7 @@ from dhpython.depends import Dependencies
 from dhpython.interpreter import Interpreter
 from dhpython.version import supported, default, Version, VersionRange, \
     get_requested_versions
-from dhpython.pydist import validate as validate_pydist,\
-    PUBLIC_DIR_RE
+from dhpython.pydist import validate as validate_pydist
 from dhpython.tools import relative_symlink,\
     fix_shebang,\
     so2pyver, clean_egg_name,\
@@ -302,6 +301,7 @@ def scan(package, dname=None, options=None):
          'ext': set()}
 
     dbg_package = package.endswith('-dbg')
+    interpreter = Interpreter('python', debug=dbg_package)
 
     if not dname:
         proot = "debian/%s" % package
@@ -328,9 +328,9 @@ def scan(package, dname=None, options=None):
             continue
 
         bin_dir = private_dir = None
-        public_dir = PUBLIC_DIR_RE.match(root)
+        version = interpreter.parse_public_version(root)
+        public_dir = bool(version)
         if public_dir:
-            version = Version(public_dir.group(1))
             if root.endswith('-packages'):
                 r['public_vers'].add(version)
         else:
@@ -625,6 +625,9 @@ def main():
                 options.arch is True and pdetails['arch'] == 'all':
             continue
         log.debug('processing package %s...', package)
+        if package.endswith('-dbg'):
+            interpreter.debug = True
+
         if not private_dir:
             try:
                 pyinstall(interpreter, package, options.vrange)

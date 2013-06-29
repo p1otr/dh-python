@@ -22,7 +22,7 @@ import logging
 import os
 import re
 from os.path import join, split
-from dhpython import OLD_SITE_DIRS
+from dhpython import OLD_SITE_DIRS, PUBLIC_DIR_RE
 
 SHEBANG_RE = re.compile(r'''
     (?:\#!\s*){0,1}  # shebang prefix
@@ -257,6 +257,11 @@ class Interpreter:
 
         return result
 
+    def parse_public_version(self, path):
+        """Return version assigned to site-packages path."""
+        match = PUBLIC_DIR_RE[self.impl].match(path)
+        if match:
+            return Version(match.groups(0))
 
     def cache_file(self, fpath, version=None):
         """Given path to a .py file, return path to its .pyc/.pyo file.

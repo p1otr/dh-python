@@ -35,7 +35,7 @@ from dhpython.debhelper import DebHelper
 from dhpython.depends import Dependencies
 from dhpython.interpreter import Interpreter, EXTFILE_RE
 from dhpython.version import supported, default, Version, VersionRange
-from dhpython.pydist import validate as validate_pydist, PUBLIC_DIR_RE
+from dhpython.pydist import validate as validate_pydist
 from dhpython.tools import fix_shebang, clean_egg_name
 from dhpython.option import Option
 
@@ -124,6 +124,7 @@ def scan(package, dname=None, options=None):
          'ext': set()}
 
     dbg_package = package.endswith('-dbg')
+    interpreter = Interpreter('python', impl='cpython3', debug=dbg_package)
 
     if not dname:
         proot = "debian/%s" % package
@@ -153,7 +154,8 @@ def scan(package, dname=None, options=None):
             continue
 
         bin_dir = private_dir = None
-        public_dir = PUBLIC_DIR_RE.match(root)
+        version = interpreter.parse_public_version(root)
+        public_dir = bool(version)
         if not public_dir:
             for i in private_to_check:
                 if root.startswith(join('debian', package, i)):
@@ -230,17 +232,7 @@ def scan(package, dname=None, options=None):
                     continue
                 # assume all extensions were build for cPython
                 if fext == 'so':
-                    ver = public_dir.groups()[0]
-                    if not ver or len(ver) == 1:
-                        tagver = EXTFILE_RE.search(fn)
-                        if tagver is not None:
-                            tagver = tagver.groupdict()['ver']
-                            if tagver is not None:
-                                ver = "%s.%s" % (tagver[0], tagver[1])
-                    # note that if groups()[0] is empty, default Python version will be used
-                    tmp = "python%s-dbg" if dbg_package else "python%s"
-                    interpreter = Interpreter(tmp % ver)
-                    new_fn = interpreter.check_extname(fn)
+                    new_fn = interpreter.check_extname(fn, version)
                     if new_fn:
                         new_fpath = join(root, new_fn)
                         if exists(new_fpath):
@@ -420,11 +412,15 @@ def main():
     if not options.vrange and dh.python_version:
         options.vrange = VersionRange(dh.python_version)
 
+    interpreter = Interpreter('python')
     for package, pdetails in dh.packages.items():
         if options.arch is False and pdetails['arch'] != 'all' or \
                 options.arch is True and pdetails['arch'] == 'all':
             continue
         log.debug('processing package %s...', package)
+        if package.endswith('-dbg'):
+            interpreter.debug = True
+
         if not private_dir:
             fix_locations(package)
         stats = scan(package, private_dir, options)
