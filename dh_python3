@@ -417,6 +417,8 @@ def main():
         log.debug('argv: %s', sys.argv)
         log.debug('options: %s', options)
         log.debug('args: %s', args)
+        log.debug('supported Python versions: %s (default=%s)',
+                  ','.join(str(v) for v in SUPPORTED), DEFAULT)
     else:
         log.setLevel(logging.INFO)
 
