@@ -1,5 +1,12 @@
 #!/usr/bin/make -f
 
+# hardcode default/supported Python versions to make tests more reliable
+# Note that all these packages have to be installed during tests
+export DEBPYTHON_DEFAULT=2.7
+export DEBPYTHON_SUPPORTED=2.6,2.7
+export DEBPYTHON3_DEFAULT=3.3
+export DEBPYTHON3_SUPPORTED=3.2,3.3
+
 # enable or disable tests here:
 TESTS := test201 test202 test203 test204 test205 test206 test207 test301 test302 test303 test304
 
