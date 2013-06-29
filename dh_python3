@@ -75,16 +75,8 @@ def scan(package, dname=None, options=None):
         private_to_check = [dname]
 
     for root, dirs, file_names in os.walk(proot):
-        # ignore Python 2.X locations
-        if '/usr/lib/python2' in root or\
-           '/usr/local/lib/python2' in root or\
-           '/usr/share/pyshared/' in root or\
-           '/usr/lib/pyshared/' in root:
-            # warn only once
-            tmp = root.replace('/local', '').split('/')
-            if len(tmp) == 5:  # debian/package/usr/foo/bar
-                log.warning('Python 2.x location detected, '
-                            'please use dh_python2: %s', root)
+        if interpreter.should_ignore(root):
+            del dirs[:]
             continue
 
         bin_dir = private_dir = None

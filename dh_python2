@@ -277,13 +277,8 @@ def scan(package, dname=None, options=None):
         private_to_check = [dname]
 
     for root, dirs, file_names in os.walk(proot):
-        # ignore Python 3.X locations
-        if '/usr/lib/python3' in root or\
-           '/usr/local/lib/python3' in root:
-            # warn only once
-            if root[root.find('/lib/python'):].count('/') == 2:
-                log.warning('Python 3.x location detected, '
-                            'please use dh_python3: %s', root)
+        if interpreter.should_ignore(root):
+            del dirs[:]
             continue
 
         bin_dir = private_dir = None

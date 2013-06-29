@@ -24,7 +24,7 @@ PKG_PREFIX_MAP = {'cpython2': 'python',
                   'cpython3': 'python3',
                   'pypy': 'pypy'}
 
-# minimum version required for py3compile/py3clean:
+# minimum version required for compile/clean scripts:
 MINPYCDEP = {'cpython2': 'python (>= 2.6.6-3)',
              'cpython3': 'python3 (>= 3.2.3-3~)',
              'pypy': 'pypy'}
@@ -33,6 +33,11 @@ PUBLIC_DIR_RE = {
     'cpython2': re.compile(r'.*?/usr/lib/python(2\.\d)/(site|dist)-packages'),
     'cpython3': re.compile(r'.*?/usr/lib/python(3(?:\.\d+)?)/dist-packages'),
     'pypy': re.compile(r'.*?/usr/lib/pypy/dist-packages')}
+
+INTERPRETER_DIR_TPLS = {
+    'cpython2': r'.*/python2\.\d/',
+    'cpython3': r'.*/python3(?:\.\d+)?/',
+    'pypy': r'.*/pypy/'}
 
 # Interpreter site-directories
 OLD_SITE_DIRS = {
