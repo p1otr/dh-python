@@ -55,6 +55,16 @@ REQUIRES_RE = re.compile(r'''
         (?P<version>(\w|[-.])+)
     )?
     ''', re.VERBOSE)
+PYDIST_DIRS = {
+    'cpython2': '/usr/share/python/dist/',
+    'cpython3': '/usr/share/python3/dist/',
+    'pypy': '/usr/share/pypy/dist/',
+}
+OVERRIDES_FILE_NAMES = {
+    'cpython2': 'debian/pydist-overrides',
+    'cpython3': 'debian/py3dist-overrides',
+    'pypy': 'debian/pypydist-overrides',
+}
 
 
 def validate(fpath):
@@ -72,26 +82,24 @@ def validate(fpath):
 
 
 @memoize
-def load(impl, dname='/usr/share/dh-python/dist/{}',
-         fname='debian/pydist-{}-overrides',
-         fbname='/usr/share/dh-python/dist/{}_fallback'):
+def load(impl):
     """Load iformation about installed Python distributions.
 
     :param impl: interpreter implementation, f.e. cpython2, cpython3, pypy
-    :param fname: local fallback file name
-    :param fbname: global fallback file name
+    :type impl: str
     """
-    dname = dname.format(impl)
-    fname = fname.format(impl)
-    fbname = fbname.format(impl)
-
+    fname = OVERRIDES_FILE_NAMES.get(impl)
     if exists(fname):
         to_check = [fname]  # first one!
     else:
         to_check = []
+
+    dname = PYDIST_DIRS.get(impl)
     if isdir(dname):
         to_check.extend(join(dname, i) for i in os.listdir(dname))
-    if exists(fbname):  # fall back generated at python-defaults build time
+
+    fbname = '/usr/share/dh-python/dist/{}_fallback'.format(impl)
+    if exists(fbname):  # fall back generated at dh-python build time
         to_check.append(fbname)  # last one!
 
     result = {}
