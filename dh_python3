@@ -26,17 +26,15 @@ import os
 import re
 import sys
 from optparse import OptionParser, SUPPRESS_HELP
-from os.path import islink, exists, join, split
-from shutil import rmtree, copy as fcopy
-from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
+from os.path import exists, join
+from shutil import copy as fcopy
 sys.path.insert(1, '/usr/share/dh-python/')
 from dhpython.debhelper import DebHelper
 from dhpython.depends import Dependencies
 from dhpython.interpreter import Interpreter, EXTFILE_RE
 from dhpython.version import supported, default, Version, VersionRange
 from dhpython.pydist import validate as validate_pydist
-from dhpython.fs import fix_locations
-from dhpython.tools import fix_shebang, clean_egg_name
+from dhpython.fs import fix_locations, Scan
 from dhpython.option import Option
 
 # initialize script
@@ -48,201 +46,21 @@ DEFAULT = default('cpython3')
 SUPPORTED = supported('cpython3')
 
 
-### PACKAGE DETAILS ############################################
-def scan(package, dname=None, options=None):
-    """Gather statistics about Python files in given package."""
-    r = {'requires.txt': set(),
-         'shebangs': set(),
-         'private_dirs': {},
-         'compile': False,
-         'ext': set()}
-
-    dbg_package = package.endswith('-dbg')
-    interpreter = Interpreter('python', impl='cpython3', debug=dbg_package)
-
-    if not dname:
-        proot = "debian/%s" % package
-        if dname is False:
-            private_to_check = []
-        else:
-            private_to_check = [i % package for i in
-                                ('usr/lib/%s', 'usr/lib/games/%s',
-                                'usr/share/%s', 'usr/share/games/%s')]
-    else:
-        # scan private directory *only*
-        dname = dname.strip('/')
-        proot = join('debian', package, dname)
-        private_to_check = [dname]
-
-    for root, dirs, file_names in os.walk(proot):
-        if interpreter.should_ignore(root):
-            del dirs[:]
-            continue
-
-        bin_dir = private_dir = None
-        version = interpreter.parse_public_version(root)
-        public_dir = bool(version)
-        if not public_dir:
-            for i in private_to_check:
-                if root.startswith(join('debian', package, i)):
-                    private_dir = '/' + i
-                    break
-            else:  # i.e. not public_dir and not private_dir
-                if len(root.split('/', 6)) < 6 and \
-                        root.endswith(('/sbin', '/bin', '/usr/games')):
-                    # /(s)bin or /usr/(s)bin or /usr/games
-                    bin_dir = root
-
-        for name in dirs:
-            if name == '__pycache__':
-                rmtree(join(root, name))
-                dirs.remove(name)
-                continue
-            # handle EGG related data (.egg-info dirs)
-            if name.endswith('.egg-info'):
-                if dbg_package and options.clean_dbg_pkg:
-                    rmtree(join(root, name))
-                    dirs.remove(name)
-                    continue
-                clean_name = clean_egg_name(name)
-                if clean_name != name:
-                    if exists(join(root, clean_name)):
-                        log.info('removing %s (%s is already available)', name, clean_name)
-                        rmtree(join(root, name))
-                        dirs[dirs.index(name)] = clean_name
-                    else:
-                        log.info('renaming %s to %s', name, clean_name)
-                        os.rename(join(root, name), join(root, clean_name))
-                        dirs[dirs.index(name)] = clean_name
-        if root.endswith('.egg-info'):
-            if 'requires.txt' in file_names:
-                r['requires.txt'].add(join(root, 'requires.txt'))
-            if 'SOURCES.txt' in file_names:
-                file_names.remove('SOURCES.txt')
-                os.remove(join(root, 'SOURCES.txt'))
-            continue
-
-        # check files
-        for fn in sorted(file_names):
-            # sorted() to make sure .so files are handled before .so.foo
-            fpath = join(root, fn)
-            if not exists(fpath):
-                # could be removed while handling .so symlinks
-                if islink(fpath) and '.so.' in split(fpath)[-1]:
-                    # dangling symlink to (now removed/renamed) .so file
-                    # which wasn't removed yet (see test3's quux.so.0)
-                    log.info('removing symlink: %s', fpath)
-                    os.remove(fpath)
-                continue
-            fext = fn.rsplit('.', 1)[-1]
-            if fext in ('pyc', 'pyo'):
-                os.remove(fpath)
-                continue
-            if public_dir:
-                if fext == 'so' and islink(fpath):
-                    dstfpath = fpath
-                    links = set()
-                    while islink(dstfpath):
-                        links.add(dstfpath)
-                        dstfpath = join(root, os.readlink(dstfpath))
-                    if exists(dstfpath) and '.so.' in split(dstfpath)[-1]:
-                        # rename .so.$FOO symlinks, remove other ones
-                        for lpath in links:
-                            log.info('removing symlink: %s', lpath)
-                            os.remove(lpath)
-                        log.info('renaming %s to %s', dstfpath, fn)
-                        os.rename(dstfpath, fpath)
-                if dbg_package and options.clean_dbg_pkg and \
-                        fext not in ('so', 'h'):
-                    os.remove(join(root, fn))
-                    continue
-                # assume all extensions were build for cPython
-                if fext == 'so':
-                    new_fn = interpreter.check_extname(fn, version)
-                    if new_fn:
-                        new_fpath = join(root, new_fn)
-                        if exists(new_fpath):
-                            log.warn('destination file exist, '
-                                     'cannot rename %s to %s', fn, new_fn)
-                        else:
-                            log.warn('renaming %s to %s', fn, new_fn)
-                            os.rename(fpath, new_fpath)
-
-            elif private_dir:
-                if exists(fpath) and fext != 'so':
-                    mode = os.stat(fpath)[ST_MODE]
-                    if mode & S_IXUSR or mode & S_IXGRP or mode & S_IXOTH:
-                        if (options.no_shebang_rewrite or
-                            fix_shebang(fpath, options.shebang)) and \
-                                not options.ignore_shebangs:
-                            try:
-                                res = Interpreter.from_file(fpath)
-                            except Exception as e:
-                                log.debug('cannot parse shebang %s: %s', fpath, e)
-                            else:
-                                r['private_dirs'].setdefault(private_dir, {})\
-                                    .setdefault('shebangs', set()).add(res)
-
-            if public_dir or private_dir:
-                if fext == 'so':
-                    tagver = EXTFILE_RE.search(fn)
-                    if tagver is None:
-                        # yeah, python3.1 is not covered, but we don't want to
-                        # mess with non-Python libraries, don't we?
-                        continue
-                    tagver = tagver.groupdict()['ver']
-                    if tagver is None:
-                        continue
-                    tagver = Version("%s.%s" % (tagver[0], tagver[1]))
-                    (r if public_dir else
-                     r['private_dirs'].setdefault(private_dir, {}))\
-                        .setdefault('ext', set()).add(tagver)
-                    continue
-                elif fext == 'py':
-                    (r if public_dir else
-                     r['private_dirs'].setdefault(private_dir, {})
-                     )['compile'] = True
-                    continue
-
-            # .egg-info files
-            if fn.endswith('.egg-info'):
-                clean_name = clean_egg_name(fn)
-                if clean_name != fn:
-                    if exists(join(root, clean_name)):
-                        log.info('removing %s (%s is already available)',
-                                 fn, clean_name)
-                        os.remove(join(root, fn))
-                    else:
-                        log.info('renaming %s to %s', fn, clean_name)
-                        os.rename(join(root, fn), join(root, clean_name))
-                continue
-            # search for scripts in bin dirs
-            if bin_dir:
-                if (options.no_shebang_rewrite or
-                    fix_shebang(fpath, options.shebang)) and \
-                        not options.ignore_shebangs:
-                    try:
-                        res = Interpreter.from_file(fpath)
-                    except Exception as e:
-                        log.debug('cannot parse shebang %s: %s', fpath, e)
-                    else:
-                        r['shebangs'].add(res)
-
-    if dbg_package and options.clean_dbg_pkg:
-        # remove empty directories in -dbg packages
-        proot = proot + '/usr/lib'
-        for root, dirs, file_names in os.walk(proot, topdown=False):
-            if '-packages/' in root and not file_names:
-                try:
-                    os.rmdir(root)
-                except Exception:
-                    pass
-
-    log.debug("package %s details = %s", package, r)
-    return r
+class Scanner(Scan):
+    def handle_ext(self, fpath):
+        path, fname = fpath.rsplit('/', 1)
+        tagver = EXTFILE_RE.search(fname)
+        if tagver is None:
+            # yeah, python3.1 is not covered, but we don't want to
+            # mess with non-Python libraries, don't we?
+            return
+        tagver = tagver.groupdict()['ver']
+        if tagver is None:
+            return
+        tagver = Version("%s.%s" % (tagver[0], tagver[1]))
+        return tagver
 
 
-################################################################
 def main():
     usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR [-X REGEXPR]\n'
     parser = OptionParser(usage, version='%prog DEVELV', option_class=Option)
@@ -349,7 +167,7 @@ def main():
 
         if not private_dir:
             fix_locations(package, interpreter, SUPPORTED)
-        stats = scan(package, private_dir, options)
+        stats = Scanner(interpreter, package, private_dir, options).result
 
         dependencies = Dependencies(package, 'cpython3')
         dependencies.parse(stats, options)

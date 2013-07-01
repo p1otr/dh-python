@@ -30,9 +30,9 @@ MINPYCDEP = {'cpython2': 'python (>= 2.6.6-3)',
              'pypy': 'pypy'}
 
 PUBLIC_DIR_RE = {
-    'cpython2': re.compile(r'.*?/usr/lib/python(2\.\d)/(site|dist)-packages'),
-    'cpython3': re.compile(r'.*?/usr/lib/python(3(?:\.\d+)?)/dist-packages'),
-    'pypy': re.compile(r'.*?/usr/lib/pypy/dist-packages')}
+    'cpython2': re.compile(r'.*?/usr/lib/python(2\.\d)(?:/|$)'),
+    'cpython3': re.compile(r'.*?/usr/lib/python(3(?:\.\d+)?)(?:/|$)'),
+    'pypy': re.compile(r'.*?/usr/lib/pypy(?:/|$)')}
 
 INTERPRETER_DIR_TPLS = {
     'cpython2': r'.*/python2\.\d/',

@@ -27,22 +27,17 @@ import re
 import sys
 from filecmp import dircmp, cmpfiles, cmp as fcmp
 from optparse import OptionParser, SUPPRESS_HELP
-from os.path import isabs, isdir, islink, exists, join, normpath, realpath,\
-    split
-from shutil import rmtree, copy as fcopy
-from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
+from os.path import isabs, isdir, islink, exists, join, normpath, realpath
+from shutil import copy as fcopy
 sys.path.insert(1, '/usr/share/dh-python/')
 from dhpython.debhelper import DebHelper
 from dhpython.depends import Dependencies
 from dhpython.interpreter import Interpreter
-from dhpython.fs import fix_locations
+from dhpython.fs import fix_locations, Scan
 from dhpython.version import supported, default, VersionRange, \
     get_requested_versions
 from dhpython.pydist import validate as validate_pydist
-from dhpython.tools import relative_symlink,\
-    fix_shebang,\
-    so2pyver, clean_egg_name,\
-    parse_ns, remove_ns,\
+from dhpython.tools import relative_symlink, so2pyver, parse_ns, remove_ns,\
     pyinstall, pyremove
 from dhpython.option import Option
 
@@ -53,6 +48,22 @@ log = logging.getLogger('dhpython')
 os.umask(0o22)
 DEFAULT = default('cpython2')
 SUPPORTED = supported('cpython2')
+
+
+class Scanner(Scan):
+    def handle_ext(self, fpath):
+        so_version = so2pyver(fpath)
+        if so_version:
+            path, fn = fpath.rsplit('/', 1)
+            if self.current_pub_version:
+                if self.current_pub_version != so_version:
+                    log.error('extension linked to libpython%s '
+                              'and shipped in python%s\'s dist-'
+                              'packages: %s',
+                              so_version, self.current_pub_version, fn)
+                log.warn('public extension linked with '
+                         'libpython%s: %s', so_version, fn)
+            return so_version
 
 
 ### SHARING FILES ##############################################
@@ -248,215 +259,6 @@ def share_2x(dir1, dir2, dc=None):
         share_2x(join(dir1, dn), join(dir2, dn), dc)
 
 
-### PACKAGE DETAILS ############################################
-def scan(package, dname=None, options=None):
-    """Gather statistics about Python files in given package."""
-    r = {'requires.txt': set(),
-         'nsp.txt': set(),
-         'shebangs': set(),
-         'public_vers': set(),
-         'private_dirs': {},
-         'compile': False,
-         'ext': set()}
-
-    dbg_package = package.endswith('-dbg')
-    interpreter = Interpreter('python', debug=dbg_package)
-
-    if not dname:
-        proot = "debian/%s" % package
-        if dname is False:
-            private_to_check = []
-        else:
-            private_to_check = [i % package for i in
-                                ('usr/lib/%s', 'usr/lib/games/%s',
-                                'usr/share/%s', 'usr/share/games/%s')]
-    else:
-        # scan private directory *only*
-        dname = dname.strip('/')
-        proot = join('debian', package, dname)
-        private_to_check = [dname]
-
-    for root, dirs, file_names in os.walk(proot):
-        if interpreter.should_ignore(root):
-            del dirs[:]
-            continue
-
-        bin_dir = private_dir = None
-        version = interpreter.parse_public_version(root)
-        public_dir = bool(version)
-        if public_dir:
-            if root.endswith('-packages'):
-                r['public_vers'].add(version)
-        else:
-            # TODO: find a way to specify Python version private
-            # extension was build for
-            version = False
-            for i in private_to_check:
-                if root.startswith(join('debian', package, i)):
-                    private_dir = '/' + i
-                    break
-            else:  # i.e. not public_dir and not private_dir
-                if len(root.split('/', 6)) < 6 and \
-                        root.endswith(('/sbin', '/bin', '/usr/games')):
-                    # /(s)bin or /usr/(s)bin or /usr/games
-                    bin_dir = root
-
-        for name in dirs:
-            if name == '__pycache__':
-                rmtree(join(root, name))
-                dirs.remove(name)
-                continue
-            # handle EGG related data (.egg-info dirs)
-            if name.endswith('.egg-info'):
-                if dbg_package and options.clean_dbg_pkg:
-                    rmtree(join(root, name))
-                    dirs.remove(name)
-                    continue
-                clean_name = clean_egg_name(name)
-                if clean_name != name:
-                    if exists(join(root, clean_name)):
-                        log.info('removing %s (%s is already available)', name, clean_name)
-                        rmtree(join(root, name))
-                        dirs[dirs.index(name)] = clean_name
-                    else:
-                        log.info('renaming %s to %s', name, clean_name)
-                        os.rename(join(root, name), join(root, clean_name))
-                        dirs[dirs.index(name)] = clean_name
-        if root.endswith('.egg-info'):
-            if 'requires.txt' in file_names:
-                r['requires.txt'].add(join(root, 'requires.txt'))
-            if 'namespace_packages.txt' in file_names:
-                r['nsp.txt'].add(join(root, 'namespace_packages.txt'))
-            if 'SOURCES.txt' in file_names:
-                file_names.remove('SOURCES.txt')
-                os.remove(join(root, 'SOURCES.txt'))
-            continue
-
-        # check files
-        for fn in sorted(file_names):
-            # sorted() to make sure .so files are handled before .so.foo
-            fpath = join(root, fn)
-            if not exists(fpath):
-                # could be removed while handling .so symlinks
-                if islink(fpath) and '.so.' in split(fpath)[-1]:
-                    # dangling symlink to (now removed/renamed) .so file
-                    # which wasn't removed yet (see test3's quux.so.0)
-                    log.info('removing symlink: %s', fpath)
-                    os.remove(fpath)
-                continue
-            fext = fn.rsplit('.', 1)[-1]
-            if fext in ('pyc', 'pyo'):
-                os.remove(fpath)
-                continue
-            if public_dir:
-                if fext == 'so' and islink(fpath):
-                    dstfpath = fpath
-                    links = set()
-                    while islink(dstfpath):
-                        links.add(dstfpath)
-                        dstfpath = join(root, os.readlink(dstfpath))
-                    if exists(dstfpath) and '.so.' in split(dstfpath)[-1]:
-                        # rename .so.$FOO symlinks, remove other ones
-                        for lpath in links:
-                            log.info('removing symlink: %s', lpath)
-                            os.remove(lpath)
-                        log.info('renaming %s to %s', dstfpath, fn)
-                        os.rename(dstfpath, fpath)
-                if dbg_package and options.clean_dbg_pkg and \
-                        fext not in ('so', 'h'):
-                    os.remove(join(root, fn))
-                    continue
-                # assume all extensions were build for cPython
-                if fext == 'so':
-                    new_fn = interpreter.check_extname(fn, version)
-                    if new_fn:
-                        new_fpath = join(root, new_fn)
-                        if exists(new_fpath):
-                            log.warn('destination file exist, '
-                                     'cannot rename %s to %s', fn, new_fn)
-                        else:
-                            log.warn('renaming %s to %s', fn, new_fn)
-                            os.rename(fpath, new_fpath)
-
-            elif private_dir:
-                if exists(fpath) and fext != 'so':
-                    mode = os.stat(fpath)[ST_MODE]
-                    if mode & S_IXUSR or mode & S_IXGRP or mode & S_IXOTH:
-                        if (options.no_shebang_rewrite or
-                            fix_shebang(fpath, options.shebang)) and \
-                                not options.ignore_shebangs:
-                            try:
-                                res = Interpreter.from_file(fpath)
-                            except Exception as e:
-                                log.debug('cannot parse shebang %s: %s', fpath, e)
-                            else:
-                                r['private_dirs'].setdefault(private_dir, {})\
-                                    .setdefault('shebangs', set()).add(res)
-
-            if public_dir or private_dir:
-                if fext == 'so':
-                    so_version = so2pyver(join(root, fn))
-                    if so_version:
-                        if public_dir:
-                            if version != so_version:
-                                log.error('extension linked to libpython%s '
-                                          'and shipped in python%s\'s dist-'
-                                          'packages: %s',
-                                          so_version, version, fn)
-                                exit(7)
-                            log.warn('public extension linked with '
-                                     'libpython%s: %s', so_version, fn)
-                        elif not version:
-                            version = so_version
-
-                    (r if public_dir else
-                     r['private_dirs'].setdefault(private_dir, {}))\
-                        .setdefault('ext', set()).add(version)
-                    continue
-                elif fext == 'py':
-                    (r if public_dir else
-                     r['private_dirs'].setdefault(private_dir, {})
-                     )['compile'] = True
-                    continue
-
-            # .egg-info files
-            if fn.endswith('.egg-info'):
-                clean_name = clean_egg_name(fn)
-                if clean_name != fn:
-                    if exists(join(root, clean_name)):
-                        log.info('removing %s (%s is already available)',
-                                 fn, clean_name)
-                        os.remove(join(root, fn))
-                    else:
-                        log.info('renaming %s to %s', fn, clean_name)
-                        os.rename(join(root, fn), join(root, clean_name))
-                continue
-            # search for scripts in bin dirs
-            if bin_dir:
-                if (options.no_shebang_rewrite or
-                    fix_shebang(fpath, options.shebang)) and \
-                        not options.ignore_shebangs:
-                    try:
-                        res = Interpreter.from_file(fpath)
-                    except Exception as e:
-                        log.debug('cannot parse shebang %s: %s', fpath, e)
-                    else:
-                        r['shebangs'].add(res)
-
-    if dbg_package and options.clean_dbg_pkg:
-        # remove empty directories in -dbg packages
-        proot = proot + '/usr/lib'
-        for root, dirs, file_names in os.walk(proot, topdown=False):
-            if '-packages/' in root and not file_names:
-                try:
-                    os.rmdir(root)
-                except Exception:
-                    pass
-
-    log.debug("package %s details = %s", package, r)
-    return r
-
-
 ################################################################
 def main():
     usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR [-X REGEXPR]\n'
@@ -605,14 +407,13 @@ def main():
                 log.error("%s.pyremove: %s", package, err)
                 exit(5)
             fix_locations(package, interpreter, SUPPORTED)
-        stats = scan(package, private_dir, options)
+        stats = Scanner(interpreter, package, private_dir, options).result
         if not private_dir:
             share(package, stats, options)
             pyshared_dir = "debian/%s/usr/share/pyshared/" % package
             if not stats['public_vers'] and exists(pyshared_dir):
                 create_public_links(pyshared_dir, options.vrange)
-                stats['public_vers'] = get_requested_versions('cpython2', options.vrange)
-                stats['compile'] = True
+                stats = Scanner(interpreter, package, private_dir, options).result
 
         dependencies = Dependencies(package, 'cpython2')
         dependencies.parse(stats, options)
