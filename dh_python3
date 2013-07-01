@@ -354,14 +354,14 @@ def main():
         dependencies = Dependencies(package, 'cpython3')
         dependencies.parse(stats, options)
 
-        if stats['ext']:
+        if stats['ext_vers']:
             dh.addsubstvar(package, 'python3:Versions',
-                           ', '.join(str(v) for v in sorted(stats['ext'])))
+                           ', '.join(str(v) for v in sorted(stats['ext_vers'])))
             ps = package.split('-', 1)
             if len(ps) > 1 and ps[0] == 'python3':
                 dh.addsubstvar(package, 'python3:Provides',
                                ', '.join("python%s-%s" % (i, ps[1])
-                               for i in sorted(stats['ext'])))
+                               for i in sorted(stats['ext_vers'])))
 
         pyclean_added = False  # invoke pyclean only once in maintainer script
         if stats['compile']:
@@ -380,8 +380,9 @@ def main():
 
             args = pdir
 
-            ext_for = details.get('ext')
-            if ext_for is None:  # no extension
+            ext_for = details.get('ext_vers')
+            ext_no_version = details.get('ext_no_version')
+            if ext_for is None and not ext_no_version:  # no extension
                 shebang_versions = list(i.version for i in details.get('shebangs', [])
                                         if i.version and i.version.minor)
                 if not options.ignore_shebangs and len(shebang_versions) == 1:
@@ -389,7 +390,7 @@ def main():
                     args += " -V %s" % shebang_versions[0]
                 elif options.vrange and options.vrange != (None, None):
                     args += " -V %s" % options.vrange
-            elif False in ext_for:
+            elif ext_no_version:
                 # at least one extension's version not detected
                 if options.vrange and '-' not in str(options.vrange):
                     ver = str(options.vrange)

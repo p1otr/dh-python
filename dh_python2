@@ -74,7 +74,7 @@ def share(package, stats, options):
         # TODO: remove this once file conflicts will not be needed anymore
         move_to_pyshared(interpreter.sitedir(package, pubvers[0]))
 
-    for version in stats['ext']:
+    for version in stats['ext_vers']:
         create_ext_links(interpreter.sitedir(package, version))
 
     if options.guess_versions and pubvers:
@@ -83,7 +83,7 @@ def share(package, stats, options):
                 interpreter.version = version
                 log.debug('guessing files for %s', interpreter)
                 versions_without_ext = sorted(set(pubvers) -
-                                              stats['ext'])
+                                              stats['ext_vers'])
                 if not versions_without_ext:
                     log.error('extension for python%s is missing. '
                               'Build extensions for all supported Python '
@@ -644,8 +644,9 @@ def main():
 
             args = pdir
 
-            ext_for = details.get('ext')
-            if ext_for is None:  # no extension
+            ext_for = details.get('ext_vers')
+            ext_no_version = details.get('ext_no_version')
+            if ext_for is None and not ext_no_version:  # no extension
                 shebang_versions = list(i.version for i in details.get('shebangs', [])
                                         if i.version and i.version.minor)
                 if not options.ignore_shebangs and len(shebang_versions) == 1:
@@ -653,7 +654,7 @@ def main():
                     args += " -V %s" % shebang_versions[0]
                 elif options.vrange and options.vrange != (None, None):
                     args += " -V %s" % options.vrange
-            elif False in ext_for:
+            elif ext_no_version:
                 # at least one extension's version not detected
                 if options.vrange and '-' not in str(options.vrange):
                     ver = str(options.vrange)

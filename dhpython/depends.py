@@ -118,12 +118,12 @@ class Dependencies:
             if maxv >= default(self.impl):
                 self.depend("%s (<< %s)" % (tpl, maxv + 1))
 
-        if stats['ext']:
+        if stats['ext_vers']:
             # TODO: what about extensions with stable ABI?
-            sorted_vers = sorted(stats['ext'])
+            sorted_vers = sorted(stats['ext_vers'])
             minv = sorted_vers[0]
             maxv = sorted_vers[-1]
-            #self.depend('|'.join(vtpl % i for i in stats['ext']))
+            #self.depend('|'.join(vtpl % i for i in stats['ext_vers']))
             if minv <= default(self.impl):
                 self.depend("%s (>= %s)" % (tpl, minv))
             if maxv >= default(self.impl):
@@ -154,8 +154,8 @@ class Dependencies:
                 if self.impl in MINPYCDEP:
                     self.depend(MINPYCDEP[self.impl])
                 args = ''
-                if details.get('ext'):
-                    extensions = sorted(v for v in details['ext'] if v is not False)
+                if details.get('ext_vers'):
+                    extensions = sorted(details['ext_vers'])
                     #self.depend('|'.join(vtpl % i for i in extensions))
                     if extensions:
                         args += "-V %s" % VersionRange(minver=extensions[0], maxver=extensions[-1])
@@ -168,6 +168,11 @@ class Dependencies:
                     #if versions[0] in supported_versions:
                     args += "-V %s" % versions[0]
                     # ... otherwise compile with default version
+                elif details.get('ext_no_version'):
+                    # assume unrecognized extension was built for default interpreter version
+                    dversion = default(self.impl)
+                    args += "-V %s" % dversion
+                    self.depend(vtpl % dversion)
                 elif vrange:
                     args += "-V %s" % vrange
                     if vrange.minver == vrange.maxver:
