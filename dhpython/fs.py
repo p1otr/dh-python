@@ -23,7 +23,7 @@ from filecmp import cmp as cmpfile
 from os import listdir, remove, renames, rmdir
 from os.path import exists, isdir, join
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('dhpython')
 
 
 def fix_locations(package, interpreter, versions):

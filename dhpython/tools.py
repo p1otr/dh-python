@@ -29,7 +29,7 @@ from shutil import rmtree
 from os.path import exists, getsize, isdir, islink, join, split
 from subprocess import Popen, PIPE
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('dhpython')
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d(?:-[^.]*)?)?(\.egg-info|\.pth)$')
 SHAREDLIB_RE = re.compile(r'NEEDED.*libpython(\d\.\d)')
 

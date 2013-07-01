@@ -33,7 +33,7 @@ VERSION_RE = re.compile(r'''
     (?P<releaselevel>alpha|beta|candidate|final)?[.\s]?
     (?P<serial>\d+)?''', re.VERBOSE)
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('dhpython')
 Interpreter = None
 
 

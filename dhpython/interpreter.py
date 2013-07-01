@@ -54,7 +54,7 @@ EXTFILE_RE = re.compile(r'''
     ))?
     (?P<debug>_d)?
     \.so$''', re.VERBOSE)
-log = logging.getLogger(__name__)
+log = logging.getLogger('dhpython')
 
 
 class Interpreter:

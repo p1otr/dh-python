@@ -47,9 +47,9 @@ from dhpython.tools import relative_symlink,\
 from dhpython.option import Option
 
 # initialize script
-logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
-                           '%(message)s')
-log = logging.getLogger(__name__)
+logging.basicConfig(format='%(levelname).1s: dh_python2 '
+                           '%(module)s:%(lineno)d: %(message)s')
+log = logging.getLogger('dhpython')
 os.umask(0o22)
 DEFAULT = default('cpython2')
 SUPPORTED = supported('cpython2')

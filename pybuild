@@ -26,8 +26,8 @@ import sys
 from os import environ, getcwd, makedirs
 from os.path import exists, join
 
-logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
-                           '%(message)s')
+logging.basicConfig(format='%(levelname).1s: pybuild '
+                           '%(module)s:%(lineno)d: %(message)s')
 log = logging.getLogger('dhpython')
 
 

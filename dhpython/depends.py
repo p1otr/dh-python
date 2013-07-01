@@ -23,7 +23,7 @@ from dhpython import PKG_PREFIX_MAP, MINPYCDEP
 from dhpython.pydist import parse_pydep, guess_dependency
 from dhpython.version import default, supported, VersionRange
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('dhpython')
 
 
 class Dependencies:

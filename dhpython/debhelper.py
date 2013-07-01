@@ -23,7 +23,7 @@ from os import makedirs, chmod
 from os.path import exists, join, dirname
 from dhpython import PKG_NAME_TPLS, RT_LOCATIONS, RT_TPLS
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('dhpython')
 
 
 class DebHelper:

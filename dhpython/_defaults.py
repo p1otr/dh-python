@@ -33,7 +33,7 @@ DEFAULT = {
     'cpython3': (3, 3),
     'pypy': (2, 0)}
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('dhpython')
 
 
 def cpython_versions(major):

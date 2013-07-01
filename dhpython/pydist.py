@@ -29,7 +29,7 @@ from dhpython import PKG_PREFIX_MAP, PUBLIC_DIR_RE,\
 from dhpython.version import get_requested_versions, Version
 from dhpython.tools import memoize
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('dhpython')
 
 PYDIST_RE = re.compile(r"""
     (?P<name>[A-Za-z][A-Za-z0-9_.\-]*)             # Python distribution name
