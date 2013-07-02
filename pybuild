@@ -96,7 +96,7 @@ def main(cfg):
     versions = cfg.versions
     if not versions:
         versions = list(reversed(get_requested_versions('cpython3',
-                                                        available=True))))
+                                                        available=True)))
     versions = [Version(v) for v in versions]
 
     def get_option(name, interpreter=None, version=None, default=None):
