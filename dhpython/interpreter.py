@@ -262,7 +262,11 @@ class Interpreter:
         """Return version assigned to site-packages path."""
         match = PUBLIC_DIR_RE[self.impl].match(path)
         if match:
-            return Version(match.groups(0))
+            vers = match.groups(0)
+            if vers:
+                return Version(vers)
+            # PyPy is not versioned
+            return default(self.impl)
 
     def should_ignore(self, path):
         """Return True if path is used by another interpreter implementation."""
@@ -438,4 +442,4 @@ class Interpreter:
 
 # due to circular imports issue
 from dhpython.tools import execute
-from dhpython.version import Version
+from dhpython.version import Version, default
