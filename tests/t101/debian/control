@@ -1,0 +1,13 @@
+Source: foo
+Section: python
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper (>= 7.0.50~)
+# , dh-python
+Standards-Version: 3.9.4
+
+Package: pypy-foo
+Architecture: all
+Depends: ${pypy3:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: package with public PyPy modules
+ exemple package #1

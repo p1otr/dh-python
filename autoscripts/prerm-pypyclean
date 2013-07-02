@@ -1,0 +1,6 @@
+if which pypyclean >/dev/null 2>&1; then
+	pypyclean -p #PACKAGE# #ARGS#
+else
+	dpkg -L #PACKAGE# | grep '\.py$' | sed -r 's,/([^/]*).py$,/__pycache__/\1\.*,' | xargs rm
+	find /usr/lib/pypy/dist-packages/ -type d -name __pycache__ -empty | xargs rmdir
+fi

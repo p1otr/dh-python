@@ -4,6 +4,8 @@ export DEBPYTHON_DEFAULT ?= $(shell python3 ../../dhpython/_defaults.py default 
 export DEBPYTHON_SUPPORTED ?= $(shell python3 ../../dhpython/_defaults.py supported cpython2)
 export DEBPYTHON3_DEFAULT ?= $(shell python3 ../../dhpython/_defaults.py default cpython3)
 export DEBPYTHON3_SUPPORTED ?= $(shell python3 ../../dhpython/_defaults.py supported cpython3)
+export DEBPYPY_DEFAULT ?= $(shell python3 ../../dhpython/_defaults.py default pypy)
+export DEBPYPY_SUPPORTED ?= $(shell python3 ../../dhpython/_defaults.py supported pypy)
 
 all: run check
 

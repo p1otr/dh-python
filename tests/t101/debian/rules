@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_install:
+	dh_install
+	DH_VERBOSE=1 ../../dh_pypy
+
+override_dh_auto_build:
+override_dh_auto_test:
+
+override_dh_auto_install:
+	mkdir -p debian/pypy-foo/usr/lib/pypy/site-packages/__pycache__
+	echo "print('foo')" > debian/pypy-foo/usr/lib/pypy/site-packages/foo.py
+	touch debian/pypy-foo/usr/lib/pypy/site-packages/__pycache__/foo.pypy-20.pyc
+
+override_dh_auto_clean:
