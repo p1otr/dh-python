@@ -11,3 +11,4 @@ pydist/cache/
 *\.debhelper
 *\.substvars
 */*/debian/files
+debian/files
