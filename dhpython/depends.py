@@ -38,6 +38,9 @@ class Dependencies:
             self.ipkg_tpl = 'python3-dbg' if dbgpkg else 'python3'
         elif impl == 'cpython2':
             self.ipkg_tpl = 'python-dbg' if dbgpkg else 'python'
+        elif impl == 'pypy':
+            self.ipkg_tpl = 'pypy-dbg' if dbgpkg else 'pypy'
+            self.ipkg_vtpl = 'pypy%s-dbg' if dbgpkg else 'pypy%s'
         self.depends = set()
         self.recommends = []
         self.suggests = []
