@@ -135,11 +135,11 @@ sub pybuild_commands {
 			}
 		}
 		if ($this->{py3def}) {
-			if (not $pyall and grep {$_ eq 'python3' or $_ eq 'python3-dev'} @deps) {
+			if (not $py3all and grep {$_ eq 'python3' or $_ eq 'python3-dev'} @deps) {
  				# TODO: "python3" case: should X-Python3-Version header in debian/control be also required here?
 				push @result, "pybuild --$step -i $i -p '$this->{py3def}' @options";
 			}
-			if (not $pyalldbg and grep {$_ eq 'python3-dbg'} @deps) {
+			if (not $py3alldbg and grep {$_ eq 'python3-dbg'} @deps) {
 				push @result, "pybuild --$step -i $i-dbg -p '$this->{py3def}' @options";
 			}
 		}
