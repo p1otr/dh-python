@@ -28,7 +28,6 @@ import sys
 from optparse import OptionParser, SUPPRESS_HELP
 from os.path import exists, join
 from shutil import copy as fcopy
-sys.path.insert(1, '/usr/share/dh-python/')
 from dhpython.debhelper import DebHelper
 from dhpython.depends import Dependencies
 from dhpython.interpreter import Interpreter, EXTFILE_RE

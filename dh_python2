@@ -29,7 +29,6 @@ from filecmp import dircmp, cmpfiles, cmp as fcmp
 from optparse import OptionParser, SUPPRESS_HELP
 from os.path import isabs, isdir, islink, exists, join, normpath, realpath
 from shutil import copy as fcopy
-sys.path.insert(1, '/usr/share/dh-python/')
 from dhpython.debhelper import DebHelper
 from dhpython.depends import Dependencies
 from dhpython.interpreter import Interpreter

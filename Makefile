@@ -24,14 +24,14 @@ install:
 		$(DESTDIR)$(PREFIX)/share/dh-python/dhpython/build
 	$(INSTALL) -m 644 dhpython/*.py $(DESTDIR)$(PREFIX)/share/dh-python/dhpython/
 	$(INSTALL) -m 644 dhpython/build/*.py $(DESTDIR)$(PREFIX)/share/dh-python/dhpython/build/
-	$(INSTALL) -m 755 pybuild $(DESTDIR)$(PREFIX)/bin/
+	$(INSTALL) -m 755 pybuild $(DESTDIR)$(PREFIX)/share/dh-python/
 	$(INSTALL) -m 755 dh_pypy $(DESTDIR)$(PREFIX)/share/dh-python/
-	$(INSTALL) -m 755 dh_python2 $(DESTDIR)$(PREFIX)/bin/
-	$(INSTALL) -m 755 dh_python3 $(DESTDIR)$(PREFIX)/bin/
-	sed -i -e 's/DEVELV/$(DVERSION)/' $(DESTDIR)$(PREFIX)/bin/pybuild
+	$(INSTALL) -m 755 dh_python2 $(DESTDIR)$(PREFIX)/share/dh-python/
+	$(INSTALL) -m 755 dh_python3 $(DESTDIR)$(PREFIX)/share/dh-python/
+	sed -i -e 's/DEVELV/$(DVERSION)/' $(DESTDIR)$(PREFIX)/share/dh-python/pybuild
 	sed -i -e 's/DEVELV/$(DVERSION)/' $(DESTDIR)$(PREFIX)/share/dh-python/dh_pypy
-	sed -i -e 's/DEVELV/$(DVERSION)/' $(DESTDIR)$(PREFIX)/bin/dh_python2
-	sed -i -e 's/DEVELV/$(DVERSION)/' $(DESTDIR)$(PREFIX)/bin/dh_python3
+	sed -i -e 's/DEVELV/$(DVERSION)/' $(DESTDIR)$(PREFIX)/share/dh-python/dh_python2
+	sed -i -e 's/DEVELV/$(DVERSION)/' $(DESTDIR)$(PREFIX)/share/dh-python/dh_python3
 	
 	$(INSTALL) -m 644 dh/pybuild.pm $(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Buildsystem/
 	$(INSTALL) -m 644 dh/pypy.pm $(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Sequence/

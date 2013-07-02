@@ -33,11 +33,7 @@ log = logging.getLogger('dhpython')
 
 def main(cfg):
     log.debug('cfg: %s', cfg)
-    try:
-        from dhpython import build
-    except ImportError:
-        sys.path.append('/usr/share/dh-python/')
-        from dhpython import build  # NOQA
+    from dhpython import build
     from dhpython.version import Version, get_requested_versions
     from dhpython.tools import execute, move_matching_files
 
