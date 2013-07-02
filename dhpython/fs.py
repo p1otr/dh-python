@@ -92,8 +92,8 @@ def share_files(srcdir, dstdir, interpreter):
 
 
 class Scan:
-    UNWANTED_DIRS = re.compile('.*/__pycache__/.*')
-    UNWANTED_FILES = re.compile('.*\.py[co]')
+    UNWANTED_DIRS = re.compile(r'.*/__pycache__(/.*)?$')
+    UNWANTED_FILES = re.compile(r'.*\.py[co]$')
 
     def __init__(self, interpreter, package, dpath=None, options=None):
         self.interpreter = interpreter
