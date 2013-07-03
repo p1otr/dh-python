@@ -38,6 +38,7 @@ SHEBANG_RE = re.compile(r'''
     ''', re.VERBOSE)
 EXTFILE_RE = re.compile(r'''
     (?P<name>.*?)
+    (?P<debug>_d)?
     (?:\.
         (?P<stableabi>abi\d+)
      |(?:\.
@@ -45,14 +46,13 @@ EXTFILE_RE = re.compile(r'''
             (?P<impl>cpython|pypy)
             -
             (?P<ver>\d{2})
-            (?P<flags>[a-z]*?)
+            (?P<flags>[a-z]*)
         )?
         (?:
             (?:(?<!\.)-)?  # minus sign only if soabi is defined
             (?P<multiarch>[^/]*?)
         )?
     ))?
-    (?P<debug>_d)?
     \.so$''', re.VERBOSE)
 log = logging.getLogger('dhpython')
 
@@ -331,7 +331,7 @@ class Interpreter:
             soabi, multiarch = self._get_config(version)
         except Exception:
             log.debug('cannot get multiarch', exc_info=True)
-            # interpreter without multiach support
+            # interpreter without multiarch support
             return ''
         return multiarch
 
@@ -371,30 +371,36 @@ class Interpreter:
         if info['stableabi']:
             # files with stable ABI in name don't need changes
             return
+        if info['debug'] and self.debug is False:
+            # do not change Python 2.X extensions already marked as debug
+            # (the other way arround is acceptable)
+            return
 
-        i = Interpreter(self, version=version)
-        if info['ver']:
-            i.version = "{}.{}".format(info['ver'][0], info['ver'][1])
-        if not i.debug and (info['debug'] or 'd' in (info['flags'] or '')):
-            i.debug = True
         try:
-            soabi, multiarch = i._get_config()
+            soabi, multiarch = self._get_config(version)
         except Exception:
             log.debug('cannot get soabi/multiarch', exc_info=True)
             return
-        result = info['name']
-        if i.impl == 'cpython3' and i.version >> '3.2' and result.endswith('module'):
-            result = result[:-6]
-        if info['soabi'] or soabi:
-            result = "{}.{}".format(result, info['soabi'] or soabi)
-            if info['multiarch'] or multiarch:
-                result = "{}-{}".format(result, info['multiarch'] or multiarch)
-        # uncomment next two lines to enable multiarch renaming in Python 2.7
-        #elif i.impl == 'cpython2' and i.version == '2.7':
-        #    result = "{}.{}".format(result, info['multiarch'] or multiarch)
 
-        if self.debug and self.impl == 'cpython2':
+        if info['soabi'] and soabi and info['soabi'] != soabi:
+            return
+
+        tmp_soabi = info['soabi'] or soabi
+        tmp_multiarch = info['multiarch'] or multiarch
+
+        result = info['name']
+        if self.impl == 'cpython3' and version >> '3.2' and result.endswith('module'):
+            result = result[:-6]
+        elif self.debug and self.impl == 'cpython2':
             result += '_d'
+
+        if tmp_soabi:
+            result = "{}.{}".format(result, tmp_soabi)
+            if tmp_multiarch:
+                result = "{}-{}".format(result, tmp_multiarch)
+        elif self.impl == 'cpython2' and version == '2.7':
+            result = "{}.{}".format(result, tmp_multiarch)
+
         result += '.so'
         if fname == result:
             return
