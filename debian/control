@@ -2,10 +2,14 @@ Source: dh-python
 Section: python
 Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
-Build-Depends: debhelper (>= 9), python3-minimal
+Build-Depends: debhelper (>= 9), python3-minimal,
+# TODO: replace next line with libpython3-stdlib once it's available:
+ libpython3.3-stdlib, python3.2,
+# provides rst2man command:
+ python-docutils
 Standards-Version: 3.9.4
 Vcs-Git: git://anonscm.debian.org/users/piotr/dh-python.git
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/piotr/dh-python.git;a=summary
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/piotr/dh-python.git
 X-Python3-Version: >= 3.2
 
 Package: dh-python
