@@ -14,3 +14,7 @@ override_dh_pysupport:
 		--recommends Mako\
 		--suggests 'Foo >= 0.1rc2'\
 		--suggests 'bar >= 1.0'
+
+clean:
+	dh_clean
+	rm -rf build

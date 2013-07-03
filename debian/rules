@@ -3,6 +3,10 @@
 %:
 	dh $@
 
+clean:
+	make clean
+	dh_clean
+
 override_dh_auto_test:
 	# FIXME
 

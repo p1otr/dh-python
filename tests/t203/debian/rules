@@ -28,3 +28,6 @@ override_dh_pysupport:
 		/usr/lib/python${DPY}/dist-packages/foo/quux.so
 	# ... and complex multiple symlinks
 	DH_VERBOSE=1 ../../dh_python2
+
+clean:
+	dh_clean
