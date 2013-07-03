@@ -391,8 +391,7 @@ def main():
                 options.arch is True and pdetails['arch'] == 'all':
             continue
         log.debug('processing package %s...', package)
-        if package.endswith('-dbg'):
-            interpreter.debug = True
+        interpreter.debug = package.endswith('-dbg')
 
         if not private_dir:
             try:

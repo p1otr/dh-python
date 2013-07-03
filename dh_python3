@@ -155,14 +155,13 @@ def main():
     if not options.vrange and dh.python_version:
         options.vrange = VersionRange(dh.python_version)
 
-    interpreter = Interpreter('python')
+    interpreter = Interpreter('python3')
     for package, pdetails in dh.packages.items():
         if options.arch is False and pdetails['arch'] != 'all' or \
                 options.arch is True and pdetails['arch'] == 'all':
             continue
         log.debug('processing package %s...', package)
-        if package.endswith('-dbg'):
-            interpreter.debug = True
+        interpreter.debug = package.endswith('-dbg')
 
         if not private_dir:
             fix_locations(package, interpreter, SUPPORTED)
