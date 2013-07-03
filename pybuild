@@ -406,7 +406,7 @@ if __name__ == '__main__':
     elif cfg.verbose:
         log.setLevel(logging.DEBUG)
     else:
-        log.setLevel(logging.WARNING)
+        log.setLevel(logging.INFO)
     log.debug(sys.argv)
     main(cfg)
     # let dh/cdbs clean the .pybuild dir
