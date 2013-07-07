@@ -27,7 +27,7 @@ override_dh_pysupport:
 	dh_link /usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0 \
 		/usr/lib/python${DPY}/dist-packages/foo/quux.so
 	# ... and complex multiple symlinks
-	DH_VERBOSE=1 ../../dh_python2
+	DH_VERBOSE=1 DEB_HOST_MULTIARCH=my_multiarch-triplet ../../dh_python2
 
 clean:
 	dh_clean
