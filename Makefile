@@ -49,7 +49,8 @@ dist_fallback:
 
 # TESTS
 nose:
-	nosetests3 --verbose --with-doctest --with-coverage
+	#nosetests3 --verbose --with-doctest --with-coverage
+	nosetests3 --verbose --with-doctest
 
 tests: nose
 	make -C tests
