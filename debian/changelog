@@ -1,5 +1,5 @@
-dh-python (1.0~b1-1) unstable; urgency=low
+dh-python (1.0~b1-1) experimental; urgency=low
 
   * Initial release.
 
- -- Piotr Ożarowski <piotr@debian.org>  Sat, 18 May 2013 21:17:39 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 07 Jul 2013 21:47:50 +0200
