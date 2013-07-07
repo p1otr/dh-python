@@ -2,6 +2,7 @@ Source: dh-python
 Section: python
 Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
+Uploaders: Stefano Rivera <stefanor@debian.org>
 Build-Depends: debhelper (>= 9), python3-minimal,
 # TODO: replace next line with libpython3-stdlib once it's available:
  libpython3.3-stdlib, python3.2,
