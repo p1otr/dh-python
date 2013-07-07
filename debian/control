@@ -26,3 +26,5 @@ Description: Debian helper tools for packaging Python libraries and applications
     adds maintainer scripts to byte compile files, etc.
   * dh_python3 - calculates Python 3.X dependencies for Debian packages,
     adds maintainer scripts to byte compile files, etc.
+  * dh_pypy - calculates PyPy dependencies for Debian packages,
+    adds maintainer scripts to byte compile files, etc.
