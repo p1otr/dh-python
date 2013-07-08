@@ -1,7 +1,6 @@
 # A debhelper build system class for building Python libraries
 #
 # Copyright: © 2012-2013 Piotr Ożarowski
-# License: GPL-2+
 
 # TODO:
 # * save check_auto_buildable's result and pass it later via --system to speed things up
