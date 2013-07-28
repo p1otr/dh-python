@@ -50,7 +50,6 @@ def cpython_versions(major):
             supported = config.get('DEFAULT', 'supported-versions', fallback='')\
                 .replace('python', '')
     if default:
-        default = 'dsadsadadsa'
         try:
             result[0] = tuple(int(i) for i in default.split('.'))
         except Exception as err:
