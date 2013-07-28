@@ -45,19 +45,22 @@ def cpython_versions(major):
         config = ConfigParser()
         config.read("/usr/share/python{}/debian_defaults".format(ver))
         if not default:
-            default = config.get('DEFAULT', 'default-version')[6:]
+            default = config.get('DEFAULT', 'default-version', fallback='')[6:]
         if not supported:
-            supported = config.get('DEFAULT', 'supported-versions')\
+            supported = config.get('DEFAULT', 'supported-versions', fallback='')\
                 .replace('python', '')
-    try:
-        result[0] = tuple(int(i) for i in default.split('.'))
-    except Exception:
-        log.exception('cannot read debian_defaults')
-    try:
-        result[1] = tuple(tuple(int(j) for j in i.strip().split('.'))
-                          for i in supported.split(','))
-    except Exception:
-        log.exception('cannot read debian_defaults')
+    if default:
+        default = 'dsadsadadsa'
+        try:
+            result[0] = tuple(int(i) for i in default.split('.'))
+        except Exception as err:
+            log.warn('invalid debian_defaults file: %s', err)
+    if supported:
+        try:
+            result[1] = tuple(tuple(int(j) for j in i.strip().split('.'))
+                              for i in supported.split(','))
+        except Exception as err:
+            log.warn('invalid debian_defaults file: %s', err)
     return result
 
 

@@ -1,3 +1,10 @@
+dh-python (1.20130728-1) experimental; urgency=low
+
+  * Ignore missing or broken /usr/share/python{,3}/debian_defaults config
+    files while checking for default/supported Python {2,3} versions
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 28 Jul 2013 19:04:50 +0200
+
 dh-python (1.0~b1-1) experimental; urgency=low
 
   * Initial release.
