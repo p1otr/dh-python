@@ -77,8 +77,10 @@ def share_files(srcdir, dstdir, interpreter):
                 else:
                     log.warn('renaming %s to %s', fpath1_orig, fpath1)
                     os.renames(fpath1_orig, fpath1)
+                    i = new_name
         fpath2 = join(dstdir, i)
-        if not exists(fpath2):
+        if not isdir(fpath1) and not exists(fpath2):
+            # do not rename directories here - all .so files have to be renamed first
             os.renames(fpath1, fpath2)
             continue
         if isdir(fpath1):

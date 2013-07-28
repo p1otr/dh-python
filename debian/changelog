@@ -2,6 +2,8 @@ dh-python (1.20130728-1) experimental; urgency=low
 
   * Ignore missing or broken /usr/share/python{,3}/debian_defaults config
     files while checking for default/supported Python {2,3} versions
+  * dh_python3: fix renaming (tagging) non-default public extensions that were
+    not installed directly in dist-packages/ (../dist-packages/foo/bar.so, etc.)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 28 Jul 2013 19:04:50 +0200
 
