@@ -18,8 +18,8 @@ Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}
 Breaks:
 # due to /usr/bin/dh_python3 and debhelper files
- python3 (<< 3.3.2-10~)
-Replaces: python3 (<< 3.3.2-10~)
+ python3 (<< 3.3.2-4~)
+Replaces: python3 (<< 3.3.2-4~)
 Description: Debian helper tools for packaging Python libraries and applications
  This package contains:
   * pybuild - invokes various build systems for requested Python versions in

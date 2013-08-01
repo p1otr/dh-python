@@ -1,11 +1,12 @@
-dh-python (1.20130728-1) experimental; urgency=low
+dh-python (1.20130728-1) unstable; urgency=low
 
+  * Upload to unstable, breaks/replaces python3 << 3.3.2-4~
   * Ignore missing or broken /usr/share/python{,3}/debian_defaults config
     files while checking for default/supported Python {2,3} versions
   * dh_python3: fix renaming (tagging) non-default public extensions that were
     not installed directly in dist-packages/ (../dist-packages/foo/bar.so, etc.)
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 28 Jul 2013 19:04:50 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Wed, 31 Jul 2013 22:13:05 +0200
 
 dh-python (1.0~b1-1) experimental; urgency=low
 
