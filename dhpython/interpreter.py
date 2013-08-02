@@ -398,7 +398,7 @@ class Interpreter:
             result = "{}.{}".format(result, tmp_soabi)
             if tmp_multiarch:
                 result = "{}-{}".format(result, tmp_multiarch)
-        elif self.impl == 'cpython2' and version == '2.7':
+        elif self.impl == 'cpython2' and version == '2.7' and tmp_multiarch:
             result = "{}.{}".format(result, tmp_multiarch)
 
         result += '.so'
