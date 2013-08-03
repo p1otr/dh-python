@@ -1,3 +1,10 @@
+dh-python (1.20130803-1) UNRELEASED; urgency=low
+
+  * dh_python3: do not add multiarch triplets in python3.2's extensions -
+    mutliarch support was disabled in this interpreter
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 03 Aug 2013 12:41:15 +0200
+
 dh-python (1.20130728-1) unstable; urgency=low
 
   * Upload to unstable, breaks/replaces python3 << 3.3.2-4~

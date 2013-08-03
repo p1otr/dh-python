@@ -77,21 +77,21 @@ class TestInterpreter(unittest.TestCase):
     def test_python32(self):
         i = Interpreter('python3.2')
         self.assertEqual(i.soabi(), 'cpython-32mu')
-        self.assertEqual(i.check_extname('foo.so'), r'foo.cpython-32mu-MYARCH.so')
+        self.assertEqual(i.check_extname('foo.so'), r'foo.cpython-32mu.so')
         self.assertIsNone(i.check_extname('foo.cpython-33m.so'))  # different version
         self.assertIsNone(i.check_extname('foo.cpython-32mu-OTHER.so'))  # different architecture
         self.assertIsNone(i.check_extname('foo.abi3.so'))
-        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/bazmodule.cpython-32mu-MYARCH.so')
+        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/bazmodule.cpython-32mu.so')
 
     @unittest.skipUnless(exists('/usr/bin/python3.2-dbg'), 'python3.2-dbg is not installed')
     def test_python32dbg(self):
         i = Interpreter('python3.2-dbg')
         self.assertEqual(i.soabi(), 'cpython-32dmu')
-        self.assertEqual(i.check_extname('foo.so'), r'foo.cpython-32dmu-MYARCH.so')
+        self.assertEqual(i.check_extname('foo.so'), r'foo.cpython-32dmu.so')
         self.assertIsNone(i.check_extname('foo.cpython-33m.so'))  # different version
         self.assertIsNone(i.check_extname('foo.cpython-32dmu-OTHER.so'))  # different architecture
         self.assertIsNone(i.check_extname('foo.abi3.so'))
-        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/bazmodule.cpython-32dmu-MYARCH.so')
+        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/bazmodule.cpython-32dmu.so')
 
     @unittest.skipUnless(exists('/usr/bin/python3.3'), 'python3.3 is not installed')
     def test_python33(self):
