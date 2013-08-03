@@ -375,6 +375,9 @@ class Interpreter:
             # do not change Python 2.X extensions already marked as debug
             # (the other way arround is acceptable)
             return
+        if info['soabi'] and info['multiarch']:
+            # already tagged, nothing we can do here
+            return
 
         try:
             soabi, multiarch = self._get_config(version)
