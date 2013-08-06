@@ -146,7 +146,7 @@ disable examples
 
 DEBHELPER COMMAND SEQUENCER INTEGRATION
 =======================================
-* build depend on python3 (>= 3.3.0-2)
+* build depend on dh-python
 * add "--buildsystem=pybuild" to dh's arguments in debian/rules
 * if more than one binary package is build:
   add debian/python-foo.install files, or
