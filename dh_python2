@@ -353,7 +353,7 @@ def main():
         else:
             if re.search('\n\s*dh_pydeb', rules) or \
                     re.search('\n\s*dh\s+[^#]*--with[^#]+pydeb', rules):
-                log.warning('dh_pydeb detected, PyDist feature disabled')
+                log.info('dh_pydeb detected, PyDist feature disabled')
                 options.guess_deps = False
 
     if not args:
@@ -369,6 +369,7 @@ def main():
 
     if options.verbose or os.environ.get('DH_VERBOSE') == '1':
         log.setLevel(logging.DEBUG)
+        log.debug('version: %s', parser.get_version().split(' ', 1)[-1])
         log.debug('argv: %s', sys.argv)
         log.debug('options: %s', options)
         log.debug('args: %s', args)

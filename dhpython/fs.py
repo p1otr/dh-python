@@ -75,7 +75,7 @@ def share_files(srcdir, dstdir, interpreter):
                     log.warn('destination file exist, '
                              'cannot rename %s to %s', fpath1_orig, fpath1)
                 else:
-                    log.warn('renaming %s to %s', fpath1_orig, fpath1)
+                    log.info('renaming %s to %s', fpath1_orig, fpath1)
                     os.renames(fpath1_orig, fpath1)
                     i = new_name
         fpath2 = join(dstdir, i)
@@ -275,7 +275,7 @@ class Scan:
                 log.warn('destination file exist, '
                          'cannot rename %s to %s', fname, new_fn)
             else:
-                log.warn('renaming %s to %s', fname, new_fn)
+                log.info('renaming %s to %s', fname, new_fn)
                 os.rename(fpath, new_fpath)
             return new_fpath
         return fpath
