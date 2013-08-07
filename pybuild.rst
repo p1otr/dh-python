@@ -174,6 +174,12 @@ debian/rules file example::
  %:
   	dh $@ --with python2,python3 --buildsystem=pybuild
 
+overriding test command example::
+
+ override_dh_auto_test:
+ 	PYBUILD_SYSTEM=custom \
+ 	PYBUILD_TEST_ARGS="nosetests --with-doctest {build_dir}/" dh_auto_test
+
 SEE ALSO
 ========
 * dh_python2(1)
