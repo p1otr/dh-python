@@ -46,6 +46,12 @@ def main(cfg):
     if 'DEB_BUILD_OPTIONS' in environ:
         nocheck = 'nocheck' in environ['DEB_BUILD_OPTIONS']
 
+    env = environ.copy()
+    if 'LC_ALL' not in env:
+        env['LC_ALL'] = 'C.UTF-8'
+    if 'http_proxy' not in env:
+        env['http_proxy'] = 'http://127.0.0.1:9/'
+
     if cfg.system:
         certainty = 99
         Plugin = build.plugins.get(cfg.system)
@@ -53,7 +59,7 @@ def main(cfg):
             log.error('unrecognized build system: %s', cfg.system)
             exit(10)
         plugin = Plugin(cfg)
-        context = {'ENV': environ.copy(), 'args': {}, 'dir': cfg.dir}
+        context = {'ENV': env, 'args': {}, 'dir': cfg.dir}
     else:
         plugin, certainty, context = None, 0, None
         for Plugin in build.plugins.values():
@@ -63,11 +69,6 @@ def main(cfg):
                 log.warn('cannot initialize %s plugin: %s', Plugin.NAME,
                          err, exc_info=cfg.verbose)
                 continue
-            env = environ.copy()
-            if 'LC_ALL' not in env:
-                env['LC_ALL'] = 'C.UTF-8'
-            if 'http_proxy' not in env:
-                env['http_proxy'] = 'http://127.0.0.1:9/'
             tmp_context = {'ENV': env, 'args': {}, 'dir': cfg.dir}
             tmp_certainty = tmp_plugin.detect(tmp_context)
             if tmp_certainty and tmp_certainty > certainty:
