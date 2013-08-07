@@ -42,6 +42,9 @@ install:
 %.1: %.rst
 	rst2man $< > $@
 
+%.htm: %.rst
+	rst2html $< > $@
+
 manpages: $(MANPAGES)
 
 dist_fallback:
