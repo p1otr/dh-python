@@ -133,7 +133,7 @@ class Base:
         raise NotImplementedError("build method not implemented in %s" % self.NAME)
 
     def test(self, context, args):
-        if args['version'] == '2.7' or args['version'] >> '3.1':
+        if args['version'] == '2.7' or args['version'] >> '3.1' or args['interpreter'] == 'pypy':
             return 'cd {build_dir}; {interpreter} -m unittest discover -v {args}'
 
     def execute(self, context, args, command, log_file=None):
