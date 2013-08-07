@@ -27,20 +27,20 @@ class BuildSystem(Base):
 
     @shell_command
     def clean(self, context, args):
-        return self.cfg.clean_args
+        return args['args']
 
     @shell_command
     def configure(self, context, args):
-        return self.cfg.configure_args
+        return args['args']
 
     @shell_command
     def build(self, context, args):
-        return self.cfg.build_args
+        return args['args']
 
     @shell_command
     def install(self, context, args):
-        return self.cfg.install_args
+        return args['args']
 
     @shell_command
     def test(self, context, args):
-        return self.cfg.test_args or super(BuildSystem, self).test(context, args)
+        return args['args'] or super(BuildSystem, self).test(context, args)
