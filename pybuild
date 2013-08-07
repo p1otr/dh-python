@@ -354,6 +354,15 @@ def parse_args(argv):
     arguments.add_argument('--after-test', metavar='CMD',
                            help='invoked after the test command')
 
+    tests = parser.add_argument_group('TESTS', '''\
+        unittest\'s discover is used by default (if available)''')
+    tests.add_argument('--test-nose', action='store_true',
+                       default=environ.get('PYBUILD_TEST_NOSE') == '1',
+                       help='use nose module in --test step')
+    tests.add_argument('--test-py-test', action='store_true',
+                       default=environ.get('PYBUILD_TEST_PY_TEST') == '1',
+                       help='use py.test module in --test step')
+
     dirs = parser.add_argument_group('DIRECTORIES')
     dirs.add_argument('-d', '--dir', action='store', metavar='DIR',
                       default=getcwd(),

@@ -52,6 +52,18 @@ ACTION
     --list-systems
         list available build systems and exit
 
+TESTS
+-----
+    unittest's discover from standard library (available in Python 2.7 and
+    >= 3.2) is used in test step by default.
+
+    --test-nose
+        use nose module in test step, remember to add python-nose and/or
+        python3-nose to Build-Depends
+    --test-pytest
+        use pytest module in test step, remember to add python-pytest and/or
+        python3-pytest to Build-Depends
+
 BUILD SYSTEM ARGUMENTS
 ----------------------
   Additional arguments passed to the build system.

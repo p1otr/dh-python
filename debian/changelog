@@ -6,6 +6,8 @@ dh-python (1.20130807-1) unstable; urgency=low
   * pybuild:
     - rename PYBUILD_DEBUG env. var. to PYBUILD_VERBOSE
     - run `pypy -m unittest discover -v` in test target for pypy interpreter
+    - add --test-nose and --test-pytest options (can be enabled also via
+      PYBUILD_TEST_NOSE=1 or PYBUILD_TEST_PYTEST=1)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sat, 03 Aug 2013 12:41:15 +0200
 
