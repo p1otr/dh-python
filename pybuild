@@ -291,7 +291,7 @@ def parse_args(argv):
     usage = '%(prog)s [ACTION] [BUILD SYSTEM ARGS] [DIRECTORIES] [OPTIONS]'
     parser = argparse.ArgumentParser(usage=usage)
     parser.add_argument('-v', '--verbose', action='store_true',
-                        default=environ.get('PYBUILD_DEBUG') == '1',
+                        default=environ.get('PYBUILD_VERBOSE') == '1',
                         help='turn verbose mode on')
     parser.add_argument('-q', '--quiet', action='store_true',
                         default=environ.get('PYBUILD_QUIET') == '1',
