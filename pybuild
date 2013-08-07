@@ -91,8 +91,8 @@ def main(cfg):
     # reversed so that default Python version will be last
     versions = cfg.versions
     if not versions:
-        versions = list(reversed(get_requested_versions('cpython3',
-                                                        available=True)))
+        log.debug('defaulting to all supported Python 3.X versions')
+        versions = list(get_requested_versions('cpython3', available=True))
     versions = [Version(v) for v in versions]
 
     def get_option(name, interpreter=None, version=None, default=None):
