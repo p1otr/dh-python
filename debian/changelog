@@ -1,7 +1,7 @@
 dh-python (1.20130807-1) unstable; urgency=low
 
   * dh_python3: do not add multiarch triplets in python3.2's extensions -
-    mutliarch support was disabled in this interpreter
+    multiarch support was disabled in this interpreter
   * dh_pypy: fix prerm script to remove .pyc files (thanks to Jakub Wilk)
   * pybuild:
     - rename PYBUILD_DEBUG env. var. to PYBUILD_VERBOSE
