@@ -118,7 +118,8 @@ class Scan:
                        'public_vers': set(),
                        'private_dirs': {},
                        'compile': False,
-                       'ext_vers': set()}
+                       'ext_vers': set(),
+                       'ext_no_version': set()}
 
         for root, dirs, file_names in os.walk(self.proot):
             if interpreter.should_ignore(root):

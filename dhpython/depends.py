@@ -99,7 +99,9 @@ class Dependencies:
         vtpl = self.ipkg_vtpl
         vrange = options.vrange
 
-        if vrange:
+        if vrange and any((stats['compile'], stats['public_vers'],
+                          stats['ext_vers'], stats['ext_no_version'],
+                          stats['shebangs'])):
             minv = vrange.minver
             # note it's an open interval (i.e. do not add 1 here!):
             maxv = vrange.maxver
