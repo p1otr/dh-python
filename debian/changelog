@@ -2,6 +2,9 @@ dh-python (1.20130809-1) UNRELEASED; urgency=low
 
   * Do not translate X-Python{,3}-Version into Depends if there are no Python
     files in the package
+  * pybuild's distutils build plugin: set --root only in install step.
+    dh doesn't pass DESTDIR in other steps and hence files for single binary
+    packages ended in debian/tmp by default (closes: 719434)
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Aug 2013 15:55:11 +0200
 

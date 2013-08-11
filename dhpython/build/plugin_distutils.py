@@ -47,8 +47,7 @@ def create_pydistutils_cfg(func):
                                'build-lib={}\n'.format(args['build_dir']),
                                '[install]\n',
                                'install-layout=deb\n',
-                               'install-lib={}\n'.format(args['install_dir']),
-                               'root={}\n'.format(args['destdir'])])
+                               'install-lib={}\n'.format(args['install_dir'])])
         context['ENV']['HOME'] = args['home_dir']
         return func(self, context, args, *oargs, **kwargs)
 
@@ -97,7 +96,7 @@ class BuildSystem(Base):
     @shell_command
     @create_pydistutils_cfg
     def install(self, context, args):
-        return '{interpreter} {setup_py} install {args}'
+        return '{interpreter} {setup_py} install --root {destdir} {args}'
 
     @shell_command
     @create_pydistutils_cfg
