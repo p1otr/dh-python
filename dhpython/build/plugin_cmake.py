@@ -50,7 +50,7 @@ class BuildSystem(Base):
     def install(self, context, args):
         return ('dh_auto_install --buildsystem=cmake'
                 ' --builddirectory="{build_dir}"'
-                ' --destdir="{dest_dir}"'
+                ' --destdir="{destdir}"'
                 ' -- {args}')
 
     @shell_command
