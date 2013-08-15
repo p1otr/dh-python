@@ -78,6 +78,7 @@ sub clean {
 		$this->doit_in_sourcedir($command);
 	}
 	$this->doit_in_sourcedir('rm', '-rf', '.pybuild/');
+	$this->doit_in_sourcedir('find', '.', '-name', '*.pyc', '-exec', 'rm', '{}', ';');
 }
 
 sub pybuild_commands {
