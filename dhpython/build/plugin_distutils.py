@@ -101,9 +101,10 @@ class BuildSystem(Base):
     @shell_command
     @create_pydistutils_cfg
     def test(self, context, args):
-        fpath = join(args['dir'], args['setup_py'])
-        with open(fpath) as fp:
-            if fp.read().find('test_suite') > 0:
-                # TODO: is that enough to detect if test target is available?
-                return '{interpreter} {setup_py} test {args}'
+        if not self.cfg.custom_tests:
+            fpath = join(args['dir'], args['setup_py'])
+            with open(fpath) as fp:
+                if fp.read().find('test_suite') > 0:
+                    # TODO: is that enough to detect if test target is available?
+                    return '{interpreter} {setup_py} test {args}'
         return super(BuildSystem, self).test(context, args)

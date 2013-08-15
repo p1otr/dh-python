@@ -405,6 +405,12 @@ def parse_args(argv):
         for version in args.versions:
             versions.extend(version.split())
         args.versions = versions
+
+    if args.test_nose or args.test_pytest or args.system == 'custom':
+        args.custom_tests = True
+    else:
+        args.custom_tests = False
+
     return args
 
 

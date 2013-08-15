@@ -6,6 +6,8 @@ dh-python (1.20130809-1) UNRELEASED; urgency=low
     dh doesn't pass DESTDIR in other steps and hence files for single binary
     packages ended in debian/tmp by default (closes: 719434)
   * Fix typo in plugin_cmake.py (thanks to D. Barbier, closes: #719528)
+  * pybuild: --test-nose/--test-pytest have higher priority than setup.py's
+    test_suite now
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Aug 2013 15:55:11 +0200
 
