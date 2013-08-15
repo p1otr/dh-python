@@ -417,6 +417,7 @@ if __name__ == '__main__':
         log.setLevel(logging.DEBUG)
     else:
         log.setLevel(logging.INFO)
+    log.debug('version: DEVELV')
     log.debug(sys.argv)
     main(cfg)
     # let dh/cdbs clean the .pybuild dir

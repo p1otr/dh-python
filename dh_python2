@@ -369,7 +369,7 @@ def main():
 
     if options.verbose or os.environ.get('DH_VERBOSE') == '1':
         log.setLevel(logging.DEBUG)
-        log.debug('version: %s', parser.get_version().split(' ', 1)[-1])
+        log.debug('version: DEVELV')
         log.debug('argv: %s', sys.argv)
         log.debug('options: %s', options)
         log.debug('args: %s', args)
