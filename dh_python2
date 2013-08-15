@@ -458,13 +458,11 @@ def main():
                 # at least one extension's version not detected
                 if options.vrange and '-' not in str(options.vrange):
                     ver = str(options.vrange)
-                    dependencies.depend("python%s" % ver)
-                    args += " -V %s" % ver
                 else:  # try shebang or default Python version
                     ver = (list(i.version for i in details.get('shebangs', [])
                                 if i.version) or [None])[0] or DEFAULT
-                    dependencies.depend("python%s" % ver)
-                    args += " -V %s" % ver
+                dependencies.depend("python%s" % ver)
+                args += " -V %s" % ver
             else:
                 version = ext_for.pop()
                 args += " -V %s" % version
