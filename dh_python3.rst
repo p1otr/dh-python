@@ -42,10 +42,10 @@ dh_python3 tries to translate Python dependencies from requires.txt file to
 Debian dependencies. Use debian/py3dist-overrides or --no-guessing-deps option
 to override it if the guess is incorrect. If you want dh_python3 to generate
 more strict dependencies (f.e. to avoid ABI problems) create
-debian/python3-foo.pydist file. See /usr/share/doc/python3-doc/README.PyDist
-(provided by python3-doc package) for more information. If the pydist file
-contains PEP386 flag or set of (uscan like) rules, dh_python3 will make the
-depedency versioned (version requirements are ignored by default).
+debian/python3-foo.pydist file. See /usr/share/doc/dh-python/README.PyDist
+for more information. If the pydist file contains PEP386 flag or set of (uscan
+like) rules, dh_python3 will make the depedency versioned (version requirements
+are ignored by default).
 
 private dirs
 ~~~~~~~~~~~~
@@ -129,7 +129,7 @@ OPTIONS
 SEE ALSO
 ========
 * /usr/share/doc/python/python-policy.txt.gz
-* /usr/share/doc/python3-doc/README.PyDist (python3-doc package)
+* /usr/share/doc/dh-python/README.PyDist
 * py3compile(1), py3clean(1)
 * dh_python2(1), pycompile(1), pyclean(1)
 * http://deb.li/dhp3 - most recent version of this document

@@ -49,10 +49,10 @@ dh_python2 tries to translate Python dependencies from requires.txt file to
 Debian dependencies. Use debian/pydist-overrides or --no-guessing-deps option
 to override it if the guess is incorrect. If you want dh_python2 to generate
 more strict dependencies (f.e. to avoid ABI problems) create
-debian/python-foo.pydist file. See /usr/share/doc/python-doc/README.PyDist
-(provided by python-doc package) for more information. If the pydist file
-contains PEP386 flag or set of (uscan like) rules, dh_python2 will make the
-depedency versioned (version requirements are ignored by default).
+debian/python-foo.pydist file. See /usr/share/doc/dh-python/README.PyDist
+for more information. If the pydist file contains PEP386 flag or set of (uscan
+like) rules, dh_python2 will make the depedency versioned (version requirements
+are ignored by default).
 
 namespace feature
 ~~~~~~~~~~~~~~~~~
@@ -189,7 +189,7 @@ OPTIONS
 SEE ALSO
 ========
 * /usr/share/doc/python/python-policy.txt.gz
-* /usr/share/doc/python-doc/README.PyDist (python-doc package)
+* /usr/share/doc/dh-python/README.PyDist
 * pycompile(1), pyclean(1)
 * dh_python3(1), py3compile(1), py3clean(1)
 * Wiki page about converting package to dh_python2:

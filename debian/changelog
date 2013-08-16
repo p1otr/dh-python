@@ -10,6 +10,7 @@ dh-python (1.20130818-1) UNRELEASED; urgency=low
     test_suite now
   * pybuild.pm: remove .pyc files in clean target
   * pybuild: directory paths escaping fixed
+  * install README.PyDist file in dh-python package (closes: #698144)
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Aug 2013 15:55:11 +0200
 
