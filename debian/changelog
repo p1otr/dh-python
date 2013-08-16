@@ -1,4 +1,4 @@
-dh-python (1.20130809-1) UNRELEASED; urgency=low
+dh-python (1.20130818-1) UNRELEASED; urgency=low
 
   * Do not translate X-Python{,3}-Version into Depends if there are no Python
     files in the package
@@ -9,6 +9,7 @@ dh-python (1.20130809-1) UNRELEASED; urgency=low
   * pybuild: --test-nose/--test-pytest have higher priority than setup.py's
     test_suite now
   * pybuild.pm: remove .pyc files in clean target
+  * pybuild: directory paths escaping fixed
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Aug 2013 15:55:11 +0200
 

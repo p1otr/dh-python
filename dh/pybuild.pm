@@ -46,14 +46,14 @@ sub new {
 sub configure {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('configure', @_)) {
-		$this->doit_in_sourcedir($command);
+		$this->doit_in_sourcedir(@$command);
 	}
 }
 
 sub build {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('build', @_)) {
-		$this->doit_in_sourcedir($command);
+		$this->doit_in_sourcedir(@$command);
 	}
 }
 
@@ -61,21 +61,21 @@ sub install {
 	my $this=shift;
 	my $destdir=shift;
 	foreach my $command ($this->pybuild_commands('install', @_)) {
-		$this->doit_in_sourcedir("$command --dest-dir '$destdir'");
+		$this->doit_in_sourcedir(@$command, '--dest-dir', $destdir);
 	}
 }
 
 sub test {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('test', @_)) {
-		$this->doit_in_sourcedir($command);
+		$this->doit_in_sourcedir(@$command);
 	}
 }
 
 sub clean {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('clean', @_)) {
-		$this->doit_in_sourcedir($command);
+		$this->doit_in_sourcedir(@$command);
 	}
 	$this->doit_in_sourcedir('rm', '-rf', '.pybuild/');
 	$this->doit_in_sourcedir('find', '.', '-name', '*.pyc', '-exec', 'rm', '{}', ';');
@@ -106,19 +106,19 @@ sub pybuild_commands {
 		if ($this->{pyvers}) {
 			if (grep {$_ eq 'python-all' or $_ eq 'python-all-dev'} @deps) {
 				$pyall = 1;
-				push @result, "pybuild --$step -i $i -p '$this->{pyvers}' @options";
+				push @result, ['pybuild', "--$step", '-i', $i, '-p', $this->{pyvers}, @options];
 			}
 			if (grep {$_ eq 'python-all-dbg'} @deps) {
 				$pyalldbg = 1;
-				push @result, "pybuild --$step -i $i-dbg -p '$this->{pyvers}' @options";
+				push @result, ['pybuild', "--$step", '-i', "$i-dbg", '-p', $this->{pyvers}, @options];
 			}
 		}
 		if ($this->{pydef}) {
 			if (not $pyall and grep {$_ eq 'python' or $_ eq 'python-dev'} @deps) {
-				push @result, "pybuild --$step -i $i -p '$this->{pydef}' @options";
+				push @result, ['pybuild', "--$step", '-i', $i, '-p', $this->{pydef}, @options];
 			}
 			if (not $pyalldbg and grep {$_ eq 'python-dbg'} @deps) {
-				push @result, "pybuild --$step -i $i-dbg -p '$this->{pydef}' @options";
+				push @result, ['pybuild', "--$step", '-i', "$i-dbg", '-p', $this->{pydef}, @options];
 			}
 		}
 
@@ -127,27 +127,27 @@ sub pybuild_commands {
 			my $i = 'python{version}';
 			if (grep {$_ eq 'python3-all' or $_ eq 'python3-all-dev'} @deps) {
 				$py3all = 1;
-				push @result, "pybuild --$step -i $i -p '$this->{py3vers}' @options";
+				push @result, ['pybuild', "--$step", '-i', $i, '-p', $this->{py3vers}, @options];
 			}
 			if (grep {$_ eq 'python3-all-dbg'} @deps) {
 				$py3alldbg = 1;
-				push @result, "pybuild --$step -i $i-dbg -p'$this->{py3vers}' @options";
+				push @result, ['pybuild', "--$step", '-i', "$i-dbg", '-p', $this->{py3vers}, @options];
 			}
 		}
 		if ($this->{py3def}) {
 			if (not $py3all and grep {$_ eq 'python3' or $_ eq 'python3-dev'} @deps) {
  				# TODO: "python3" case: should X-Python3-Version header in debian/control be also required here?
-				push @result, "pybuild --$step -i $i -p '$this->{py3def}' @options";
+				push @result, ['pybuild', "--$step", '-i', $i, '-p', $this->{py3def}, @options];
 			}
 			if (not $py3alldbg and grep {$_ eq 'python3-dbg'} @deps) {
-				push @result, "pybuild --$step -i $i-dbg -p '$this->{py3def}' @options";
+				push @result, ['pybuild', "--$step", '-i', "$i-dbg", '-p', $this->{py3def}, @options];
 			}
 		}
 		# TODO: pythonX.Y → `pybuild -i python{version} -p X.Y`
 
 		# PyPy
 		if ($this->{pypydef} and grep {$_ eq 'pypy'} @deps) {
-			push @result, "pybuild --$step -i pypy -p '$this->{pypydef}' @options";
+			push @result, ['pybuild', "--$step", '-i', 'pypy', '-p', $this->{pypydef}, @options];
 		}
 	}
 	return @result;

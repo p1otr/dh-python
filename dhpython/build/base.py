@@ -26,6 +26,12 @@ from os.path import join
 from subprocess import Popen, PIPE
 from shutil import rmtree
 from dhpython.tools import execute
+try:
+    from shlex import quote
+except ImportError:
+    # shlex.quote is new in Python 3.3
+    def quote(s):
+        return ("'" + s.replace("'", "'\"'\"'") + "'") if "'" in s else s
 
 log = logging.getLogger('dhpython')
 
@@ -171,7 +177,11 @@ def shell_command(func):
         else:
             log_file = False
 
-        command = command.format(**args)
+        quoted_args = dict((k, quote(v)) if k in ('dir', 'destdir')
+                           or k.endswith('_dir') else (k, v)
+                           for k, v in args.items())
+        command = command.format(**quoted_args)
+
         output = self.execute(context, args, command, log_file)
         if output['returncode'] != 0:
             msg = 'exit code={}: {}'.format(output['returncode'], command)
