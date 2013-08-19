@@ -3,9 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
 Uploaders: Stefano Rivera <stefanor@debian.org>
-Build-Depends: debhelper (>= 9), python3-minimal,
-# TODO: replace next line with libpython3-stdlib once it's available:
- libpython3.3-stdlib, python3.2,
+Build-Depends: debhelper (>= 9), python3-minimal, libpython3-stdlib,
 # provides rst2man command:
  python-docutils
 Standards-Version: 3.9.4

@@ -1,4 +1,4 @@
-dh-python (1.20130818-1) UNRELEASED; urgency=low
+dh-python (1.20130819-1) unstable; urgency=low
 
   * Do not translate X-Python{,3}-Version into Depends if there are no Python
     files in the package
@@ -11,8 +11,10 @@ dh-python (1.20130818-1) UNRELEASED; urgency=low
   * pybuild.pm: remove .pyc files in clean target
   * pybuild: directory paths escaping fixed
   * install README.PyDist file in dh-python package (closes: #698144)
+  * Replace "libpython3.3-stdlib, python3.2" build depentency with
+    libpython3-stdlib (which is already in unstable)
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Aug 2013 15:55:11 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 19 Aug 2013 10:55:56 +0200
 
 dh-python (1.20130807-1) unstable; urgency=low
 
