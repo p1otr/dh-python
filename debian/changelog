@@ -1,3 +1,14 @@
+dh-python (1.20130819-1~bpo70+1) UNRELEASED; urgency=low
+
+  * Rebuild for wheezy-backports.
+  * Replace libpython3-stdlib build dependency with python3.2
+  * Update default/supported Python versions (in a fallback code,
+    if python_defaults missing)
+  * Use dpkg-divert to replace python3's dh_python3 and python's dh_python2
+    and drop Breaks/Replaces
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 22 Aug 2013 21:29:36 +0200
+
 dh-python (1.20130819-1) unstable; urgency=low
 
   * Do not translate X-Python{,3}-Version into Depends if there are no Python

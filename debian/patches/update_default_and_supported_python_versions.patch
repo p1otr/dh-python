@@ -1,0 +1,21 @@
+Description: update default/supported Python versions in fallback code
+Author: Piotr Ozarowski <piotr@debian.org>
+
+--- dh-python-1.20130819.orig/dhpython/_defaults.py
++++ dh-python-1.20130819/dhpython/_defaults.py
+@@ -25,12 +25,12 @@ from os import environ
+ from subprocess import Popen, PIPE
+ 
+ SUPPORTED = {
+-    'cpython2': [(2, 7)],
+-    'cpython3': [(3, 3)],
++    'cpython2': [(2, 7, 2, 6)],
++    'cpython3': [(3, 2)],
+     'pypy': [(2, 0)]}
+ DEFAULT = {
+     'cpython2': (2, 7),
+-    'cpython3': (3, 3),
++    'cpython3': (3, 2),
+     'pypy': (2, 0)}
+ 
+ log = logging.getLogger('dhpython')
