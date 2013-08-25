@@ -1,3 +1,11 @@
+dh-python (1.20130830-1) UNRELEASED; urgency=low
+
+  [ Dmitrijs Ledkovs ]
+  * Fix pybuild.pm when PYBUILD_INTERPRETERS is set
+    (broken in previous upload, closes: #720744)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 25 Aug 2013 12:39:39 +0200
+
 dh-python (1.20130819-1) unstable; urgency=low
 
   * Do not translate X-Python{,3}-Version into Depends if there are no Python

@@ -88,7 +88,7 @@ sub pybuild_commands {
 	my @result;
 
 	if ($ENV{'PYBUILD_INTERPRETERS'}) {
-		push @result, "pybuild --$step @options";
+		push @result, ['pybuild', "--$step", @options];
 	}
 	else {
 		# get interpreter packages from Build-Depends{,-Indep}:
