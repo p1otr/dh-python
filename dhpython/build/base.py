@@ -22,7 +22,7 @@ import logging
 from functools import wraps
 from glob import glob1
 from os import remove, walk
-from os.path import join
+from os.path import isdir, join
 from subprocess import Popen, PIPE
 from shutil import rmtree
 from dhpython.tools import execute
@@ -111,6 +111,14 @@ class Base:
         return result
 
     def clean(self, context, args):
+        if self.cfg.test_tox:
+            tox_dir = join(args['dir'], '.tox')
+            if isdir(tox_dir):
+                try:
+                    rmtree(tox_dir)
+                except Exception:
+                    log.debug('cannot remove %s', tox_dir)
+
         for root, dirs, file_names in walk(context['dir']):
             for name in dirs:
                 if name == '__pycache__':
@@ -145,6 +153,8 @@ class Base:
             return 'cd {build_dir}; {interpreter} -m nose --with-doctest {args}'
         elif self.cfg.test_pytest:
             return 'cd {build_dir}; {interpreter} -m pytest {args}'
+        elif self.cfg.test_tox:
+            return 'cd {build_dir}; tox -c {dir}/tox.ini -e py{version.major}{version.minor}'
         elif args['version'] == '2.7' or args['version'] >> '3.1' or args['interpreter'] == 'pypy':
             return 'cd {build_dir}; {interpreter} -m unittest discover -v {args}'
 

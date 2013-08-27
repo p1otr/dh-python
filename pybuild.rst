@@ -63,6 +63,9 @@ TESTS
     --test-pytest
         use pytest module in test step, remember to add python-pytest and/or
         python3-pytest to Build-Depends
+    --test-tox
+        use tox command in test step, remember to add python-tox
+        to Build-Depends. Requires tox.ini file
 
 BUILD SYSTEM ARGUMENTS
 ----------------------

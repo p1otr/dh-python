@@ -5,9 +5,12 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
     (broken in previous upload, closes: #720744)
 
   [ Piotr Ożarowski ]
-  * Add Barry Warsow to co-maintainers
-  * Mention {version.major} and {version.minor} in pybuild's manpage
-    (closes: 721068)
+  * Add Barry Warsaw to co-maintainers
+  * pybuild:
+    - mention {version.major} and {version.minor} in pybuild's manpage
+      (closes: 721068)
+    - add --test-tox option (PYBUILD_TEST_TOX=1 works too, like with
+      other pybuild options), closes: 721067
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 25 Aug 2013 12:39:39 +0200
 

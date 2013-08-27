@@ -363,6 +363,9 @@ def parse_args(argv):
     tests.add_argument('--test-pytest', action='store_true',
                        default=environ.get('PYBUILD_TEST_PYTEST') == '1',
                        help='use pytest module in --test step')
+    tests.add_argument('--test-tox', action='store_true',
+                       default=environ.get('PYBUILD_TEST_TOX') == '1',
+                       help='use tox in --test step')
 
     dirs = parser.add_argument_group('DIRECTORIES')
     dirs.add_argument('-d', '--dir', action='store', metavar='DIR',
@@ -406,7 +409,8 @@ def parse_args(argv):
             versions.extend(version.split())
         args.versions = versions
 
-    if args.test_nose or args.test_pytest or args.system == 'custom':
+    if args.test_nose or args.test_pytest or args.test_tox\
+       or args.system == 'custom':
         args.custom_tests = True
     else:
         args.custom_tests = False
