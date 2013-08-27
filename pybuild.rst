@@ -103,6 +103,7 @@ BUILD SYSTEM ARGUMENTS
 variables that can be used in `ARGUMENTS` and `COMMAND`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * `{version}` will be replaced with current Python version,
+  you can also use `{version.major}`, `{version.minor}`, etc.
 * `{interpreter}` will be replaced with current interpreter,
 * `{dir}` will be replaced with sources directory,
 * `{destdir}` will be replaced with destination directory,

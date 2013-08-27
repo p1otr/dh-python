@@ -6,6 +6,8 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * Add Barry Warsow to co-maintainers
+  * Mention {version.major} and {version.minor} in pybuild's manpage
+    (closes: 721068)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 25 Aug 2013 12:39:39 +0200
 
