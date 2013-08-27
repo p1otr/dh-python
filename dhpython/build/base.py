@@ -31,7 +31,9 @@ try:
 except ImportError:
     # shlex.quote is new in Python 3.3
     def quote(s):
-        return ("'" + s.replace("'", "'\"'\"'") + "'") if "'" in s else s
+        if not s:
+            return "''"
+        return "'" + s.replace("'", "'\"'\"'") + "'"
 
 log = logging.getLogger('dhpython')
 
