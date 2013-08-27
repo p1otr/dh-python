@@ -51,6 +51,8 @@ def main(cfg):
         env['LC_ALL'] = 'C.UTF-8'
     if 'http_proxy' not in env:
         env['http_proxy'] = 'http://127.0.0.1:9/'
+    if 'https_proxy' not in env:
+        env['https_proxy'] = 'https://127.0.0.1:9/'
 
     if cfg.system:
         certainty = 99

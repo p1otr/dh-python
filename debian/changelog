@@ -11,6 +11,7 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
       (closes: 721068)
     - add --test-tox option (PYBUILD_TEST_TOX=1 works too, like with
       other pybuild options), closes: 721067
+    - set https_proxy to 127.0.0.1 if it's not set (similar to http_proxy)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 25 Aug 2013 12:39:39 +0200
 
