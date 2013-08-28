@@ -35,6 +35,7 @@ def main(cfg):
     log.debug('cfg: %s', cfg)
     from dhpython import build
     from dhpython.version import Version, get_requested_versions
+    from dhpython.interpreter import Interpreter
     from dhpython.tools import execute, move_matching_files
 
     if cfg.list_systems:
@@ -125,7 +126,7 @@ def main(cfg):
                                default=join(home_dir, 'build'))
         args = dict(context['args'])
         args.update({
-            'interpreter': i,
+            'interpreter': Interpreter(i),
             'args': get_option("%s_args" % step, interpreter, version, ''),
             'dir': context['dir'].format(version=version, interpreter=i),
             'destdir': (join(context['dir'], context['destdir'])).format(
