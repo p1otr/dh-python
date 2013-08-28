@@ -96,7 +96,7 @@ class BuildSystem(Base):
     @shell_command
     @create_pydistutils_cfg
     def install(self, context, args):
-        return '{interpreter} {setup_py} install --root {destdir} {args}'
+        return '{interpreter.binary_dv} {setup_py} install --root {destdir} {args}'
 
     @shell_command
     @create_pydistutils_cfg
