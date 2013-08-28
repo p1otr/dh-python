@@ -145,19 +145,33 @@ class Interpreter:
     def __str__(self):
         return self._vstr(self.version)
 
-    def _vstr(self, version):
+    def _vstr(self, version=None, consider_default_ver=False):
         if self.impl == 'pypy':
             # TODO: will Debian support more than one PyPy version?
             return self.name
         version = version or self.version or ''
+        if consider_default_ver and version == self.default_version:
+            version = '3' if self.impl == 'cpython3' else ''
         if isinstance(version, Version) and version == Version(major=2):
             version = ''  # do not promote /usr/bin/python2
         if self.debug:
             return 'python{}-dbg'.format(version)
         return self.name + str(version)
 
-    def binary(self, version):
+    def binary(self, version=None):
         return '/usr/bin/{}'.format(self._vstr(version))
+
+    @property
+    def binary_dv(self):
+        """Like binary(), but returns path to default intepreter symlink
+        if version matches default one for given implementation.
+        """
+        return '/usr/bin/{}'.format(self._vstr(consider_default_ver=True))
+
+    @property
+    def default_version(self):
+        if self.impl:
+            return default(self.impl)
 
     @staticmethod
     def parse(shebang):
