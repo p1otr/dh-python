@@ -466,7 +466,7 @@ def main():
             else:
                 version = ext_for.pop()
                 args += " -V %s" % version
-                dependencies.depend("python%d.%d" % version)
+                dependencies.depend("python%s" % version)
 
             for pattern in options.regexpr or []:
                 args += " -X '%s'" % pattern.replace("'", r"'\''")
