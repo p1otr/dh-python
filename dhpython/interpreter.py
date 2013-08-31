@@ -152,7 +152,7 @@ class Interpreter:
         version = version or self.version or ''
         if consider_default_ver and version == self.default_version:
             version = '3' if self.impl == 'cpython3' else ''
-        if isinstance(version, Version) and version == Version(major=2):
+        elif isinstance(version, Version) and version == Version(major=2):
             version = ''  # do not promote /usr/bin/python2
         if self.debug:
             return 'python{}-dbg'.format(version)
