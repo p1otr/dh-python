@@ -24,7 +24,7 @@ import logging
 import argparse
 import sys
 from os import environ, getcwd, makedirs
-from os.path import exists, join
+from os.path import abspath, exists, join
 
 logging.basicConfig(format='%(levelname).1s: pybuild '
                            '%(module)s:%(lineno)d: %(message)s')
@@ -121,26 +121,24 @@ def main(cfg):
 
     def get_args(context, step, version, interpreter):
         i = interpreter.format(version=version)
-        home_dir = '.pybuild/{}_{}'.format(interpreter.format(version='X.Y'), version)
+        home_dir = abspath('.pybuild/{}_{}'.format(interpreter.format(version='X.Y'), version))
         build_dir = get_option('build_dir', interpreter, version,
                                default=join(home_dir, 'build'))
         args = dict(context['args'])
         args.update({
             'interpreter': Interpreter(i),
+            'version': version,
             'args': get_option("%s_args" % step, interpreter, version, ''),
-            'dir': context['dir'].format(version=version, interpreter=i),
-            'destdir': (join(context['dir'], context['destdir'])).format(
-                version=version, interpreter=i),
-            'home_dir': (join(context['dir'], home_dir)).format(
-                version=version, interpreter=i),
-            'build_dir': (join(context['dir'], build_dir)).format(
-                version=version, interpreter=i),
+            'dir': abspath(context['dir'].format(version=version, interpreter=i)),
+            'destdir': abspath(context['destdir'].format(
+                version=version, interpreter=i)),
+            'build_dir': abspath(build_dir.format(version=version, interpreter=i)),
             # versioned dist-packages even for Python 3.X - dh_python3 will fix it later
             # (and will have a chance to compare files)
             'install_dir': get_option('install_dir', interpreter, version,
                                       '/usr/lib/python{version}/dist-packages'
                                       ).format(version=version, interpreter=i),
-            'version': version})
+            'home_dir': home_dir})
         if interpreter == 'pypy':
             args['install_dir'] = '/usr/lib/pypy/dist-packages/'
         if step == 'test':
