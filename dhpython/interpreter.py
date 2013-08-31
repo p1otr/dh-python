@@ -159,14 +159,14 @@ class Interpreter:
         return self.name + str(version)
 
     def binary(self, version=None):
-        return '/usr/bin/{}'.format(self._vstr(version))
+        return '{}{}'.format(self.path, self._vstr(version))
 
     @property
     def binary_dv(self):
         """Like binary(), but returns path to default intepreter symlink
         if version matches default one for given implementation.
         """
-        return '/usr/bin/{}'.format(self._vstr(consider_default_ver=True))
+        return '{}{}'.format(self.path, self._vstr(consider_default_ver=True))
 
     @property
     def default_version(self):
