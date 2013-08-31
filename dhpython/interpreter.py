@@ -150,7 +150,7 @@ class Interpreter:
             # TODO: will Debian support more than one PyPy version?
             return self.name
         version = version or self.version or ''
-        if consider_default_ver and version == self.default_version:
+        if consider_default_ver and (not version or version == self.default_version):
             version = '3' if self.impl == 'cpython3' else ''
         elif isinstance(version, Version) and version == Version(major=2):
             version = ''  # do not promote /usr/bin/python2
@@ -422,6 +422,20 @@ class Interpreter:
         if fname == result:
             return
         return join(fdir, result)
+
+    def suggest_pkg_name(self, name):
+        """Suggest binary package name with for given library name
+
+        >>> Interpreter('python3.3').suggest_pkg_name('foo')
+        'python3-foo'
+        >>> Interpreter('python2.7-dbg').suggest_pkg_name('bar')
+        'python-bar-dbg'
+        """
+        binary = self._vstr(consider_default_ver=True)
+        if '-' in binary:
+            tmp = binary.split('-', 1)
+            return '{}-{}-{}'.format(tmp[0], name, tmp[1])
+        return '{}-{}'.format(binary, name)
 
     def _get_config(self, version=None):
         version = Version(version or self.version)
