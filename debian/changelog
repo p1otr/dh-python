@@ -17,6 +17,9 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
       (if interpreter version matches the default one) - this will force
       distutils to not hardcode interpreter version in shebangs
 
+  [ Dmitry Shachnev ]
+  * Make sure tests do not require python-support.
+
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 25 Aug 2013 12:39:39 +0200
 
 dh-python (1.20130819-1) unstable; urgency=low

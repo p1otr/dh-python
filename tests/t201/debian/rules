@@ -3,6 +3,9 @@
 	dh $@ --buildsystem=python_distutils
 
 override_dh_pysupport:
+
+override_dh_install:
+	dh_install
 	find debian/ -name jquery.js -exec \
 	ln -fs /usr/share/javascript/jquery/jquery.js '{}' \;
 	find debian/ -name foo -type d -exec \
