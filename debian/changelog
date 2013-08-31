@@ -16,6 +16,7 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
     - distutils build plugin: use default interpreter symlink in install step
       (if interpreter version matches the default one) - this will force
       distutils to not hardcode interpreter version in shebangs
+  * Disable two tests in test201 dir if /usr/bin/python2.6 is not available
 
   [ Dmitry Shachnev ]
   * Make sure tests do not require python-support.
