@@ -304,8 +304,8 @@ class Interpreter:
         >>> i = Interpreter('python')
         >>> i.cache_file('foo.py', Version('3.1'))
         'foo.pyc'
-        >>> i.cache_file('bar/foo.py', '3.2')
-        'bar/__pycache__/foo.cpython-32.pyc'
+        >>> i.cache_file('bar/foo.py', '3.3')
+        'bar/__pycache__/foo.cpython-33.pyc'
         """
         version = Version(version or self.version)
         last_char = 'o' if '-O' in self.options else 'c'
@@ -330,8 +330,8 @@ class Interpreter:
         """Return Python magic tag (used in __pycache__ dir to tag files).
 
         >>> i = Interpreter('python')
-        >>> i.magic_tag(version='3.2')
-        'cpython-32'
+        >>> i.magic_tag(version='3.3')
+        'cpython-33'
         """
         version = Version(version or self.version)
         if self.impl.startswith('cpython') and version << Version('3.2'):

@@ -3,6 +3,7 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
   [ Dmitrijs Ledkovs ]
   * Fix pybuild.pm when PYBUILD_INTERPRETERS is set
     (broken in previous upload, closes: #720744)
+  * Bump doctests s/3.2/3.3/
 
   [ Piotr Ożarowski ]
   * Add Barry Warsaw to co-maintainers
