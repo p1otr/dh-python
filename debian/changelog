@@ -19,6 +19,7 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
 
   [ Dmitry Shachnev ]
   * Make sure tests do not require python-support.
+  * Add "dh-python" and "nosetests" autopkgtests.
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 25 Aug 2013 12:39:39 +0200
 
