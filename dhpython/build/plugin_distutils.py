@@ -78,6 +78,8 @@ class BuildSystem(Base):
     @create_pydistutils_cfg
     def clean(self, context, args):
         super(BuildSystem, self).clean(context, args)
+        dpath = join(context['dir'], 'build')
+        isdir(dpath) and rmtree(dpath)
         for fname in glob1(context['dir'], '*.egg-info'):
             fpath = join(context['dir'], fname)
             rmtree(fpath) if isdir(fpath) else remove(fpath)
