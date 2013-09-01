@@ -1,4 +1,4 @@
-dh-python (1.20130819-1~bpo70+1) UNRELEASED; urgency=low
+dh-python (1.20130819-1~bpo70+1) wheezy-backports; urgency=low
 
   * Rebuild for wheezy-backports.
   * Replace libpython3-stdlib build dependency with python3.2
@@ -10,7 +10,7 @@ dh-python (1.20130819-1~bpo70+1) UNRELEASED; urgency=low
     - fix_pybuild.pm_when_PYBUILD_INTERPRETERS_is_set
     - fix_fallback_code_for_shlex.quote
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 22 Aug 2013 21:29:36 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 01 Sep 2013 21:15:25 +0200
 
 dh-python (1.20130819-1) unstable; urgency=low
 
