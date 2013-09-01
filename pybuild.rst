@@ -130,6 +130,10 @@ DIRECTORIES
       [default: `\.so(\.[^/]*)?$`]
   --install-dir DIR
       set installation directory [default: .../dist-packages]
+  --name NAME
+      use this name to guess destination directories
+      (depending on interpreter, "foo" sets debian/python-foo,
+      debian/python3-foo, debian/python3-foo-dbg, etc.)
 
 variables that can be used in `DIR`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

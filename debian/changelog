@@ -17,6 +17,7 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
       (if interpreter version matches the default one) - this will force
       distutils to not hardcode interpreter version in shebangs
     - fix problem with relative paths when dh's --sourcedirectory is used
+    - add --name (PYBUILD_NAME) option
   * Disable two tests in test201 dir if /usr/bin/python2.6 is not available
 
   [ Dmitry Shachnev ]

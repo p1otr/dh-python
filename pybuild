@@ -124,14 +124,20 @@ def main(cfg):
         home_dir = abspath('.pybuild/{}_{}'.format(interpreter.format(version='X.Y'), version))
         build_dir = get_option('build_dir', interpreter, version,
                                default=join(home_dir, 'build'))
+
+        ipreter = Interpreter(i)
+        destdir = context['destdir'].format(version=version, interpreter=i)
+        if cfg.name and destdir.rstrip('/').endswith('debian/tmp'):
+            destdir = "debian/{}".format(ipreter.suggest_pkg_name(cfg.name))
+        destdir = abspath(destdir)
+
         args = dict(context['args'])
         args.update({
-            'interpreter': Interpreter(i),
+            'interpreter': ipreter,
             'version': version,
             'args': get_option("%s_args" % step, interpreter, version, ''),
             'dir': abspath(context['dir'].format(version=version, interpreter=i)),
-            'destdir': abspath(context['destdir'].format(
-                version=version, interpreter=i)),
+            'destdir': destdir,
             'build_dir': abspath(build_dir.format(version=version, interpreter=i)),
             # versioned dist-packages even for Python 3.X - dh_python3 will fix it later
             # (and will have a chance to compare files)
@@ -384,6 +390,9 @@ def parse_args(argv):
                       ' if --ext-destdir is set [default: .so files]')
     dirs.add_argument('--install-dir', action='store', metavar='DIR',
                       help='installation directory [default: .../dist-packages]')
+    dirs.add_argument('--name', action='store',
+                      default=environ.get('PYBUILD_NAME'),
+                      help='use this name to guess destination directories')
 
     limit = parser.add_argument_group('LIMITATIONS')
     limit.add_argument('-s', '--system',
