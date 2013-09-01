@@ -6,6 +6,9 @@ dh-python (1.20130819-1~bpo70+1) UNRELEASED; urgency=low
     if python_defaults missing)
   * Use dpkg-divert to replace python3's dh_python3 and python's dh_python2
     and drop Breaks/Replaces
+  * Backport two commits from 1.20130901-1 release:
+    - fix_pybuild.pm_when_PYBUILD_INTERPRETERS_is_set
+    - fix_fallback_code_for_shlex.quote
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 22 Aug 2013 21:29:36 +0200
 

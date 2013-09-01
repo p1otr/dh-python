@@ -1,0 +1,27 @@
+From bfa31b07ad51a2e18cebf470abe5f41ac6161103 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Piotr=20O=C5=BCarowski?= <piotr@debian.org>
+Date: Tue, 27 Aug 2013 20:50:45 +0200
+Subject: [PATCH] fix fallback code for shlex.quote
+
+---
+ dhpython/build/base.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/dhpython/build/base.py b/dhpython/build/base.py
+index c9e0781..3a0c224 100644
+--- a/dhpython/build/base.py
++++ b/dhpython/build/base.py
+@@ -31,7 +31,9 @@ try:
+ except ImportError:
+     # shlex.quote is new in Python 3.3
+     def quote(s):
+-        return ("'" + s.replace("'", "'\"'\"'") + "'") if "'" in s else s
++        if not s:
++            return "''"
++        return "'" + s.replace("'", "'\"'\"'") + "'"
+ 
+ log = logging.getLogger('dhpython')
+ 
+-- 
+1.8.4.rc3
+

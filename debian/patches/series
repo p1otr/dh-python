@@ -1,1 +1,3 @@
 update_default_and_supported_python_versions.patch
+fix_pybuild.pm_when_PYBUILD_INTERPRETERS_is_set.patch
+fix_fallback_code_for_shlex.quote.patch
