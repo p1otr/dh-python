@@ -19,6 +19,8 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
     - fix problem with relative paths when dh's --sourcedirectory is used
     - add --name (PYBUILD_NAME) option
   * Disable two tests in test201 dir if /usr/bin/python2.6 is not available
+  * Replace python-docutils build dependency with python3-docutils (both
+    provide rst2man)
 
   [ Dmitry Shachnev ]
   * Make sure tests do not require python-support.
