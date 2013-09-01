@@ -18,6 +18,9 @@ dh-python (1.20130830-1) UNRELEASED; urgency=low
       distutils to not hardcode interpreter version in shebangs
     - fix problem with relative paths when dh's --sourcedirectory is used
     - add --name (PYBUILD_NAME) option
+  * dh_python{2,3} and dh_pypy: generate "interpreter (>= X.Y),
+    interpreter (<< X.Z)" dependency if private directory contains extensions
+    even if there are no .py files inside (closes: 720258)
   * Disable two tests in test201 dir if /usr/bin/python2.6 is not available
   * Replace python-docutils build dependency with python3-docutils (both
     provide rst2man)

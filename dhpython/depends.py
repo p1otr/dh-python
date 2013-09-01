@@ -142,6 +142,7 @@ class Dependencies:
             self.depend(str(ipreter))
 
         supported_versions = supported(self.impl)
+        default_version = default(self.impl)
         for private_dir, details in stats['private_dirs'].items():
             versions = list(i.version for i in details.get('shebangs', []) if i.version and i.version.minor)
 
@@ -155,29 +156,29 @@ class Dependencies:
             if any(True for i in details.get('shebangs', []) if i.version is None):
                 self.depend(tpl)
 
+            extensions = sorted(details.get('ext_vers', set()))
+            #self.depend('|'.join(vtpl % i for i in extensions))
+            if extensions:
+                self.depend("%s (>= %s)" % (tpl, extensions[0]))
+                self.depend("%s (<< %s)" % (tpl, extensions[-1] + 1))
+            elif details.get('ext_no_version'):
+                # assume unrecognized extension was built for default interpreter version
+                self.depend("%s (>= %s)" % (tpl, default_version))
+                self.depend("%s (<< %s)" % (tpl, default_version + 1))
+
             if details.get('compile'):
                 if self.impl in MINPYCDEP:
                     self.depend(MINPYCDEP[self.impl])
                 args = ''
-                if details.get('ext_vers'):
-                    extensions = sorted(details['ext_vers'])
-                    #self.depend('|'.join(vtpl % i for i in extensions))
-                    if extensions:
-                        args += "-V %s" % VersionRange(minver=extensions[0], maxver=extensions[-1])
-                        if len(extensions) == 1:
-                            self.depend(vtpl % extensions[0])
-                        else:
-                            self.depend("%s (>= %s)" % (tpl, extensions[0]))
-                            self.depend("%s (<< %s)" % (tpl, extensions[-1] + 1))
+                if extensions:
+                    args += "-V %s" % VersionRange(minver=extensions[0], maxver=extensions[-1])
                 elif len(versions) == 1:  # only one version from shebang
                     #if versions[0] in supported_versions:
                     args += "-V %s" % versions[0]
                     # ... otherwise compile with default version
                 elif details.get('ext_no_version'):
                     # assume unrecognized extension was built for default interpreter version
-                    dversion = default(self.impl)
-                    args += "-V %s" % dversion
-                    self.depend(vtpl % dversion)
+                    args += "-V %s" % default_version
                 elif vrange:
                     args += "-V %s" % vrange
                     if vrange.minver == vrange.maxver:
