@@ -85,7 +85,7 @@ def main(cfg):
         if plugin.SUPPORTED_INTERPRETERS is not True and interpreter not in plugin.SUPPORTED_INTERPRETERS:
             log.error('interpreter %s not supported by %s', interpreter, plugin)
             exit(12)
-    log.info('detected build system: %s (certainty: %s%%)', plugin, certainty)
+    log.debug('detected build system: %s (certainty: %s%%)', plugin.NAME, certainty)
 
     if cfg.detect_only:
         if not cfg.really_quiet:

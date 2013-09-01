@@ -3,7 +3,6 @@
 # Copyright: © 2012-2013 Piotr Ożarowski
 
 # TODO:
-# * save check_auto_buildable's result and pass it later via --system to speed things up
 # * support for dh --parallel
 
 package Debian::Debhelper::Buildsystem::pybuild;

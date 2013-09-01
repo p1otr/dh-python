@@ -33,6 +33,6 @@ for i in (i[7:-3] for i in glob1(dirname(__file__), 'plugin_*.py')):
         plugins[i] = module.BuildSystem
     except Exception as err:
         if log.level < logging.INFO:
-            log.info("cannot initialize '%s'", i, exc_info=True)
+            log.debug("cannot initialize '%s' plugin", i, exc_info=True)
         else:
-            log.info("cannot initialize '%s': %s", i, err)
+            log.debug("cannot initialize '%s' plugin: %s", i, err)
