@@ -179,10 +179,8 @@ DEBHELPER COMMAND SEQUENCER INTEGRATION
 
 debian/rules file example::
 
- export PYBUILD_DESTDIR_python2=debian/python-foo/
- export PYBUILD_DESTDIR_python2-dbg=debian/python-foo-dbg/
- export PYBUILD_DESTDIR_python3=debian/python3-foo/
- export PYBUILD_DESTDIR_python3-dbg=debian/python3-foo-dbg/
+ #! /usr/bin/make -f
+ export PYBUILD_NAME=foo
  %:
   	dh $@ --with python2,python3 --buildsystem=pybuild
 
