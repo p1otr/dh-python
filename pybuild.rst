@@ -115,6 +115,10 @@ variables that can be used in `ARGUMENTS` and `COMMAND`
   (.pybuild/interpreter_version/ by default),
 * `{build_dir}` will be replaced with build directory
 * `{install_dir}` will be replaced with install directory.
+* `{package}` will be replaced with suggested package name,
+  if --name (or PYBUILD_NAME) is set to `foo`, this variable
+  will be replaced to `python-foo`, `python3-foo` or `pypy-foo`
+  depending on interpreter which is used in given iteration.
 
 DIRECTORIES
 -----------

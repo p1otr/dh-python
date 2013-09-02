@@ -1,6 +1,7 @@
 dh-python (1.20130902-1) unstable; urgency=low
 
   * Fix DESTDIR guessing (from --name) for non-default interpreter versions
+  * Add {package} to supported variables in command templates
 
  -- Piotr Ożarowski <piotr@debian.org>  Mon, 02 Sep 2013 18:22:14 +0200
 

@@ -127,12 +127,17 @@ def main(cfg):
 
         ipreter = Interpreter(i)
         destdir = context['destdir'].format(version=version, interpreter=i)
+        if cfg.name:
+            package = ipreter.suggest_pkg_name(cfg.name)
+        else:
+            package = 'PYBUILD_NAME_not_set'
         if cfg.name and destdir.rstrip('/').endswith('debian/tmp'):
-            destdir = "debian/{}".format(ipreter.suggest_pkg_name(cfg.name))
+            destdir = "debian/{}".format(package)
         destdir = abspath(destdir)
 
         args = dict(context['args'])
         args.update({
+            'package': package,
             'interpreter': ipreter,
             'version': version,
             'args': get_option("%s_args" % step, interpreter, version, ''),
