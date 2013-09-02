@@ -426,16 +426,20 @@ class Interpreter:
     def suggest_pkg_name(self, name):
         """Suggest binary package name with for given library name
 
+        >>> Interpreter('python3.1').suggest_pkg_name('foo')
+        'python3-foo'
         >>> Interpreter('python3.3').suggest_pkg_name('foo')
         'python3-foo'
         >>> Interpreter('python2.7-dbg').suggest_pkg_name('bar')
         'python-bar-dbg'
         """
-        binary = self._vstr(consider_default_ver=True)
-        if '-' in binary:
-            tmp = binary.split('-', 1)
-            return '{}-{}-{}'.format(tmp[0], name, tmp[1])
-        return '{}-{}'.format(binary, name)
+        if self.impl == 'pypy':
+            return 'pypy-{}'.format(name)
+        version = '3' if self.impl == 'cpython3' else ''
+        result = 'python{}-{}'.format(version, name)
+        if self.debug:
+            result += '-dbg'
+        return result
 
     def _get_config(self, version=None):
         version = Version(version or self.version)
