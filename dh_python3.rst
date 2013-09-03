@@ -87,6 +87,8 @@ OPTIONS
 
 --no-dbg-cleaning	do not remove any files from debug packages
 
+--no-ext-rename	do not add magic tags nor multiarch tuples to extension file names
+
 --no-shebang-rewrite	do not rewrite shebangs
 
 --skip-private	don't check private directories

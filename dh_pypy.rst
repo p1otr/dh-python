@@ -75,6 +75,8 @@ OPTIONS
 --no-guessing-deps	disable guessing dependencies
 
 --no-dbg-cleaning	do not remove any files from debug packages
+    
+--no-ext-rename	do not add magic tags nor multiarch tuples to extension file names
 
 --no-shebang-rewrite	do not rewrite shebangs
 

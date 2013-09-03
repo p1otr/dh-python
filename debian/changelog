@@ -1,7 +1,9 @@
-dh-python (1.20130902-2) unstable; urgency=low
+dh-python (1.20130902-1) unstable; urgency=low
 
-  * Do not rename extensions in directories that include architecture triplet
-    as part of the path (closes: 721696)
+  * dh_python2, dh_python3, dh_pypy:
+    - do not rename extensions in directories that include architecture triplet
+      as part of the path (closes: 721696)
+    - add --no-ext-rename option
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 03 Sep 2013 20:20:43 +0200
 

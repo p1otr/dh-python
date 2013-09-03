@@ -319,6 +319,9 @@ def main():
     parser.add_option('--no-dbg-cleaning', action='store_false',
                       dest='clean_dbg_pkg', default=True,
                       help='do not remove files from debug packages')
+    parser.add_option('--no-ext-rename', action='store_true',
+                      default=False, help='do not add magic tags nor multiarch'
+                                          ' tuples to extension file names)')
     parser.add_option('--no-shebang-rewrite', action='store_true',
                       default=False, help='do not rewrite shebangs')
     # ignore some debhelper options:
@@ -405,7 +408,7 @@ def main():
             except Exception as err:
                 log.error("%s.pyremove: %s", package, err)
                 exit(5)
-            fix_locations(package, interpreter, SUPPORTED)
+            fix_locations(package, interpreter, SUPPORTED, options)
         stats = Scanner(interpreter, package, private_dir, options).result
         if not private_dir:
             share(package, stats, options)
