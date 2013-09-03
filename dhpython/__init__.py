@@ -39,6 +39,9 @@ INTERPRETER_DIR_TPLS = {
     'cpython3': r'.*/python3(?:\.\d+)?/',
     'pypy': r'.*/pypy/'}
 
+MULTIARCH_DIR_TPL = re.compile(
+    '.*/([a-z][^/-]+-(?:linux|kfreebsd|gnu)(?:-[^/-]+)?)(?:/.*|$)')
+
 # Interpreter site-directories
 OLD_SITE_DIRS = {
     'cpython2': [

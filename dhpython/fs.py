@@ -25,6 +25,7 @@ from filecmp import cmp as cmpfile
 from os.path import exists, isdir, islink, join, split
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
+from dhpython import MULTIARCH_DIR_TPL
 from dhpython.tools import fix_shebang, clean_egg_name
 from dhpython.interpreter import Interpreter
 
@@ -269,6 +270,9 @@ class Scan:
                 log.info('renaming %s to %s', dstfpath, fname)
                 os.rename(dstfpath, fpath)
 
+        if MULTIARCH_DIR_TPL.match(fpath):
+            # ignore /lib/i386-linux-gnu/, /usr/lib/x86_64-kfreebsd-gnu/, etc.
+            return fpath
         new_fn = self.interpreter.check_extname(fname, self.current_pub_version)
         if new_fn:
             # TODO: what about symlinks pointing to this file
