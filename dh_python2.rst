@@ -192,6 +192,7 @@ SEE ALSO
 ========
 * /usr/share/doc/python/python-policy.txt.gz
 * /usr/share/doc/dh-python/README.PyDist
+* pybuild(1)
 * pycompile(1), pyclean(1)
 * dh_python3(1), py3compile(1), py3clean(1)
 * Wiki page about converting package to dh_python2:
