@@ -254,7 +254,8 @@ class Scan:
         This method is invoked for all .so files in public or private directories.
         """
         path, fname = fpath.rsplit('/', 1)
-        if islink(fpath):
+        if self.current_pub_version and islink(fpath):
+            # replace symlinks with extensions in dist-packages directory
             dstfpath = fpath
             links = set()
             while islink(dstfpath):
