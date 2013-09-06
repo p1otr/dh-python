@@ -103,7 +103,7 @@ def main():
                       help='translate given requirements into Debian '
                            'dependencies and add them to ${pypy:Suggests}')
     parser.add_option('--requires', action='append',
-                      help='tranaslate requirements from given file into Debian '
+                      help='translate requirements from given file into Debian '
                            'dependencies and add them to ${python3:Depends}')
     parser.add_option('--shebang',
                       help='use given command as shebang in scripts')
