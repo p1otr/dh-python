@@ -104,7 +104,7 @@ def main():
                            'dependencies and add them to ${pypy:Suggests}')
     parser.add_option('--requires', action='append',
                       help='translate requirements from given file into Debian '
-                           'dependencies and add them to ${python3:Depends}')
+                           'dependencies and add them to ${pypy:Depends}')
     parser.add_option('--shebang',
                       help='use given command as shebang in scripts')
     parser.add_option('--ignore-shebangs', action='store_true', default=False,

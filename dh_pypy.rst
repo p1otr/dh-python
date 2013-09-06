@@ -111,7 +111,7 @@ OPTIONS
   and add them to ${pypy:Suggests}
 
 --requires=FILENAME	translate requirements from given file(s) into Debian
-  dependencies and add them to ${python3:Depends}
+  dependencies and add them to ${pypy:Depends}
 
 --shebang=COMMAND	use given command as shebang in scripts
 

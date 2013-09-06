@@ -174,7 +174,7 @@ OPTIONS
   and add them to ${python:Suggests}
 
 --requires=FILENAME	translate requirements from given file(s) into Debian
-  dependencies and add them to ${python3:Depends}
+  dependencies and add them to ${python:Depends}
 
 --namespace	use this option (multiple time if necessary) if
   namespace_packages.txt is not complete
