@@ -1,3 +1,9 @@
+dh-python (1.20130913-1) UNRELEASED; urgency=low
+
+  * dh_py*: add --requires option
+
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 06 Sep 2013 20:27:05 +0200
+
 dh-python (1.20130903-1) unstable; urgency=low
 
   * dh_python2, dh_python3, dh_pypy:

@@ -19,6 +19,7 @@
 # THE SOFTWARE.
 
 import logging
+from os.path import exists
 from dhpython import PKG_PREFIX_MAP, MINPYCDEP
 from dhpython.pydist import parse_pydep, guess_dependency
 from dhpython.version import default, supported, VersionRange
@@ -209,5 +210,12 @@ class Dependencies:
         # add dependencies from --suggests
         for item in options.suggests or []:
             self.suggest(guess_dependency(self.impl, item))
+        # add dependencies from --requires
+        for fn in options.requires or []:
+            if not exists(fn):
+                log.warn('cannot find requirements file: %s', fn)
+                continue
+            for i in parse_pydep(self.impl, fn):
+                self.depend(i)
 
         log.debug(self)

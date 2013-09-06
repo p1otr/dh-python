@@ -306,6 +306,9 @@ def main():
     parser.add_option('--suggests', action='append',
                       help='translate given requirements into Debian '
                            'dependencies and add them to ${python:Suggests}')
+    parser.add_option('--requires', action='append',
+                      help='tranaslate requirements from given file into Debian '
+                           'dependencies and add them to ${python3:Depends}')
     parser.add_option('--namespace', action='append', dest='namespaces',
                       help='recreate __init__.py files for given namespaces at install time')
     parser.add_option('--clean-pycentral', action='store_true', default=False,
