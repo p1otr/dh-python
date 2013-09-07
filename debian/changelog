@@ -1,6 +1,10 @@
 dh-python (1.20130913-1) UNRELEASED; urgency=low
 
+  [ Piotr Ożarowski ]
   * dh_py*: add --requires option
+
+  [ Steve Langasek ]
+  * Adjust dh_python to be multiarch-friendly (closes: 722045)
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 06 Sep 2013 20:27:05 +0200
 

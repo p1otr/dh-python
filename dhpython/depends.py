@@ -100,9 +100,21 @@ class Dependencies:
         vtpl = self.ipkg_vtpl
         vrange = options.vrange
 
+	# Shebang depends are the only things that get python:any
+        if vrange and stats['shebangs']:
+            minv = vrange.minver
+            # note it's an open interval (i.e. do not add 1 here!):
+            maxv = vrange.maxver
+            if minv == maxv:
+                self.depend(vtpl % minv)
+                minv = maxv = None
+            if minv:
+                self.depend("%s:any (>= %s)" % (tpl, minv))
+            if maxv:
+                self.depend("%s:any (<< %s)" % (tpl, maxv))
+
         if vrange and any((stats['compile'], stats['public_vers'],
-                          stats['ext_vers'], stats['ext_no_version'],
-                          stats['shebangs'])):
+                          stats['ext_vers'], stats['ext_no_version'])):
             minv = vrange.minver
             # note it's an open interval (i.e. do not add 1 here!):
             maxv = vrange.maxver
@@ -140,7 +152,7 @@ class Dependencies:
             self.depend(MINPYCDEP[self.impl])
 
         for ipreter in stats['shebangs']:
-            self.depend(str(ipreter))
+            self.depend("%s:any" % str(ipreter))
 
         supported_versions = supported(self.impl)
         default_version = default(self.impl)
@@ -149,13 +161,13 @@ class Dependencies:
 
             for v in versions:
                 if v in supported_versions:
-                    self.depend(vtpl % v)
+                    self.depend("%s:any" % (vtpl % v))
                 else:
                     log.info('dependency on %s (from shebang) ignored'
                              ' - it\'s not supported anymore', vtpl % v)
             # /usr/bin/python{,3} shebang → add python{,3} to Depends
             if any(True for i in details.get('shebangs', []) if i.version is None):
-                self.depend(tpl)
+                self.depend("%s:any" % tpl)
 
             extensions = sorted(details.get('ext_vers', set()))
             #self.depend('|'.join(vtpl % i for i in extensions))
