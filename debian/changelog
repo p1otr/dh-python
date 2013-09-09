@@ -6,6 +6,10 @@ dh-python (1.20130913-1) UNRELEASED; urgency=low
   [ Steve Langasek ]
   * Adjust dh_python to be multiarch-friendly (closes: 722045)
 
+  [ B. Clausius ]
+  * pybuild: fix --test when LC_ALL=C and setup.py contains non-ascii
+    characters (closes: 722214)
+
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 06 Sep 2013 20:27:05 +0200
 
 dh-python (1.20130903-1) unstable; urgency=low

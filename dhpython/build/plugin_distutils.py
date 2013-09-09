@@ -105,8 +105,8 @@ class BuildSystem(Base):
     def test(self, context, args):
         if not self.cfg.custom_tests:
             fpath = join(args['dir'], args['setup_py'])
-            with open(fpath) as fp:
-                if fp.read().find('test_suite') > 0:
+            with open(fpath, 'rb') as fp:
+                if fp.read().find(b'test_suite') > 0:
                     # TODO: is that enough to detect if test target is available?
                     return '{interpreter} {setup_py} test {args}'
         return super(BuildSystem, self).test(context, args)
