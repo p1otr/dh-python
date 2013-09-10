@@ -1,7 +1,10 @@
 dh-python (1.20130913-1) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
-  * dh_py*: add --requires option
+  * dh_py*:
+    - add --requires option
+    - do not generate "python2" dependency while guessing private
+      extension's version using shebangs in other files (closes: #722307)
 
   [ Steve Langasek ]
   * Adjust dh_python to be multiarch-friendly (closes: 722045)

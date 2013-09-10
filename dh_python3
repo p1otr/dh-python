@@ -219,7 +219,7 @@ def main():
                     ver = str(options.vrange)
                 else:  # try shebang or default Python version
                     ver = (list(i.version for i in details.get('shebangs', [])
-                                if i.version) or [None])[0] or DEFAULT
+                                if i.version and i.version.minor) or [None])[0] or DEFAULT
                 dependencies.depend("python%s" % ver)
                 args += " -V %s" % ver
             else:
