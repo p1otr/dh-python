@@ -1,4 +1,4 @@
-dh-python (1.20130819-1~bpo70+2) UNRELEASED; urgency=low
+dh-python (1.20130819-1~bpo70+2) wheezy-backports; urgency=low
 
   * Remove the diversions on removal.
 
