@@ -9,7 +9,7 @@ Author: Piotr Ozarowski <piotr@debian.org>
  SUPPORTED = {
 -    'cpython2': [(2, 7)],
 -    'cpython3': [(3, 3)],
-+    'cpython2': [(2, 7, 2, 6)],
++    'cpython2': [(2, 7), (2, 6)],
 +    'cpython3': [(3, 2)],
      'pypy': [(2, 0)]}
  DEFAULT = {
