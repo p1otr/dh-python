@@ -14,7 +14,7 @@ remove_divert() {
 
 if [ abort-upgrade = "$1" ] && dpkg --compare-versions "$2" lt '1.20130819-1~bpo70+1'; then
 	remove_divert
-elif [ remove = "$1" ]; then
+elif [ remove = "$1" -o abort-install = "$1" ]; then
 	remove_divert
 fi
 
