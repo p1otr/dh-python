@@ -1,3 +1,9 @@
+dh-python (1.20130819-1~bpo70+2) UNRELEASED; urgency=low
+
+  * Remove the diversions on removal.
+
+ -- Stefano Rivera <stefanor@debian.org>  Thu, 12 Sep 2013 17:34:27 +0200
+
 dh-python (1.20130819-1~bpo70+1) wheezy-backports; urgency=low
 
   * Rebuild for wheezy-backports.
