@@ -16,6 +16,8 @@ if [ abort-upgrade = "$1" ] && dpkg --compare-versions "$2" lt '1.20130819-1~bpo
 	remove_divert
 elif [ remove = "$1" -o abort-install = "$1" ]; then
 	remove_divert
+elif [ upgrade = "$1" ] && echo "$2" | grep -vq '~bpo'; then
+	remove_divert
 fi
 
 #DEBHELPER#

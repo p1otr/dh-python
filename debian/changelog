@@ -1,3 +1,9 @@
+dh-python (1.20130819-1~bpo70+3) UNRELEASED; urgency=low
+
+  * Remove the diversion on upgrade away from a backport.
+
+ -- Stefano Rivera <stefanor@debian.org>  Thu, 12 Sep 2013 23:25:16 +0200
+
 dh-python (1.20130819-1~bpo70+2) wheezy-backports; urgency=low
 
   * Remove the diversions on removal.
