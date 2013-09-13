@@ -34,6 +34,8 @@ class Dependencies:
         self.impl = impl
         self.package = package
         self.is_debug_package = dbgpkg = package.endswith('-dbg')
+
+        # TODO: move it to PyPy and CPython{2,3} classes
         self.ipkg_vtpl = 'python%s-dbg' if dbgpkg else 'python%s'
         if impl == 'cpython3':
             self.ipkg_tpl = 'python3-dbg' if dbgpkg else 'python3'
@@ -42,6 +44,13 @@ class Dependencies:
         elif impl == 'pypy':
             self.ipkg_tpl = 'pypy-dbg' if dbgpkg else 'pypy'
             self.ipkg_vtpl = 'pypy%s-dbg' if dbgpkg else 'pypy%s'
+        if impl == 'pypy':
+            self.ipkg_tpl_ma = self.ipkg_tpl
+            self.ipkg_vtpl_ma = self.ipkg_vtpl
+        else:
+            self.ipkg_tpl_ma = self.ipkg_tpl + ':any'
+            self.ipkg_vtpl_ma = self.ipkg_vtpl + ':any'
+
         self.depends = set()
         self.recommends = []
         self.suggests = []
@@ -98,6 +107,8 @@ class Dependencies:
         log.debug('generating dependencies for package %s', self.package)
         tpl = self.ipkg_tpl
         vtpl = self.ipkg_vtpl
+        tpl_ma = self.ipkg_tpl_ma
+        vtpl_ma = self.ipkg_vtpl_ma
         vrange = options.vrange
 
 	# Shebang depends are the only things that get python:any
@@ -109,9 +120,9 @@ class Dependencies:
                 self.depend(vtpl % minv)
                 minv = maxv = None
             if minv:
-                self.depend("%s:any (>= %s)" % (tpl, minv))
+                self.depend("%s (>= %s)" % (tpl_ma, minv))
             if maxv:
-                self.depend("%s:any (<< %s)" % (tpl, maxv))
+                self.depend("%s (<< %s)" % (tpl_ma, maxv))
 
         if vrange and any((stats['compile'], stats['public_vers'],
                           stats['ext_vers'], stats['ext_no_version'])):
@@ -152,7 +163,7 @@ class Dependencies:
             self.depend(MINPYCDEP[self.impl])
 
         for ipreter in stats['shebangs']:
-            self.depend("%s:any" % str(ipreter))
+            self.depend("%s%s" % (ipreter, ':any' if self.impl == 'pypy' else ''))
 
         supported_versions = supported(self.impl)
         default_version = default(self.impl)
@@ -161,13 +172,13 @@ class Dependencies:
 
             for v in versions:
                 if v in supported_versions:
-                    self.depend("%s:any" % (vtpl % v))
+                    self.depend(vtpl_ma % v)
                 else:
                     log.info('dependency on %s (from shebang) ignored'
                              ' - it\'s not supported anymore', vtpl % v)
             # /usr/bin/python{,3} shebang → add python{,3} to Depends
             if any(True for i in details.get('shebangs', []) if i.version is None):
-                self.depend("%s:any" % tpl)
+                self.depend(tpl_ma)
 
             extensions = sorted(details.get('ext_vers', set()))
             #self.depend('|'.join(vtpl % i for i in extensions))

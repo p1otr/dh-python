@@ -1,4 +1,4 @@
-dh-python (1.20130913-1) UNRELEASED; urgency=low
+dh-python (1.20130913-1) unstable; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_py*:
@@ -13,7 +13,7 @@ dh-python (1.20130913-1) UNRELEASED; urgency=low
   * pybuild: fix --test when LC_ALL=C and setup.py contains non-ascii
     characters (closes: 722214)
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 06 Sep 2013 20:27:05 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 13 Sep 2013 20:47:46 +0200
 
 dh-python (1.20130903-1) unstable; urgency=low
 
