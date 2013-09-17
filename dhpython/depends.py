@@ -111,21 +111,13 @@ class Dependencies:
         vtpl_ma = self.ipkg_vtpl_ma
         vrange = options.vrange
 
-        # Shebang depends are the only things that get python:any
-        if vrange and stats['shebangs']:
-            minv = vrange.minver
-            # note it's an open interval (i.e. do not add 1 here!):
-            maxv = vrange.maxver
-            if minv == maxv:
-                self.depend(vtpl % minv)
-                minv = maxv = None
-            if minv:
-                self.depend("%s (>= %s)" % (tpl_ma, minv))
-            if maxv:
-                self.depend("%s (<< %s)" % (tpl_ma, maxv))
-
         if vrange and any((stats['compile'], stats['public_vers'],
-                          stats['ext_vers'], stats['ext_no_version'])):
+                           stats['ext_vers'], stats['ext_no_version'],
+                           stats['shebangs'])):
+            if any((stats['compile'], stats['public_vers'], stats['shebangs'])):
+                tpl_tmp = tpl_ma
+            else:
+                tpl_tmp = tpl
             minv = vrange.minver
             # note it's an open interval (i.e. do not add 1 here!):
             maxv = vrange.maxver
@@ -133,9 +125,9 @@ class Dependencies:
                 self.depend(vtpl % minv)
                 minv = maxv = None
             if minv:
-                self.depend("%s (>= %s)" % (tpl, minv))
+                self.depend("%s (>= %s)" % (tpl_tmp, minv))
             if maxv:
-                self.depend("%s (<< %s)" % (tpl, maxv))
+                self.depend("%s (<< %s)" % (tpl_tmp, maxv))
 
         if self.impl == 'cpython2' and stats['public_vers']:
             # additional Depends to block python package transitions
@@ -143,9 +135,9 @@ class Dependencies:
             minv = sorted_vers[0]
             maxv = sorted_vers[-1]
             if minv <= default(self.impl):
-                self.depend("%s (>= %s)" % (tpl, minv))
+                self.depend("%s (>= %s)" % (tpl_ma, minv))
             if maxv >= default(self.impl):
-                self.depend("%s (<< %s)" % (tpl, maxv + 1))
+                self.depend("%s (<< %s)" % (tpl_ma, maxv + 1))
 
         if stats['ext_vers']:
             # TODO: what about extensions with stable ABI?
@@ -209,9 +201,9 @@ class Dependencies:
                         self.depend(vtpl % vrange.minver)
                     else:
                         if vrange.minver:  # minimum version specified
-                            self.depend("%s (>= %s)" % (tpl, vrange.minver))
+                            self.depend("%s (>= %s)" % (tpl_ma, vrange.minver))
                         if vrange.maxver:  # maximum version specified
-                            self.depend("%s (<< %s)" % (tpl, vrange.maxver + 1))
+                            self.depend("%s (<< %s)" % (tpl_ma, vrange.maxver + 1))
 
                 for pattern in options.regexpr or []:
                     args += " -X '%s'" % pattern.replace("'", r"'\''")

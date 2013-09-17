@@ -1,7 +1,9 @@
 dh-python (1.20130917-1) unstable; urgency=low
 
-  * dh_python{2,3}: bump minimum required python{,3}:any version to
-    workaround #723586
+  * dh_python{2,3}:
+    - bump minimum required python{,3}:any version to workaround #723586
+    - generate :any dependencies to specify range of supported Python versions
+      (doesn't include extensions case), closes: 723070
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 17 Sep 2013 19:29:05 +0200
 
