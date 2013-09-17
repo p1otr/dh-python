@@ -10,7 +10,7 @@ check:
 		test -f debian/python-foo/usr/lib/python2.6/dist-packages/foo/__init__.p;\
 		test ! -f debian/python-foo/usr/lib/python2.6/dist-packages/foo/spam.py;\
 	fi
-	grep -q "Depends: .*python (<<" debian/python-foo/DEBIAN/control
+	grep -qe "Depends: .*python\(:any\)\? (<<" debian/python-foo/DEBIAN/control
 	[ "`readlink debian/python-foo/usr/lib/python$(DPY)/dist-packages/foo/absolute_link_to_tmp`" = "/tmp" ]
 	[ "`readlink debian/python-foo/usr/lib/python$(DPY)/dist-packages/foo/link_to_parent_dir`" = ".." ]
 
