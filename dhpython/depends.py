@@ -111,7 +111,7 @@ class Dependencies:
         vtpl_ma = self.ipkg_vtpl_ma
         vrange = options.vrange
 
-	# Shebang depends are the only things that get python:any
+        # Shebang depends are the only things that get python:any
         if vrange and stats['shebangs']:
             minv = vrange.minver
             # note it's an open interval (i.e. do not add 1 here!):
