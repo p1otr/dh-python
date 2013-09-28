@@ -1,3 +1,10 @@
+dh-python (1.20130929-1) UNRELEASED; urgency=low
+
+  * Revert python-docutils build dependency change (to avoid circular
+    dependencies)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 28 Sep 2013 14:51:58 +0200
+
 dh-python (1.20130917-1) unstable; urgency=low
 
   * dh_python{2,3}:
