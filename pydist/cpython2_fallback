@@ -326,6 +326,7 @@ pyFAI pyfai
 pyLibravatar python-libravatar
 pyOwnCloud python-owncloud
 py_Asterisk python-asterisk
+py_bcrypt python-bcrypt
 py_pypcap python-pypcap
 py_rrdtool python-rrdtool
 pyacidobasic python-acidobasic
@@ -518,6 +519,7 @@ wikipediafs wikipediafs
 winpdb winpdb
 wxPython_common python-wxgtk2.8
 wxgeometrie wxgeometrie
+xapers xapers
 xdot xdot
 xml_marshaller python-xmlmarshaller
 xpra_all xpra

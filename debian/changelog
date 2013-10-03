@@ -1,10 +1,10 @@
-dh-python (1.20130929-1) UNRELEASED; urgency=low
+dh-python (1.20131003-1) unstable; urgency=low
 
   * Revert python-docutils build dependency change (to avoid circular
     dependencies)
   * Install PyDist fallback files
 
- -- Piotr Ożarowski <piotr@debian.org>  Sat, 28 Sep 2013 14:51:58 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 03 Oct 2013 18:06:37 +0200
 
 dh-python (1.20130917-1) unstable; urgency=low
 

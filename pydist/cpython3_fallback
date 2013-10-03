@@ -21,6 +21,7 @@ jsonpointer python3-json-pointer
 kazam kazam
 py3dns python3-dns
 pyOpenSSL python3-openssl
+py_bcrypt python3-bcrypt
 py_postgresql python3-postgresql
 pycrypto python3-crypto
 pyenchant python3-enchant
@@ -33,9 +34,12 @@ pyliblo python3-liblo
 pypolicyd_spf postfix-policyd-spf-python
 pyppd pyppd
 pyserial python3-serial
+pysnmp python3-pysnmp4
 pyspf python3-spf
 pysubnettree python3-subnettree
 python3_libgearman python3-gearman.libgearman
+python_graph_core python3-pygraph
+python_graph_dot python3-pygraph
 pytz python3-tz
 pyxdg python3-xdg
 pyzmq python3-zmq
