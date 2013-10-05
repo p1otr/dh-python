@@ -63,6 +63,7 @@ def main(cfg):
             exit(10)
         plugin = Plugin(cfg)
         context = {'ENV': env, 'args': {}, 'dir': cfg.dir}
+        plugin.detect(context)
     else:
         plugin, certainty, context = None, 0, None
         for Plugin in build.plugins.values():
