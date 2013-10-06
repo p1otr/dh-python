@@ -1,3 +1,11 @@
+dh-python (1.20131003-2) UNRELEASED; urgency=low
+
+  * distutils build plugin: use default interpreter symlink in build step as
+    well as the install step (if interpreter version matches the default one).
+    So that shebangs in setuptools scripts.
+
+ -- Stefano Rivera <stefanor@debian.org>  Sun, 06 Oct 2013 18:14:31 +0200
+
 dh-python (1.20131003-1) unstable; urgency=low
 
   * Revert python-docutils build dependency change (to avoid circular
