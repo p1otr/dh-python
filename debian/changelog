@@ -6,6 +6,8 @@ dh-python (1.20130917-1~bpo70+1) wheezy-backports; urgency=low
     if python_defaults missing)
   * Use dpkg-divert to replace python3's dh_python3 and python's dh_python2
     and drop Breaks/Replaces
+  * dh_python2: do not rename extension files, Wheezy's python2.7 doesn't
+    support multiarch tuples
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 01 Sep 2013 21:15:25 +0200
 
