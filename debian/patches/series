@@ -1,2 +1,3 @@
 update_default_and_supported_python_versions.patch
 disable_ext_renaming_in_dh_python2.patch
+disable_multiarch_dependencies.patch
