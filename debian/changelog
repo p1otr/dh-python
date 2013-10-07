@@ -13,7 +13,7 @@ dh-python (1.20130917-1~bpo70+1) wheezy-backports; urgency=low
     - install PyDist fallback files
     - dh_python2: searching for packages with egg-info fixed
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 01 Sep 2013 21:15:25 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 07 Oct 2013 21:42:35 +0200
 
 dh-python (1.20130917-1) unstable; urgency=low
 
