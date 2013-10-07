@@ -1,0 +1,41 @@
+diff --git a/Makefile b/Makefile
+index 267963a..4963552 100644
+--- a/Makefile
++++ b/Makefile
+@@ -21,7 +21,9 @@ install:
+ 		$(DESTDIR)$(PREFIX)/share/debhelper/autoscripts/ \
+ 		$(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Sequence/ \
+ 		$(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Buildsystem/ \
+-		$(DESTDIR)$(PREFIX)/share/dh-python/dhpython/build
++		$(DESTDIR)$(PREFIX)/share/dh-python/dhpython/build \
++		$(DESTDIR)$(PREFIX)/share/dh-python/dist
++	$(INSTALL) -m 644 pydist/*_fallback $(DESTDIR)$(PREFIX)/share/dh-python/dist/
+ 	$(INSTALL) -m 644 dhpython/*.py $(DESTDIR)$(PREFIX)/share/dh-python/dhpython/
+ 	$(INSTALL) -m 644 dhpython/build/*.py $(DESTDIR)$(PREFIX)/share/dh-python/dhpython/build/
+ 	$(INSTALL) -m 755 pybuild $(DESTDIR)$(PREFIX)/share/dh-python/
+diff --git a/dhpython/__init__.py b/dhpython/__init__.py
+index 12cc3f2..bde749f 100644
+--- a/dhpython/__init__.py
++++ b/dhpython/__init__.py
+@@ -75,7 +75,7 @@ PYDIST_OVERRIDES_FNAMES = {
+     'pypy': 'debian/pypydist-overrides'}
+ 
+ PYDIST_DPKG_SEARCH_TPLS = {
+-    'cpython2': "*/%s-?*\.egg-info | grep '/python2\../\|/pyshared/'",
++    'cpython2': "*/{}-?*\.egg-info | grep '/python2\../\|/pyshared/'",
+     'cpython3': '*python3/*/{}-?*\.egg-info',
+     'pypy': '*pypy/*/{}-?\.egg-info'}
+ 
+diff --git a/pydist/Makefile b/pydist/Makefile
+index 34848e6..2e919af 100644
+--- a/pydist/Makefile
++++ b/pydist/Makefile
+@@ -5,7 +5,7 @@ clean:
+ 	#rm -f dist_fallback
+ 	rm -f README.PyDist.html
+ 
+-dist_fallback: sources.list
++dist_fallback:
+ 	python3 ./generate_fallback_list.py --skip-sensible-names
+ 
+ README.PyDist.html: README.PyDist

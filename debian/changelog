@@ -9,6 +9,9 @@ dh-python (1.20130917-1~bpo70+1) wheezy-backports; urgency=low
   * dh_python2: do not rename extension files, Wheezy's python2.7 doesn't
     support multiarch tuples
   * Disable multiarch dependencies (":any" not supported that well in Wheezy)
+  * Backported commits from newer versions:
+    - install PyDist fallback files
+    - dh_python2: searching for packages with egg-info fixed
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 01 Sep 2013 21:15:25 +0200
 
