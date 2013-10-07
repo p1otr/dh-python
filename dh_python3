@@ -103,6 +103,9 @@ def main():
     parser.add_option('--suggests', action='append',
                       help='translate given requirements into Debian '
                            'dependencies and add them to ${python3:Suggests}')
+    parser.add_option('--requires', action='append',
+                      help='translate requirements from given file into Debian '
+                           'dependencies and add them to ${python3:Depends}')
     parser.add_option('--shebang',
                       help='use given command as shebang in scripts')
     parser.add_option('--ignore-shebangs', action='store_true', default=False,
@@ -110,6 +113,9 @@ def main():
     parser.add_option('--no-dbg-cleaning', action='store_false',
                       dest='clean_dbg_pkg', default=True,
                       help='do not remove files from debug packages')
+    parser.add_option('--no-ext-rename', action='store_true',
+                      default=False, help='do not add magic tags nor multiarch'
+                                          ' tuples to extension file names)')
     parser.add_option('--no-shebang-rewrite', action='store_true',
                       default=False, help='do not rewrite shebangs')
     # ignore some debhelper options:
@@ -165,7 +171,7 @@ def main():
         interpreter.debug = package.endswith('-dbg')
 
         if not private_dir:
-            fix_locations(package, interpreter, SUPPORTED)
+            fix_locations(package, interpreter, SUPPORTED, options)
         stats = Scanner(interpreter, package, private_dir, options).result
 
         dependencies = Dependencies(package, 'cpython3')
@@ -213,7 +219,7 @@ def main():
                     ver = str(options.vrange)
                 else:  # try shebang or default Python version
                     ver = (list(i.version for i in details.get('shebangs', [])
-                                if i.version) or [None])[0] or DEFAULT
+                                if i.version and i.version.minor) or [None])[0] or DEFAULT
                 dependencies.depend("python%s" % ver)
                 args += " -V %s" % ver
             else:

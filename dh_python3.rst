@@ -87,6 +87,8 @@ OPTIONS
 
 --no-dbg-cleaning	do not remove any files from debug packages
 
+--no-ext-rename	do not add magic tags nor multiarch tuples to extension file names
+
 --no-shebang-rewrite	do not rewrite shebangs
 
 --skip-private	don't check private directories
@@ -122,6 +124,9 @@ OPTIONS
 --suggests=SUGGESTS	translate given requirements into Debian dependencies
   and add them to ${python3:Suggests}
 
+--requires=FILENAME	translate requirements from given file(s) into Debian
+  dependencies and add them to ${python3:Depends}
+
 --shebang=COMMAND	use given command as shebang in scripts
 
 --ignore-shebangs	do not translate shebangs into Debian dependencies
@@ -130,6 +135,7 @@ SEE ALSO
 ========
 * /usr/share/doc/python/python-policy.txt.gz
 * /usr/share/doc/dh-python/README.PyDist
+* pybuild(1)
 * py3compile(1), py3clean(1)
 * dh_python2(1), pycompile(1), pyclean(1)
 * http://deb.li/dhp3 - most recent version of this document

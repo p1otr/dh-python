@@ -1,16 +1,4 @@
-dh-python (1.20130819-1~bpo70+3) UNRELEASED; urgency=low
-
-  * Remove the diversion on upgrade away from a backport.
-
- -- Stefano Rivera <stefanor@debian.org>  Thu, 12 Sep 2013 23:25:16 +0200
-
-dh-python (1.20130819-1~bpo70+2) wheezy-backports; urgency=low
-
-  * Remove the diversions on removal.
-
- -- Stefano Rivera <stefanor@debian.org>  Thu, 12 Sep 2013 17:34:27 +0200
-
-dh-python (1.20130819-1~bpo70+1) wheezy-backports; urgency=low
+dh-python (1.20130917-1~bpo70+1) wheezy-backports; urgency=low
 
   * Rebuild for wheezy-backports.
   * Replace libpython3-stdlib build dependency with python3.2
@@ -18,11 +6,83 @@ dh-python (1.20130819-1~bpo70+1) wheezy-backports; urgency=low
     if python_defaults missing)
   * Use dpkg-divert to replace python3's dh_python3 and python's dh_python2
     and drop Breaks/Replaces
-  * Backport two commits from 1.20130901-1 release:
-    - fix_pybuild.pm_when_PYBUILD_INTERPRETERS_is_set
-    - fix_fallback_code_for_shlex.quote
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 01 Sep 2013 21:15:25 +0200
+
+dh-python (1.20130917-1) unstable; urgency=low
+
+  * dh_python{2,3}:
+    - bump minimum required python{,3}:any version to workaround #723586
+    - generate :any dependencies to specify range of supported Python versions
+      (doesn't include extensions case), closes: 723070
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 17 Sep 2013 19:29:05 +0200
+
+dh-python (1.20130913-1) unstable; urgency=low
+
+  [ Piotr Ożarowski ]
+  * dh_py*:
+    - add --requires option
+    - do not generate "python2" dependency while guessing private
+      extension's version using shebangs in other files (closes: #722307)
+
+  [ Steve Langasek ]
+  * Adjust dh_python to be multiarch-friendly (closes: 722045)
+
+  [ B. Clausius ]
+  * pybuild: fix --test when LC_ALL=C and setup.py contains non-ascii
+    characters (closes: 722214)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 13 Sep 2013 20:47:46 +0200
+
+dh-python (1.20130903-1) unstable; urgency=low
+
+  * dh_python2, dh_python3, dh_pypy:
+    - do not rename extensions in directories that include architecture triplet
+      as part of the path (closes: 721696)
+    - add --no-ext-rename option
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 03 Sep 2013 20:20:43 +0200
+
+dh-python (1.20130902-1) unstable; urgency=low
+
+  * Fix DESTDIR guessing (from --name) for non-default interpreter versions
+  * Add {package} to supported variables in command templates
+
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 02 Sep 2013 18:22:14 +0200
+
+dh-python (1.20130901-1) unstable; urgency=low
+
+  [ Dmitrijs Ledkovs ]
+  * Fix pybuild.pm when PYBUILD_INTERPRETERS is set
+    (broken in previous upload, closes: #720744)
+  * Bump doctests s/3.2/3.3/
+
+  [ Piotr Ożarowski ]
+  * Add Barry Warsaw to co-maintainers
+  * pybuild:
+    - mention {version.major} and {version.minor} in pybuild's manpage
+      (closes: 721068)
+    - add --test-tox option (PYBUILD_TEST_TOX=1 works too, like with
+      other pybuild options), closes: 721067
+    - set https_proxy to 127.0.0.1 if it's not set (similar to http_proxy)
+    - distutils build plugin: use default interpreter symlink in install step
+      (if interpreter version matches the default one) - this will force
+      distutils to not hardcode interpreter version in shebangs
+    - fix problem with relative paths when dh's --sourcedirectory is used
+    - add --name (PYBUILD_NAME) option
+  * dh_python{2,3} and dh_pypy: generate "interpreter (>= X.Y),
+    interpreter (<< X.Z)" dependency if private directory contains extensions
+    even if there are no .py files inside (closes: 720258)
+  * Disable two tests in test201 dir if /usr/bin/python2.6 is not available
+  * Replace python-docutils build dependency with python3-docutils (both
+    provide rst2man)
+
+  [ Dmitry Shachnev ]
+  * Make sure tests do not require python-support.
+  * Add "dh-python" and "nosetests" autopkgtests.
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 01 Sep 2013 20:51:17 +0200
 
 dh-python (1.20130819-1) unstable; urgency=low
 

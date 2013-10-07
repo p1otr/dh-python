@@ -63,6 +63,9 @@ TESTS
     --test-pytest
         use pytest module in test step, remember to add python-pytest and/or
         python3-pytest to Build-Depends
+    --test-tox
+        use tox command in test step, remember to add python-tox
+        to Build-Depends. Requires tox.ini file
 
 BUILD SYSTEM ARGUMENTS
 ----------------------
@@ -103,6 +106,7 @@ BUILD SYSTEM ARGUMENTS
 variables that can be used in `ARGUMENTS` and `COMMAND`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * `{version}` will be replaced with current Python version,
+  you can also use `{version.major}`, `{version.minor}`, etc.
 * `{interpreter}` will be replaced with current interpreter,
 * `{dir}` will be replaced with sources directory,
 * `{destdir}` will be replaced with destination directory,
@@ -111,6 +115,10 @@ variables that can be used in `ARGUMENTS` and `COMMAND`
   (.pybuild/interpreter_version/ by default),
 * `{build_dir}` will be replaced with build directory
 * `{install_dir}` will be replaced with install directory.
+* `{package}` will be replaced with suggested package name,
+  if --name (or PYBUILD_NAME) is set to `foo`, this variable
+  will be replaced to `python-foo`, `python3-foo` or `pypy-foo`
+  depending on interpreter which is used in given iteration.
 
 DIRECTORIES
 -----------
@@ -126,6 +134,10 @@ DIRECTORIES
       [default: `\.so(\.[^/]*)?$`]
   --install-dir DIR
       set installation directory [default: .../dist-packages]
+  --name NAME
+      use this name to guess destination directories
+      (depending on interpreter, "foo" sets debian/python-foo,
+      debian/python3-foo, debian/python3-foo-dbg, etc.)
 
 variables that can be used in `DIR`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,10 +179,8 @@ DEBHELPER COMMAND SEQUENCER INTEGRATION
 
 debian/rules file example::
 
- export PYBUILD_DESTDIR_python2=debian/python-foo/
- export PYBUILD_DESTDIR_python2-dbg=debian/python-foo-dbg/
- export PYBUILD_DESTDIR_python3=debian/python3-foo/
- export PYBUILD_DESTDIR_python3-dbg=debian/python3-foo-dbg/
+ #! /usr/bin/make -f
+ export PYBUILD_NAME=foo
  %:
   	dh $@ --with python2,python3 --buildsystem=pybuild
 

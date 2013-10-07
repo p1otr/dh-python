@@ -145,19 +145,33 @@ class Interpreter:
     def __str__(self):
         return self._vstr(self.version)
 
-    def _vstr(self, version):
+    def _vstr(self, version=None, consider_default_ver=False):
         if self.impl == 'pypy':
             # TODO: will Debian support more than one PyPy version?
             return self.name
         version = version or self.version or ''
-        if isinstance(version, Version) and version == Version(major=2):
+        if consider_default_ver and (not version or version == self.default_version):
+            version = '3' if self.impl == 'cpython3' else ''
+        elif isinstance(version, Version) and version == Version(major=2):
             version = ''  # do not promote /usr/bin/python2
         if self.debug:
             return 'python{}-dbg'.format(version)
         return self.name + str(version)
 
-    def binary(self, version):
-        return '/usr/bin/{}'.format(self._vstr(version))
+    def binary(self, version=None):
+        return '{}{}'.format(self.path, self._vstr(version))
+
+    @property
+    def binary_dv(self):
+        """Like binary(), but returns path to default intepreter symlink
+        if version matches default one for given implementation.
+        """
+        return '{}{}'.format(self.path, self._vstr(consider_default_ver=True))
+
+    @property
+    def default_version(self):
+        if self.impl:
+            return default(self.impl)
 
     @staticmethod
     def parse(shebang):
@@ -290,8 +304,8 @@ class Interpreter:
         >>> i = Interpreter('python')
         >>> i.cache_file('foo.py', Version('3.1'))
         'foo.pyc'
-        >>> i.cache_file('bar/foo.py', '3.2')
-        'bar/__pycache__/foo.cpython-32.pyc'
+        >>> i.cache_file('bar/foo.py', '3.3')
+        'bar/__pycache__/foo.cpython-33.pyc'
         """
         version = Version(version or self.version)
         last_char = 'o' if '-O' in self.options else 'c'
@@ -316,8 +330,8 @@ class Interpreter:
         """Return Python magic tag (used in __pycache__ dir to tag files).
 
         >>> i = Interpreter('python')
-        >>> i.magic_tag(version='3.2')
-        'cpython-32'
+        >>> i.magic_tag(version='3.3')
+        'cpython-33'
         """
         version = Version(version or self.version)
         if self.impl.startswith('cpython') and version << Version('3.2'):
@@ -408,6 +422,24 @@ class Interpreter:
         if fname == result:
             return
         return join(fdir, result)
+
+    def suggest_pkg_name(self, name):
+        """Suggest binary package name with for given library name
+
+        >>> Interpreter('python3.1').suggest_pkg_name('foo')
+        'python3-foo'
+        >>> Interpreter('python3.3').suggest_pkg_name('foo')
+        'python3-foo'
+        >>> Interpreter('python2.7-dbg').suggest_pkg_name('bar')
+        'python-bar-dbg'
+        """
+        if self.impl == 'pypy':
+            return 'pypy-{}'.format(name)
+        version = '3' if self.impl == 'cpython3' else ''
+        result = 'python{}-{}'.format(version, name)
+        if self.debug:
+            result += '-dbg'
+        return result
 
     def _get_config(self, version=None):
         version = Version(version or self.version)

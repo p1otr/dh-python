@@ -19,6 +19,7 @@
 # THE SOFTWARE.
 
 import logging
+from os.path import exists
 from dhpython import PKG_PREFIX_MAP, MINPYCDEP
 from dhpython.pydist import parse_pydep, guess_dependency
 from dhpython.version import default, supported, VersionRange
@@ -33,6 +34,8 @@ class Dependencies:
         self.impl = impl
         self.package = package
         self.is_debug_package = dbgpkg = package.endswith('-dbg')
+
+        # TODO: move it to PyPy and CPython{2,3} classes
         self.ipkg_vtpl = 'python%s-dbg' if dbgpkg else 'python%s'
         if impl == 'cpython3':
             self.ipkg_tpl = 'python3-dbg' if dbgpkg else 'python3'
@@ -41,6 +44,13 @@ class Dependencies:
         elif impl == 'pypy':
             self.ipkg_tpl = 'pypy-dbg' if dbgpkg else 'pypy'
             self.ipkg_vtpl = 'pypy%s-dbg' if dbgpkg else 'pypy%s'
+        if impl == 'pypy':
+            self.ipkg_tpl_ma = self.ipkg_tpl
+            self.ipkg_vtpl_ma = self.ipkg_vtpl
+        else:
+            self.ipkg_tpl_ma = self.ipkg_tpl + ':any'
+            self.ipkg_vtpl_ma = self.ipkg_vtpl + ':any'
+
         self.depends = set()
         self.recommends = []
         self.suggests = []
@@ -97,11 +107,17 @@ class Dependencies:
         log.debug('generating dependencies for package %s', self.package)
         tpl = self.ipkg_tpl
         vtpl = self.ipkg_vtpl
+        tpl_ma = self.ipkg_tpl_ma
+        vtpl_ma = self.ipkg_vtpl_ma
         vrange = options.vrange
 
         if vrange and any((stats['compile'], stats['public_vers'],
-                          stats['ext_vers'], stats['ext_no_version'],
-                          stats['shebangs'])):
+                           stats['ext_vers'], stats['ext_no_version'],
+                           stats['shebangs'])):
+            if any((stats['compile'], stats['public_vers'], stats['shebangs'])):
+                tpl_tmp = tpl_ma
+            else:
+                tpl_tmp = tpl
             minv = vrange.minver
             # note it's an open interval (i.e. do not add 1 here!):
             maxv = vrange.maxver
@@ -109,9 +125,9 @@ class Dependencies:
                 self.depend(vtpl % minv)
                 minv = maxv = None
             if minv:
-                self.depend("%s (>= %s)" % (tpl, minv))
+                self.depend("%s (>= %s)" % (tpl_tmp, minv))
             if maxv:
-                self.depend("%s (<< %s)" % (tpl, maxv))
+                self.depend("%s (<< %s)" % (tpl_tmp, maxv))
 
         if self.impl == 'cpython2' and stats['public_vers']:
             # additional Depends to block python package transitions
@@ -119,9 +135,9 @@ class Dependencies:
             minv = sorted_vers[0]
             maxv = sorted_vers[-1]
             if minv <= default(self.impl):
-                self.depend("%s (>= %s)" % (tpl, minv))
+                self.depend("%s (>= %s)" % (tpl_ma, minv))
             if maxv >= default(self.impl):
-                self.depend("%s (<< %s)" % (tpl, maxv + 1))
+                self.depend("%s (<< %s)" % (tpl_ma, maxv + 1))
 
         if stats['ext_vers']:
             # TODO: what about extensions with stable ABI?
@@ -139,54 +155,55 @@ class Dependencies:
             self.depend(MINPYCDEP[self.impl])
 
         for ipreter in stats['shebangs']:
-            self.depend(str(ipreter))
+            self.depend("%s%s" % (ipreter, ':any' if self.impl == 'pypy' else ''))
 
         supported_versions = supported(self.impl)
+        default_version = default(self.impl)
         for private_dir, details in stats['private_dirs'].items():
             versions = list(i.version for i in details.get('shebangs', []) if i.version and i.version.minor)
 
             for v in versions:
                 if v in supported_versions:
-                    self.depend(vtpl % v)
+                    self.depend(vtpl_ma % v)
                 else:
                     log.info('dependency on %s (from shebang) ignored'
                              ' - it\'s not supported anymore', vtpl % v)
             # /usr/bin/python{,3} shebang → add python{,3} to Depends
             if any(True for i in details.get('shebangs', []) if i.version is None):
-                self.depend(tpl)
+                self.depend(tpl_ma)
+
+            extensions = sorted(details.get('ext_vers', set()))
+            #self.depend('|'.join(vtpl % i for i in extensions))
+            if extensions:
+                self.depend("%s (>= %s)" % (tpl, extensions[0]))
+                self.depend("%s (<< %s)" % (tpl, extensions[-1] + 1))
+            elif details.get('ext_no_version'):
+                # assume unrecognized extension was built for default interpreter version
+                self.depend("%s (>= %s)" % (tpl, default_version))
+                self.depend("%s (<< %s)" % (tpl, default_version + 1))
 
             if details.get('compile'):
                 if self.impl in MINPYCDEP:
                     self.depend(MINPYCDEP[self.impl])
                 args = ''
-                if details.get('ext_vers'):
-                    extensions = sorted(details['ext_vers'])
-                    #self.depend('|'.join(vtpl % i for i in extensions))
-                    if extensions:
-                        args += "-V %s" % VersionRange(minver=extensions[0], maxver=extensions[-1])
-                        if len(extensions) == 1:
-                            self.depend(vtpl % extensions[0])
-                        else:
-                            self.depend("%s (>= %s)" % (tpl, extensions[0]))
-                            self.depend("%s (<< %s)" % (tpl, extensions[-1] + 1))
+                if extensions:
+                    args += "-V %s" % VersionRange(minver=extensions[0], maxver=extensions[-1])
                 elif len(versions) == 1:  # only one version from shebang
                     #if versions[0] in supported_versions:
                     args += "-V %s" % versions[0]
                     # ... otherwise compile with default version
                 elif details.get('ext_no_version'):
                     # assume unrecognized extension was built for default interpreter version
-                    dversion = default(self.impl)
-                    args += "-V %s" % dversion
-                    self.depend(vtpl % dversion)
+                    args += "-V %s" % default_version
                 elif vrange:
                     args += "-V %s" % vrange
                     if vrange.minver == vrange.maxver:
                         self.depend(vtpl % vrange.minver)
                     else:
                         if vrange.minver:  # minimum version specified
-                            self.depend("%s (>= %s)" % (tpl, vrange.minver))
+                            self.depend("%s (>= %s)" % (tpl_ma, vrange.minver))
                         if vrange.maxver:  # maximum version specified
-                            self.depend("%s (<< %s)" % (tpl, vrange.maxver + 1))
+                            self.depend("%s (<< %s)" % (tpl_ma, vrange.maxver + 1))
 
                 for pattern in options.regexpr or []:
                     args += " -X '%s'" % pattern.replace("'", r"'\''")
@@ -208,5 +225,12 @@ class Dependencies:
         # add dependencies from --suggests
         for item in options.suggests or []:
             self.suggest(guess_dependency(self.impl, item))
+        # add dependencies from --requires
+        for fn in options.requires or []:
+            if not exists(fn):
+                log.warn('cannot find requirements file: %s', fn)
+                continue
+            for i in parse_pydep(self.impl, fn):
+                self.depend(i)
 
         log.debug(self)

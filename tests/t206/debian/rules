@@ -3,6 +3,9 @@
 	dh $@ --buildsystem=python_distutils
 
 override_dh_pysupport:
+
+override_dh_install:
+	dh_install
 	DH_VERBOSE=1 ../../dh_python2
 	DH_VERBOSE=1 ../../dh_python2 /usr/share/bar25
 	DH_VERBOSE=1 ../../dh_python2 /usr/share/baz24 -V 2.4

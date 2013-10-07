@@ -13,6 +13,9 @@ override_dh_auto_install:
 
 
 override_dh_pysupport:
+
+override_dh_install:
+	dh_install
 	DH_VERBOSE=1 ../../dh_python2 --namespace foo --namespace bar.baz --namespace bar
 
 clean:

@@ -1,0 +1,6 @@
+Tests: dh-python
+Depends: python-all-dev, python3-all-dev, pypy, debhelper, libjs-jquery
+
+Tests: nosetests
+Depends: python3-nose, python-all, python3-all, pypy
+Restrictions: allow-stderr

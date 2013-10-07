@@ -306,6 +306,9 @@ def main():
     parser.add_option('--suggests', action='append',
                       help='translate given requirements into Debian '
                            'dependencies and add them to ${python:Suggests}')
+    parser.add_option('--requires', action='append',
+                      help='translate requirements from given file into Debian '
+                           'dependencies and add them to ${python:Depends}')
     parser.add_option('--namespace', action='append', dest='namespaces',
                       help='recreate __init__.py files for given namespaces at install time')
     parser.add_option('--clean-pycentral', action='store_true', default=False,
@@ -319,6 +322,9 @@ def main():
     parser.add_option('--no-dbg-cleaning', action='store_false',
                       dest='clean_dbg_pkg', default=True,
                       help='do not remove files from debug packages')
+    parser.add_option('--no-ext-rename', action='store_true',
+                      default=False, help='do not add magic tags nor multiarch'
+                                          ' tuples to extension file names)')
     parser.add_option('--no-shebang-rewrite', action='store_true',
                       default=False, help='do not rewrite shebangs')
     # ignore some debhelper options:
@@ -405,7 +411,7 @@ def main():
             except Exception as err:
                 log.error("%s.pyremove: %s", package, err)
                 exit(5)
-            fix_locations(package, interpreter, SUPPORTED)
+            fix_locations(package, interpreter, SUPPORTED, options)
         stats = Scanner(interpreter, package, private_dir, options).result
         if not private_dir:
             share(package, stats, options)
@@ -460,13 +466,13 @@ def main():
                     ver = str(options.vrange)
                 else:  # try shebang or default Python version
                     ver = (list(i.version for i in details.get('shebangs', [])
-                                if i.version) or [None])[0] or DEFAULT
+                                if i.version and i.version.minor) or [None])[0] or DEFAULT
                 dependencies.depend("python%s" % ver)
                 args += " -V %s" % ver
             else:
                 version = ext_for.pop()
                 args += " -V %s" % version
-                dependencies.depend("python%d.%d" % version)
+                dependencies.depend("python%s" % version)
 
             for pattern in options.regexpr or []:
                 args += " -X '%s'" % pattern.replace("'", r"'\''")

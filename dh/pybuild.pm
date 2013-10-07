@@ -3,14 +3,12 @@
 # Copyright: © 2012-2013 Piotr Ożarowski
 
 # TODO:
-# * save check_auto_buildable's result and pass it later via --system to speed things up
 # * support for dh --parallel
 
 package Debian::Debhelper::Buildsystem::pybuild;
 
 use strict;
-use Cwd ();
-use Debian::Debhelper::Dh_Lib qw(error);
+use Debian::Debhelper::Dh_Lib qw(error doit);
 use base 'Debian::Debhelper::Buildsystem';
 
 sub DESCRIPTION {
@@ -19,7 +17,7 @@ sub DESCRIPTION {
 
 sub check_auto_buildable {
 	my $this=shift;
-	return $this->doit_in_sourcedir('pybuild', '--detect', '--really-quiet');
+	return doit('pybuild', '--detect', '--really-quiet', '--dir', $this->get_sourcedir());
 }
 
 sub new {
@@ -46,14 +44,14 @@ sub new {
 sub configure {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('configure', @_)) {
-		$this->doit_in_sourcedir(@$command);
+		doit(@$command, '--dir', $this->get_sourcedir());
 	}
 }
 
 sub build {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('build', @_)) {
-		$this->doit_in_sourcedir(@$command);
+		doit(@$command, '--dir', $this->get_sourcedir());
 	}
 }
 
@@ -61,24 +59,24 @@ sub install {
 	my $this=shift;
 	my $destdir=shift;
 	foreach my $command ($this->pybuild_commands('install', @_)) {
-		$this->doit_in_sourcedir(@$command, '--dest-dir', $destdir);
+		doit(@$command, '--dir', $this->get_sourcedir(), '--dest-dir', $destdir);
 	}
 }
 
 sub test {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('test', @_)) {
-		$this->doit_in_sourcedir(@$command);
+		doit(@$command, '--dir', $this->get_sourcedir());
 	}
 }
 
 sub clean {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('clean', @_)) {
-		$this->doit_in_sourcedir(@$command);
+		doit(@$command, '--dir', $this->get_sourcedir());
 	}
-	$this->doit_in_sourcedir('rm', '-rf', '.pybuild/');
-	$this->doit_in_sourcedir('find', '.', '-name', '*.pyc', '-exec', 'rm', '{}', ';');
+	doit('rm', '-rf', '.pybuild/');
+	doit('find', '.', '-name', '*.pyc', '-exec', 'rm', '{}', ';');
 }
 
 sub pybuild_commands {
@@ -88,7 +86,7 @@ sub pybuild_commands {
 	my @result;
 
 	if ($ENV{'PYBUILD_INTERPRETERS'}) {
-		push @result, "pybuild --$step @options";
+		push @result, ['pybuild', "--$step", @options];
 	}
 	else {
 		# get interpreter packages from Build-Depends{,-Indep}:

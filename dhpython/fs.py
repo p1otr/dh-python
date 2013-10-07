@@ -25,13 +25,14 @@ from filecmp import cmp as cmpfile
 from os.path import exists, isdir, islink, join, split
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
+from dhpython import MULTIARCH_DIR_TPL
 from dhpython.tools import fix_shebang, clean_egg_name
 from dhpython.interpreter import Interpreter
 
 log = logging.getLogger('dhpython')
 
 
-def fix_locations(package, interpreter, versions):
+def fix_locations(package, interpreter, versions, options):
     """Move files to the right location."""
     for version in versions:
         interpreter.version = version
@@ -41,7 +42,7 @@ def fix_locations(package, interpreter, versions):
             if isdir(srcdir):
                 # TODO: what about relative symlinks?
                 log.debug('moving files from %s to %s', srcdir, dstdir)
-                share_files(srcdir, dstdir, interpreter)
+                share_files(srcdir, dstdir, interpreter, options)
                 parent_dir = '/'.join(srcdir.split('/')[:-1])
                 if exists(parent_dir) and not os.listdir(parent_dir):
                     os.rmdir(parent_dir)
@@ -51,17 +52,17 @@ def fix_locations(package, interpreter, versions):
         for srcdir in interpreter.old_sitedirs(package, gdb=True):
             if isdir(srcdir):
                 log.debug('moving files from %s to %s', srcdir, dstdir)
-                share_files(srcdir, dstdir, interpreter)
+                share_files(srcdir, dstdir, interpreter, options)
                 parent_dir = '/'.join(srcdir.split('/')[:-1])
                 if exists(parent_dir) and not os.listdir(parent_dir):
                     os.rmdir(parent_dir)
 
 
-def share_files(srcdir, dstdir, interpreter):
+def share_files(srcdir, dstdir, interpreter, options):
     """Try to move as many files from srcdir to dstdir as possible."""
     for i in os.listdir(srcdir):
         fpath1 = join(srcdir, i)
-        if i.rsplit('.', 1)[-1] == 'so':
+        if not options.no_ext_rename and i.rsplit('.', 1)[-1] == 'so':
             # try to rename extension here as well (in :meth:`scan` info about
             # Python version is gone)
             version = interpreter.parse_public_version(srcdir)
@@ -84,7 +85,7 @@ def share_files(srcdir, dstdir, interpreter):
             os.renames(fpath1, fpath2)
             continue
         if isdir(fpath1):
-            share_files(fpath1, fpath2, interpreter)
+            share_files(fpath1, fpath2, interpreter, options)
         elif cmpfile(fpath1, fpath2, shallow=False):
             os.remove(fpath1)
         # XXX: check symlinks
@@ -178,7 +179,8 @@ class Scan:
 
                 fext = fn.rsplit('.', 1)[-1]
                 if fext == 'so':
-                    fpath = self.rename_ext(fpath)
+                    if not self.options.no_ext_rename:
+                        fpath = self.rename_ext(fpath)
                     ver = self.handle_ext(fpath)
                     if ver:
                         self.current_result.setdefault('ext_vers', set()).add(ver)
@@ -254,7 +256,8 @@ class Scan:
         This method is invoked for all .so files in public or private directories.
         """
         path, fname = fpath.rsplit('/', 1)
-        if islink(fpath):
+        if self.current_pub_version and islink(fpath):
+            # replace symlinks with extensions in dist-packages directory
             dstfpath = fpath
             links = set()
             while islink(dstfpath):
@@ -268,6 +271,9 @@ class Scan:
                 log.info('renaming %s to %s', dstfpath, fname)
                 os.rename(dstfpath, fpath)
 
+        if MULTIARCH_DIR_TPL.match(fpath):
+            # ignore /lib/i386-linux-gnu/, /usr/lib/x86_64-kfreebsd-gnu/, etc.
+            return fpath
         new_fn = self.interpreter.check_extname(fname, self.current_pub_version)
         if new_fn:
             # TODO: what about symlinks pointing to this file

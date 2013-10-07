@@ -24,7 +24,7 @@ import logging
 import argparse
 import sys
 from os import environ, getcwd, makedirs
-from os.path import exists, join
+from os.path import abspath, exists, join
 
 logging.basicConfig(format='%(levelname).1s: pybuild '
                            '%(module)s:%(lineno)d: %(message)s')
@@ -35,6 +35,7 @@ def main(cfg):
     log.debug('cfg: %s', cfg)
     from dhpython import build
     from dhpython.version import Version, get_requested_versions
+    from dhpython.interpreter import Interpreter
     from dhpython.tools import execute, move_matching_files
 
     if cfg.list_systems:
@@ -51,6 +52,8 @@ def main(cfg):
         env['LC_ALL'] = 'C.UTF-8'
     if 'http_proxy' not in env:
         env['http_proxy'] = 'http://127.0.0.1:9/'
+    if 'https_proxy' not in env:
+        env['https_proxy'] = 'https://127.0.0.1:9/'
 
     if cfg.system:
         certainty = 99
@@ -82,7 +85,7 @@ def main(cfg):
         if plugin.SUPPORTED_INTERPRETERS is not True and interpreter not in plugin.SUPPORTED_INTERPRETERS:
             log.error('interpreter %s not supported by %s', interpreter, plugin)
             exit(12)
-    log.info('detected build system: %s (certainty: %s%%)', plugin, certainty)
+    log.debug('detected build system: %s (certainty: %s%%)', plugin.NAME, certainty)
 
     if cfg.detect_only:
         if not cfg.really_quiet:
@@ -118,26 +121,35 @@ def main(cfg):
 
     def get_args(context, step, version, interpreter):
         i = interpreter.format(version=version)
-        home_dir = '.pybuild/{}_{}'.format(interpreter.format(version='X.Y'), version)
+        home_dir = abspath('.pybuild/{}_{}'.format(interpreter.format(version='X.Y'), version))
         build_dir = get_option('build_dir', interpreter, version,
                                default=join(home_dir, 'build'))
+
+        ipreter = Interpreter(i)
+        destdir = context['destdir'].format(version=version, interpreter=i)
+        if cfg.name:
+            package = ipreter.suggest_pkg_name(cfg.name)
+        else:
+            package = 'PYBUILD_NAME_not_set'
+        if cfg.name and destdir.rstrip('/').endswith('debian/tmp'):
+            destdir = "debian/{}".format(package)
+        destdir = abspath(destdir)
+
         args = dict(context['args'])
         args.update({
-            'interpreter': i,
+            'package': package,
+            'interpreter': ipreter,
+            'version': version,
             'args': get_option("%s_args" % step, interpreter, version, ''),
-            'dir': context['dir'].format(version=version, interpreter=i),
-            'destdir': (join(context['dir'], context['destdir'])).format(
-                version=version, interpreter=i),
-            'home_dir': (join(context['dir'], home_dir)).format(
-                version=version, interpreter=i),
-            'build_dir': (join(context['dir'], build_dir)).format(
-                version=version, interpreter=i),
+            'dir': abspath(context['dir'].format(version=version, interpreter=i)),
+            'destdir': destdir,
+            'build_dir': abspath(build_dir.format(version=version, interpreter=i)),
             # versioned dist-packages even for Python 3.X - dh_python3 will fix it later
             # (and will have a chance to compare files)
             'install_dir': get_option('install_dir', interpreter, version,
                                       '/usr/lib/python{version}/dist-packages'
                                       ).format(version=version, interpreter=i),
-            'version': version})
+            'home_dir': home_dir})
         if interpreter == 'pypy':
             args['install_dir'] = '/usr/lib/pypy/dist-packages/'
         if step == 'test':
@@ -363,6 +375,9 @@ def parse_args(argv):
     tests.add_argument('--test-pytest', action='store_true',
                        default=environ.get('PYBUILD_TEST_PYTEST') == '1',
                        help='use pytest module in --test step')
+    tests.add_argument('--test-tox', action='store_true',
+                       default=environ.get('PYBUILD_TEST_TOX') == '1',
+                       help='use tox in --test step')
 
     dirs = parser.add_argument_group('DIRECTORIES')
     dirs.add_argument('-d', '--dir', action='store', metavar='DIR',
@@ -380,6 +395,9 @@ def parse_args(argv):
                       ' if --ext-destdir is set [default: .so files]')
     dirs.add_argument('--install-dir', action='store', metavar='DIR',
                       help='installation directory [default: .../dist-packages]')
+    dirs.add_argument('--name', action='store',
+                      default=environ.get('PYBUILD_NAME'),
+                      help='use this name to guess destination directories')
 
     limit = parser.add_argument_group('LIMITATIONS')
     limit.add_argument('-s', '--system',
@@ -406,7 +424,8 @@ def parse_args(argv):
             versions.extend(version.split())
         args.versions = versions
 
-    if args.test_nose or args.test_pytest or args.system == 'custom':
+    if args.test_nose or args.test_pytest or args.test_tox\
+       or args.system == 'custom':
         args.custom_tests = True
     else:
         args.custom_tests = False

@@ -300,7 +300,7 @@ def pyremove(interpreter, package, vrange):
         for version in myvers:
             files = glob(interpreter.sitedir(package, version) + details['pattern'])
             if not files:
-                log.debug('%s.pyremove: nothing to remove: python%d.%d, %s',
+                log.debug('%s.pyremove: nothing to remove: python%s, %s',
                           package, version, details['pattern'])
                 continue
             for fpath in files:

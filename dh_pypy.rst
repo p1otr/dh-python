@@ -75,6 +75,8 @@ OPTIONS
 --no-guessing-deps	disable guessing dependencies
 
 --no-dbg-cleaning	do not remove any files from debug packages
+    
+--no-ext-rename	do not add magic tags nor multiarch tuples to extension file names
 
 --no-shebang-rewrite	do not rewrite shebangs
 
@@ -107,6 +109,9 @@ OPTIONS
 
 --suggests=SUGGESTS	translate given requirements into Debian dependencies
   and add them to ${pypy:Suggests}
+
+--requires=FILENAME	translate requirements from given file(s) into Debian
+  dependencies and add them to ${pypy:Depends}
 
 --shebang=COMMAND	use given command as shebang in scripts
 

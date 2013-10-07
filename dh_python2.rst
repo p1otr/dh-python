@@ -136,6 +136,8 @@ OPTIONS
 
 --no-dbg-cleaning	do not remove any files from debug packages
 
+--no-ext-rename	do not add magic tags nor multiarch tuples to extension file names
+
 --no-shebang-rewrite	do not rewrite shebangs
 
 --skip-private	don't check private directories
@@ -171,6 +173,9 @@ OPTIONS
 --suggests=SUGGESTS	translate given requirements into Debian dependencies
   and add them to ${python:Suggests}
 
+--requires=FILENAME	translate requirements from given file(s) into Debian
+  dependencies and add them to ${python:Depends}
+
 --namespace	use this option (multiple time if necessary) if
   namespace_packages.txt is not complete
 
@@ -190,6 +195,7 @@ SEE ALSO
 ========
 * /usr/share/doc/python/python-policy.txt.gz
 * /usr/share/doc/dh-python/README.PyDist
+* pybuild(1)
 * pycompile(1), pyclean(1)
 * dh_python3(1), py3compile(1), py3clean(1)
 * Wiki page about converting package to dh_python2:
