@@ -234,6 +234,7 @@ gnome_app_install gnome-codec-install
 gnomecatalog gnomecatalog
 gnuplot_py python-gnuplot
 go2 go2
+google_api_python_client python-googleapi
 gourmet gourmet
 graphite_web graphite-web
 grokmirror grokmirror
@@ -434,6 +435,7 @@ ssh_import_id ssh-import-id
 summain summain
 supervisor supervisor
 suricatasc suricata
+svnmailer svnmailer
 swift3 swift-plugin-s3
 synaptiks kde-config-touchpad
 system_storage_manager system-storage-manager

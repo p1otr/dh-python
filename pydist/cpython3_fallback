@@ -19,6 +19,7 @@ ipython ipython3
 jsonpatch python3-json-patch
 jsonpointer python3-json-pointer
 kazam kazam
+msgpack_python python3-msgpack
 py3dns python3-dns
 pyOpenSSL python3-openssl
 py_bcrypt python3-bcrypt
