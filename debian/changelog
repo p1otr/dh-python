@@ -9,6 +9,10 @@ dh-python (1.20131003-2) UNRELEASED; urgency=low
   * dh_python2: searching for packages with egg-info fixed
   * dh_py*: "so" files no longer detected as extensions (closes: 726616)
 
+  [ B. Clausius ]
+  * pybuild: no longer fails if source directory path contains braces
+    (closes: 726458)
+
  -- Stefano Rivera <stefanor@debian.org>  Sun, 06 Oct 2013 18:14:31 +0200
 
 dh-python (1.20131003-1) unstable; urgency=low
