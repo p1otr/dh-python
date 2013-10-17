@@ -399,6 +399,19 @@ class Interpreter:
                 result += 'mu'
         return result
 
+    @property
+    def library_file(self):
+        """Return libfoo.so file path."""
+        if self.impl == 'pypy':
+            return ''
+        libpl, ldlibrary = self._get_config()[3:5]
+        if ldlibrary.endswith('.a'):
+            # python3.1-dbg, python3.2, python3.2-dbg returned static lib
+            ldlibrary = ldlibrary.replace('.a', '.so')
+        if libpl and ldlibrary:
+            return join(libpl, ldlibrary)
+        raise Exception('cannot find library file for {}'.format(self))
+
     def check_extname(self, fname, version=None):
         """Return extension file name if file can be renamed."""
 
@@ -485,7 +498,7 @@ class Interpreter:
             cmd = 'from distutils import sysconfig as s;'
         cmd += 'print("__SEP__".join(i or "" ' \
                'for i in s.get_config_vars('\
-               '"SOABI", "MULTIARCH", "INCLUDEPY")))'
+               '"SOABI", "MULTIARCH", "INCLUDEPY", "LIBPL", "LDLIBRARY")))'
         conf_vars = self._execute(cmd, version).split('__SEP__')
         try:
             conf_vars[1] = os.environ['DEB_HOST_MULTIARCH']
