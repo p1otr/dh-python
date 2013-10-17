@@ -182,6 +182,7 @@ class Scan:
                     if not self.options.no_ext_rename:
                         fpath = self.rename_ext(fpath)
                     ver = self.handle_ext(fpath)
+                    ver = ver or version
                     if ver:
                         self.current_result.setdefault('ext_vers', set()).add(ver)
                     else:
