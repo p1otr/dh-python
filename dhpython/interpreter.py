@@ -342,7 +342,7 @@ class Interpreter:
         """Return multiarch tag."""
         version = Version(version or self.version)
         try:
-            soabi, multiarch = self._get_config(version)
+            soabi, multiarch = self._get_config(version)[:2]
         except Exception:
             log.debug('cannot get multiarch', exc_info=True)
             # interpreter without multiarch support
@@ -360,12 +360,44 @@ class Interpreter:
         version = Version(version or self.version)
         # NOTE: it's not the same as magic_tag
         try:
-            soabi, multiarch = self._get_config(version)
+            soabi, multiarch = self._get_config(version)[:2]
         except Exception:
             log.debug('cannot get soabi', exc_info=True)
             # interpreter without soabi support
             return ''
         return soabi
+
+    @property
+    def include_dir(self):
+        """Return INCLUDE_DIR path.
+
+        >>> Interpreter('python2.7').include_dir
+        '/usr/include/python2.7'
+        >>> Interpreter('python3.3-dbg').include_dir
+        '/usr/include/python3.3dm'
+        """
+        if self.impl == 'pypy':
+            return '/usr/lib/pypy/include'
+        try:
+            result = self._get_config()[2]
+            if result:
+                return result
+        except Exception:
+            result = ''
+            log.debug('cannot get include path', exc_info=True)
+        result = '/usr/include/{}'.format(self.name)
+        version = self.version
+        if self.debug:
+            if version << '3.3':
+                result += '_d'
+            else:
+                result += 'dm'
+        else:
+            if version >> '3.2':
+                result += 'm'
+            elif version == '3.2':
+                result += 'mu'
+        return result
 
     def check_extname(self, fname, version=None):
         """Return extension file name if file can be renamed."""
@@ -394,7 +426,7 @@ class Interpreter:
             return
 
         try:
-            soabi, multiarch = self._get_config(version)
+            soabi, multiarch = self._get_config(version)[:2]
         except Exception:
             log.debug('cannot get soabi/multiarch', exc_info=True)
             return
@@ -452,7 +484,8 @@ class Interpreter:
         else:
             cmd = 'from distutils import sysconfig as s;'
         cmd += 'print("__SEP__".join(i or "" ' \
-               'for i in s.get_config_vars("SOABI", "MULTIARCH")))'
+               'for i in s.get_config_vars('\
+               '"SOABI", "MULTIARCH", "INCLUDEPY")))'
         conf_vars = self._execute(cmd, version).split('__SEP__')
         try:
             conf_vars[1] = os.environ['DEB_HOST_MULTIARCH']
