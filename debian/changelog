@@ -8,6 +8,8 @@ dh-python (1.20131003-2) UNRELEASED; urgency=low
   [ Piotr Ożarowski ]
   * dh_python2: searching for packages with egg-info fixed
   * dh_py*: "so" files no longer detected as extensions (closes: 726616)
+  * pybuild: set PYTHON_LIBRARY and PYTHON_INCLUDE_DIR in cmake build
+    plugin's configure step
 
   [ B. Clausius ]
   * pybuild: no longer fails if source directory path contains braces
