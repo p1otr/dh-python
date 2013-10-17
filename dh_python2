@@ -27,7 +27,8 @@ import re
 import sys
 from filecmp import dircmp, cmpfiles, cmp as fcmp
 from optparse import OptionParser, SUPPRESS_HELP
-from os.path import isabs, isdir, islink, exists, join, normpath, realpath
+from os.path import isabs, isdir, islink, exists, join, normpath, splitext,\
+    realpath
 from shutil import copy as fcopy
 from dhpython.debhelper import DebHelper
 from dhpython.depends import Dependencies
@@ -47,6 +48,8 @@ log = logging.getLogger('dhpython')
 os.umask(0o22)
 DEFAULT = default('cpython2')
 SUPPORTED = supported('cpython2')
+
+fext = lambda fname: splitext(fname)[-1][1:]
 
 
 class Scanner(Scan):
@@ -118,8 +121,6 @@ def move_to_pyshared(dir1):
     dstdir = join(debian, package, 'usr/share/pyshared/',
                   '/'.join(dir1.split('/')[6:]))
 
-    fext = lambda fname: fname.rsplit('.', 1)[-1]
-
     for i in os.listdir(dir1):
         fpath1 = join(dir1, i)
         if isdir(fpath1) and not islink(fpath1):
@@ -161,7 +162,7 @@ def create_ext_links(dir1):
         fpath1 = join(dir1, i)
         if isdir(fpath1):
             create_ext_links(fpath1)
-        elif i.rsplit('.', 1)[-1] == 'so':
+        elif fext(i) == 'so':
             fpath2 = join(dstdir, i)
             if exists(fpath2):
                 continue
@@ -222,7 +223,8 @@ def share_2x(dir1, dir2, dc=None):
         common_files = cmpfiles(dir1, dir2, common_files, shallow=False)[0]
 
     for fn in common_files:
-        if 'so' in fn.split('.'):  # foo.so, bar.so.0.1.2, etc.
+        if 'so' in fn.split('.') and not fn.startswith('so'):
+            # foo.so, bar.so.0.1.2, etc.
             # in unlikely case where extensions are exactly the same
             continue
         fpath1 = join(dir1, fn)
