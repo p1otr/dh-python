@@ -21,7 +21,9 @@ install:
 		$(DESTDIR)$(PREFIX)/share/debhelper/autoscripts/ \
 		$(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Sequence/ \
 		$(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Buildsystem/ \
-		$(DESTDIR)$(PREFIX)/share/dh-python/dhpython/build
+		$(DESTDIR)$(PREFIX)/share/dh-python/dhpython/build \
+		$(DESTDIR)$(PREFIX)/share/dh-python/dist
+	$(INSTALL) -m 644 pydist/*_fallback $(DESTDIR)$(PREFIX)/share/dh-python/dist/
 	$(INSTALL) -m 644 dhpython/*.py $(DESTDIR)$(PREFIX)/share/dh-python/dhpython/
 	$(INSTALL) -m 644 dhpython/build/*.py $(DESTDIR)$(PREFIX)/share/dh-python/dhpython/build/
 	$(INSTALL) -m 755 pybuild $(DESTDIR)$(PREFIX)/share/dh-python/

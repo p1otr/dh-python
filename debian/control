@@ -2,10 +2,10 @@ Source: dh-python
 Section: python
 Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
-Uploaders: Stefano Rivera <stefanor@debian.org>
+Uploaders: Stefano Rivera <stefanor@debian.org>, Barry Warsaw <barry@debian.org>
 Build-Depends: debhelper (>= 9), python3-minimal,
  python3.2,
-# provides rst2man command:
+# provides rst2man command (python3-docutils not used to avoid circular deps):
  python-docutils
 Standards-Version: 3.9.4
 Vcs-Git: git://anonscm.debian.org/dh-python/dh-python.git
