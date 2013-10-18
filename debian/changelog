@@ -10,6 +10,8 @@ dh-python (1.20131003-1~bpo70+1) wheezy-backports; urgency=low
     support multiarch tuples
   * Disable multiarch dependencies (":any" not supported that well in Wheezy)
   * Backported commits from newer versions:
+    - dh_python2: searching for packages with egg-info fixed
+    - dh_py*: re-enable detection of public extension's version using file path
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 18 Oct 2013 20:02:13 +0200
 

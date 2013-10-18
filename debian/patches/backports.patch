@@ -1,0 +1,25 @@
+diff --git a/dhpython/__init__.py b/dhpython/__init__.py
+index 12cc3f2..bde749f 100644
+--- a/dhpython/__init__.py
++++ b/dhpython/__init__.py
+@@ -75,7 +75,7 @@ PYDIST_OVERRIDES_FNAMES = {
+     'pypy': 'debian/pypydist-overrides'}
+ 
+ PYDIST_DPKG_SEARCH_TPLS = {
+-    'cpython2': "*/%s-?*\.egg-info | grep '/python2\../\|/pyshared/'",
++    'cpython2': "*/{}-?*\.egg-info | grep '/python2\../\|/pyshared/'",
+     'cpython3': '*python3/*/{}-?*\.egg-info',
+     'pypy': '*pypy/*/{}-?\.egg-info'}
+ 
+diff --git a/dhpython/fs.py b/dhpython/fs.py
+index 7276333..05bd3d7 100644
+--- a/dhpython/fs.py
++++ b/dhpython/fs.py
+@@ -182,6 +182,7 @@ class Scan:
+                     if not self.options.no_ext_rename:
+                         fpath = self.rename_ext(fpath)
+                     ver = self.handle_ext(fpath)
++                    ver = ver or version
+                     if ver:
+                         self.current_result.setdefault('ext_vers', set()).add(ver)
+                     else:
