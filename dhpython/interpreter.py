@@ -38,7 +38,6 @@ SHEBANG_RE = re.compile(r'''
     ''', re.VERBOSE)
 EXTFILE_RE = re.compile(r'''
     (?P<name>.*?)
-    (?P<debug>_d)?
     (?:\.
         (?P<stableabi>abi\d+)
      |(?:\.
@@ -53,6 +52,7 @@ EXTFILE_RE = re.compile(r'''
             (?P<multiarch>[^/]*?)
         )?
     ))?
+    (?P<debug>_d)?
     \.so$''', re.VERBOSE)
 log = logging.getLogger('dhpython')
 
@@ -453,8 +453,6 @@ class Interpreter:
         result = info['name']
         if self.impl == 'cpython3' and version >> '3.2' and result.endswith('module'):
             result = result[:-6]
-        elif self.debug and self.impl == 'cpython2':
-            result += '_d'
 
         if tmp_soabi:
             result = "{}.{}".format(result, tmp_soabi)
@@ -463,6 +461,8 @@ class Interpreter:
         elif self.impl == 'cpython2' and version == '2.7' and tmp_multiarch:
             result = "{}.{}".format(result, tmp_multiarch)
 
+        if self.debug and self.impl == 'cpython2':
+            result += '_d'
         result += '.so'
         if fname == result:
             return
