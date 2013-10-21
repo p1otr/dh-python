@@ -23,3 +23,71 @@ index 7276333..05bd3d7 100644
                      if ver:
                          self.current_result.setdefault('ext_vers', set()).add(ver)
                      else:
+diff --git a/dhpython/interpreter.py b/dhpython/interpreter.py
+index 8d9a574..32d0bf2 100644
+--- a/dhpython/interpreter.py
++++ b/dhpython/interpreter.py
+@@ -38,7 +38,6 @@ SHEBANG_RE = re.compile(r'''
+     ''', re.VERBOSE)
+ EXTFILE_RE = re.compile(r'''
+     (?P<name>.*?)
+-    (?P<debug>_d)?
+     (?:\.
+         (?P<stableabi>abi\d+)
+      |(?:\.
+@@ -53,6 +52,7 @@ EXTFILE_RE = re.compile(r'''
+             (?P<multiarch>[^/]*?)
+         )?
+     ))?
++    (?P<debug>_d)?
+     \.so$''', re.VERBOSE)
+ log = logging.getLogger('dhpython')
+ 
+@@ -408,8 +408,6 @@ class Interpreter:
+         result = info['name']
+         if self.impl == 'cpython3' and version >> '3.2' and result.endswith('module'):
+             result = result[:-6]
+-        elif self.debug and self.impl == 'cpython2':
+-            result += '_d'
+ 
+         if tmp_soabi:
+             result = "{}.{}".format(result, tmp_soabi)
+@@ -418,6 +416,8 @@ class Interpreter:
+         elif self.impl == 'cpython2' and version == '2.7' and tmp_multiarch:
+             result = "{}.{}".format(result, tmp_multiarch)
+ 
++        if self.debug and self.impl == 'cpython2':
++            result += '_d'
+         result += '.so'
+         if fname == result:
+             return
+diff --git a/tests/test_interpreter.py b/tests/test_interpreter.py
+index 832639e..7078372 100644
+--- a/tests/test_interpreter.py
++++ b/tests/test_interpreter.py
+@@ -42,7 +42,7 @@ class TestInterpreter(unittest.TestCase):
+         i = Interpreter('python2.7')
+         self.assertEqual(i.soabi(), '')
+         self.assertEqual(i.check_extname('foo.so'), 'foo.MYARCH.so')
+-        self.assertIsNone(i.check_extname('foo_d.MYARCH.so'))
++        self.assertIsNone(i.check_extname('foo.MYARCH_d.so'))
+         self.assertIsNone(i.check_extname('foo.abi3.so'))
+         self.assertIsNone(i.check_extname('foo.OTHER.so'))  # different architecture
+         self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), 'foo/bar/bazmodule.MYARCH.so')
+@@ -51,11 +51,11 @@ class TestInterpreter(unittest.TestCase):
+     def test_python27dbg(self):
+         i = Interpreter('python2.7-dbg')
+         self.assertEqual(i.soabi(), '')
+-        self.assertEqual(i.check_extname('foo.so'), 'foo_d.MYARCH.so')
+-        self.assertEqual(i.check_extname('foo_d.so'), 'foo_d.MYARCH.so')
+-        self.assertIsNone(i.check_extname('foo_d.MYARCH.so'))
+-        self.assertIsNone(i.check_extname('foo_d.OTHER.so'))  # different architecture
+-        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), 'foo/bar/bazmodule_d.MYARCH.so')
++        self.assertEqual(i.check_extname('foo.so'), 'foo.MYARCH_d.so')
++        self.assertEqual(i.check_extname('foo_d.so'), 'foo.MYARCH_d.so')
++        self.assertIsNone(i.check_extname('foo.MYARCH_d.so'))
++        self.assertIsNone(i.check_extname('foo.OTHER_d.so'))  # different architecture
++        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), 'foo/bar/bazmodule.MYARCH_d.so')
+ 
+     @unittest.skipUnless(exists('/usr/bin/python3.1'), 'python3.1 is not installed')
+     def test_python31(self):

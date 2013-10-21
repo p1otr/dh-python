@@ -12,8 +12,9 @@ dh-python (1.20131003-1~bpo70+1) wheezy-backports; urgency=low
   * Backported commits from newer versions:
     - dh_python2: searching for packages with egg-info fixed
     - dh_py*: re-enable detection of public extension's version using file path
+    - dh_python2: fix renaming debug extensions with multiarch tuples
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 18 Oct 2013 20:02:13 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 21 Oct 2013 21:17:49 +0200
 
 dh-python (1.20131003-1) unstable; urgency=low
 
