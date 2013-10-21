@@ -1,8 +1,8 @@
-dh-python (1.20131021-1) UNRELEASED; urgency=low
+dh-python (1.20131021-1) unstable; urgency=low
 
   * dh_python2: fix renaming debug extensions with multiarch tuples
 
- -- Piotr Ożarowski <piotr@debian.org>  Mon, 21 Oct 2013 08:34:53 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 21 Oct 2013 20:52:04 +0200
 
 dh-python (1.20131017-1) unstable; urgency=low
 

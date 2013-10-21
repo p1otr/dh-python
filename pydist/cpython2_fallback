@@ -242,6 +242,7 @@ gunicorn gunicorn
 gvb gvb
 gyp gyp
 hgnested mercurial-nested
+horizon python-django-horizon
 httpcode httpcode
 httpie httpie
 hyde hyde
