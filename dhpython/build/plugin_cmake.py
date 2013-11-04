@@ -21,7 +21,6 @@
 from dhpython.build.base import Base, shell_command
 
 
-# FIXME: doesn't work
 class BuildSystem(Base):
     DESCRIPTION = 'CMake build system (using dh_auto_* commands)'
     REQUIRED_COMMANDS = ['cmake']
@@ -38,6 +37,8 @@ class BuildSystem(Base):
         return ('dh_auto_configure --buildsystem=cmake'
                 ' --builddirectory="{build_dir}" --'
                 ' -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/{interpreter}'
+                ' -DPYTHON_LIBRARY:FILEPATH={interpreter.library_file}'
+                ' -DPYTHON_INCLUDE_DIR:PATH={interpreter.include_dir}'
                 ' {args}')
 
     @shell_command

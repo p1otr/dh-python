@@ -38,7 +38,6 @@ SHEBANG_RE = re.compile(r'''
     ''', re.VERBOSE)
 EXTFILE_RE = re.compile(r'''
     (?P<name>.*?)
-    (?P<debug>_d)?
     (?:\.
         (?P<stableabi>abi\d+)
      |(?:\.
@@ -53,6 +52,7 @@ EXTFILE_RE = re.compile(r'''
             (?P<multiarch>[^/]*?)
         )?
     ))?
+    (?P<debug>_d)?
     \.so$''', re.VERBOSE)
 log = logging.getLogger('dhpython')
 
@@ -342,7 +342,7 @@ class Interpreter:
         """Return multiarch tag."""
         version = Version(version or self.version)
         try:
-            soabi, multiarch = self._get_config(version)
+            soabi, multiarch = self._get_config(version)[:2]
         except Exception:
             log.debug('cannot get multiarch', exc_info=True)
             # interpreter without multiarch support
@@ -360,12 +360,57 @@ class Interpreter:
         version = Version(version or self.version)
         # NOTE: it's not the same as magic_tag
         try:
-            soabi, multiarch = self._get_config(version)
+            soabi, multiarch = self._get_config(version)[:2]
         except Exception:
             log.debug('cannot get soabi', exc_info=True)
             # interpreter without soabi support
             return ''
         return soabi
+
+    @property
+    def include_dir(self):
+        """Return INCLUDE_DIR path.
+
+        >>> Interpreter('python2.7').include_dir
+        '/usr/include/python2.7'
+        >>> Interpreter('python3.3-dbg').include_dir
+        '/usr/include/python3.3dm'
+        """
+        if self.impl == 'pypy':
+            return '/usr/lib/pypy/include'
+        try:
+            result = self._get_config()[2]
+            if result:
+                return result
+        except Exception:
+            result = ''
+            log.debug('cannot get include path', exc_info=True)
+        result = '/usr/include/{}'.format(self.name)
+        version = self.version
+        if self.debug:
+            if version << '3.3':
+                result += '_d'
+            else:
+                result += 'dm'
+        else:
+            if version >> '3.2':
+                result += 'm'
+            elif version == '3.2':
+                result += 'mu'
+        return result
+
+    @property
+    def library_file(self):
+        """Return libfoo.so file path."""
+        if self.impl == 'pypy':
+            return ''
+        libpl, ldlibrary = self._get_config()[3:5]
+        if ldlibrary.endswith('.a'):
+            # python3.1-dbg, python3.2, python3.2-dbg returned static lib
+            ldlibrary = ldlibrary.replace('.a', '.so')
+        if libpl and ldlibrary:
+            return join(libpl, ldlibrary)
+        raise Exception('cannot find library file for {}'.format(self))
 
     def check_extname(self, fname, version=None):
         """Return extension file name if file can be renamed."""
@@ -394,7 +439,7 @@ class Interpreter:
             return
 
         try:
-            soabi, multiarch = self._get_config(version)
+            soabi, multiarch = self._get_config(version)[:2]
         except Exception:
             log.debug('cannot get soabi/multiarch', exc_info=True)
             return
@@ -408,8 +453,6 @@ class Interpreter:
         result = info['name']
         if self.impl == 'cpython3' and version >> '3.2' and result.endswith('module'):
             result = result[:-6]
-        elif self.debug and self.impl == 'cpython2':
-            result += '_d'
 
         if tmp_soabi:
             result = "{}.{}".format(result, tmp_soabi)
@@ -418,6 +461,8 @@ class Interpreter:
         elif self.impl == 'cpython2' and version == '2.7' and tmp_multiarch:
             result = "{}.{}".format(result, tmp_multiarch)
 
+        if self.debug and self.impl == 'cpython2':
+            result += '_d'
         result += '.so'
         if fname == result:
             return
@@ -452,7 +497,8 @@ class Interpreter:
         else:
             cmd = 'from distutils import sysconfig as s;'
         cmd += 'print("__SEP__".join(i or "" ' \
-               'for i in s.get_config_vars("SOABI", "MULTIARCH")))'
+               'for i in s.get_config_vars('\
+               '"SOABI", "MULTIARCH", "INCLUDEPY", "LIBPL", "LDLIBRARY")))'
         conf_vars = self._execute(cmd, version).split('__SEP__')
         try:
             conf_vars[1] = os.environ['DEB_HOST_MULTIARCH']

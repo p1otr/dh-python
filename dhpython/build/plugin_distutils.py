@@ -93,7 +93,7 @@ class BuildSystem(Base):
     @shell_command
     @create_pydistutils_cfg
     def build(self, context, args):
-        return '{interpreter} {setup_py} build {args}'
+        return '{interpreter.binary_dv} {setup_py} build {args}'
 
     @shell_command
     @create_pydistutils_cfg

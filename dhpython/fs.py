@@ -22,7 +22,7 @@ import logging
 import os
 import re
 from filecmp import cmp as cmpfile
-from os.path import exists, isdir, islink, join, split
+from os.path import exists, isdir, islink, join, split, splitext
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 from dhpython import MULTIARCH_DIR_TPL
@@ -62,7 +62,7 @@ def share_files(srcdir, dstdir, interpreter, options):
     """Try to move as many files from srcdir to dstdir as possible."""
     for i in os.listdir(srcdir):
         fpath1 = join(srcdir, i)
-        if not options.no_ext_rename and i.rsplit('.', 1)[-1] == 'so':
+        if not options.no_ext_rename and splitext(i)[-1] == '.so':
             # try to rename extension here as well (in :meth:`scan` info about
             # Python version is gone)
             version = interpreter.parse_public_version(srcdir)
@@ -177,11 +177,12 @@ class Scan:
                         os.remove(fpath)
                     continue
 
-                fext = fn.rsplit('.', 1)[-1]
+                fext = splitext(fn)[-1][1:]
                 if fext == 'so':
                     if not self.options.no_ext_rename:
                         fpath = self.rename_ext(fpath)
                     ver = self.handle_ext(fpath)
+                    ver = ver or version
                     if ver:
                         self.current_result.setdefault('ext_vers', set()).add(ver)
                     else:
@@ -220,7 +221,7 @@ class Scan:
             return True
         if self.current_pub_version and self.is_dbg_package\
                 and self.options.clean_dbg_pkg\
-                and fpath.rsplit('.', 1)[1] not in ('so', 'h'):
+                and splitext(fpath)[-1][1:] not in ('so', 'h'):
             return True
 
     @property

@@ -1,4 +1,4 @@
-dh-python (1.20131003-1~bpo70+1) wheezy-backports; urgency=low
+dh-python (1.20131021-1~bpo70+1) wheezy-backports; urgency=low
 
   * Rebuild for wheezy-backports.
   * Replace libpython3-stdlib build dependency with python3.2
@@ -9,12 +9,34 @@ dh-python (1.20131003-1~bpo70+1) wheezy-backports; urgency=low
   * dh_python2: do not rename extension files, Wheezy's python2.7 doesn't
     support multiarch tuples
   * Disable multiarch dependencies (":any" not supported that well in Wheezy)
-  * Backported commits from newer versions:
-    - dh_python2: searching for packages with egg-info fixed
-    - dh_py*: re-enable detection of public extension's version using file path
-    - dh_python2: fix renaming debug extensions with multiarch tuples
 
- -- Piotr Ożarowski <piotr@debian.org>  Mon, 21 Oct 2013 21:17:49 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 04 Nov 2013 23:26:58 +0100
+
+dh-python (1.20131021-1) unstable; urgency=low
+
+  * dh_python2: fix renaming debug extensions with multiarch tuples
+
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 21 Oct 2013 20:52:04 +0200
+
+dh-python (1.20131017-1) unstable; urgency=low
+
+  [ Stefano Rivera ]
+  * distutils build plugin: use default interpreter symlink in build step as
+    well as the install step (if interpreter version matches the default one).
+    So that shebangs in setuptools scripts.
+
+  [ Piotr Ożarowski ]
+  * dh_python2: searching for packages with egg-info fixed
+  * dh_python2: fix public module version detection (regression)
+  * dh_py*: "so" files no longer detected as extensions (closes: 726616)
+  * pybuild: set PYTHON_LIBRARY and PYTHON_INCLUDE_DIR in cmake build
+    plugin's configure step
+
+  [ B. Clausius ]
+  * pybuild: no longer fails if source directory path contains braces
+    (closes: 726458)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 17 Oct 2013 22:24:25 +0200
 
 dh-python (1.20131003-1) unstable; urgency=low
 
