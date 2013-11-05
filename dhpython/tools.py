@@ -298,16 +298,15 @@ def pyremove(interpreter, package, vrange):
             log.debug('%s.pyremove: no matching versions for line %s',
                       package, line)
         for version in myvers:
-            files = glob(interpreter.sitedir(package, version) + details['pattern'])
-            if not files:
-                log.debug('%s.pyremove: nothing to remove: python%s, %s',
-                          package, version, details['pattern'])
-                continue
-            for fpath in files:
-                if isdir(fpath):
-                    rmtree(fpath)
-                else:
-                    os.remove(fpath)
+            site_dirs = interpreter.old_sitedirs(package, version)
+            site_dirs.append(interpreter.sitedir(package, version))
+            for sdir in site_dirs:
+                files = glob(sdir + details['pattern'])
+                for fpath in files:
+                    if isdir(fpath):
+                        rmtree(fpath)
+                    else:
+                        os.remove(fpath)
 
 from dhpython.interpreter import Interpreter
 from dhpython.version import Version, get_requested_versions, RANGE_PATTERN
