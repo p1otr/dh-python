@@ -35,6 +35,7 @@ from dhpython.version import supported, default, Version, VersionRange
 from dhpython.pydist import validate as validate_pydist
 from dhpython.fs import fix_locations, Scan
 from dhpython.option import Option
+from dhpython.tools import pyremove
 
 # initialize script
 logging.basicConfig(format='%(levelname).1s: dh_python3 '
@@ -171,6 +172,11 @@ def main():
         interpreter.debug = package.endswith('-dbg')
 
         if not private_dir:
+            try:
+                pyremove(interpreter, package, options.vrange)
+            except Exception as err:
+                log.error("%s.pyremove: %s", package, err)
+                exit(5)
             fix_locations(package, interpreter, SUPPORTED, options)
         stats = Scanner(interpreter, package, private_dir, options).result
 

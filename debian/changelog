@@ -1,3 +1,9 @@
+dh-python (1.20131021-2) UNRELEASED; urgency=low
+
+  * dh_python3: add support for debian/package.pyremove files
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 05 Nov 2013 22:57:20 +0100
+
 dh-python (1.20131021-1) unstable; urgency=low
 
   * dh_python2: fix renaming debug extensions with multiarch tuples
