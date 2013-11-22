@@ -1,6 +1,6 @@
 dh-python (1.20131021-2) UNRELEASED; urgency=low
 
-  * dh_python3: add support for debian/package.pyremove files
+  * dh_python3, dh_pypy: add support for debian/package.pyremove files
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 05 Nov 2013 22:57:20 +0100
 

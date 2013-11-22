@@ -35,6 +35,7 @@ from dhpython.version import supported, default, Version, VersionRange
 from dhpython.pydist import validate as validate_pydist
 from dhpython.fs import fix_locations, Scan
 from dhpython.option import Option
+from dhpython.tools import pyremove
 
 # initialize script
 logging.basicConfig(format='%(levelname).1s: dh_pypy '
@@ -144,6 +145,7 @@ def main():
 
     if options.verbose or os.environ.get('DH_VERBOSE') == '1':
         log.setLevel(logging.DEBUG)
+        log.debug('version: DEVELV')
         log.debug('argv: %s', sys.argv)
         log.debug('options: %s', options)
         log.debug('args: %s', args)
@@ -166,10 +168,14 @@ def main():
                 options.arch is True and pdetails['arch'] == 'all':
             continue
         log.debug('processing package %s...', package)
-        if package.endswith('-dbg'):
-            interpreter.debug = True
+        interpreter.debug = package.endswith('-dbg')
 
         if not private_dir:
+            try:
+                pyremove(interpreter, package, options.vrange)
+            except Exception as err:
+                log.error("%s.pyremove: %s", package, err)
+                exit(5)
             fix_locations(package, interpreter, SUPPORTED, options)
         stats = Scanner(interpreter, package, private_dir, options).result
 
