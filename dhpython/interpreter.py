@@ -426,6 +426,10 @@ class Interpreter:
         if not info:
             return
         info = info.groupdict()
+        if info['ver'] and (not version or version.minor is None):
+            # get version from soabi if version is not set of only major
+            # version number is set
+            version = Version("%s.%s" % (info['ver'][0], info['ver'][1]))
 
         if info['stableabi']:
             # files with stable ABI in name don't need changes
