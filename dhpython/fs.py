@@ -34,6 +34,9 @@ log = logging.getLogger('dhpython')
 
 def fix_locations(package, interpreter, versions, options):
     """Move files to the right location."""
+    # make a copy since we change version later
+    interpreter = Interpreter(interpreter)
+
     for version in versions:
         interpreter.version = version
 
