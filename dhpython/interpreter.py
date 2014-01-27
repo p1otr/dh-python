@@ -204,7 +204,12 @@ class Interpreter:
             data = fp.read(96)
             if b"\0" in data:
                 raise ValueError('cannot parse binary file')
-        parsed = cls.parse(str(data, 'utf-8'))
+        # make sure only first line is checkeed
+        data = str(data, 'utf-8').split('\n')[0]
+        if not data.startswith('#!'):
+            raise ValueError("doesn't look like a shebang: %s" % data)
+
+        parsed = cls.parse(data)
         if not parsed:
             raise ValueError("doesn't look like a shebang: %s" % data)
         for key, val in parsed.items():
