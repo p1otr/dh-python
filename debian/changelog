@@ -15,6 +15,8 @@ dh-python (1.20131021-2) UNRELEASED; urgency=low
     (closes: 727674)
   * Generate dependencies for minimum required interpreter version that are
     satisfied by alpha/beta/rc releases (i.e. generate ">= X.Y~")
+  * pybuild build plugins: show executed command (not only in --verbose),
+    closes: 733755
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 05 Nov 2013 22:57:20 +0100
 
