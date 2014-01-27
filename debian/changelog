@@ -7,6 +7,8 @@ dh-python (1.20131021-2) UNRELEASED; urgency=low
     (closes: 732308)
   * Assume UTF-8 encoding also in non UTF-8 environments while opening text
     files (closes: 735370)
+  * Mention in pybuild's manpage that disabling anything for python3 doesn't
+    disable python3-dbg as well (closes: 735899)
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 05 Nov 2013 22:57:20 +0100
 
