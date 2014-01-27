@@ -125,7 +125,7 @@ class Dependencies:
                 self.depend(vtpl % minv)
                 minv = maxv = None
             if minv:
-                self.depend("%s (>= %s)" % (tpl_tmp, minv))
+                self.depend("%s (>= %s~)" % (tpl_tmp, minv))
             if maxv:
                 self.depend("%s (<< %s)" % (tpl_tmp, maxv))
 
@@ -135,7 +135,7 @@ class Dependencies:
             minv = sorted_vers[0]
             maxv = sorted_vers[-1]
             if minv <= default(self.impl):
-                self.depend("%s (>= %s)" % (tpl_ma, minv))
+                self.depend("%s (>= %s~)" % (tpl_ma, minv))
             if maxv >= default(self.impl):
                 self.depend("%s (<< %s)" % (tpl_ma, maxv + 1))
 
@@ -146,7 +146,7 @@ class Dependencies:
             maxv = sorted_vers[-1]
             #self.depend('|'.join(vtpl % i for i in stats['ext_vers']))
             if minv <= default(self.impl):
-                self.depend("%s (>= %s)" % (tpl, minv))
+                self.depend("%s (>= %s~)" % (tpl, minv))
             if maxv >= default(self.impl):
                 self.depend("%s (<< %s)" % (tpl, maxv + 1))
 
@@ -175,11 +175,11 @@ class Dependencies:
             extensions = sorted(details.get('ext_vers', set()))
             #self.depend('|'.join(vtpl % i for i in extensions))
             if extensions:
-                self.depend("%s (>= %s)" % (tpl, extensions[0]))
+                self.depend("%s (>= %s~)" % (tpl, extensions[0]))
                 self.depend("%s (<< %s)" % (tpl, extensions[-1] + 1))
             elif details.get('ext_no_version'):
                 # assume unrecognized extension was built for default interpreter version
-                self.depend("%s (>= %s)" % (tpl, default_version))
+                self.depend("%s (>= %s~)" % (tpl, default_version))
                 self.depend("%s (<< %s)" % (tpl, default_version + 1))
 
             if details.get('compile'):
@@ -201,7 +201,7 @@ class Dependencies:
                         self.depend(vtpl % vrange.minver)
                     else:
                         if vrange.minver:  # minimum version specified
-                            self.depend("%s (>= %s)" % (tpl_ma, vrange.minver))
+                            self.depend("%s (>= %s~)" % (tpl_ma, vrange.minver))
                         if vrange.maxver:  # maximum version specified
                             self.depend("%s (<< %s)" % (tpl_ma, vrange.maxver + 1))
 

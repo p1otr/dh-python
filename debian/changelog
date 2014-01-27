@@ -13,6 +13,8 @@ dh-python (1.20131021-2) UNRELEASED; urgency=low
   * pybuild's distutils build plugin: set install-scripts to /usr/bin by default
   * Test Python 2.7 only in test203 if /usr/bin/python2.6 is missing
     (closes: 727674)
+  * Generate dependencies for minimum required interpreter version that are
+    satisfied by alpha/beta/rc releases (i.e. generate ">= X.Y~")
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 05 Nov 2013 22:57:20 +0100
 
