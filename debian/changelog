@@ -5,6 +5,8 @@ dh-python (1.20131021-2) UNRELEASED; urgency=low
     when more than one Python 3 version is supported (closes: 733128)
   * Make sure only first line is taken into account while checking shebangs
     (closes: 732308)
+  * Assume UTF-8 encoding also in non UTF-8 environments while opening text
+    files (closes: 735370)
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 05 Nov 2013 22:57:20 +0100
 

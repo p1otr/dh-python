@@ -345,7 +345,7 @@ def main():
 
     if not options.vrange and exists('debian/pyversions'):
         log.debug('parsing version range from debian/pyversions')
-        with open('debian/pyversions') as fp:
+        with open('debian/pyversions', encoding='utf-8') as fp:
             for line in fp:
                 line = line.strip()
                 if line and not line.startswith('#'):
@@ -355,7 +355,7 @@ def main():
     # disable PyDist if dh_pydeb is used
     if options.guess_deps:
         try:
-            rules = open('debian/rules', 'r').read()
+            rules = open('debian/rules', 'r', encoding='utf-8').read()
         except IOError:
             log.warning('cannot open debian/rules file')
         else:
@@ -432,7 +432,7 @@ def main():
             if len(ps) > 1 and ps[0] == 'python':
                 dh.addsubstvar(package, 'python:Provides',
                                ', '.join("python%s-%s" % (i, ps[1])
-                               for i in sorted(stats['public_vers'])))
+                                         for i in sorted(stats['public_vers'])))
 
         pyclean_added = False  # invoke pyclean only once in maintainer script
         if stats['compile']:
@@ -511,7 +511,7 @@ def main():
             dstdir = join('debian', package, 'usr/share/python/ns/')
             if not exists(dstdir):
                 os.makedirs(dstdir)
-            with open(join(dstdir, package), 'a') as fp:
+            with open(join(dstdir, package), 'a', encoding='utf-8') as fp:
                 fp.writelines("%s\n" % i for i in nsp)
 
         pyshared = join('debian', package, 'usr/share/pyshared/')

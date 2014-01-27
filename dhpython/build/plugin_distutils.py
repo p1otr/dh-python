@@ -40,7 +40,7 @@ def create_pydistutils_cfg(func):
     def wrapped_func(self, context, args, *oargs, **kwargs):
         fpath = join(args['home_dir'], '.pydistutils.cfg')
         if not exists(fpath):
-            with open(fpath, 'w') as fp:
+            with open(fpath, 'w', encoding='utf-8') as fp:
                 fp.writelines(['[clean]\n',
                                'all=1\n',
                                '[build]\n',

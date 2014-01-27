@@ -144,7 +144,7 @@ def parse_ns(fpaths, other=None):
     """Parse namespace_packages.txt files."""
     result = set(other or [])
     for fpath in fpaths:
-        with open(fpath, 'r') as fp:
+        with open(fpath, 'r', encoding='utf-8') as fp:
             for line in fp:
                 if line:
                     result.add(line.strip())
@@ -208,7 +208,7 @@ def execute(command, cwd=None, env=None, log_output=None):
     elif log_output:
         if isinstance(log_output, str):
             close = True
-            log_output = open(log_output, 'a')
+            log_output = open(log_output, 'a', encoding='utf-8')
         log_output.write('\n# command executed on {}'.format(datetime.now().isoformat()))
         log_output.write('\n$ {}\n'.format(command))
         log_output.flush()
