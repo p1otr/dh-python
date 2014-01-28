@@ -22,6 +22,7 @@
 import logging
 from configparser import ConfigParser
 from os import environ
+from os.path import exists
 from subprocess import Popen, PIPE
 
 SUPPORTED = {
