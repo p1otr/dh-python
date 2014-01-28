@@ -17,6 +17,7 @@ dh-python (1.20131021-2) UNRELEASED; urgency=low
     satisfied by alpha/beta/rc releases (i.e. generate ">= X.Y~")
   * pybuild build plugins: show executed command (not only in --verbose),
     closes: 733755
+  * Standards-Version bumped to 3.9.5 (no changes needed)
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 05 Nov 2013 22:57:20 +0100
 
