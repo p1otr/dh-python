@@ -291,7 +291,7 @@ def pyremove(interpreter, package, vrange):
             continue
         details = REMOVE_RE.match(line)
         if not details:
-            raise ValueError("unrecognized line: %s" % (package, line))
+            raise ValueError("unrecognized line: %s: %s" % (package, line))
         details = details.groupdict()
         myvers = versions & get_requested_versions(impl, details['vrange'])
         if not myvers:
