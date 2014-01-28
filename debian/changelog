@@ -1,4 +1,4 @@
-dh-python (1.20131021-2) UNRELEASED; urgency=low
+dh-python (1.20140128-1) unstable; urgency=low
 
   * dh_python3, dh_pypy: add support for debian/package.pyremove files
     (closes: 730777)
@@ -19,7 +19,7 @@ dh-python (1.20131021-2) UNRELEASED; urgency=low
     closes: 733755
   * Standards-Version bumped to 3.9.5 (no changes needed)
 
- -- Piotr Ożarowski <piotr@debian.org>  Tue, 05 Nov 2013 22:57:20 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 28 Jan 2014 18:20:19 +0100
 
 dh-python (1.20131021-1) unstable; urgency=low
 
