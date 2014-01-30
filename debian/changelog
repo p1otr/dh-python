@@ -2,7 +2,7 @@ dh-python (1.20140128-1) unstable; urgency=low
 
   * dh_python3, dh_pypy: add support for debian/package.pyremove files
     (closes: 730777)
-  * dh_python3: add multiarch tuples to all already tagged extensions if
+  * dh_python3: add multiarch tuples to all already tagged extensions
     when more than one Python 3 version is supported (closes: 733128)
   * Make sure only first line is taken into account while checking shebangs
     (closes: 732308)
