@@ -75,13 +75,13 @@ def share_files(srcdir, dstdir, interpreter, options):
                 new_name = interpreter.check_extname(i, version)
                 if new_name:
                     fpath1 = join(srcdir, new_name)
-                if exists(fpath1):
-                    log.warn('destination file exist, '
-                             'cannot rename %s to %s', fpath1_orig, fpath1)
-                else:
-                    log.info('renaming %s to %s', fpath1_orig, fpath1)
-                    os.renames(fpath1_orig, fpath1)
-                    i = new_name
+                    if exists(fpath1):
+                        log.warn('destination file exist, '
+                                 'cannot rename %s to %s', fpath1_orig, fpath1)
+                    else:
+                        log.info('renaming %s to %s', fpath1_orig, fpath1)
+                        os.renames(fpath1_orig, fpath1)
+                        i = new_name
         fpath2 = join(dstdir, i)
         if not isdir(fpath1) and not exists(fpath2):
             # do not rename directories here - all .so files have to be renamed first
