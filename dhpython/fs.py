@@ -22,7 +22,7 @@ import logging
 import os
 import re
 from filecmp import cmp as cmpfile
-from os.path import exists, isdir, islink, join, split, splitext
+from os.path import exists, dirname, isdir, islink, join, split, splitext
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 from dhpython import MULTIARCH_DIR_TPL
@@ -47,8 +47,12 @@ def fix_locations(package, interpreter, versions, options):
                 log.debug('moving files from %s to %s', srcdir, dstdir)
                 share_files(srcdir, dstdir, interpreter, options)
                 parent_dir = '/'.join(srcdir.split('/')[:-1])
-                if exists(parent_dir) and not os.listdir(parent_dir):
-                    os.rmdir(parent_dir)
+                while parent_dir:
+                    if exists(parent_dir):
+                        if os.listdir(parent_dir):
+                            break
+                        os.rmdir(parent_dir)
+                    parent_dir = dirname(parent_dir)
 
         # do the same with debug locations
         dstdir = interpreter.sitedir(package, gdb=True)
@@ -57,8 +61,12 @@ def fix_locations(package, interpreter, versions, options):
                 log.debug('moving files from %s to %s', srcdir, dstdir)
                 share_files(srcdir, dstdir, interpreter, options)
                 parent_dir = '/'.join(srcdir.split('/')[:-1])
-                if exists(parent_dir) and not os.listdir(parent_dir):
-                    os.rmdir(parent_dir)
+                while parent_dir:
+                    if exists(parent_dir):
+                        if os.listdir(parent_dir):
+                            break
+                        os.rmdir(parent_dir)
+                    parent_dir = dirname(parent_dir)
 
 
 def share_files(srcdir, dstdir, interpreter, options):

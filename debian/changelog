@@ -1,8 +1,12 @@
 dh-python (1.20140128-2) UNRELEASED; urgency=medium
 
+  [ Piotr Ożarowski ]
   * pybuild: do not invoke clean commands for missing interpreters
     (and thus do not require all interpreter versions to be installed while
     building source package outside build environment, closes: 737091)
+
+  [ Matthias Klose ]
+  * Remove empty directories when moving files. 
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 30 Jan 2014 21:41:34 +0100
 
