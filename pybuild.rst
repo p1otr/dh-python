@@ -201,4 +201,5 @@ SEE ALSO
 ========
 * dh_python2(1)
 * dh_python3(1)
+* https://wiki.debian.org/Python/Pybuild
 * http://deb.li/pybuild - most recent version of this document
