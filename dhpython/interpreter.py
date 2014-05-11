@@ -309,8 +309,8 @@ class Interpreter:
         >>> i = Interpreter('python')
         >>> i.cache_file('foo.py', Version('3.1'))
         'foo.pyc'
-        >>> i.cache_file('bar/foo.py', '3.3')
-        'bar/__pycache__/foo.cpython-33.pyc'
+        >>> i.cache_file('bar/foo.py', '3.4')
+        'bar/__pycache__/foo.cpython-34.pyc'
         """
         version = Version(version or self.version)
         last_char = 'o' if '-O' in self.options else 'c'
@@ -335,8 +335,8 @@ class Interpreter:
         """Return Python magic tag (used in __pycache__ dir to tag files).
 
         >>> i = Interpreter('python')
-        >>> i.magic_tag(version='3.3')
-        'cpython-33'
+        >>> i.magic_tag(version='3.4')
+        'cpython-34'
         """
         version = Version(version or self.version)
         if self.impl.startswith('cpython') and version << Version('3.2'):
@@ -378,8 +378,8 @@ class Interpreter:
 
         >>> Interpreter('python2.7').include_dir
         '/usr/include/python2.7'
-        >>> Interpreter('python3.3-dbg').include_dir
-        '/usr/include/python3.3dm'
+        >>> Interpreter('python3.4-dbg').include_dir
+        '/usr/include/python3.4dm'
         """
         if self.impl == 'pypy':
             return '/usr/lib/pypy/include'
@@ -482,7 +482,7 @@ class Interpreter:
 
         >>> Interpreter('python3.1').suggest_pkg_name('foo')
         'python3-foo'
-        >>> Interpreter('python3.3').suggest_pkg_name('foo')
+        >>> Interpreter('python3.4').suggest_pkg_name('foo')
         'python3-foo'
         >>> Interpreter('python2.7-dbg').suggest_pkg_name('bar')
         'python-bar-dbg'
