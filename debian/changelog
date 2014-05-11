@@ -4,6 +4,9 @@ dh-python (1.20140128-2) UNRELEASED; urgency=medium
   * pybuild: do not invoke clean commands for missing interpreters
     (and thus do not require all interpreter versions to be installed while
     building source package outside build environment, closes: 737091)
+  * dh_python2: no longer moves files to /usr/share/pyshared if there's only
+    one supported Python 2.X version and doesn't create /usr/lib/pyshared
+    symlinks for extensions (as other helper tools are now deprecated)
 
   [ Matthias Klose ]
   * Remove empty directories when moving files. 
