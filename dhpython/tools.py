@@ -90,7 +90,7 @@ def fix_shebang(fpath, replacement=None):
     try:
         interpreter = Interpreter.from_file(fpath)
     except Exception as err:
-        log.error('fix_shebang (%s): %s', fpath, err)
+        log.debug('fix_shebang (%s): %s', fpath, err)
         return None
 
     if not replacement and interpreter.path != '/usr/bin/':  # f.e. /usr/local/* or */bin/env
