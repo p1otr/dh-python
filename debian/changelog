@@ -1,4 +1,4 @@
-dh-python (1.20140128-2) UNRELEASED; urgency=medium
+dh-python (1.20140511-1) unstable; urgency=medium
 
   [ Piotr Ożarowski ]
   * pybuild: do not invoke clean commands for missing interpreters
@@ -12,7 +12,7 @@ dh-python (1.20140128-2) UNRELEASED; urgency=medium
   [ Matthias Klose ]
   * Remove empty directories when moving files. 
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 30 Jan 2014 21:41:34 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 11 May 2014 20:59:15 +0200
 
 dh-python (1.20140128-1) unstable; urgency=low
 
