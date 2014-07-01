@@ -22,7 +22,7 @@ import logging
 import os
 import re
 from filecmp import cmp as cmpfile
-from os.path import exists, isdir, islink, join, split, splitext
+from os.path import exists, dirname, isdir, islink, join, split, splitext
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 from dhpython import MULTIARCH_DIR_TPL
@@ -34,6 +34,9 @@ log = logging.getLogger('dhpython')
 
 def fix_locations(package, interpreter, versions, options):
     """Move files to the right location."""
+    # make a copy since we change version later
+    interpreter = Interpreter(interpreter)
+
     for version in versions:
         interpreter.version = version
 
@@ -44,8 +47,12 @@ def fix_locations(package, interpreter, versions, options):
                 log.debug('moving files from %s to %s', srcdir, dstdir)
                 share_files(srcdir, dstdir, interpreter, options)
                 parent_dir = '/'.join(srcdir.split('/')[:-1])
-                if exists(parent_dir) and not os.listdir(parent_dir):
-                    os.rmdir(parent_dir)
+                while parent_dir:
+                    if exists(parent_dir):
+                        if os.listdir(parent_dir):
+                            break
+                        os.rmdir(parent_dir)
+                    parent_dir = dirname(parent_dir)
 
         # do the same with debug locations
         dstdir = interpreter.sitedir(package, gdb=True)
@@ -54,8 +61,12 @@ def fix_locations(package, interpreter, versions, options):
                 log.debug('moving files from %s to %s', srcdir, dstdir)
                 share_files(srcdir, dstdir, interpreter, options)
                 parent_dir = '/'.join(srcdir.split('/')[:-1])
-                if exists(parent_dir) and not os.listdir(parent_dir):
-                    os.rmdir(parent_dir)
+                while parent_dir:
+                    if exists(parent_dir):
+                        if os.listdir(parent_dir):
+                            break
+                        os.rmdir(parent_dir)
+                    parent_dir = dirname(parent_dir)
 
 
 def share_files(srcdir, dstdir, interpreter, options):
@@ -72,13 +83,13 @@ def share_files(srcdir, dstdir, interpreter, options):
                 new_name = interpreter.check_extname(i, version)
                 if new_name:
                     fpath1 = join(srcdir, new_name)
-                if exists(fpath1):
-                    log.warn('destination file exist, '
-                             'cannot rename %s to %s', fpath1_orig, fpath1)
-                else:
-                    log.info('renaming %s to %s', fpath1_orig, fpath1)
-                    os.renames(fpath1_orig, fpath1)
-                    i = new_name
+                    if exists(fpath1):
+                        log.warn('destination file exist, '
+                                 'cannot rename %s to %s', fpath1_orig, fpath1)
+                    else:
+                        log.info('renaming %s to %s', fpath1_orig, fpath1)
+                        os.renames(fpath1_orig, fpath1)
+                        i = new_name
         fpath2 = join(dstdir, i)
         if not isdir(fpath1) and not exists(fpath2):
             # do not rename directories here - all .so files have to be renamed first

@@ -40,13 +40,14 @@ def create_pydistutils_cfg(func):
     def wrapped_func(self, context, args, *oargs, **kwargs):
         fpath = join(args['home_dir'], '.pydistutils.cfg')
         if not exists(fpath):
-            with open(fpath, 'w') as fp:
+            with open(fpath, 'w', encoding='utf-8') as fp:
                 fp.writelines(['[clean]\n',
                                'all=1\n',
                                '[build]\n',
                                'build-lib={}\n'.format(args['build_dir']),
                                '[install]\n',
                                'install-layout=deb\n',
+                               'install-scripts=/usr/bin\n',
                                'install-lib={}\n'.format(args['install_dir'])])
         context['ENV']['HOME'] = args['home_dir']
         return func(self, context, args, *oargs, **kwargs)
@@ -83,7 +84,9 @@ class BuildSystem(Base):
         for fname in glob1(context['dir'], '*.egg-info'):
             fpath = join(context['dir'], fname)
             rmtree(fpath) if isdir(fpath) else remove(fpath)
-        return '{interpreter} {setup_py} clean {args}'
+        if exists(args['interpreter'].binary()):
+            return '{interpreter} {setup_py} clean {args}'
+        return 0  # no need to invoke anything
 
     @shell_command
     @create_pydistutils_cfg

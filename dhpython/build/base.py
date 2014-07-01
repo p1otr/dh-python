@@ -167,6 +167,7 @@ class Base:
             env['PYTHONPATH'] = args['PYTHONPATH']
         else:
             env = context['ENV']
+        log.info(command)
         return execute(command, context['dir'], env, log_file)
 
 

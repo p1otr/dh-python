@@ -59,7 +59,7 @@ REQUIRES_RE = re.compile(r'''
 
 def validate(fpath):
     """Check if pydist file looks good."""
-    with open(fpath) as fp:
+    with open(fpath, encoding='utf-8') as fp:
         for line in fp:
             line = line.strip('\r\n')
             if line.startswith('#') or not line:
@@ -94,7 +94,7 @@ def load(impl):
 
     result = {}
     for fpath in to_check:
-        with open(fpath) as fp:
+        with open(fpath, encoding='utf-8') as fp:
             for line in fp:
                 line = line.strip('\r\n')
                 if line.startswith('#') or not line:
@@ -213,7 +213,7 @@ def parse_pydep(impl, fname):
             else:
                 processed.append(line)
     if modified:
-        with open(fname, 'w') as fp:
+        with open(fname, 'w', encoding='utf-8') as fp:
             fp.writelines(i + '\n' for i in processed)
     return result
 

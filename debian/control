@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9), python3-minimal,
  python3.2,
 # provides rst2man command (python3-docutils not used to avoid circular deps):
  python-docutils
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Vcs-Git: git://anonscm.debian.org/dh-python/dh-python.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=dh-python/dh-python.git
 X-Python3-Version: >= 3.2

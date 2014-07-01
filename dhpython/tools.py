@@ -90,7 +90,7 @@ def fix_shebang(fpath, replacement=None):
     try:
         interpreter = Interpreter.from_file(fpath)
     except Exception as err:
-        log.error('fix_shebang (%s): %s', fpath, err)
+        log.debug('fix_shebang (%s): %s', fpath, err)
         return None
 
     if not replacement and interpreter.path != '/usr/bin/':  # f.e. /usr/local/* or */bin/env
@@ -144,7 +144,7 @@ def parse_ns(fpaths, other=None):
     """Parse namespace_packages.txt files."""
     result = set(other or [])
     for fpath in fpaths:
-        with open(fpath, 'r') as fp:
+        with open(fpath, 'r', encoding='utf-8') as fp:
             for line in fp:
                 if line:
                     result.add(line.strip())
@@ -208,7 +208,7 @@ def execute(command, cwd=None, env=None, log_output=None):
     elif log_output:
         if isinstance(log_output, str):
             close = True
-            log_output = open(log_output, 'a')
+            log_output = open(log_output, 'a', encoding='utf-8')
         log_output.write('\n# command executed on {}'.format(datetime.now().isoformat()))
         log_output.write('\n$ {}\n'.format(command))
         log_output.flush()
@@ -291,23 +291,22 @@ def pyremove(interpreter, package, vrange):
             continue
         details = REMOVE_RE.match(line)
         if not details:
-            raise ValueError("unrecognized line: %s" % (package, line))
+            raise ValueError("unrecognized line: %s: %s" % (package, line))
         details = details.groupdict()
         myvers = versions & get_requested_versions(impl, details['vrange'])
         if not myvers:
             log.debug('%s.pyremove: no matching versions for line %s',
                       package, line)
         for version in myvers:
-            files = glob(interpreter.sitedir(package, version) + details['pattern'])
-            if not files:
-                log.debug('%s.pyremove: nothing to remove: python%s, %s',
-                          package, version, details['pattern'])
-                continue
-            for fpath in files:
-                if isdir(fpath):
-                    rmtree(fpath)
-                else:
-                    os.remove(fpath)
+            site_dirs = interpreter.old_sitedirs(package, version)
+            site_dirs.append(interpreter.sitedir(package, version))
+            for sdir in site_dirs:
+                files = glob(sdir + details['pattern'])
+                for fpath in files:
+                    if isdir(fpath):
+                        rmtree(fpath)
+                    else:
+                        os.remove(fpath)
 
 from dhpython.interpreter import Interpreter
 from dhpython.version import Version, get_requested_versions, RANGE_PATTERN

@@ -22,15 +22,16 @@
 import logging
 from configparser import ConfigParser
 from os import environ
+from os.path import exists
 from subprocess import Popen, PIPE
 
 SUPPORTED = {
     'cpython2': [(2, 7)],
-    'cpython3': [(3, 3)],
+    'cpython3': [(3, 4)],
     'pypy': [(2, 0)]}
 DEFAULT = {
     'cpython2': (2, 7),
-    'cpython3': (3, 3),
+    'cpython3': (3, 4),
     'pypy': (2, 0)}
 
 log = logging.getLogger('dhpython')

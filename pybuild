@@ -237,29 +237,29 @@ def main(cfg):
         step = func.__func__.__name__
         if step == 'test' and nocheck:
             exit(0)
-        for interpreter in cfg.interpreter:
+        for i in cfg.interpreter:
             iversions = versions
-            if '{version}' not in interpreter and len(versions) > 1:
+            if '{version}' not in i and len(versions) > 1:
                 log.info('limiting Python versions to %s due to missing {version}'
                          ' in interpreter string', str(versions[0]))
                 iversions = versions[:1]  # just the default or closest to default
             for version in iversions:
-                if is_disabled(step, interpreter, version):
+                if is_disabled(step, i, version):
                     continue
                 c = dict(context)
-                c['dir'] = get_option('dir', interpreter, version, cfg.dir)
-                c['destdir'] = get_option('destdir', interpreter, version, cfg.destdir)
+                c['dir'] = get_option('dir', i, version, cfg.dir)
+                c['destdir'] = get_option('destdir', i, version, cfg.destdir)
                 try:
-                    run(func, interpreter, version, c)
+                    run(func, i, version, c)
                 except Exception as err:
                     log.error('%s: plugin %s failed with: %s',
                               step, plugin.NAME, err, exc_info=cfg.verbose)
                     exit(13)
                 if step == 'install':
-                    ext_destdir = get_option('ext_destdir', interpreter, version)
+                    ext_destdir = get_option('ext_destdir', i, version)
                     if ext_destdir:
                         move_matching_files(c['destdir'], ext_destdir,
-                                            get_option('ext_pattern', interpreter, version))
+                                            get_option('ext_pattern', i, version))
         exit(0)
 
     ### all functions for interpreters in batches mode ###

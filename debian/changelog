@@ -1,4 +1,4 @@
-dh-python (1.20131021-1~bpo70+1) wheezy-backports; urgency=low
+dh-python (1.20140511-1~bpo70+1) wheezy-backports; urgency=low
 
   * Rebuild for wheezy-backports.
   * Replace libpython3-stdlib build dependency with python3.2
@@ -10,7 +10,46 @@ dh-python (1.20131021-1~bpo70+1) wheezy-backports; urgency=low
     support multiarch tuples
   * Disable multiarch dependencies (":any" not supported that well in Wheezy)
 
- -- Piotr Ożarowski <piotr@debian.org>  Mon, 04 Nov 2013 23:26:58 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 01 Jul 2014 17:04:23 +0200
+
+dh-python (1.20140511-1) unstable; urgency=medium
+
+  [ Piotr Ożarowski ]
+  * pybuild: do not invoke clean commands for missing interpreters
+    (and thus do not require all interpreter versions to be installed while
+    building source package outside build environment, closes: 737091)
+  * dh_python2: no longer moves files to /usr/share/pyshared if there's only
+    one supported Python 2.X version and doesn't create /usr/lib/pyshared
+    symlinks for extensions (as other helper tools are now deprecated)
+  * Show fix_shebang's error messages only in debug mode, closes: 745581
+
+  [ Matthias Klose ]
+  * Remove empty directories when moving files. 
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 11 May 2014 20:59:15 +0200
+
+dh-python (1.20140128-1) unstable; urgency=low
+
+  * dh_python3, dh_pypy: add support for debian/package.pyremove files
+    (closes: 730777)
+  * dh_python3: add multiarch tuples to all already tagged extensions
+    when more than one Python 3 version is supported (closes: 733128)
+  * Make sure only first line is taken into account while checking shebangs
+    (closes: 732308)
+  * Assume UTF-8 encoding also in non UTF-8 environments while opening text
+    files (closes: 735370)
+  * Mention in pybuild's manpage that disabling anything for python3 doesn't
+    disable python3-dbg as well (closes: 735899)
+  * pybuild's distutils build plugin: set install-scripts to /usr/bin by default
+  * Test Python 2.7 only in test203 if /usr/bin/python2.6 is missing
+    (closes: 727674)
+  * Generate dependencies for minimum required interpreter version that are
+    satisfied by alpha/beta/rc releases (i.e. generate ">= X.Y~")
+  * pybuild build plugins: show executed command (not only in --verbose),
+    closes: 733755
+  * Standards-Version bumped to 3.9.5 (no changes needed)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 28 Jan 2014 18:20:19 +0100
 
 dh-python (1.20131021-1) unstable; urgency=low
 

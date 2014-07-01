@@ -204,7 +204,12 @@ class Interpreter:
             data = fp.read(96)
             if b"\0" in data:
                 raise ValueError('cannot parse binary file')
-        parsed = cls.parse(str(data, 'utf-8'))
+        # make sure only first line is checkeed
+        data = str(data, 'utf-8').split('\n')[0]
+        if not data.startswith('#!'):
+            raise ValueError("doesn't look like a shebang: %s" % data)
+
+        parsed = cls.parse(data)
         if not parsed:
             raise ValueError("doesn't look like a shebang: %s" % data)
         for key, val in parsed.items():
@@ -304,8 +309,8 @@ class Interpreter:
         >>> i = Interpreter('python')
         >>> i.cache_file('foo.py', Version('3.1'))
         'foo.pyc'
-        >>> i.cache_file('bar/foo.py', '3.3')
-        'bar/__pycache__/foo.cpython-33.pyc'
+        >>> i.cache_file('bar/foo.py', '3.4')
+        'bar/__pycache__/foo.cpython-34.pyc'
         """
         version = Version(version or self.version)
         last_char = 'o' if '-O' in self.options else 'c'
@@ -330,8 +335,8 @@ class Interpreter:
         """Return Python magic tag (used in __pycache__ dir to tag files).
 
         >>> i = Interpreter('python')
-        >>> i.magic_tag(version='3.3')
-        'cpython-33'
+        >>> i.magic_tag(version='3.4')
+        'cpython-34'
         """
         version = Version(version or self.version)
         if self.impl.startswith('cpython') and version << Version('3.2'):
@@ -373,8 +378,8 @@ class Interpreter:
 
         >>> Interpreter('python2.7').include_dir
         '/usr/include/python2.7'
-        >>> Interpreter('python3.3-dbg').include_dir
-        '/usr/include/python3.3dm'
+        >>> Interpreter('python3.4-dbg').include_dir
+        '/usr/include/python3.4dm'
         """
         if self.impl == 'pypy':
             return '/usr/lib/pypy/include'
@@ -426,6 +431,10 @@ class Interpreter:
         if not info:
             return
         info = info.groupdict()
+        if info['ver'] and (not version or version.minor is None):
+            # get version from soabi if version is not set of only major
+            # version number is set
+            version = Version("%s.%s" % (info['ver'][0], info['ver'][1]))
 
         if info['stableabi']:
             # files with stable ABI in name don't need changes
@@ -473,7 +482,7 @@ class Interpreter:
 
         >>> Interpreter('python3.1').suggest_pkg_name('foo')
         'python3-foo'
-        >>> Interpreter('python3.3').suggest_pkg_name('foo')
+        >>> Interpreter('python3.4').suggest_pkg_name('foo')
         'python3-foo'
         >>> Interpreter('python2.7-dbg').suggest_pkg_name('bar')
         'python-bar-dbg'

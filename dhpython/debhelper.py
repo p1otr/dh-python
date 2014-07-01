@@ -118,7 +118,7 @@ class DebHelper:
             for when, templates in autoscripts.items():
                 fn = "debian/%s.%s.debhelper" % (package, when)
                 if exists(fn):
-                    with open(fn, 'r') as datafile:
+                    with open(fn, 'r', encoding='utf-8') as datafile:
                         data = datafile.read()
                 else:
                     data = ''
@@ -131,7 +131,7 @@ class DebHelper:
                                      "autoscripts/%s" % tpl_name)
                         if not exists(fpath):
                             fpath = "/usr/share/debhelper/autoscripts/%s" % tpl_name
-                        with open(fpath, 'r') as tplfile:
+                        with open(fpath, 'r', encoding='utf-8') as tplfile:
                             tpl = tplfile.read()
                         if self.options.compile_all and args:
                             # TODO: should args be checked to contain dir name?
@@ -144,7 +144,7 @@ class DebHelper:
                 if new_data:
                     data += '\n# Automatically added by dhpython:' +\
                             '{}\n# End automatically added section\n'.format(new_data)
-                    fp = open(fn, 'w')
+                    fp = open(fn, 'w', encoding='utf-8')
                     fp.write(data)
                     fp.close()
 
@@ -155,7 +155,7 @@ class DebHelper:
                 continue
             fn = "debian/%s.substvars" % package
             if exists(fn):
-                with open(fn, 'r') as datafile:
+                with open(fn, 'r', encoding='utf-8') as datafile:
                     data = datafile.read()
             else:
                 data = ''
@@ -181,7 +181,7 @@ class DebHelper:
                     data += "%s=%s\n" % (name, ', '.join(items))
             data = data.replace('\n\n', '\n')
             if data:
-                fp = open(fn, 'w')
+                fp = open(fn, 'w', encoding='utf-8')
                 fp.write(data)
                 fp.close()
 
@@ -196,7 +196,7 @@ class DebHelper:
                 makedirs(d)
             fn = "%s/%s.rtupdate" % (d, package)
             if exists(fn):
-                data = open(fn, 'r').read()
+                data = open(fn, 'r', encoding='utf-8').read()
             else:
                 data = "#! /bin/sh\nset -e"
             for dname, args in values:
@@ -206,7 +206,7 @@ class DebHelper:
                 if cmd not in data:
                     data += "\n%s" % cmd
             if data:
-                fp = open(fn, 'w')
+                fp = open(fn, 'w', encoding='utf-8')
                 fp.write(data)
                 fp.close()
                 chmod(fn, 0o755)

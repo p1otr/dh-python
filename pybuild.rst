@@ -13,6 +13,32 @@ SYNOPSIS
 ========
   pybuild [ACTION] [BUILD SYSTEM ARGUMENTS] [DIRECTORIES] [OPTIONS]
 
+DEBHELPER COMMAND SEQUENCER INTEGRATION
+=======================================
+* build depend on `dh-python`,
+* build depend on `python3-all`, `python-all-dbg`, `pypy`, etc.
+  (for all supported Python interpreters, pybuild will use it to create
+  a list of interpreters to build for),
+* add `--buildsystem=pybuild` to dh's arguments in debian/rules,
+* if more than one binary package is build:
+  add debian/python-foo.install files, or
+  `export PYBUILD_NAME=modulename` (modulename will be used to guess binary
+  package prefixes), or
+  `export PYBUILD_DESTDIR` env. variables in debian/rules
+
+debian/rules file example::
+
+ #! /usr/bin/make -f
+ export PYBUILD_NAME=foo
+ %:
+  	dh $@ --with python2,python3 --buildsystem=pybuild
+
+overriding test command with custom build plugin example::
+
+ override_dh_auto_test:
+ 	PYBUILD_SYSTEM=custom \
+ 	PYBUILD_TEST_ARGS="command --with --options {build_dir}/" dh_auto_test
+
 OPTIONS
 =======
   Most options can be set (in addition to command line) via environment
@@ -157,6 +183,8 @@ LIMITATIONS
 	change interpreter [default: python{version}]
   --disable ITEMS
         disable action, interpreter, version or any mix of them.
+        Note that f.e. python3 and python3-dbg are two different interpreters,
+        --disable python3/test doesn't disable python3-dbg's tests.
 
 disable examples
 ~~~~~~~~~~~~~~~~
@@ -165,34 +193,13 @@ disable examples
 * `PYBUILD_DISABLE_python2=1` - disables all actions for Python 2.X
 * `PYBUILD_DISABLE_python3.3=test` - disables tests for Python 3.3
 * `PYBUILD_DISABLE=test/python3.3` - same as above
-* `PYBUILD_DISABLE='configure/python3 2.4 pypy'` - disables configure
+* `PYBUILD_DISABLE=configure/python3 2.4 pypy` - disables configure
   action for all python3 interpreters, all actions for version 2.4, and
   all actions for pypy
-
-DEBHELPER COMMAND SEQUENCER INTEGRATION
-=======================================
-* build depend on dh-python
-* build depend on python3-all, python-all-dbg, pypy, etc.
-* add "--buildsystem=pybuild" to dh's arguments in debian/rules
-* if more than one binary package is build:
-  add debian/python-foo.install files, or
-  export PYBUILD_DESTDIR env. variables in debian/rules 
-
-debian/rules file example::
-
- #! /usr/bin/make -f
- export PYBUILD_NAME=foo
- %:
-  	dh $@ --with python2,python3 --buildsystem=pybuild
-
-overriding test command example::
-
- override_dh_auto_test:
- 	PYBUILD_SYSTEM=custom \
- 	PYBUILD_TEST_ARGS="nosetests --with-doctest {build_dir}/" dh_auto_test
 
 SEE ALSO
 ========
 * dh_python2(1)
 * dh_python3(1)
+* https://wiki.debian.org/Python/Pybuild
 * http://deb.li/pybuild - most recent version of this document
