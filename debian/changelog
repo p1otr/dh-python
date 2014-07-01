@@ -9,8 +9,11 @@ dh-python (1.20140511-1~bpo70+1) wheezy-backports; urgency=low
   * dh_python2: do not rename extension files, Wheezy's python2.7 doesn't
     support multiarch tuples
   * Disable multiarch dependencies (":any" not supported that well in Wheezy)
+  * dh_python2: create pyshared symlinks again
+  * Update pydist maps to generate Wheezy dependencies (if package name in
+    Jessie is different)
 
- -- Piotr Ożarowski <piotr@debian.org>  Tue, 01 Jul 2014 17:04:23 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 01 Jul 2014 21:31:59 +0200
 
 dh-python (1.20140511-1) unstable; urgency=medium
 
