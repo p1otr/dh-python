@@ -184,7 +184,7 @@ LIMITATIONS
   --disable ITEMS
         disable action, interpreter, version or any mix of them.
         Note that f.e. python3 and python3-dbg are two different interpreters,
-        --disable python3/test doesn't disable python3-dbg's tests.
+        --disable test/python3 doesn't disable python3-dbg's tests.
 
 disable examples
 ~~~~~~~~~~~~~~~~
