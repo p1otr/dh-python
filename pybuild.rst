@@ -33,12 +33,6 @@ debian/rules file example::
  %:
   	dh $@ --with python2,python3 --buildsystem=pybuild
 
-overriding test command with custom build plugin example::
-
- override_dh_auto_test:
- 	PYBUILD_SYSTEM=custom \
- 	PYBUILD_TEST_ARGS="command --with --options {build_dir}/" dh_auto_test
-
 OPTIONS
 =======
   Most options can be set (in addition to command line) via environment
