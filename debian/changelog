@@ -10,7 +10,10 @@ dh-python (1.20140511-1) unstable; urgency=medium
   * Show fix_shebang's error messages only in debug mode, closes: 745581
 
   [ Matthias Klose ]
-  * Remove empty directories when moving files. 
+  * Remove empty directories when moving files.
+
+  [ Stefano Rivera ]
+  * Update supported (and default) PyPy version to 2.4.
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 11 May 2014 20:59:15 +0200
 
