@@ -1,3 +1,10 @@
+dh-python (1.20141012-1) UNRELEASED; urgency=medium
+
+  [ Stefano Rivera ]
+  * Update supported (and default) PyPy version to 2.4.
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 09 Oct 2014 19:03:53 +0200
+
 dh-python (1.20140511-1) unstable; urgency=medium
 
   [ Piotr Ożarowski ]
@@ -11,9 +18,6 @@ dh-python (1.20140511-1) unstable; urgency=medium
 
   [ Matthias Klose ]
   * Remove empty directories when moving files.
-
-  [ Stefano Rivera ]
-  * Update supported (and default) PyPy version to 2.4.
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 11 May 2014 20:59:15 +0200
 
