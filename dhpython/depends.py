@@ -215,6 +215,12 @@ class Dependencies:
                 # removed from requires.txt?
                 for i in parse_pydep(self.impl, fn):
                     self.depend(i)
+            for fpath in stats['egg-info']:
+                with open(fpath, 'r', encoding='utf-8') as fp:
+                    for line in fp:
+                        if line.startswith('Requires: '):
+                            req = line[10:].strip()
+                            self.depend(guess_dependency(self.impl, req))
 
         # add dependencies from --depends
         for item in options.depends or []:

@@ -125,6 +125,7 @@ class Scan:
 
         self.options = options
         self.result = {'requires.txt': set(),
+                       'egg-info': set(),
                        'nsp.txt': set(),
                        'shebangs': set(),
                        'public_vers': set(),
@@ -373,6 +374,7 @@ class Scan:
             else:
                 log.info('renaming %s to %s', name, clean_name)
                 os.rename(fpath, join(root, clean_name))
+        self.result['egg-info'].add(join(root, clean_name))
 
     def cleanup(self):
         if self.is_dbg_package and self.options.clean_dbg_pkg:
