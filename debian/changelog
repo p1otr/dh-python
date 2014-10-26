@@ -3,6 +3,9 @@ dh-python (1.20141012-1) UNRELEASED; urgency=medium
   [ Stefano Rivera ]
   * Update supported (and default) PyPy version to 2.4.
 
+  [ Piotr Ożarowski ]
+  * Remove "-p " from autoscripts if --compile-all option is set
+
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 09 Oct 2014 19:03:53 +0200
 
 dh-python (1.20140511-1) unstable; urgency=medium

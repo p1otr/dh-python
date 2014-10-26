@@ -135,7 +135,7 @@ class DebHelper:
                             tpl = tplfile.read()
                         if self.options.compile_all and args:
                             # TODO: should args be checked to contain dir name?
-                            tpl = tpl.replace('#PACKAGE#', '')
+                            tpl = tpl.replace('-p #PACKAGE#', '')
                         else:
                             tpl = tpl.replace('#PACKAGE#', package)
                         tpl = tpl.replace('#ARGS#', i)
