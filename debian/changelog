@@ -14,6 +14,7 @@ dh-python (1.20141026-1) unstable; urgency=medium
   * Add argparse to Python 3.X's dist fallback (closes: 763200)
   * Ensure that Depends and the likes are written in a stable
     order (closes: 759231, thanks to Jérémy Bobbio for the patch)
+  * Remove dh_python2 diversions while upgrading from bpo package 
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 26 Oct 2014 23:32:57 +0100
 
