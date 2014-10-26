@@ -179,8 +179,8 @@ def guess_dependency(impl, req, version=None):
     pname = sensible_pname(impl, name)
     log.info('Cannot find installed package that provides %s. '
              'Using %s as package name. Please add "%s correct_package_name" '
-             'line to debian/py3dist-overrides to override it IF this is incorrect.',
-             name, pname, safe_name(name))
+             'line to %s to override it IF this is incorrect.',
+             name, pname, safe_name(name), PYDIST_OVERRIDES_FNAMES[impl])
     return pname
 
 
