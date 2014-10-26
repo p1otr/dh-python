@@ -123,7 +123,7 @@ def guess_dependency(impl, req, version=None):
         version = Version(version)
 
     # some upstreams have weird ideas for distribution name...
-    name, rest = re.compile('([^><= \(\)\[]+)(.*)').match(req).groups()
+    name, rest = re.compile('([^!><= \(\)\[]+)(.*)').match(req).groups()
     req = safe_name(name) + rest
 
     data = load(impl)

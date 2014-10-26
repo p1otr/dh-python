@@ -6,6 +6,8 @@ dh-python (1.20141012-1) UNRELEASED; urgency=medium
   [ Piotr Ożarowski ]
   * Remove "-p " from autoscripts if --compile-all option is set
   * Add support for guessing dependencies from egg-info files (closes: 756378)
+  * Parse "!=" relationship in egg dependencies (closes: 754058, thanks to
+    Rafael Laboissiere for the patch)
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 09 Oct 2014 19:03:53 +0200
 
