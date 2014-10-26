@@ -1,4 +1,5 @@
 setuptools python3-pkg-resources
+argparse python3 (>= 3.2)
 Attic attic
 CDApplet cairo-dock-dbus-plug-in-interface-python
 CDBashApplet cairo-dock-dbus-plug-in-interface-python

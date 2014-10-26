@@ -37,7 +37,8 @@ DEFAULTS = {
         # not recognized due to .pth file (egg-info is in PIL/ and not in *-packages/)
         'pil python-imaging\n'],
     'cpython3': [
-        'setuptools python3-pkg-resources\n'],
+        'setuptools python3-pkg-resources\n',
+        'argparse python3 (>= 3.2)\n'],
     'pypy': []
 }
 
