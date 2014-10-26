@@ -85,8 +85,8 @@ Use --no-dbg-cleaning option to disable this feature.
 pyinstall files
 ~~~~~~~~~~~~~~~
 Files listed in debian/pkg.pyinstall file will be installed as public modules
-for all requested Python versions (dh_install doesn't know about python's site-
-vs. dist-packages issue).
+(i.e. into .../dist-packages/ directory) for all requested Python versions
+(dh_install doesn't know about python's site- vs. dist-packages issue).
 
 Syntax: ``path/to/file [VERSION_RANGE] [NAMESPACE]``
 
@@ -105,9 +105,9 @@ Examples:
 
 pyremove files
 ~~~~~~~~~~~~~~
-If you want to remove some files installed by build system (from all supported
-Python versions or only from a subset of these versions), add them to
-debian/pkg.pyremove file.
+If you want to remove some public modules (i.e. files in .../dist-packages/
+directory) installed by build system (from all supported Python versions or
+only from a subset of these versions), add them to debian/pkg.pyremove file.
 
 Examples:
  * ``*.pth`` removes .pth files from .../dist-packages/
