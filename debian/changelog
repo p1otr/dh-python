@@ -15,6 +15,7 @@ dh-python (1.20141026-1) unstable; urgency=medium
   * Ensure that Depends and the likes are written in a stable
     order (closes: 759231, thanks to Jérémy Bobbio for the patch)
   * Remove dh_python2 diversions while upgrading from bpo package 
+  * Standards-Version bumped to 3.9.6 (no changes needed)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 26 Oct 2014 23:32:57 +0100
 

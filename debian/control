@@ -6,7 +6,7 @@ Uploaders: Stefano Rivera <stefanor@debian.org>, Barry Warsaw <barry@debian.org>
 Build-Depends: debhelper (>= 9), python3-minimal, libpython3-stdlib,
 # provides rst2man command (python3-docutils not used to avoid circular deps):
  python-docutils
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Vcs-Git: git://anonscm.debian.org/dh-python/dh-python.git
 Vcs-Browser: http://anonscm.debian.org/cgit/dh-python/dh-python.git
 X-Python3-Version: >= 3.2
