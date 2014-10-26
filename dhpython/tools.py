@@ -301,7 +301,7 @@ def pyremove(interpreter, package, vrange):
             site_dirs = interpreter.old_sitedirs(package, version)
             site_dirs.append(interpreter.sitedir(package, version))
             for sdir in site_dirs:
-                files = glob(sdir + details['pattern'])
+                files = glob(sdir + '/' + details['pattern'])
                 for fpath in files:
                     if isdir(fpath):
                         rmtree(fpath)
