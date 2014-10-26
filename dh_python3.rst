@@ -66,6 +66,36 @@ In binary packages which name ends with `-dbg`, all files in
 that have extensions different than `so` or `h` are removed by default.
 Use --no-dbg-cleaning option to disable this feature.
 
+pyinstall files
+~~~~~~~~~~~~~~~
+Files listed in debian/pkg.pyinstall file will be installed as public modules
+(i.e. into .../dist-packages/ directory) for all requested Python versions.
+
+Syntax: ``path/to/file [VERSION_RANGE] [NAMESPACE]``
+
+debian directory is automatically removed from the path, so you can place your
+files in debian/ directory and install them from this location (if you want to
+install them in "debian" namespace, set NAMESPACE to debian). If NAMESPACE is
+set, all listed files will be installed in .../dist-packages/NAMESPACE/
+directory.
+
+Examples:
+ * ``foo.py`` installs .../dist-packages/foo.py for all supported Python versions
+ * ``foo/bar.py 3.3-`` installs .../dist-packages/foo/bar.py for versions >= 3.3
+ * ``foo/bar.py spam`` installs .../dist-packages/spam/bar.py
+ * ``debian/*.py spam.egg 3.2`` installs .../python3.2/dist-packages/spam/egg/\*.py
+   files
+
+pyremove files
+~~~~~~~~~~~~~~
+If you want to remove some public modules (i.e. files in .../dist-packages/
+directory) installed by build system (from all supported Python versions or
+only from a subset of these versions), add them to debian/pkg.pyremove file.
+
+Examples:
+ * ``*.pth`` removes .pth files from .../dist-packages/
+ * ``bar/baz.py 3.2`` removes .../python3.2/dist-packages/bar/baz.py
+
 overriding supported / default Python versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you want to override system's list of supported Python versions or the
