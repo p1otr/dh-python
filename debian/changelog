@@ -1,4 +1,4 @@
-dh-python (1.20141012-1) UNRELEASED; urgency=medium
+dh-python (1.20141026-1) unstable; urgency=medium
 
   [ Stefano Rivera ]
   * Update supported (and default) PyPy version to 2.4.
@@ -8,9 +8,14 @@ dh-python (1.20141012-1) UNRELEASED; urgency=medium
   * Add support for guessing dependencies from egg-info files (closes: 756378)
   * Parse "!=" relationship in egg dependencies (closes: 754058, thanks to
     Rafael Laboissiere for the patch)
+  * Improve handling pyinstall/pyremove files (leading slash no longer needed
+    for deprecated directories, manpages improved a bit) - closes: 741381
   * Suggest the right file name for dependency overrides (closes: 748296)
+  * Add argparse to Python 3.X's dist fallback (closes: 763200)
+  * Ensure that Depends and the likes are written in a stable
+    order (closes: 759231, thanks to Jérémy Bobbio for the patch)
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 09 Oct 2014 19:03:53 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 26 Oct 2014 23:32:57 +0100
 
 dh-python (1.20140511-1) unstable; urgency=medium
 
