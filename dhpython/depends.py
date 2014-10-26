@@ -61,17 +61,17 @@ class Dependencies:
     def export_to(self, dh):
         """Fill in debhelper's substvars."""
         prefix = PKG_PREFIX_MAP.get(self.impl, 'misc')
-        for i in self.depends:
+        for i in sorted(self.depends):
             dh.addsubstvar(self.package, '{}:Depends'.format(prefix), i)
-        for i in self.recommends:
+        for i in sorted(self.recommends):
             dh.addsubstvar(self.package, '{}:Recommends'.format(prefix), i)
-        for i in self.suggests:
+        for i in sorted(self.suggests):
             dh.addsubstvar(self.package, '{}:Suggests'.format(prefix), i)
-        for i in self.enhances:
+        for i in sorted(self.enhances):
             dh.addsubstvar(self.package, '{}:Enhances'.format(prefix), i)
-        for i in self.breaks:
+        for i in sorted(self.breaks):
             dh.addsubstvar(self.package, '{}:Breaks'.format(prefix), i)
-        for i in self.rtscripts:
+        for i in sorted(self.rtscripts):
             dh.add_rtupdate(self.package, i)
 
     def __str__(self):
