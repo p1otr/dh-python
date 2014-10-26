@@ -49,11 +49,13 @@ REQUIRES_RE = re.compile(r'''
     \s*
     (?P<enabled_extras>(?:\[[^\]]*\])?)  # ignored for now
     \s*
+    \(?  # optional parenthesis
     (?:  # optional minimum/maximum version
         (?P<operator><=?|>=?|==|!=)
         \s*
         (?P<version>(\w|[-.])+)
     )?
+    \)?  # optional closing parenthesis
     ''', re.VERBOSE)
 
 
@@ -121,7 +123,7 @@ def guess_dependency(impl, req, version=None):
         version = Version(version)
 
     # some upstreams have weird ideas for distribution name...
-    name, rest = re.compile('([^><= \[]+)(.*)').match(req).groups()
+    name, rest = re.compile('([^><= \(\)\[]+)(.*)').match(req).groups()
     req = safe_name(name) + rest
 
     data = load(impl)
