@@ -1,8 +1,14 @@
-dh-python (1.20141111-1) UNRELEASED; urgency=medium
+dh-python (1.20141111-1) unstable; urgency=medium
 
   * Set dh-python's Multi-Arch to "foreign" (closes: 767339)
+  * dist_fallback files now contain list of all packages that provide Egg
+    metadata (i.e. not just packages that don't have sensible name)
+  * dh_python* no longer guesses dependency from requires.txt files nor Requires
+    fields. Dependencies are generated only if given requirement is available
+    in dist_fallback file (generated at dh-python's build time) or if it's
+    available at build time (hint: Build-Depends)
 
- -- Piotr Ożarowski <piotr@debian.org>  Tue, 11 Nov 2014 15:41:25 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 11 Nov 2014 21:23:20 +0100
 
 dh-python (1.20141026-1) unstable; urgency=medium
 
