@@ -1,2 +1,9 @@
+Unidecode pypy-unidecode
+Wand pypy-wand
 beautifulsoup4 pypy-bs4
+mutagen pypy-mutagen
+pretend pypy-pretend
 pyzmq pypy-zmq
+rply pypy-rply
+simplejson pypy-simplejson
+sqlparse pypy-sqlparse
