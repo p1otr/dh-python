@@ -117,13 +117,14 @@ def load(impl):
 
 
 def guess_dependency(impl, req, version=None):
-    log.debug('trying to guess dependency for %s (python=%s)',
+    log.debug('trying to find dependency for %s (python=%s)',
               req, version)
     if isinstance(version, str):
         version = Version(version)
 
     # some upstreams have weird ideas for distribution name...
     name, rest = re.compile('([^!><= \(\)\[]+)(.*)').match(req).groups()
+    # TODO: check stdlib and dist-packaged for name.py and name.so files
     req = safe_name(name) + rest
 
     data = load(impl)
@@ -154,7 +155,7 @@ def guess_dependency(impl, req, version=None):
             else:
                 return item['dependency']
 
-    # try dpkg -S
+    # search for Egg metadata file or directory (using dpkg -S)
     query = PYDIST_DPKG_SEARCH_TPLS[impl].format(ci_regexp(safe_name(name)))
 
     log.debug("invoking dpkg -S %s", query)
@@ -175,13 +176,13 @@ def guess_dependency(impl, req, version=None):
     else:
         log.debug('dpkg -S did not find package for %s: %s', name, stderr)
 
-    # fall back to python-distname
     pname = sensible_pname(impl, name)
-    log.info('Cannot find installed package that provides %s. '
-             'Using %s as package name. Please add "%s correct_package_name" '
-             'line to %s to override it IF this is incorrect.',
-             name, pname, safe_name(name), PYDIST_OVERRIDES_FNAMES[impl])
-    return pname
+    log.info('Cannot find package that provides %s. '
+             'Please add package that provides it to Build-Depends or '
+             'add "%s %s-fixme" line to %s or add proper '
+             ' dependency to Depends by hand and ignore this info.',
+             name, safe_name(name), pname, PYDIST_OVERRIDES_FNAMES[impl])
+    # return pname
 
 
 def parse_pydep(impl, fname):
