@@ -14,7 +14,7 @@ XS-Testsuite: autopkgtest
 
 Package: dh-python
 Architecture: all
-#Multi-Arch: foreign
+Multi-Arch: foreign
 Depends: ${misc:Depends}, ${python3:Depends}
 Breaks:
 # due to /usr/bin/dh_python3 and debhelper files
