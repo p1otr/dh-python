@@ -42,7 +42,7 @@ def relpath(target, link):
     """
     t = target.split('/')
     l = link.split('/')
-    while l[0] == t[0]:
+    while l and l[0] == t[0]:
         del l[0], t[0]
     return '/'.join(['..'] * (len(l) - 1) + t)
 
