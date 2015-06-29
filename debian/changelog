@@ -4,6 +4,8 @@ dh-python (1.20150628-1) unstable; urgency=medium
     stripped from the beginning of the path.
   * Re-apply Multi-Arch change.
   * Remove XS-Testsuite control field, no longer necessary.
+  * Sort namespace files, for reproducibility. Thanks to Chris Lamb for the
+    patch. (closes: 777134)
 
  -- Stefano Rivera <stefanor@debian.org>  Sun, 28 Jun 2015 18:15:20 -0700
 

@@ -510,7 +510,7 @@ def main():
             if not exists(dstdir):
                 os.makedirs(dstdir)
             with open(join(dstdir, package), 'a', encoding='utf-8') as fp:
-                fp.writelines("%s\n" % i for i in nsp)
+                fp.writelines("%s\n" % i for i in sorted(nsp))
 
         pyshared = join('debian', package, 'usr/share/pyshared/')
         if isdir(pyshared) and not os.listdir(pyshared):
