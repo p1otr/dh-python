@@ -78,7 +78,7 @@ def move_matching_files(src, dst, pattern):
         for fn in filenames:
             spath = join(root, fn)
             if match(spath):
-                dpath = join(dst, spath.lstrip(src).lstrip('/'))
+                dpath = join(dst, relpath(spath, src).lstrip('/'))
                 os.renames(spath, dpath)
 
 
