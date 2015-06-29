@@ -3,6 +3,7 @@ dh-python (1.20150628-1) unstable; urgency=medium
   * Fix path handling when --ext-dest-dir is used. Some characters were being
     stripped from the beginning of the path.
   * Re-apply Multi-Arch change.
+  * Remove XS-Testsuite control field, no longer necessary.
 
  -- Stefano Rivera <stefanor@debian.org>  Sun, 28 Jun 2015 18:15:20 -0700
 
