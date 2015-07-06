@@ -1,9 +1,9 @@
-dh-python (1.20150705-1) UNRELEASED; urgency=medium
+dh-python (1.20150705-1) unstable; urgency=medium
 
   * Support requires.txt in PyPy packages.
   * Add unit tests for bugs fixed in this and the previous upload.
 
- -- Stefano Rivera <stefanor@debian.org>  Sun, 05 Jul 2015 12:08:39 -0700
+ -- Stefano Rivera <stefanor@debian.org>  Sun, 05 Jul 2015 19:09:24 -0700
 
 dh-python (1.20150628-1) unstable; urgency=medium
 
