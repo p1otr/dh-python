@@ -187,10 +187,9 @@ def guess_dependency(impl, req, version=None):
 
 def parse_pydep(impl, fname):
     public_dir = PUBLIC_DIR_RE[impl].match(fname)
-    if public_dir and len(public_dir.group(1)) != 1:
+    ver = None
+    if public_dir and public_dir.groups() and len(public_dir.group(1)) != 1:
         ver = public_dir.group(1)
-    else:
-        ver = None
 
     result = []
     modified = optional_section = False

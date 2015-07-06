@@ -282,7 +282,7 @@ class Interpreter:
         match = PUBLIC_DIR_RE[self.impl].match(path)
         if match:
             vers = match.groups(0)
-            if vers:
+            if vers and vers[0]:
                 return Version(vers)
             # PyPy is not versioned
             return default(self.impl)
