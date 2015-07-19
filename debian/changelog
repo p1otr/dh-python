@@ -1,4 +1,4 @@
-dh-python (2.20150719) UNRELEASED; urgency=medium
+dh-python (2.20150719) unstable; urgency=medium
 
   * Update dist_fallback files
   * Converted to native package and bumped version number to 2.*
@@ -12,7 +12,7 @@ dh-python (2.20150719) UNRELEASED; urgency=medium
     for the patch)
   * Remove "module" from extension file names also in Python 2.7
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 19 Jul 2015 13:57:42 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 19 Jul 2015 22:54:37 +0200
 
 dh-python (1.20150705-1) unstable; urgency=medium
 
