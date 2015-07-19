@@ -45,14 +45,34 @@ competitors, though.
 
 dependencies
 ~~~~~~~~~~~~
-dh_python2 tries to translate Python dependencies from requires.txt file to
-Debian dependencies. Use debian/pydist-overrides or --no-guessing-deps option
-to override it if the guess is incorrect. If you want dh_python2 to generate
-more strict dependencies (f.e. to avoid ABI problems) create
-debian/python-foo.pydist file. See /usr/share/doc/dh-python/README.PyDist
-for more information. If the pydist file contains PEP386 flag or set of (uscan
-like) rules, dh_python2 will make the depedency versioned (version requirements
-are ignored by default).
+dh_python2 tries to translate Python dependencies from the `requires.txt` file
+to Debian dependencies. In many cases, this works without any additional
+configuration because dh_python2 comes with a build-in mapping of Python module
+names to Debian packages that is periodically regenerated from the Debian
+archive. By default, the version information in the Python dependencies is
+discarded. If you want dh_python2 to generate more strict dependencies (e.g. to
+avoid ABI problems), or if the automatic mapping does not work correctly for
+your package, you have to provide dh_python2 with additional rules for the
+translation of Python module to Debian package dependencies.
+
+For a package *python-foo* that depends on a package *python-bar*, there are
+two files that may provide such rules:
+
+#. If the *python-foo* source package ships with a
+   `debian/pydist-overrides` file, this file is used by dh_python
+   during the build of *python-foo*.
+
+#. If the *python-bar* source package ships with a
+   `debian/python-bar.pydist` file (and uses dh_python), this file
+   will be included in the binary package as
+   `/usr/share/dh-python/dist/cpython2/python-bar`. During the build
+   of *python-foo*, dh_python will then find and use the file.
+
+Both files have the same format described in
+`/usr/share/doc/dh-python/README.PyDist`. If all you want is to generate
+versioned dependencies (and assuming that the *python-bar* package provides
+the *pybar* Python module), in most cases it will be sufficient to put the line
+``pybar python-bar; PEP386`` into either of the above files.
 
 namespace feature
 ~~~~~~~~~~~~~~~~~

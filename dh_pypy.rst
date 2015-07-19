@@ -31,14 +31,34 @@ NOTES
 
 dependencies
 ~~~~~~~~~~~~
-dh_pypy tries to translate Python dependencies from requires.txt file to
-Debian dependencies. Use debian/pypydist-overrides or --no-guessing-deps option
-to override it if the guess is incorrect. If you want dh_pypy to generate
-more strict dependencies (f.e. to avoid ABI problems) create
-debian/pypy-foo.pydist file. See /usr/share/doc/dh-python/README.PyDist
-for more information. If the pydist file contains PEP386 flag or set of (uscan
-like) rules, dh_pypy will make the depedency versioned (version requirements
-are ignored by default).
+dh_pypy tries to translate Python dependencies from the `requires.txt` file
+to Debian dependencies. In many cases, this works without any additional
+configuration because dh_pypy comes with a build-in mapping of Python module
+names to Debian packages that is periodically regenerated from the Debian
+archive. By default, the version information in the Python dependencies is
+discarded. If you want dh_pypy to generate more strict dependencies (e.g. to
+avoid ABI problems), or if the automatic mapping does not work correctly for
+your package, you have to provide dh_pypy with additional rules for the
+translation of Python module to Debian package dependencies.
+
+For a package *pypy-foo* that depends on a package *pypy-bar*, there are
+two files that may provide such rules:
+
+#. If the *pypy-foo* source package ships with a
+   `debian/pypy-overrides` file, this file is used by dh_pypy
+   during the build of *pypy-foo*.
+
+#. If the *pypy-bar* source package ships with a
+   `debian/pypy-bar.pydist` file (and uses dh_pypy), this file
+   will be included in the binary package as
+   `/usr/share/dh-python/dist/pypy/pypy-bar`. During the build
+   of *pypy-foo*, dh_pypy will then find and use the file.
+
+Both files have the same format described in
+`/usr/share/doc/dh-python/README.PyDist`. If all you want is to generate
+versioned dependencies (and assuming that the *pypy-bar* package provides
+the *pybar* Python module), in most cases it will be sufficient to put the line
+``pybar pypy-bar; PEP386`` into either of the above files.
 
 private dirs
 ~~~~~~~~~~~~

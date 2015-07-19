@@ -38,14 +38,34 @@ NOTES
 
 dependencies
 ~~~~~~~~~~~~
-dh_python3 tries to translate Python dependencies from requires.txt file to
-Debian dependencies. Use debian/py3dist-overrides or --no-guessing-deps option
-to override it if the guess is incorrect. If you want dh_python3 to generate
-more strict dependencies (f.e. to avoid ABI problems) create
-debian/python3-foo.pydist file. See /usr/share/doc/dh-python/README.PyDist
-for more information. If the pydist file contains PEP386 flag or set of (uscan
-like) rules, dh_python3 will make the depedency versioned (version requirements
-are ignored by default).
+dh_python3 tries to translate Python dependencies from the `requires.txt` file
+to Debian dependencies. In many cases, this works without any additional
+configuration because dh_python3 comes with a build-in mapping of Python module
+names to Debian packages that is periodically regenerated from the Debian
+archive. By default, the version information in the Python dependencies is
+discarded. If you want dh_python3 to generate more strict dependencies (e.g. to
+avoid ABI problems), or if the automatic mapping does not work correctly for
+your package, you have to provide dh_python3 with additional rules for the
+translation of Python module to Debian package dependencies.
+
+For a package *python3-foo* that depends on a package *python3-bar*, there are
+two files that may provide such rules:
+
+#. If the *python3-foo* source package ships with a
+   `debian/py3dist-overrides` file, this file is used by dh_python3
+   during the build of *python3-foo*.
+
+#. If the *python3-bar* source package ships with a
+   `debian/python3-bar.pydist` file (and uses dh_python3), this file
+   will be included in the binary package as
+   `/usr/share/dh-python/dist/cpython3/python3-bar`. During the build
+   of *python3-foo*, dh_python3 will then find and use the file.
+
+Both files have the same format described in
+`/usr/share/doc/dh-python/README.PyDist`. If all you want is to generate
+versioned dependencies (and assuming that the *python3-bar* package provides
+the *pybar* Python module), in most cases it will be sufficient to put the line
+``pybar python3-bar; PEP386`` into either of the above files.
 
 private dirs
 ~~~~~~~~~~~~
