@@ -1,6 +1,8 @@
 Unidecode pypy-unidecode
 Wand pypy-wand
 beautifulsoup4 pypy-bs4
+dulwich pypy-dulwich
+fastimport pypy-fastimport
 mutagen pypy-mutagen
 pretend pypy-pretend
 pyzmq pypy-zmq
