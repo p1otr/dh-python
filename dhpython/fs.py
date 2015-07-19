@@ -217,6 +217,19 @@ class Scan:
                 if fext == 'py' and self.handle_public_module(fpath) is not False:
                     self.current_result['compile'] = True
 
+            if not dirs:
+                # try to remove directory if it's empty (and its parent if it's empty afterwards)
+                while root:
+                    try:
+                        os.rmdir(root)
+                        log.debug('removing empty directory: %s', root)
+                    except Exception:
+                        break
+                    root = root.rsplit('/', 1)[0]
+
+                    if not root.startswith(self.proot):
+                        break
+
         log.debug("package %s details = %s", package, self.result)
 
     @property
