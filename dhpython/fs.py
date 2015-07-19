@@ -144,6 +144,11 @@ class Scan:
             if self.current_pub_version:  # i.e. a public site-packages directory
                 if root.endswith('-packages'):
                     self.result['public_vers'].add(version)
+                    for name in ('test', 'tests'):
+                        if name in dirs:
+                            log.debug('removing dist-packages/%s (too common name)', name)
+                            rmtree(join(root, name))
+                            dirs.remove(name)
             else:
                 self.current_private_dir = self.check_private_dir(root)
                 if not self.current_private_dir:

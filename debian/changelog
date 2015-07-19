@@ -2,7 +2,10 @@ dh-python (2.20150719) UNRELEASED; urgency=medium
 
   * Update dist_fallback files
   * Converted to native package and bumped version number to 2.*
-  * dh_python{2,3}: remove empty directories (closes: 761028)
+  * dh_python{2,3}:
+    - remove empty directories (closes: 761028)
+    - remove "test" and "tests" directories from dist-packages/
+      (packages should ship tests in /usr/share/ or under thier own namespace)
   * Make private dir autoscript snippets output in a determinstic order
     (closes: 792436, thanks to Chris Lamb for the patch)
   * Clarify purpose of .pydist files (closes: 778633, thanks to Nikolaus Rath

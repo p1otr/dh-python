@@ -1,3 +1,4 @@
 foo.py /usr/share/pyshared/
 __init__.py /usr/share/pyshared/bar/
+__init__.py /usr/share/pyshared/tests/
 bar.py /usr/share/pyshared/bar/
