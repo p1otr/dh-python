@@ -200,7 +200,7 @@ def main():
             dh.autoscript(package, 'postinst', 'postinst-py3compile', args)
             dh.autoscript(package, 'prerm', 'prerm-py3clean', '')
             pyclean_added = True
-        for pdir, details in stats['private_dirs'].items():
+        for pdir, details in sorted(stats['private_dirs'].items()):
             if not details.get('compile'):
                 continue
             if not pyclean_added:
