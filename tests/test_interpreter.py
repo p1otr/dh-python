@@ -45,7 +45,7 @@ class TestInterpreter(unittest.TestCase):
         self.assertIsNone(i.check_extname('foo.MYARCH_d.so'))
         self.assertIsNone(i.check_extname('foo.abi3.so'))
         self.assertIsNone(i.check_extname('foo.OTHER.so'))  # different architecture
-        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), 'foo/bar/bazmodule.MYARCH.so')
+        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), 'foo/bar/baz.MYARCH.so')
 
     @unittest.skipUnless(exists('/usr/bin/python2.7-dbg'), 'python2.7-dbg is not installed')
     def test_python27dbg(self):
@@ -55,7 +55,7 @@ class TestInterpreter(unittest.TestCase):
         self.assertEqual(i.check_extname('foo_d.so'), 'foo.MYARCH_d.so')
         self.assertIsNone(i.check_extname('foo.MYARCH_d.so'))
         self.assertIsNone(i.check_extname('foo.OTHER_d.so'))  # different architecture
-        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), 'foo/bar/bazmodule.MYARCH_d.so')
+        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), 'foo/bar/baz.MYARCH_d.so')
 
     @unittest.skipUnless(exists('/usr/bin/python3.1'), 'python3.1 is not installed')
     def test_python31(self):

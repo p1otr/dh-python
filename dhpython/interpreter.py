@@ -460,7 +460,8 @@ class Interpreter:
         tmp_multiarch = info['multiarch'] or multiarch
 
         result = info['name']
-        if self.impl == 'cpython3' and version >> '3.2' and result.endswith('module'):
+        if result.endswith('module') and (self.impl == 'cpython3' and version >> '3.2'
+                                          or self.impl == 'cpython2' and version == '2.7'):
             result = result[:-6]
 
         if tmp_soabi:
