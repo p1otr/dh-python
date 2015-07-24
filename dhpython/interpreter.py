@@ -466,7 +466,7 @@ class Interpreter:
 
         if tmp_soabi:
             result = "{}.{}".format(result, tmp_soabi)
-            if tmp_multiarch and not (self.impl == 'cpython3' and version << '3.3'):
+            if tmp_multiarch and not (self.impl == 'cpython3' and version << '3.3') and tmp_multiarch not in soabi:
                 result = "{}-{}".format(result, tmp_multiarch)
         elif self.impl == 'cpython2' and version == '2.7' and tmp_multiarch:
             result = "{}.{}".format(result, tmp_multiarch)
