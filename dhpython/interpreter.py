@@ -510,6 +510,9 @@ class Interpreter:
                'for i in s.get_config_vars('\
                '"SOABI", "MULTIARCH", "INCLUDEPY", "LIBPL", "LDLIBRARY")))'
         conf_vars = self._execute(cmd, version).split('__SEP__')
+        if conf_vars[1] in conf_vars[0]:
+            # Python >= 3.5 includes MILTIARCH in SOABI
+            conf_vars[0] = conf_vars[0].replace("-%s" % conf_vars[1], '')
         try:
             conf_vars[1] = os.environ['DEB_HOST_MULTIARCH']
         except KeyError:
