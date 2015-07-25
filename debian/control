@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
 Uploaders: Stefano Rivera <stefanor@debian.org>, Barry Warsaw <barry@debian.org>
-Build-Depends: debhelper (>= 9), python3-minimal, libpython3-stdlib,
+Build-Depends: debhelper (>= 9), python3-minimal, libpython3-stdlib, libdpkg-perl,
 # provides rst2man command (python3-docutils not used to avoid circular deps):
  python-docutils
 Standards-Version: 3.9.6
@@ -14,7 +14,7 @@ X-Python3-Version: >= 3.2
 Package: dh-python
 Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends}, ${python3:Depends}
+Depends: libdpkg-perl, ${misc:Depends}, ${python3:Depends}
 Breaks:
 # due to /usr/bin/dh_python3 and debhelper files
  python3 (<< 3.3.2-4~)

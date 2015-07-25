@@ -8,6 +8,7 @@
 package Debian::Debhelper::Buildsystem::pybuild;
 
 use strict;
+use Dpkg::Control;
 use Debian::Debhelper::Dh_Lib qw(error doit);
 use base 'Debian::Debhelper::Buildsystem';
 
@@ -155,15 +156,16 @@ sub python_build_dependencies {
 	my $this=shift;
 
 	my @result;
-	open (CONTROL, 'debian/control') || error("cannot read debian/control: $!\n");
-	foreach my $builddeps (join('', <CONTROL>) =~ 
-			/^Build-Depends[^:]*:.*\n(?:^[^\w\n#].*\n)*/gmi) {
-		while ($builddeps =~ /[\s,](pypy|python[0-9\.]*(-all)?((-dev)|(-dbg))?)[\s,]|$/g) {
-			if ($1) {push @result, $1};
+	my $c = Dpkg::Control->new(type => CTRL_INFO_SRC);
+	if ($c->load('debian/control')) {
+		for my $field (grep /^Build-Depends/, keys %{$c}) {
+			my $builddeps = $c->{$field};
+			while ($builddeps =~ /(?:^|[\s,])(pypy|python[0-9\.]*(-all)?((-dev)|(-dbg))?)(?:[\s,]|$)/g) {
+				if ($1) {push @result, $1};
+			}
 		}
 	}
 
-	close CONTROL;
 	return @result;
 }
 
