@@ -94,6 +94,24 @@ sub pybuild_commands {
 		# NOTE: possible problems with alternative/versioned dependencies
 		my @deps = $this->python_build_dependencies();
 
+		my @py2opts = ('pybuild', "--$step");
+		my @py3opts = ('pybuild', "--$step");
+
+		if ($step == 'test') {
+			if (grep {$_ eq 'python-tox'} @deps) {
+				push @py2opts, '--test-tox'}
+			elsif (grep {$_ eq 'python-pytest'} @deps) {
+				push @py2opts, '--test-pytest'}
+			elsif (grep {$_ eq 'python-nose'} @deps) {
+				push @py2opts, '--test-nose'}
+			if (grep {$_ eq 'python3-tox'} @deps) {
+				push @py3opts, '--test-tox'}
+			elsif (grep {$_ eq 'python3-nose'} @deps) {
+				push @py3opts, '--test-nose'}
+			elsif (grep {$_ eq 'python3-pytest'} @deps) {
+				push @py3opts, '--test-pytest'}
+		}
+
 		my $pyall = 0;
 		my $pyalldbg = 0;
 		my $py3all = 0;
@@ -105,41 +123,39 @@ sub pybuild_commands {
 		if ($this->{pyvers}) {
 			if (grep {$_ eq 'python-all' or $_ eq 'python-all-dev'} @deps) {
 				$pyall = 1;
-				push @result, ['pybuild', "--$step", '-i', $i, '-p', $this->{pyvers}, @options];
+				push @result, [@py2opts, '-i', $i, '-p', $this->{pyvers}, @options];
 			}
 			if (grep {$_ eq 'python-all-dbg'} @deps) {
 				$pyalldbg = 1;
-				push @result, ['pybuild', "--$step", '-i', "$i-dbg", '-p', $this->{pyvers}, @options];
+				push @result, [@py2opts, '-i', "$i-dbg", '-p', $this->{pyvers}, @options];
 			}
 		}
 		if ($this->{pydef}) {
 			if (not $pyall and grep {$_ eq 'python' or $_ eq 'python-dev'} @deps) {
-				push @result, ['pybuild', "--$step", '-i', $i, '-p', $this->{pydef}, @options];
+				push @result, [@py2opts, '-i', $i, '-p', $this->{pydef}, @options];
 			}
 			if (not $pyalldbg and grep {$_ eq 'python-dbg'} @deps) {
-				push @result, ['pybuild', "--$step", '-i', "$i-dbg", '-p', $this->{pydef}, @options];
+				push @result, [@py2opts, '-i', "$i-dbg", '-p', $this->{pydef}, @options];
 			}
 		}
 
 		# Python 3
 		if ($this->{py3vers}) {
-			my $i = 'python{version}';
 			if (grep {$_ eq 'python3-all' or $_ eq 'python3-all-dev'} @deps) {
 				$py3all = 1;
-				push @result, ['pybuild', "--$step", '-i', $i, '-p', $this->{py3vers}, @options];
+				push @result, [@py3opts, '-i', $i, '-p', $this->{py3vers}, @options];
 			}
 			if (grep {$_ eq 'python3-all-dbg'} @deps) {
 				$py3alldbg = 1;
-				push @result, ['pybuild', "--$step", '-i', "$i-dbg", '-p', $this->{py3vers}, @options];
+				push @result, [@py3opts, '-i', "$i-dbg", '-p', $this->{py3vers}, @options];
 			}
 		}
 		if ($this->{py3def}) {
 			if (not $py3all and grep {$_ eq 'python3' or $_ eq 'python3-dev'} @deps) {
- 				# TODO: "python3" case: should X-Python3-Version header in debian/control be also required here?
-				push @result, ['pybuild', "--$step", '-i', $i, '-p', $this->{py3def}, @options];
+				push @result, [@py3opts, '-i', $i, '-p', $this->{py3def}, @options];
 			}
 			if (not $py3alldbg and grep {$_ eq 'python3-dbg'} @deps) {
-				push @result, ['pybuild', "--$step", '-i', "$i-dbg", '-p', $this->{py3def}, @options];
+				push @result, [@py3opts, '-i', "$i-dbg", '-p', $this->{py3def}, @options];
 			}
 		}
 		# TODO: pythonX.Y → `pybuild -i python{version} -p X.Y`
@@ -160,7 +176,7 @@ sub python_build_dependencies {
 	if ($c->load('debian/control')) {
 		for my $field (grep /^Build-Depends/, keys %{$c}) {
 			my $builddeps = $c->{$field};
-			while ($builddeps =~ /(?:^|[\s,])(pypy|python[0-9\.]*(-all)?((-dev)|(-dbg))?)(?:[\s,]|$)/g) {
+			while ($builddeps =~ /(?:^|[\s,])(pypy|python[0-9\.]*(-[^\s,]+)?)(?:[\s,]|$)/g) {
 				if ($1) {push @result, $1};
 			}
 		}
