@@ -54,8 +54,12 @@ def main(cfg):
         env['no_proxy'] = 'localhost'
     if 'http_proxy' not in env:
         env['http_proxy'] = 'http://127.0.0.1:9/'
+    elif not env['http_proxy']:
+        del env['http_proxy']  # some tools don't like empty var.
     if 'https_proxy' not in env:
         env['https_proxy'] = 'https://127.0.0.1:9/'
+    elif not env['https_proxy']:
+        del env['https_proxy']  # some tools don't like empty var.
 
     if cfg.system:
         certainty = 99
