@@ -21,7 +21,7 @@
 import logging
 from os import makedirs, chmod
 from os.path import exists, join, dirname
-from dhpython import PKG_NAME_TPLS, RT_LOCATIONS, RT_TPLS
+from dhpython import DEPENDS_SUBSTVARS, PKG_NAME_TPLS, RT_LOCATIONS, RT_TPLS
 
 log = logging.getLogger('dhpython')
 
@@ -43,6 +43,7 @@ class DebHelper:
             if name != impl:
                 skip_tpl.update(tpls)
         skip_tpl = tuple(skip_tpl)
+        substvar = DEPENDS_SUBSTVARS[impl]
 
         pkgs = options.package
         skip_pkgs = options.no_package
@@ -53,9 +54,12 @@ class DebHelper:
             raise Exception('cannot find debian/control file')
 
         for line in fp:
+            if line.startswith('#'):
+                continue
             if not line.strip():
                 source_section = False
                 binary_package = None
+                inside_depends_field = False
                 continue
             line_l = line.lower()  # field names are case-insensitive
             if binary_package:
@@ -67,6 +71,21 @@ class DebHelper:
                     #del self.packages[binary_package]
                     self.packages[binary_package]['arch'] = arch
                     continue
+                if not binary_package.startswith(PKG_NAME_TPLS[impl]):
+                    # package doesn't have common prefix (python-, python3-, pypy-)
+                    # so lets check if Depends contains apropriate substvar
+                    if line_l.startswith('depends:'):
+                        if substvar in line:
+                            continue
+                        inside_depends_field = True
+                    elif inside_depends_field:  # multiline continuation
+                        if not line.startswith((' ', '\t')):
+                            inside_depends_field = False
+                            log.debug('skipping package %s (missing %s in Depends)',
+                                      binary_package, substvar)
+                            del self.packages[binary_package]
+                        elif substvar in line:
+                            inside_depends_field = None
             elif line_l.startswith('package:'):
                 binary_package = line[8:].strip()
                 if skip_tpl and binary_package.startswith(skip_tpl):

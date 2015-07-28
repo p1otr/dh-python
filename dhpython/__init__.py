@@ -80,6 +80,11 @@ PYDIST_DPKG_SEARCH_TPLS = {
     'pypy': '*pypy/*/{}-?\.egg-info'}
 
 # DebHelper related
+DEPENDS_SUBSTVARS = {
+    'cpython2': '${python:Depends}',
+    'cpython3': '${python3:Depends}',
+    'pypy': '${pypy:Depends}',
+}
 PKG_NAME_TPLS = {
     'cpython2': ('python-', 'python2.'),
     'cpython3': ('python3-', 'python3.'),
