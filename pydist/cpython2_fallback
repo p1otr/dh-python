@@ -2,7 +2,9 @@ python python
 setuptools python-pkg-resources
 wsgiref python (>= 2.5) | python-wsgiref
 argparse python (>= 2.7) | python-argparse
-pil python-imaging
+pil python-pil
+Pillow python-pil
+3to2 python-3to2
 APScheduler python-apscheduler
 APacheDEX apachedex
 Arriero arriero
@@ -91,6 +93,7 @@ GvGen python-gvgen
 Gyoto python-gyoto
 Gyoto_std python-gyoto
 HTSeq python-htseq
+HyPhy python-hyphy
 IMDbPY python-imdbpy
 IPy python-ipy
 ISO8583_Module python-iso8583
@@ -377,6 +380,7 @@ arista arista
 arpy python-arpy
 arrow python-arrow
 assword assword
+astLib python-astlib
 astor python-astor
 astroid python-astroid
 astropy python-astropy
@@ -394,6 +398,7 @@ avc python-avc
 babelfish python-babelfish
 backports.ssl_match_hostname python-backports.ssl-match-hostname
 backup2swift python-backup2swift
+bandit bandit
 barbican python-barbican
 barman barman
 bashate python-bashate
@@ -404,6 +409,7 @@ beautifulsoup4 python-bs4
 bicyclerepair bicyclerepair
 billiard python-billiard
 binaryornot python-binaryornot
+binplist python-binplist
 binwalk binwalk
 biom_format python-biom-format
 biopython python-biopython
@@ -474,6 +480,7 @@ cigi python-cigi
 cinder python-cinder
 cinfony python-cinfony
 circuits python-circuits
+citeproc_py python-citeproc
 ckanclient python-ckanclient
 cliapp python-cliapp
 click python-click
@@ -511,7 +518,6 @@ couchdbkit python-couchdbkit
 couleur python-couleur
 cov_core python-cov-core
 coverage python-coverage
-cppman cppman
 cpuset cpuset
 cpyrit_opencl pyrit-opencl
 cracklib python-cracklib
@@ -673,6 +679,7 @@ dput python-dput
 driconf driconf
 drmaa python-drmaa
 drslib python-drslib
+dtcwt python-dtcwt
 dtrx dtrx
 dulwich python-dulwich
 dumbnet python-dumbnet
@@ -760,6 +767,7 @@ fts_ltsp fts-ltsp-ldap
 fts_opsi fts-opsi
 fudge python-fudge
 funcparserlib python-funcparserlib
+funcsigs python-funcsigs
 funkload funkload
 fuse_python python-fuse
 fusil fusil
@@ -791,6 +799,7 @@ geolinks python-geolinks
 geopandas python-geopandas
 geopy python-geopy
 germinate python-germinate
+gerritlib python-gerritlib
 gertty gertty
 getdns python-getdns
 getmail getmail4
@@ -810,6 +819,7 @@ glipper glipper
 glitch python-glitch
 globs globs
 glpk python-glpk
+glueviz glueviz
 gmobilemedia gmobilemedia
 gmpy python-gmpy
 gmpy2 python-gmpy2
@@ -887,6 +897,7 @@ icalview trac-icalviewplugin
 identicurse identicurse
 idna python-idna
 ijson python-ijson
+imaplib2 python-imaplib2
 impacket python-impacket
 imposm python-imposm
 imposm.parser python-imposm-parser
@@ -900,6 +911,7 @@ ioprofiler ioapps
 iotop iotop
 iowait python-iowait
 ipaddr python-ipaddr
+ipaddress python-ipaddress
 ipaplatform python-freeipa
 ipapython python-freeipa
 ipatests freeipa-tests
@@ -981,6 +993,7 @@ lesscpy python-lesscpy
 leveldb python-leveldb
 libLAS python-liblas
 libconcord python-libconcord
+libhfst_swig python-libhfst
 liblarch python-liblarch
 libturpial python-libturpial
 libvirt_python python-libvirt
@@ -1157,7 +1170,6 @@ objgraph python-objgraph
 obnam obnam
 oboinus oboinus
 ocsmanager python-ocsmanager
-odf python-odf
 odfpy python-odf
 offlineimap offlineimap
 ofxclient python-ofxclient
@@ -1249,6 +1261,7 @@ pies python-pies
 piggyphoto python-piggyphoto
 pika python-pika
 pip python-pip
+pjsua python-pjproject
 pkgconfig python-pkgconfig
 pkginfo python-pkginfo
 plotly python-plotly
@@ -1289,6 +1302,7 @@ ptex2tex ptex2tex
 ptyprocess python-ptyprocess
 publicsuffix python-publicsuffix
 pudb python-pudb
+puddletag puddletag
 purity_ng purity-ng
 purl python-purl
 pushy python-pushy
@@ -1474,9 +1488,11 @@ pytc python-pytc
 pytcpwrap python-tcpwrap
 pyte python-pyte
 pytest python-pytest
+pytest_catchlog python-pytest-catchlog
 pytest_cov python-pytest-cov
 pytest_instafail python-pytest-instafail
 pytest_timeout python-pytest-timeout
+pytest_tornado python-pytest-tornado
 pytest_xdist python-pytest-xdist
 pyth python-pyth
 python_Levenshtein python-levenshtein
@@ -1503,6 +1519,7 @@ python_daemon python-daemon
 python_dateutil python-dateutil
 python_dbusmock python-dbusmock
 python_debian python-debian
+python_debianbts python-debianbts
 python_default_encoding python-freeipa
 python_designateclient python-designateclient
 python_distutils_extra python-distutils-extra
@@ -1589,8 +1606,10 @@ pytidylib python-tidylib
 pytils python-pytils
 pytimechart pytimechart
 pytimeparse python-pytimeparse
+pytoml python-pytoml
 pytools python-pytools
 pytrainer pytrainer
+pytsk3 python-tsk
 pytz python-tz
 pyudev python-pyudev
 pyusb python-usb
@@ -1727,6 +1746,7 @@ service_identity python-service-identity
 setoptconf python-setoptconf
 setproctitle python-setproctitle
 setuptools_git python-setuptools-git
+sfepy python-sfepy
 sftp_cloudfs sftpcloudfs
 sh python-sh
 shade python-shade
@@ -1771,6 +1791,7 @@ spectacle spectacle
 specto specto
 speedtest_cli speedtest-cli
 sphere python-sphere
+sphinx_bootstrap_theme python-sphinx-bootstrap-theme
 sphinx_paramlinks python-sphinx-paramlinks
 sphinx_patchqueue python-sphinx-patchqueue
 sphinx_rtd_theme python-sphinx-rtd-theme
@@ -2074,6 +2095,7 @@ xdo python-xdo
 xdot xdot
 xe python-xe
 xgflib xgridfit
+xia xia
 xlrd python-xlrd
 xlwt python-xlwt
 xmds2 xmds2

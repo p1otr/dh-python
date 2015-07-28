@@ -1,5 +1,8 @@
+pil python3-pil
+Pillow python3-pil
 setuptools python3-pkg-resources
 argparse python3 (>= 3.2)
+3to2_py3k python3-3to2
 Attic attic
 Babel python3-babel
 Beaker python3-beaker
@@ -32,6 +35,7 @@ Ghost.py python3-ghost
 Glances glances
 Gyoto python3-gyoto
 Gyoto_std python3-gyoto
+HyPhy python3-hyphy
 IPy python3-ipy
 Jinja2 python3-jinja2
 Kajiki python3-kajiki
@@ -154,11 +158,13 @@ args python3-args
 arpy python3-arpy
 arrow python3-arrow
 asciinema asciinema
+astLib python3-astlib
 astor python3-astor
 astroid python3-astroid
 astropy python3-astropy
 astropy_helpers python3-astropy-helpers
 astroquery python3-astroquery
+asyncssh python3-asyncssh
 audioread python3-audioread
 babelfish python3-babelfish
 backup2swift python3-backup2swift
@@ -189,6 +195,7 @@ bz2file python3-bz2file
 cached_property python3-cached-property
 cachetools python3-cachetools
 cairocffi python3-cairocffi
+cdist cdist
 cdo python3-cdo
 celery python3-celery
 cffi python3-cffi
@@ -199,6 +206,7 @@ checkbox_ng python3-checkbox-ng
 checkbox_support python3-checkbox-support
 cigi python3-cigi
 circuits python3-circuits
+citeproc_py python3-citeproc
 click python3-click
 cliff python3-cliff
 cligj python3-cligj
@@ -215,6 +223,7 @@ contextlib2 python3-contextlib2
 cookiecutter python3-cookiecutter
 cov_core python3-cov-core
 coverage python3-coverage
+cppman cppman
 cracklib python3-cracklib
 crank python3-crank
 crcmod python3-crcmod
@@ -305,6 +314,7 @@ dogpile.core python3-dogpile.core
 doit python3-doit
 doublex python3-doublex
 drslib python3-drslib
+dtcwt python3-dtcwt
 dugong python3-dugong
 easygui python3-easygui
 easywebdav python3-easywebdav
@@ -319,6 +329,7 @@ eventlet python3-eventlet
 expeyes python-expeyes
 expiringdict python3-expiringdict
 extras python3-extras
+fabio python3-fabio
 factory_boy python3-factory-boy
 fail2ban fail2ban
 falcon python3-falcon
@@ -337,6 +348,7 @@ flufl.lock python3-flufl.lock
 freezegun python3-freezegun
 fudge python3-fudge
 funcparserlib python3-funcparserlib
+funcsigs python3-funcsigs
 future python3-future
 futurist python3-futurist
 fysom python3-fysom
@@ -346,6 +358,7 @@ geojson python3-geojson
 geopandas python3-geopandas
 geopy python3-geopy
 germinate python3-germinate
+gerritlib python3-gerritlib
 glue glue-sprite
 gmpy2 python3-gmpy2
 google_api_python_client python3-googleapi
@@ -383,6 +396,7 @@ icalendar python3-icalendar
 idna python3-idna
 iep python3-ieplib
 ijson python3-ijson
+imaplib2 python3-imaplib2
 influxdb python3-influxdb
 invocations python3-invocations
 invoke python3-invoke
@@ -424,6 +438,7 @@ ldap3 python3-ldap3
 ldif3 python3-ldif3
 lesscpy python3-lesscpy
 leveldb python3-leveldb
+libhfst_swig python3-libhfst
 libvirt_python python3-libvirt
 lift lift
 linecache2 python3-linecache2
@@ -444,6 +459,7 @@ lz4 python3-lz4
 macholib python3-macholib
 magcode_core python3-magcode-core
 manuel python3-manuel
+mapnik python3-mapnik
 marisa python3-marisa
 matplotlib python3-matplotlib
 matplotlib_venn python3-matplotlib-venn
@@ -501,9 +517,9 @@ oauth python3-oauth
 oauth2client python3-oauth2client
 oauthlib python3-oauthlib
 objgraph python3-objgraph
-odf python3-odf
 odfpy python3-odf
 ofxparse python3-ofxparse
+onboard onboard
 openpyxl python3-openpyxl
 openslide_python python3-openslide
 openstack.nose_plugin python3-openstack.nose-plugin
@@ -624,10 +640,13 @@ pypolicyd_spf postfix-policyd-spf-python
 pyppd pyppd
 pyproj python3-pyproj
 pypuppetdb python3-pypuppetdb
+pypureomapi python3-pypureomapi
 pyqtgraph python3-pyqtgraph
 pyrad python3-pyrad
 pyramid python3-pyramid
+pyresample python3-pyresample
 pyroute2 python3-pyroute2
+pysam python3-pysam
 pyserial python3-serial
 pyshp python3-pyshp
 pysnmp python3-pysnmp4
@@ -638,9 +657,11 @@ pysubnettree python3-subnettree
 pytaglib python3-taglib
 pyte python3-pyte
 pytest python3-pytest
+pytest_catchlog python3-pytest-catchlog
 pytest_cov python3-pytest-cov
 pytest_instafail python3-pytest-instafail
 pytest_timeout python3-pytest-timeout
+pytest_tornado python3-pytest-tornado
 python3_libgearman python3-gearman.libgearman
 python3_openid python3-openid
 python_Levenshtein python3-levenshtein
@@ -690,6 +711,7 @@ python_xmp_toolkit python3-libxmp
 pythondialog python3-dialog
 pytils python3-pytils
 pytimeparse python3-pytimeparse
+pytoml python3-pytoml
 pytools python3-pytools
 pytz python3-tz
 pyudev python3-pyudev
@@ -771,6 +793,7 @@ sockjs_tornado python3-sockjs-tornado
 sorl_thumbnail python3-sorl-thumbnail
 sortedcontainers python3-sortedcontainers
 sphere python3-sphere
+sphinx_bootstrap_theme python3-sphinx-bootstrap-theme
 sphinx_paramlinks python3-sphinx-paramlinks
 sphinx_patchqueue python3-sphinx-patchqueue
 sphinx_rtd_theme python3-sphinx-rtd-theme

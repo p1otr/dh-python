@@ -44,8 +44,11 @@ DEFAULTS = {
         'wsgiref python (>= 2.5) | python-wsgiref\n',
         'argparse python (>= 2.7) | python-argparse\n',
         # not recognized due to .pth file (egg-info is in PIL/ and not in *-packages/)
-        'pil python-imaging\n'],
+        'pil python-pil\n',
+        'Pillow python-pil\n'],
     'cpython3': [
+        'pil python3-pil\n',
+        'Pillow python3-pil\n',
         'setuptools python3-pkg-resources\n',
         'argparse python3 (>= 3.2)\n'],
     'pypy': []
