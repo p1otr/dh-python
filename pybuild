@@ -399,7 +399,7 @@ def parse_args(argv):
     dirs.add_argument('--ext-pattern', action='store', metavar='PATTERN',
                       default=environ.get('EXT_PATTERN', r'\.so(\.[^/]*)?$'),
                       help='regular expression for files that should be moved'
-                      ' if --ext-destdir is set [default: .so files]')
+                      ' if --ext-dest-dir is set [default: .so files]')
     dirs.add_argument('--install-dir', action='store', metavar='DIR',
                       help='installation directory [default: .../dist-packages]')
     dirs.add_argument('--name', action='store',

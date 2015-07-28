@@ -151,7 +151,7 @@ DIRECTORIES
   --ext-dest-dir DIR
       set destination directory for .so files
   --ext-pattern PATTERN
-      regular expression for files that should be moved if --ext-destdir is set
+      regular expression for files that should be moved if --ext-dest-dir is set
       [default: `\.so(\.[^/]*)?$`]
   --install-dir DIR
       set installation directory [default: .../dist-packages]
