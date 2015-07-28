@@ -73,7 +73,7 @@ class DebHelper:
                     continue
                 if not binary_package.startswith(PKG_NAME_TPLS[impl]):
                     # package doesn't have common prefix (python-, python3-, pypy-)
-                    # so lets check if Depends contains apropriate substvar
+                    # so lets check if Depends contains appropriate substvar
                     if line_l.startswith('depends:'):
                         if substvar in line:
                             continue
