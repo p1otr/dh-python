@@ -1,3 +1,25 @@
+dh-python (2.20150728) unstable; urgency=medium
+
+  * dh_python3: fix module renaming in Python >= 3.5 (SOABI now includes
+    MULTIARCH triplet)
+  * pybuild.pm: 
+    - fix parsing Buil-Depends with comments (closes: 793609, thanks to James
+      McCoy for the patch) - new build/runtime dependency: libdpkg-perl
+    - enable --test-{nose,pytest,tox} if apropriate build dependency is set
+  * pybuild:
+    - allow localhost connections (via no_proxy=localhost, thanks to
+      Dimitri John Ledkov)
+    - do not forward empty http{,s}_proxy env. vars - some tools do not like it
+  * dh_python{2,3} and dh_pypy: skip packages with private modules that 
+    do not have apropriate ${*:Depends} substvar in Depends
+    (-p/-N in debian/rules to select the right package is no longer needed,
+    now you can select the right tool by adding substvar)
+  * generate_fallback_list.py: add support for --ubuntu (requires
+    python3-distro-info package, thanks to James Page for original patch,
+    closes LP: #1422433)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 28 Jul 2015 21:01:02 +0200
+
 dh-python (2.20150719) unstable; urgency=medium
 
   * Update dist_fallback files
