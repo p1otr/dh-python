@@ -1,5 +1,5 @@
 #! /usr/bin/python3
-# Copyright © 2010-2013 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2010-2015 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,21 @@
 
 import re
 import sys
+try:
+    from distro_info import DistroInfo  # python3-distro-info package
+except ImportError:
+    DistroInfo = None
 from gzip import decompress
 from os import chdir, mkdir
 from os.path import dirname, exists, isdir, join, split
 from urllib.request import urlopen
 
-SOURCE = 'http://ftp.debian.org/debian/dists/unstable/main/Contents-amd64.gz'
+if '--ubuntu' in sys.argv and DistroInfo:
+    SOURCE = 'http://archive.ubuntu.com/ubuntu/dists/%s/Contents-amd64.gz' % \
+             DistroInfo('ubuntu').devel()
+else:
+    SOURCE = 'http://ftp.debian.org/debian/dists/unstable/main/Contents-amd64.gz'
+
 IGNORED_PKGS = {'python-setuptools', 'python3-setuptools', 'pypy-setuptools'}
 DEFAULTS = {
     'cpython2': [
@@ -77,7 +86,10 @@ if not exists(cache_fpath):
         fp.write(data)
 else:
     data = open(cache_fpath, 'rb').read()
-data = str(decompress(data), encoding='UTF-8')
+try:
+    data = str(decompress(data), encoding='UTF-8')
+except UnicodeDecodeError as e:  # Ubuntu
+    data = str(decompress(data), encoding='ISO-8859-15')
 
 result = {
     'cpython2': {},
@@ -90,7 +102,11 @@ for line in data.splitlines():
         if line.startswith('FILE'):
             is_header = False
         continue
-    path, desc = line.rsplit(maxsplit=1)
+    try:
+        path, desc = line.rsplit(maxsplit=1)
+    except ValueError:
+        # NOTE(jamespage) some lines in Ubuntu are not parseable.
+        continue
     path = '/' + path.rstrip()
     section, pkg_name = desc.rsplit('/', 1)
     if pkg_name in IGNORED_PKGS:
