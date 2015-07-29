@@ -3,7 +3,7 @@ dh-python (2.20150728) unstable; urgency=medium
   * dh_python3: fix module renaming in Python >= 3.5 (SOABI now includes
     MULTIARCH triplet)
   * pybuild.pm: 
-    - fix parsing Buil-Depends with comments (closes: 793609, thanks to James
+    - fix parsing Build-Depends with comments (closes: 793609, thanks to James
       McCoy for the patch) - new build/runtime dependency: libdpkg-perl
     - enable --test-{nose,pytest,tox} if appropriate build dependency is set
   * pybuild:
