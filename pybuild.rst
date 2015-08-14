@@ -90,7 +90,7 @@ TESTS
 BUILD SYSTEM ARGUMENTS
 ----------------------
   Additional arguments passed to the build system.
-  --system=custom requires complete command.
+  --system=custom requires complete command in --foo-args parameters.
 
     --before-clean COMMAND
         invoked before the clean command
