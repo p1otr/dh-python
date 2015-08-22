@@ -97,7 +97,9 @@ sub pybuild_commands {
 		my @py2opts = ('pybuild', "--$step");
 		my @py3opts = ('pybuild', "--$step");
 
-		if ($step == 'test') {
+		if ($step == 'test' and $ENV{'PYBUILD_TEST_PYTEST'} != '1' &&
+		       			$ENV{'PYBUILD_TEST_NOSE'} != '1' &&
+		       			$ENV{'PYBUILD_TEST_TOX'} != '1') {
 			if (grep {$_ eq 'python-tox'} @deps) {
 				push @py2opts, '--test-tox'}
 			elsif (grep {$_ eq 'python-pytest'} @deps) {
