@@ -108,10 +108,10 @@ sub pybuild_commands {
 				push @py2opts, '--test-nose'}
 			if (grep {$_ eq 'python3-tox'} @deps) {
 				push @py3opts, '--test-tox'}
-			elsif (grep {$_ eq 'python3-nose'} @deps) {
-				push @py3opts, '--test-nose'}
 			elsif (grep {$_ eq 'python3-pytest'} @deps) {
 				push @py3opts, '--test-pytest'}
+			elsif (grep {$_ eq 'python3-nose'} @deps) {
+				push @py3opts, '--test-nose'}
 		}
 
 		my $pyall = 0;
