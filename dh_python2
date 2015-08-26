@@ -79,10 +79,13 @@ def share(package, stats, options):
     if len(pubvers) > 1:
         for pos, version1 in enumerate(pubvers):
             dir1 = interpreter.sitedir(package, version1)
+            if not exists(dir1):
+                continue
             for version2 in pubvers[pos + 1:]:
                 dir2 = interpreter.sitedir(package, version2)
-                dc = dircmp(dir1, dir2)
-                share_2x(dir1, dir2, dc)
+                if exists(dir2):
+                    dc = dircmp(dir1, dir2)
+                    share_2x(dir1, dir2, dc)
 #    elif len(pubvers) == 1:
 #        move_to_pyshared(interpreter.sitedir(package, pubvers[0]))
 #    for version in stats['ext_vers']:
