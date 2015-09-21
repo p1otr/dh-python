@@ -208,10 +208,7 @@ def parse_pydep(impl, fname):
             dependency = guess_dependency(impl, line, ver)
             if dependency:
                 result.append(dependency)
-                if 'setuptools' in line.lower():
-                    modified = True
-                else:
-                    processed.append(line)
+                modified = True
             else:
                 processed.append(line)
     if modified:
