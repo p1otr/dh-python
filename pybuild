@@ -159,14 +159,16 @@ def main(cfg):
             'home_dir': abspath(home_dir)})
         if interpreter == 'pypy':
             args['install_dir'] = '/usr/lib/pypy/dist-packages/'
-        if step == 'test':
-            pp = context['ENV'].get('PYTHONPATH', '')
-            args['test_dir'] = join(args['destdir'], args['install_dir'].lstrip('/'))
-            if args['test_dir'] not in pp.split(':'):
-                pp = "{}:{}".format(pp, args['test_dir']).lstrip(':')
-            if args['build_dir'] not in pp.split(':'):
-                pp = "{}:{}".format(pp, args['build_dir']).lstrip(':')
-            args['PYTHONPATH'] = pp
+        if step in {'build', 'test'}:
+            pp = context['ENV'].get('PYTHONPATH')
+            pp = pp.split(':') if pp else []
+            if step == 'test':
+                args['test_dir'] = join(args['destdir'], args['install_dir'].lstrip('/'))
+                if args['test_dir'] not in pp:
+                    pp.append(args['test_dir'])
+            if args['build_dir'] not in pp:
+                pp.append(args['build_dir'])
+            args['PYTHONPATH'] = ':'.join(pp)
 
         if not exists(args['build_dir']):
             makedirs(args['build_dir'])
