@@ -425,3 +425,25 @@ def get_requested_versions(impl, vrange=None, available=None):
                        if not exists(interpreter.binary(v)))
 
     return versions
+
+
+def build_sorted(versions, impl='cpython3'):
+    """Return sorted list of versions in a build friendly order.
+
+    i.e. default version, if among versions, is sorted last.
+
+    >>> build_sorted([(2, 6), (3, 4), default('cpython3'), (3, 6), (2, 7)])[-1] == default('cpython3')
+    True
+    >>> build_sorted(('3.2', (3, 0), '3.1'))
+    [Version('3.0'), Version('3.1'), Version('3.2')]
+    """
+    default_ver = default(impl)
+
+    result = sorted(Version(v) for v in versions)
+    try:
+        result.remove(default_ver)
+    except ValueError:
+        pass
+    else:
+        result.append(default_ver)
+    return result

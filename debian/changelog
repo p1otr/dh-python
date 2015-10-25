@@ -3,6 +3,8 @@ dh-python (2.20150921) UNRELEASED; urgency=medium
   * dh_py*:
     - remove lines from requires.txt already translated into Debian
       dependencies
+  * pybuild: build default interpreter version last (in case previous build
+    results are overwritten, like in distutils build system)
 
  -- Piotr Ożarowski <piotr@debian.org>  Mon, 21 Sep 2015 22:57:44 +0200
 

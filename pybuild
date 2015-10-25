@@ -34,7 +34,7 @@ log = logging.getLogger('dhpython')
 def main(cfg):
     log.debug('cfg: %s', cfg)
     from dhpython import build
-    from dhpython.version import Version, get_requested_versions
+    from dhpython.version import Version, build_sorted, get_requested_versions
     from dhpython.interpreter import Interpreter
     from dhpython.tools import execute, move_matching_files
 
@@ -246,11 +246,12 @@ def main(cfg):
         if step == 'test' and nocheck:
             exit(0)
         for i in cfg.interpreter:
-            iversions = versions
+            ipreter = Interpreter(interpreter.format(version=versions[0]))
+            iversions = build_sorted(versions, impl=ipreter.impl)
             if '{version}' not in i and len(versions) > 1:
                 log.info('limiting Python versions to %s due to missing {version}'
-                         ' in interpreter string', str(versions[0]))
-                iversions = versions[:1]  # just the default or closest to default
+                         ' in interpreter string', str(versions[-1]))
+                iversions = versions[-1:]  # just the default or closest to default
             for version in iversions:
                 if is_disabled(step, i, version):
                     continue
@@ -274,11 +275,12 @@ def main(cfg):
     try:
         context_map = {}
         for i in cfg.interpreter:
-            iversions = versions
+            ipreter = Interpreter(interpreter.format(version=versions[0]))
+            iversions = build_sorted(versions, impl=ipreter.impl)
             if '{version}' not in i and len(versions) > 1:
                 log.info('limiting Python versions to %s due to missing {version}'
-                         ' in interpreter string', str(versions[0]))
-                iversions = versions[:1]  # just the default or closest to default
+                         ' in interpreter string', str(versions[-1]))
+                iversions = versions[-1:]  # just the default or closest to default
             for version in iversions:
                 key = (i, version)
                 if key in context_map:
