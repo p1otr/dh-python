@@ -101,6 +101,11 @@ class BuildSystem(Base):
     @shell_command
     @create_pydistutils_cfg
     def install(self, context, args):
+        # remove egg-info dirs from build_dir
+        for fname in glob1(args['build_dir'], '*.egg-info'):
+            fpath = join(args['build_dir'], fname)
+            rmtree(fpath) if isdir(fpath) else remove(fpath)
+
         return '{interpreter.binary_dv} {setup_py} install --root {destdir} {args}'
 
     @shell_command
