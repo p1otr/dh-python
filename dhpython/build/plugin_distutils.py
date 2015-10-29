@@ -41,16 +41,18 @@ def create_pydistutils_cfg(func):
         fpath = join(args['home_dir'], '.pydistutils.cfg')
         if not exists(fpath):
             with open(fpath, 'w', encoding='utf-8') as fp:
-                fp.writelines(['[clean]\n',
-                               'all=1\n',
-                               '[build]\n',
-                               'build-lib={}\n'.format(args['build_dir']),
-                               '[install]\n',
-                               'install-layout=deb\n',
-                               'install-scripts=/usr/bin\n',
-                               'install-lib={}\n'.format(args['install_dir']),
-                               '[easy_install]\n',
-                               'allow_hosts=None\n'])
+                lines = ['[clean]\n',
+                         'all=1\n',
+                         '[build]\n',
+                         'build-lib={}\n'.format(args['build_dir']),
+                         '[install]\n',
+                         'install-layout=deb\n',
+                         'install-scripts=/usr/bin\n',
+                         'install-lib={}\n'.format(args['install_dir']),
+                         '[easy_install]\n',
+                         'allow_hosts=None\n']
+                log.debug('pydistutils config file:\n%s', ''.join(lines))
+                fp.writelines(lines)
         context['ENV']['HOME'] = args['home_dir']
         return func(self, context, args, *oargs, **kwargs)
 
