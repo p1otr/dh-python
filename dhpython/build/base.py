@@ -158,7 +158,7 @@ class Base:
                     copytree(src_dpath, dst_dpath)
                     dirs_to_remove.add(dst_dpath + '\n')
                 if not args['args'] and 'PYBUILD_TEST_ARGS' not in context['ENV']\
-                   and (self.cfg.test_nose or self.cfg.test_nose):
+                   and (self.cfg.test_pytest or self.cfg.test_nose):
                     args['args'] = dname
         if dirs_to_remove:
             with open(join(args['home_dir'], 'build_dirs_to_rm_before_install'), 'w') as fp:
