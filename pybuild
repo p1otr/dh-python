@@ -23,8 +23,9 @@
 import logging
 import argparse
 import sys
-from os import environ, getcwd, makedirs
+from os import environ, getcwd, makedirs, remove
 from os.path import abspath, exists, join
+from shutil import rmtree
 
 logging.basicConfig(format='%(levelname).1s: pybuild '
                            '%(module)s:%(lineno)d: %(message)s')
@@ -213,6 +214,14 @@ def main(cfg):
                 msg = 'exit code={}: {}'.format(output['returncode'], command)
                 raise Exception(msg)
 
+        fpath = join(args['home_dir'], 'build_dirs_to_rm_before_install')
+        if step == 'install' and exists(fpath):
+            with open(fpath) as fp:
+                for line in fp:
+                    dpath = join(args['build_dir'], line.strip('\n'))
+                    if exists(dpath):
+                        rmtree(dpath)
+            remove(fpath)
         result = func(context, args)
 
         after_cmd = get_option('after_{}'.format(step), interpreter, version)

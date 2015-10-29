@@ -22,9 +22,9 @@ import logging
 from functools import wraps
 from glob import glob1
 from os import remove, walk
-from os.path import isdir, join
+from os.path import exists, isdir, join
 from subprocess import Popen, PIPE
-from shutil import rmtree
+from shutil import rmtree, copytree
 from dhpython.tools import execute
 try:
     from shlex import quote
@@ -149,6 +149,20 @@ class Base:
         raise NotImplementedError("build method not implemented in %s" % self.NAME)
 
     def test(self, context, args):
+        dirs_to_remove = set()
+        for dname in ('test', 'tests'):
+            src_dpath = join(args['dir'], dname)
+            dst_dpath = join(args['build_dir'], dname)
+            if isdir(src_dpath):
+                if not exists(dst_dpath):
+                    copytree(src_dpath, dst_dpath)
+                    dirs_to_remove.add(dst_dpath + '\n')
+                if not args['args'] and 'PYBUILD_TEST_ARGS' not in context['ENV']\
+                   and (self.cfg.test_nose or self.cfg.test_nose):
+                    args['args'] = dname
+        if dirs_to_remove:
+            with open(join(args['home_dir'], 'build_dirs_to_rm_before_install'), 'w') as fp:
+                fp.writelines(dirs_to_remove)
         if self.cfg.test_nose:
             return 'cd {build_dir}; {interpreter} -m nose {args}'
         elif self.cfg.test_pytest:
