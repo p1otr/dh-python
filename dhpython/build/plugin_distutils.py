@@ -85,9 +85,6 @@ class BuildSystem(Base):
         super(BuildSystem, self).clean(context, args)
         dpath = join(context['dir'], 'build')
         isdir(dpath) and rmtree(dpath)
-        for fname in glob1(context['dir'], '*.egg-info'):
-            fpath = join(context['dir'], fname)
-            rmtree(fpath) if isdir(fpath) else remove(fpath)
         if exists(args['interpreter'].binary()):
             return '{interpreter} {setup_py} clean {args}'
         return 0  # no need to invoke anything
