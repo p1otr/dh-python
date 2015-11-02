@@ -48,15 +48,17 @@ SUPPORTED = supported('pypy')
 
 class Scanner(Scan):
     def handle_ext(self, fpath):
+        # PyPy doesn't include interpreter version in SONAME,
+        # its ABI is stable so f.e. PyPy 4.0 has "pypy-26" in SONAME
         path, fname = fpath.rsplit('/', 1)
-        tagver = EXTFILE_RE.search(fname)
-        if tagver is None:
+        soabi = EXTFILE_RE.search(fname)
+        if soabi is None:
             return
-        tagver = tagver.groupdict()['ver']
-        if tagver is None:
+        soabi = soabi.groupdict()['soabi']
+        if soabi is None:
             return
-        tagver = Version("%s.%s" % (tagver[0], tagver[1]))
-        return tagver
+        self.current_result.setdefault('ext_soabi', set()).add(soabi)
+        return
 
 
 def main():

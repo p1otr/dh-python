@@ -139,6 +139,13 @@ class Dependencies:
             if maxv >= default(self.impl):
                 self.depend("%s (<< %s)" % (tpl_ma, maxv + 1))
 
+        if self.impl == 'pypy' and stats.get('ext_soabi'):
+            # TODO: make sure alternative is used only for the same extension names
+            # ie. for foo.ABI1.so, foo.ABI2.so, bar.ABI3,so, bar.ABI4.so generate:
+            # pypy-abi-ABI1 | pypy-abi-ABI2, pypy-abi-ABI3 | pypy-abi-ABI4
+            self.depend('|'.join(soabi.replace('-', '-abi-')
+                                 for soabi in sorted(stats['ext_soabi'])))
+
         if stats['ext_vers']:
             # TODO: what about extensions with stable ABI?
             sorted_vers = sorted(stats['ext_vers'])
