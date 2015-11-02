@@ -179,7 +179,7 @@ def guess_dependency(impl, req, version=None):
     pname = sensible_pname(impl, name)
     log.info('Cannot find package that provides %s. '
              'Please add package that provides it to Build-Depends or '
-             'add "%s %s-fixme" line to %s or add proper '
+             'add "%s %s" line to %s or add proper '
              ' dependency to Depends by hand and ignore this info.',
              name, safe_name(name), pname, PYDIST_OVERRIDES_FNAMES[impl])
     # return pname
