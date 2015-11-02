@@ -1,15 +1,20 @@
-dh-python (2.20150921) UNRELEASED; urgency=medium
+dh-python (2.20151102) unstable; urgency=medium
 
   * dh_py*:
     - remove lines from requires.txt already translated into Debian
       dependencies
-  * pybuild: build default interpreter version last (in case previous build
-    results are overwritten, like in distutils build system)
+    - remove SOURCES.txt from egg-info directories (closes: 802882)
+  * dh_pypy: generate pypy-abi-foo dependencies for PyPy extensions (closes: 803689)
+  * pybuild:
+    - build default interpreter version last (in case previous build
+      results are overwritten, like in distutils build system)
+    - remove (just before install stage) egg-info dirs generated in build_dir
+      during test stage (closes: 803242)
   * Move libdpkg-perl from Depends to Suggests. python3 still depends on
     dh-python and we don't want to pull Perl when python3 is intalled
     (libdpkg-perl is pulled in by debhelper anyway) 
 
- -- Piotr Ożarowski <piotr@debian.org>  Mon, 21 Sep 2015 22:57:44 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 02 Nov 2015 23:23:52 +0100
 
 dh-python (2.20150826) unstable; urgency=medium
 
