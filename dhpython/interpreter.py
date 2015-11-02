@@ -277,15 +277,15 @@ class Interpreter:
 
         return result
 
-    def parse_public_version(self, path):
-        """Return version assigned to site-packages path."""
+    def parse_public_dir(self, path):
+        """Return version assigned to site-packages path
+        or True is it's unversioned public dir."""
         match = PUBLIC_DIR_RE[self.impl].match(path)
         if match:
             vers = match.groups(0)
             if vers and vers[0]:
                 return Version(vers)
-            # PyPy is not versioned
-            return default(self.impl)
+            return True
 
     def should_ignore(self, path):
         """Return True if path is used by another interpreter implementation."""

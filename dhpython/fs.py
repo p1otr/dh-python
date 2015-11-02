@@ -76,8 +76,9 @@ def share_files(srcdir, dstdir, interpreter, options):
         if not options.no_ext_rename and splitext(i)[-1] == '.so':
             # try to rename extension here as well (in :meth:`scan` info about
             # Python version is gone)
-            version = interpreter.parse_public_version(srcdir)
-            if version:
+            version = interpreter.parse_public_dir(srcdir)
+            # if version is True it means it's unversioned dist-packages dir
+            if version and version is not True:
                 # note that if ver is empty, default Python version will be used
                 fpath1_orig = fpath1
                 new_name = interpreter.check_extname(i, version)
@@ -139,11 +140,21 @@ class Scan:
                 del dirs[:]
                 continue
 
-            self.current_private_dir = None
-            self.current_pub_version = version = interpreter.parse_public_version(root)
-            if self.current_pub_version:  # i.e. a public site-packages directory
+            self.current_private_dir = self.current_pub_version = None
+            version = interpreter.parse_public_dir(root)
+            if version:
+                self.current_dir_is_public = True
+                if version is True:
+                    version = None
+                else:
+                    self.current_pub_version = version
+            else:
+                self.current_dir_is_public = False
+
+            if self.current_dir_is_public:
                 if root.endswith('-packages'):
-                    self.result['public_vers'].add(version)
+                    if version is not None:
+                        self.result['public_vers'].add(version)
                     for name in ('test', 'tests'):
                         if name in dirs:
                             log.debug('removing dist-packages/%s (too common name)', name)
@@ -249,7 +260,7 @@ class Scan:
     def is_unwanted_file(self, fpath):
         if self.__class__.UNWANTED_FILES.match(fpath):
             return True
-        if self.current_pub_version and self.is_dbg_package\
+        if self.current_dir_is_public and self.is_dbg_package\
                 and self.options.clean_dbg_pkg\
                 and splitext(fpath)[-1][1:] not in ('so', 'h'):
             return True
@@ -287,7 +298,7 @@ class Scan:
         This method is invoked for all .so files in public or private directories.
         """
         path, fname = fpath.rsplit('/', 1)
-        if self.current_pub_version and islink(fpath):
+        if self.current_dir_is_public and islink(fpath):
             # replace symlinks with extensions in dist-packages directory
             dstfpath = fpath
             links = set()
@@ -305,6 +316,7 @@ class Scan:
         if MULTIARCH_DIR_TPL.match(fpath):
             # ignore /lib/i386-linux-gnu/, /usr/lib/x86_64-kfreebsd-gnu/, etc.
             return fpath
+
         new_fn = self.interpreter.check_extname(fname, self.current_pub_version)
         if new_fn:
             # TODO: what about symlinks pointing to this file
