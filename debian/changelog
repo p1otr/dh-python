@@ -4,7 +4,8 @@ dh-python (2.20151102) unstable; urgency=medium
     - remove lines from requires.txt already translated into Debian
       dependencies
     - remove SOURCES.txt from egg-info directories (closes: 802882)
-  * dh_pypy: generate pypy-abi-foo dependencies for PyPy extensions (closes: 803689)
+  * dh_pypy: generate pypy-abi-foo dependencies for PyPy extensions
+    (closes: 803689)
   * pybuild:
     - build default interpreter version last (in case previous build
       results are overwritten, like in distutils build system)
