@@ -419,6 +419,8 @@ class Interpreter:
 
     def check_extname(self, fname, version=None):
         """Return extension file name if file can be renamed."""
+        if not version and not self.version:
+            return
 
         version = Version(version or self.version)
 
