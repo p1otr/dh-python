@@ -35,7 +35,7 @@ from dhpython.version import supported, default, Version, VersionRange
 from dhpython.pydist import validate as validate_pydist
 from dhpython.fs import fix_locations, Scan
 from dhpython.option import Option
-from dhpython.tools import pyremove
+from dhpython.tools import pyinstall, pyremove
 
 # initialize script
 logging.basicConfig(format='%(levelname).1s: dh_python3 '
@@ -172,6 +172,11 @@ def main():
         interpreter.debug = package.endswith('-dbg')
 
         if not private_dir:
+            try:
+                pyinstall(interpreter, package, options.vrange)
+            except Exception as err:
+                log.error("%s.pyinstall: %s", package, err)
+                exit(4)
             try:
                 pyremove(interpreter, package, options.vrange)
             except Exception as err:
