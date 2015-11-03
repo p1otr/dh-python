@@ -1,4 +1,4 @@
-dh-python (2.20151102) unstable; urgency=medium
+dh-python (2.20151103) unstable; urgency=medium
 
   * dh_py*:
     - remove lines from requires.txt already translated into Debian
@@ -14,8 +14,9 @@ dh-python (2.20151102) unstable; urgency=medium
   * Move libdpkg-perl from Depends to Suggests. python3 still depends on
     dh-python and we don't want to pull Perl when python3 is intalled
     (libdpkg-perl is pulled in by debhelper anyway) 
+  * Add README.rst file
 
- -- Piotr Ożarowski <piotr@debian.org>  Mon, 02 Nov 2015 23:23:52 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 03 Nov 2015 23:20:36 +0100
 
 dh-python (2.20150826) unstable; urgency=medium
 
