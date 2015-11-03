@@ -162,7 +162,7 @@ class Dependencies:
             self.depend(MINPYCDEP[self.impl])
 
         for ipreter in stats['shebangs']:
-            self.depend("%s%s" % (ipreter, ':any' if self.impl == 'pypy' else ''))
+            self.depend("%s%s" % (ipreter, '' if self.impl == 'pypy' else ':any'))
 
         supported_versions = supported(self.impl)
         default_version = default(self.impl)
