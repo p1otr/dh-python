@@ -211,7 +211,7 @@ def parse_pydep(impl, fname):
                 modified = True
             else:
                 processed.append(line)
-    if modified:
+    if modified and public_dir:
         with open(fname, 'w', encoding='utf-8') as fp:
             fp.writelines(i + '\n' for i in processed)
     return result
