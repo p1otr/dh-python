@@ -1,3 +1,10 @@
+dh-python (2.20160218) UNRELEASED; urgency=medium
+
+  * pybuild's distutils build plugin: use force option at install stage to
+    avoid non-determinstic shebangs (closes: 804339)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 18 Feb 2016 21:08:04 +0100
+
 dh-python (2.20151103) unstable; urgency=medium
 
   * dh_py*:
