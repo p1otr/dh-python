@@ -167,6 +167,9 @@ sub pybuild_commands {
 			push @result, ['pybuild', "--$step", '-i', 'pypy', '-p', $this->{pypydef}, @options];
 		}
 	}
+	if (!@result) {
+		die('E: Please add apropriate interpreter package to Build-Depends, see pybuild(1) for details')
+	}
 	return @result;
 }
 
