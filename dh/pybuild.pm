@@ -9,6 +9,7 @@ package Debian::Debhelper::Buildsystem::pybuild;
 
 use strict;
 use Dpkg::Control;
+use Dpkg::Changelog::Debian;
 use Debian::Debhelper::Dh_Lib qw(error doit);
 use base 'Debian::Debhelper::Buildsystem';
 
@@ -93,6 +94,17 @@ sub pybuild_commands {
 		# get interpreter packages from Build-Depends{,-Indep}:
 		# NOTE: possible problems with alternative/versioned dependencies
 		my @deps = $this->python_build_dependencies();
+
+		# When depends on python{3,}-setuptools-scm, set
+		# SETUPTOOLS_SCM_PRETEND_VERSION to upstream version
+		if ((grep /python[0-9]?-setuptools-scm/, @deps) && !$ENV{'SETUPTOOLS_SCM_PRETEND_VERSION'}) {
+			my $changelog = Dpkg::Changelog::Debian->new(range => {"count" => 1});
+			$changelog->load("debian/changelog");
+			my $version = @{$changelog}[0]->get_version();
+			$version =~ s/-[^-]+$//;  # revision
+			$version =~ s/^\d+://;    # epoch
+			$ENV{'SETUPTOOLS_SCM_PRETEND_VERSION'} = $version;
+		}
 
 		my @py2opts = ('pybuild', "--$step");
 		my @py3opts = ('pybuild', "--$step");
