@@ -11,8 +11,8 @@ Build-Depends: debhelper (>= 9), python3-minimal, libpython3-stdlib, libdpkg-per
 # python3-all, python3-all-dbg, python3-all-dev,
 # python-all, python-all-dbg, python-all-dev
 Standards-Version: 3.9.8
-Vcs-Git: git://anonscm.debian.org/dh-python/dh-python.git
-Vcs-Browser: http://anonscm.debian.org/cgit/dh-python/dh-python.git
+Vcs-Git: https://anonscm.debian.org/git/dh-python/dh-python.git
+Vcs-Browser: https://anonscm.debian.org/cgit/dh-python/dh-python.git
 X-Python3-Version: >= 3.2
 
 Package: dh-python
