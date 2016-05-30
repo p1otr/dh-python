@@ -11,6 +11,7 @@ dh-python (2.20160218) UNRELEASED; urgency=medium
     SETUPTOOLS_SCM_PRETEND_VERSION to upstream version
   * Standards-Version is 3.9.8 now (no changes needed)
   * Changed Vcs-* URLs to https protocol
+  * Fixed pypy support when parsing Build-Depends
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 18 Feb 2016 21:08:04 +0100
 
