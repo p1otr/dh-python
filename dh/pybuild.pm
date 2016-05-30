@@ -97,6 +97,9 @@ sub pybuild_commands {
 
 		# When depends on python{3,}-setuptools-scm, set
 		# SETUPTOOLS_SCM_PRETEND_VERSION to upstream version
+		# Without this, setuptools-scm tries to detect current
+		# version from git tag, which fails for debian tags
+		# (debian/<version>) sometimes.
 		if ((grep /python[0-9]?-setuptools-scm/, @deps) && !$ENV{'SETUPTOOLS_SCM_PRETEND_VERSION'}) {
 			my $changelog = Dpkg::Changelog::Debian->new(range => {"count" => 1});
 			$changelog->load("debian/changelog");
