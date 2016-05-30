@@ -9,6 +9,7 @@ dh-python (2.20160218) UNRELEASED; urgency=medium
   [ Ondřej Nový ]
   * When depends on python{3,}-setuptools-scm, set
     SETUPTOOLS_SCM_PRETEND_VERSION to upstream version
+  * Standards-Version is 3.9.8 now (no changes needed)
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 18 Feb 2016 21:08:04 +0100
 
