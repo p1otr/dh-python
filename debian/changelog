@@ -5,6 +5,7 @@ dh-python (2.20160218) UNRELEASED; urgency=medium
     avoid non-determinstic shebangs (closes: 804339)
   * pybuild.pm: fail with a message about missing interpreter package in
     Build-Depends if there's none (closes: 819353)
+  * dh_pypy: fix dpkg search template to find more pypy egg-info packages
 
   [ Ondřej Nový ]
   * When depends on python{3,}-setuptools-scm, set
