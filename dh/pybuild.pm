@@ -46,14 +46,14 @@ sub new {
 sub configure {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('configure', @_)) {
-		doit(@$command, '--dir', $this->get_sourcedir());
+		doit(@$command);
 	}
 }
 
 sub build {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('build', @_)) {
-		doit(@$command, '--dir', $this->get_sourcedir());
+		doit(@$command);
 	}
 }
 
@@ -61,21 +61,21 @@ sub install {
 	my $this=shift;
 	my $destdir=shift;
 	foreach my $command ($this->pybuild_commands('install', @_)) {
-		doit(@$command, '--dir', $this->get_sourcedir(), '--dest-dir', $destdir);
+		doit(@$command, '--dest-dir', $destdir);
 	}
 }
 
 sub test {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('test', @_)) {
-		doit(@$command, '--dir', $this->get_sourcedir());
+		doit(@$command);
 	}
 }
 
 sub clean {
 	my $this=shift;
 	foreach my $command ($this->pybuild_commands('clean', @_)) {
-		doit(@$command, '--dir', $this->get_sourcedir());
+		doit(@$command);
 	}
 	doit('rm', '-rf', '.pybuild/');
 	doit('find', '.', '-name', '*.pyc', '-exec', 'rm', '{}', ';');
@@ -86,6 +86,12 @@ sub pybuild_commands {
 	my $step=shift;
 	my @options = @_;
 	my @result;
+
+	my $dir = $this->get_sourcedir();
+	if (not grep {$_ eq '--dir'} @options and $dir ne '.') {
+		# if --dir is not passed, PYBUILD_DIR can be used
+		push @options, '--dir', $dir;
+	}
 
 	if ($ENV{'PYBUILD_INTERPRETERS'}) {
 		push @result, ['pybuild', "--$step", @options];

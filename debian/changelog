@@ -3,8 +3,11 @@ dh-python (2.20160218) UNRELEASED; urgency=medium
   [ Piotr Ożarowski ]
   * pybuild's distutils build plugin: use force option at install stage to
     avoid non-determinstic shebangs (closes: 804339)
-  * pybuild.pm: fail with a message about missing interpreter package in
-    Build-Depends if there's none (closes: 819353)
+  * pybuild.pm:
+    - fail with a message about missing interpreter package in
+      Build-Depends if there's none (closes: 819353)
+    - do not pass --dir to pybuild if it's equal to current directory
+      (to make PYBUILD_DIR override possible)
   * dh_pypy: fix dpkg search template to find more pypy egg-info packages
 
   [ Ondřej Nový ]
