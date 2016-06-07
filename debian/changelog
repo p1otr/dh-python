@@ -21,6 +21,10 @@ dh-python (2.20160609) UNRELEASED; urgency=medium
   * Standards-Version is 3.9.8 now (no changes needed)
   * Changed Vcs-* URLs to https protocol
 
+  [ James Page ]
+  * dhpython/pydist.py: Ensure that != dependency versions are ignored
+    (LP: #1581065).
+
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 18 Feb 2016 21:08:04 +0100
 
 dh-python (2.20151103) unstable; urgency=medium

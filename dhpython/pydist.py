@@ -150,7 +150,7 @@ def guess_dependency(impl, req, version=None, bdep=None):
                 # Debian dependency
                 return item['dependency']
             if req_d['version'] and (item['standard'] or item['rules']) and\
-                    req_d['operator'] not in (None, '=='):
+                    req_d['operator'] not in (None, '==', '!='):
                 v = _translate(req_d['version'], item['rules'], item['standard'])
                 return "%s (%s %s)" % (item['dependency'], req_d['operator'], v)
             else:
