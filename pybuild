@@ -401,16 +401,16 @@ def parse_args(argv):
 
     dirs = parser.add_argument_group('DIRECTORIES')
     dirs.add_argument('-d', '--dir', action='store', metavar='DIR',
-                      default=getcwd(),
+                      default=environ.get('PYBUILD_DIR', getcwd()),
                       help='source files directory - base for other relative dirs [default: CWD]')
     dirs.add_argument('--dest-dir', action='store', metavar='DIR', dest='destdir',
                       default=environ.get('DESTDIR', 'debian/tmp'),
                       help='destination directory [default: debian/tmp]')
     dirs.add_argument('--ext-dest-dir', action='store', metavar='DIR', dest='ext_destdir',
-                      default=environ.get('EXT_DESTDIR'),
+                      default=environ.get('PYBUILD_EXT_DESTDIR'),
                       help='destination directory for .so files')
     dirs.add_argument('--ext-pattern', action='store', metavar='PATTERN',
-                      default=environ.get('EXT_PATTERN', r'\.so(\.[^/]*)?$'),
+                      default=environ.get('PYBUILD_EXT_PATTERN', r'\.so(\.[^/]*)?$'),
                       help='regular expression for files that should be moved'
                       ' if --ext-dest-dir is set [default: .so files]')
     dirs.add_argument('--install-dir', action='store', metavar='DIR',
