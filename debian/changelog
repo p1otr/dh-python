@@ -1,8 +1,8 @@
-dh-python (2.20160218) UNRELEASED; urgency=medium
+dh-python (2.20160609) UNRELEASED; urgency=medium
 
   [ Piotr Ożarowski ]
   * pybuild's distutils build plugin: use force option at install stage to
-    avoid non-determinstic shebangs (closes: 804339)
+    avoid non-deterministic shebangs (closes: 804339)
   * pybuild.pm:
     - fail with a message about missing interpreter package in
       Build-Depends if there's none (closes: 819353)
@@ -12,13 +12,14 @@ dh-python (2.20160218) UNRELEASED; urgency=medium
   * dh_py*:
     - add interpreter to Depends if .so file is detected in private dir
       only if python{,3,all,3-all}-dev is in Build-Depends (closes: 811083)
+    - use Build-Depends' minimum version for required libraries if other
+      methods to detect it failed (closes: 791433)
 
   [ Ondřej Nový ]
   * When depends on python{3,}-setuptools-scm, set
     SETUPTOOLS_SCM_PRETEND_VERSION to upstream version
   * Standards-Version is 3.9.8 now (no changes needed)
   * Changed Vcs-* URLs to https protocol
-  * Fixed pypy support when parsing Build-Depends
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 18 Feb 2016 21:08:04 +0100
 

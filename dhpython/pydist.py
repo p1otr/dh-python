@@ -116,7 +116,8 @@ def load(impl):
     return result
 
 
-def guess_dependency(impl, req, version=None):
+def guess_dependency(impl, req, version=None, bdep=None):
+    bdep = bdep or {}
     log.debug('trying to find dependency for %s (python=%s)',
               req, version)
     if isinstance(version, str):
@@ -153,6 +154,9 @@ def guess_dependency(impl, req, version=None):
                 v = _translate(req_d['version'], item['rules'], item['standard'])
                 return "%s (%s %s)" % (item['dependency'], req_d['operator'], v)
             else:
+                if item['dependency'] in bdep:
+                    # TODO: handle architecture specific dependencies from build depends ("None" below)
+                    return "{} ({})".format(item['dependency'], bdep[item['dependency']][None])
                 return item['dependency']
 
     # search for Egg metadata file or directory (using dpkg -S)
@@ -185,7 +189,7 @@ def guess_dependency(impl, req, version=None):
     # return pname
 
 
-def parse_pydep(impl, fname):
+def parse_pydep(impl, fname, bdep=None):
     public_dir = PUBLIC_DIR_RE[impl].match(fname)
     ver = None
     if public_dir and public_dir.groups() and len(public_dir.group(1)) != 1:
@@ -205,7 +209,7 @@ def parse_pydep(impl, fname):
             if optional_section:
                 processed.append(line)
                 continue
-            dependency = guess_dependency(impl, line, ver)
+            dependency = guess_dependency(impl, line, ver, bdep)
             if dependency:
                 result.append(dependency)
                 modified = True

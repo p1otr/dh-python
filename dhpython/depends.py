@@ -227,30 +227,30 @@ class Dependencies:
             for fn in stats['requires.txt']:
                 # TODO: should options.recommends and options.suggests be
                 # removed from requires.txt?
-                for i in parse_pydep(self.impl, fn):
+                for i in parse_pydep(self.impl, fn, bdep=self.bdep):
                     self.depend(i)
             for fpath in stats['egg-info']:
                 with open(fpath, 'r', encoding='utf-8') as fp:
                     for line in fp:
                         if line.startswith('Requires: '):
                             req = line[10:].strip()
-                            self.depend(guess_dependency(self.impl, req))
+                            self.depend(guess_dependency(self.impl, req, bdep=self.bdep))
 
         # add dependencies from --depends
         for item in options.depends or []:
-            self.depend(guess_dependency(self.impl, item))
+            self.depend(guess_dependency(self.impl, item, bdep=self.bdep))
         # add dependencies from --recommends
         for item in options.recommends or []:
-            self.recommend(guess_dependency(self.impl, item))
+            self.recommend(guess_dependency(self.impl, item, bdep=self.bdep))
         # add dependencies from --suggests
         for item in options.suggests or []:
-            self.suggest(guess_dependency(self.impl, item))
+            self.suggest(guess_dependency(self.impl, item, bdep=self.bdep))
         # add dependencies from --requires
         for fn in options.requires or []:
             if not exists(fn):
                 log.warn('cannot find requirements file: %s', fn)
                 continue
-            for i in parse_pydep(self.impl, fn):
+            for i in parse_pydep(self.impl, fn, bdep=self.bdep):
                 self.depend(i)
 
         log.debug(self)
