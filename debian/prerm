@@ -1,0 +1,6 @@
+#! /bin/sh
+set -e
+
+#DEBHELPER#
+
+find /usr/share/dh-python/ -type d -name __pycache__ -empty -print0 | xargs --null --no-run-if-empty rmdir
