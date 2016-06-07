@@ -423,7 +423,7 @@ def main():
                 create_public_links(pyshared_dir, options.vrange)
                 stats = Scanner(interpreter, package, private_dir, options).result
 
-        dependencies = Dependencies(package, 'cpython2')
+        dependencies = Dependencies(package, 'cpython2', dh.build_depends)
         dependencies.parse(stats, options)
 
         if stats['public_vers']:

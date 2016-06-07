@@ -9,6 +9,9 @@ dh-python (2.20160218) UNRELEASED; urgency=medium
     - do not pass --dir to pybuild if it's equal to current directory
       (to make PYBUILD_DIR override possible)
   * dh_pypy: fix dpkg search template to find more pypy egg-info packages
+  * dh_py*:
+    - add interpreter to Depends if .so file is detected in private dir
+      only if python{,3,all,3-all}-dev is in Build-Depends (closes: 811083)
 
   [ Ondřej Nový ]
   * When depends on python{3,}-setuptools-scm, set

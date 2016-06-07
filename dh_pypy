@@ -181,7 +181,7 @@ def main():
             fix_locations(package, interpreter, SUPPORTED, options)
         stats = Scanner(interpreter, package, private_dir, options).result
 
-        dependencies = Dependencies(package, 'pypy')
+        dependencies = Dependencies(package, 'pypy', dh.build_depends)
         dependencies.parse(stats, options)
 
         if stats['ext_vers']:

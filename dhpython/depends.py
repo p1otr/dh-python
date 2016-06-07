@@ -30,9 +30,10 @@ log = logging.getLogger('dhpython')
 class Dependencies:
     """Store relations (dependencies, etc.) between packages."""
 
-    def __init__(self, package, impl='cpython3'):
+    def __init__(self, package, impl='cpython3', bdep=None):
         self.impl = impl
         self.package = package
+        bdep = self.bdep = bdep or {}
         self.is_debug_package = dbgpkg = package.endswith('-dbg')
 
         # TODO: move it to PyPy and CPython{2,3} classes
@@ -50,6 +51,11 @@ class Dependencies:
         else:
             self.ipkg_tpl_ma = self.ipkg_tpl + ':any'
             self.ipkg_vtpl_ma = self.ipkg_vtpl + ':any'
+
+        self.python_dev_in_bd = 'python-dev' in bdep or\
+                                'python-all-dev' in bdep or\
+                                'python3-dev' in bdep or\
+                                'python3-all-dev' in bdep
 
         self.depends = set()
         self.recommends = []
@@ -179,15 +185,16 @@ class Dependencies:
             if any(True for i in details.get('shebangs', []) if i.version is None):
                 self.depend(tpl_ma)
 
-            extensions = sorted(details.get('ext_vers', set()))
-            #self.depend('|'.join(vtpl % i for i in extensions))
-            if extensions:
-                self.depend("%s (>= %s~)" % (tpl, extensions[0]))
-                self.depend("%s (<< %s)" % (tpl, extensions[-1] + 1))
-            elif details.get('ext_no_version'):
-                # assume unrecognized extension was built for default interpreter version
-                self.depend("%s (>= %s~)" % (tpl, default_version))
-                self.depend("%s (<< %s)" % (tpl, default_version + 1))
+            if self.python_dev_in_bd:
+                extensions = sorted(details.get('ext_vers', set()))
+                #self.depend('|'.join(vtpl % i for i in extensions))
+                if extensions:
+                    self.depend("%s (>= %s~)" % (tpl, extensions[0]))
+                    self.depend("%s (<< %s)" % (tpl, extensions[-1] + 1))
+                elif details.get('ext_no_version'):
+                    # assume unrecognized extension was built for default interpreter version
+                    self.depend("%s (>= %s~)" % (tpl, default_version))
+                    self.depend("%s (<< %s)" % (tpl, default_version + 1))
 
             if details.get('compile'):
                 if self.impl in MINPYCDEP:
