@@ -185,6 +185,7 @@ class Dependencies:
             if any(True for i in details.get('shebangs', []) if i.version is None):
                 self.depend(tpl_ma)
 
+            extensions = False
             if self.python_dev_in_bd:
                 extensions = sorted(details.get('ext_vers', set()))
                 #self.depend('|'.join(vtpl % i for i in extensions))
