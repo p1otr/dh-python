@@ -19,11 +19,19 @@
 # THE SOFTWARE.
 
 import logging
+import re
 from os import makedirs, chmod
 from os.path import exists, join, dirname
 from dhpython import DEPENDS_SUBSTVARS, PKG_NAME_TPLS, RT_LOCATIONS, RT_TPLS
 
 log = logging.getLogger('dhpython')
+parse_dep = re.compile('''[,\s]*
+    (?P<name>[^ ]+)
+    \s*
+    \(?(?P<version>[>=<]+\s*[^\)]+)?\)?
+    \s*
+    (?P<arch>\[[^\]]+\])?
+    ''', re.VERBOSE).match
 
 
 class DebHelper:
@@ -32,9 +40,12 @@ class DebHelper:
     def __init__(self, options, impl='cpython3'):
         self.options = options
         self.packages = {}
+        self.build_depends = {}
         self.python_version = None
         source_section = True
         binary_package = None
+        build_depends_line = ''
+        inside_bdepends_field = False
         # Note that each DebHelper instance supports ONE interpreter type only
         # it's not possible to mix cpython2, cpython3 and pypy here
         self.impl = impl
@@ -111,6 +122,21 @@ class DebHelper:
                         self.python_version = line[18:].strip()
                 if line_l.startswith('x-python-version:'):
                     self.python_version = line[17:].strip()
+            elif source_section and line_l.startswith(('build-depends:', 'build-depends-indep:')):
+                inside_bdepends_field = True
+                build_depends_line += ',' + line.split(':', 1)[1].strip(', \t\n')
+            elif inside_bdepends_field:  # multiline continuation
+                if not line.startswith((' ', '\t', '#')):
+                    inside_bdepends_field = False
+                elif not line.strip().startswith('#'):
+                    build_depends_line += ',' + line.strip(', \t\n')
+
+        for dep1 in build_depends_line.strip(', \t').split(','):
+            for dep2 in dep1.split('|'):
+                details = parse_dep(dep2)
+                if details:
+                    details = details.groupdict()
+                self.build_depends.setdefault(details['name'], {})[details['arch']] = details['version']
 
         fp.close()
         log.debug('source=%s, binary packages=%s', self.source_name,
