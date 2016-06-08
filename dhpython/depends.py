@@ -19,7 +19,7 @@
 # THE SOFTWARE.
 
 import logging
-from os.path import exists
+from os.path import exists, join
 from dhpython import PKG_PREFIX_MAP, MINPYCDEP
 from dhpython.pydist import parse_pydep, guess_dependency
 from dhpython.version import default, supported, VersionRange
@@ -248,10 +248,13 @@ class Dependencies:
             self.suggest(guess_dependency(self.impl, item, bdep=self.bdep))
         # add dependencies from --requires
         for fn in options.requires or []:
-            if not exists(fn):
-                log.warn('cannot find requirements file: %s', fn)
-                continue
-            for i in parse_pydep(self.impl, fn, bdep=self.bdep):
+            fpath = join('debian', self.package, fn)
+            if not exists(fpath):
+                fpath = fn
+                if not exists(fpath):
+                    log.warn('cannot find requirements file: %s', fn)
+                    continue
+            for i in parse_pydep(self.impl, fpath, bdep=self.bdep):
                 self.depend(i)
 
         log.debug(self)

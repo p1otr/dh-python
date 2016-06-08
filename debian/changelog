@@ -14,6 +14,9 @@ dh-python (2.20160609) UNRELEASED; urgency=medium
       only if python{,3,all,3-all}-dev is in Build-Depends (closes: 811083)
     - use Build-Depends' minimum version for required libraries if other
       methods to detect it failed (closes: 791433)
+    - --requires now tries to find given file in debian/pkg-name/ dir
+      (`--requires foo/bar.txt` will try debian/python3-spam/foo/bar.txt and fall back
+       to ./foo/bar.txt)
 
   [ Ondřej Nový ]
   * When depends on python{3,}-setuptools-scm, set
