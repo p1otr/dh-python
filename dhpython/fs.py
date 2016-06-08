@@ -22,7 +22,7 @@ import logging
 import os
 import re
 from filecmp import cmp as cmpfile
-from os.path import exists, isdir, islink, join, split, splitext
+from os.path import exists, isdir, islink, join, realpath, split, splitext
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 from dhpython import MULTIARCH_DIR_TPL
@@ -90,11 +90,16 @@ def share_files(srcdir, dstdir, interpreter, options):
             # do not rename directories here - all .so files have to be renamed first
             os.renames(fpath1, fpath2)
             continue
-        if isdir(fpath1):
+        if islink(fpath1):
+            # move symlinks without changing them if they point to the same place
+            if not exists(fpath2):
+                os.renames(fpath1, fpath2)
+            elif realpath(fpath1) == realpath(fpath2):
+                os.remove(fpath1)
+        elif isdir(fpath1):
             share_files(fpath1, fpath2, interpreter, options)
         elif cmpfile(fpath1, fpath2, shallow=False):
             os.remove(fpath1)
-        # XXX: check symlinks
 
     try:
         os.removedirs(srcdir)

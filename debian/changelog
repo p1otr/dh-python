@@ -18,6 +18,8 @@ dh-python (2.20160609) UNRELEASED; urgency=medium
       (`--requires foo/bar.txt` will try debian/python3-spam/foo/bar.txt and fall back
        to ./foo/bar.txt)
     - print an error if there's no package to act on
+    - fix handling symlinks while moving files to common directory
+      (closes: 801719)
 
   [ Ondřej Nový ]
   * When depends on python{3,}-setuptools-scm, set
