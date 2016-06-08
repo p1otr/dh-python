@@ -22,7 +22,7 @@ import logging
 import os
 import re
 from filecmp import cmp as cmpfile
-from os.path import exists, dirname, isdir, islink, join, split, splitext
+from os.path import exists, isdir, islink, join, split, splitext
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 from dhpython import MULTIARCH_DIR_TPL
@@ -46,13 +46,10 @@ def fix_locations(package, interpreter, versions, options):
                 # TODO: what about relative symlinks?
                 log.debug('moving files from %s to %s', srcdir, dstdir)
                 share_files(srcdir, dstdir, interpreter, options)
-                parent_dir = '/'.join(srcdir.split('/')[:-1])
-                while parent_dir:
-                    if exists(parent_dir):
-                        if os.listdir(parent_dir):
-                            break
-                        os.rmdir(parent_dir)
-                    parent_dir = dirname(parent_dir)
+                try:
+                    os.removedirs(srcdir)
+                except OSError:
+                    pass
 
         # do the same with debug locations
         dstdir = interpreter.sitedir(package, gdb=True)
@@ -60,13 +57,10 @@ def fix_locations(package, interpreter, versions, options):
             if isdir(srcdir):
                 log.debug('moving files from %s to %s', srcdir, dstdir)
                 share_files(srcdir, dstdir, interpreter, options)
-                parent_dir = '/'.join(srcdir.split('/')[:-1])
-                while parent_dir:
-                    if exists(parent_dir):
-                        if os.listdir(parent_dir):
-                            break
-                        os.rmdir(parent_dir)
-                    parent_dir = dirname(parent_dir)
+                try:
+                    os.removedirs(srcdir)
+                except OSError:
+                    pass
 
 
 def share_files(srcdir, dstdir, interpreter, options):
@@ -102,8 +96,10 @@ def share_files(srcdir, dstdir, interpreter, options):
             os.remove(fpath1)
         # XXX: check symlinks
 
-    if exists(srcdir) and not os.listdir(srcdir):
-        os.rmdir(srcdir)
+    try:
+        os.removedirs(srcdir)
+    except OSError:
+        pass
 
 
 class Scan:
@@ -234,17 +230,10 @@ class Scan:
                     self.current_result['compile'] = True
 
             if not dirs:
-                # try to remove directory if it's empty (and its parent if it's empty afterwards)
-                while root:
-                    try:
-                        os.rmdir(root)
-                        log.debug('removing empty directory: %s', root)
-                    except Exception:
-                        break
-                    root = root.rsplit('/', 1)[0]
-
-                    if not root.startswith(self.proot):
-                        break
+                try:
+                    os.removedirs(root)
+                except OSError:
+                    pass
 
         log.debug("package %s details = %s", package, self.result)
 
@@ -413,6 +402,6 @@ class Scan:
             for root, dirs, file_names in os.walk(proot, topdown=False):
                 if '-packages/' in root and not file_names:
                     try:
-                        os.rmdir(root)
+                        os.removedirs(root)
                     except Exception:
                         pass
