@@ -139,7 +139,8 @@ class DebHelper:
                 details = parse_dep(dep2)
                 if details:
                     details = details.groupdict()
-                self.build_depends.setdefault(details['name'], {})[details['arch']] = details['version']
+                    self.build_depends.setdefault(details['name'],
+                                                  {})[details['arch']] = details['version']
 
         fp.close()
         log.debug('source=%s, binary packages=%s', self.source_name,
