@@ -78,9 +78,12 @@ class DebHelper:
                     continue
                 if line_l.startswith('architecture:'):
                     arch = line[13:].strip()
-                    # TODO: if arch doesn't match current architecture:
-                    #del self.packages[binary_package]
-                    self.packages[binary_package]['arch'] = arch
+                    if options.arch is False and arch != 'all' or\
+                       options.arch is True and arch == 'all':
+                        # TODO: check also if arch matches current architecture:
+                        del self.packages[binary_package]
+                    else:
+                        self.packages[binary_package]['arch'] = arch
                     continue
                 if not binary_package.startswith(PKG_NAME_TPLS[impl]):
                     # package doesn't have common prefix (python-, python3-, pypy-)

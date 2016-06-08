@@ -397,9 +397,6 @@ def main():
 
     interpreter = Interpreter('python')
     for package, pdetails in dh.packages.items():
-        if options.arch is False and pdetails['arch'] != 'all' or \
-                options.arch is True and pdetails['arch'] == 'all':
-            continue
         log.debug('processing package %s...', package)
         interpreter.debug = package.endswith('-dbg')
 
