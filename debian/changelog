@@ -15,8 +15,8 @@ dh-python (2.20160609) UNRELEASED; urgency=medium
     - use Build-Depends' minimum version for required libraries if other
       methods to detect it failed (closes: 791433)
     - --requires now tries to find given file in debian/pkg-name/ dir
-      (`--requires foo/bar.txt` will try debian/python3-spam/foo/bar.txt and fall back
-       to ./foo/bar.txt)
+      (`--requires foo/bar.txt` will try debian/python3-spam/foo/bar.txt and
+      fall back to ./foo/bar.txt)
     - print an error if there's no package to act on
     - fix handling symlinks while moving files to common directory
       (closes: 801719)
