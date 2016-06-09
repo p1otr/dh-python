@@ -1,4 +1,4 @@
-dh-python (2.20160609) UNRELEASED; urgency=medium
+dh-python (2.20160609) unstable; urgency=medium
 
   [ Piotr Ożarowski ]
   * pybuild's distutils build plugin: use force option at install stage to
@@ -31,7 +31,7 @@ dh-python (2.20160609) UNRELEASED; urgency=medium
   * dhpython/pydist.py: Ensure that != dependency versions are ignored
     (LP: #1581065).
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 18 Feb 2016 21:08:04 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 09 Jun 2016 18:37:46 +0200
 
 dh-python (2.20151103) unstable; urgency=medium
 
