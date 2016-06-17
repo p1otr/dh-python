@@ -25,6 +25,7 @@ Django python3-django
 EbookLib python3-ebooklib
 ExifRead python3-exif
 Fiona python3-fiona
+Fastaq fastaq
 Flask python3-flask
 Flask_FlatPages python3-flask-flatpages
 Flask_OpenID python3-flask-openid
@@ -193,6 +194,7 @@ audioread python3-audioread
 audiotools audiotools
 automaton python3-automaton
 avro_python3 python3-avro
+authres python3-authres
 babelfish python3-babelfish
 backup2swift python3-backup2swift
 backupchecker backupchecker
@@ -289,6 +291,7 @@ debmake debmake
 debocker debocker
 debtags python3-debtagshw
 debtcollector python3-debtcollector
+debtagshw python3-debtagshw
 decorator python3-decorator
 defer python3-defer
 defusedxml python3-defusedxml
@@ -311,6 +314,7 @@ django_assets python3-django-assets
 django_audit_log python3-django-audit-log
 django_babel python3-django-babel
 django_bitfield python3-django-bitfield
+django_appconf python3-appconf
 django_bootstrap_form python3-bootstrapform
 django_braces python3-django-braces
 django_celery python3-django-celery
@@ -392,6 +396,7 @@ elasticsearch python3-elasticsearch
 elasticsearch_curator python3-elasticsearch-curator
 empy python3-empy
 enjarify enjarify
+enum34 python3-enum34
 enzyme python3-enzyme
 esmre python3-esmre
 eventlet python3-eventlet
@@ -413,7 +418,10 @@ fixtures python3-fixtures
 flake8 python3-flake8
 flexmock python3-flexmock
 flufl.bounce python3-flufl.bounce
+flufl.enum python3-flufl.enum
 flufl.i18n python3-flufl.i18n
+flufl.lock python3-flufl.lock
+flufl.password python3-flufl.password
 freezegun python3-freezegun
 fudge python3-fudge
 funcparserlib python3-funcparserlib
@@ -566,6 +574,7 @@ mock python3-mock
 mockito python3-mockito
 monotonic python3-monotonic
 morris python3-morris
+mockldap python3-mockldap
 mox3 python3-mox3
 mpi4py python3-mpi4py
 mpld3 python3-mpld3
@@ -769,6 +778,7 @@ pyroma python3-pyroma
 pyroute2 python3-pyroute2
 pysam python3-pysam
 pysaml2 python3-pysaml2
+pysane python3-sane
 pyserial python3-serial
 pyshp python3-pyshp
 pysmbc python3-smbc
@@ -788,6 +798,8 @@ pytest_localserver python3-pytest-localserver
 pytest_mock python3-pytest-mock
 pytest_timeout python3-pytest-timeout
 pytest_tornado python3-pytest-tornado
+python3_ldap python3-ldap3
+python3_libgearman python3-gearman.libgearman
 python3_openid python3-openid
 python_Levenshtein python3-levenshtein
 python_aalib python3-aalib
@@ -1012,6 +1024,7 @@ tox tox
 traceback2 python3-traceback2
 traitlets python3-traitlets
 traits python3-traits
+tox python-tox
 transaction python3-transaction
 translationstring python3-translationstring
 transmissionrpc python3-transmissionrpc
@@ -1093,5 +1106,6 @@ zope.location python3-zope.location
 zope.proxy python3-zope.proxy
 zope.schema python3-zope.schema
 zope.security python3-zope.security
+zope.testing python3-zope.testing
 zope.testrunner python3-zope.testrunner
 zzzeeksphinx python3-zzzeeksphinx
