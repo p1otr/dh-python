@@ -1,6 +1,6 @@
 dh-python (2.20160708) UNRELEASED; urgency=medium
 
-  * pybuild.pm: recognize ":any" build dependencies
+  * pybuild.pm: recognize ":any" build dependencies (closes: 828883)
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 07 Jul 2016 13:09:09 +0200
 
