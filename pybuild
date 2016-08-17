@@ -209,6 +209,7 @@ def main(cfg):
             else:
                 log_file = False
             command = before_cmd.format(**args)
+            log.info(command)
             output = execute(command, context['dir'], env, log_file)
             if output['returncode'] != 0:
                 msg = 'exit code={}: {}'.format(output['returncode'], command)
@@ -231,6 +232,7 @@ def main(cfg):
             else:
                 log_file = False
             command = after_cmd.format(**args)
+            log.info(command)
             output = execute(command, context['dir'], env, log_file)
             if output['returncode'] != 0:
                 msg = 'exit code={}: {}'.format(output['returncode'], command)
