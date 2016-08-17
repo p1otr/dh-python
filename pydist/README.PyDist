@@ -7,7 +7,27 @@ DISTNAME [VRANGE] [DEPENDENCY][; [PEP386] [RULES]]
 
 PyDist files help tools like dh_python2/3 to translate Python dependencies
 (from setup.py's install_requires or egg's requires.txt file) to Debian
-dependencies.
+dependencies if given Python distribution file / directory is not installed
+(hint: add proper package to Build-Depends and PyDist file might not be needed)
+or if detection is not correct.
+
+Before checking for package that provides installed egg-info file or directory
+dh_python3 is checking these locations for overrides:
+
+ * debian/py3dist-overrides
+ * /usr/share/python3/dist/*
+ * /usr/share/dh-python/dist/cpython3_fallback
+
+debian/python3-foo.pydist is copied into /usr/share/python3/dist/ automatically.
+ 
+For Python 2.X it's adequately: pydist-overrides, /usr/share/python/dist/* and
+/usr/share/dh-python/dist/cpython2_fallback
+
+For PyPy it's adequately: pypydist-overrides, /usr/share/pypy/dist/* and
+/usr/share/dh-python/dist/pypy_fallback
+
+*NOTE:* There's no need to add an override if build-depending on a package that
+provides searched egg-info results in correctly recognized dependency.
 
 
 Required fields:
