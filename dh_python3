@@ -98,11 +98,20 @@ def main():
                       help='translate given requirements into Debian '
                            'dependencies and add them to ${python3:Depends}. '
                            'Use it for missing items in requires.txt.')
+    parser.add_option('--depends-section', action='append',
+                      help='translate requirements from given section into Debian '
+                           'dependencies and add them to ${python3:Depends}')
     parser.add_option('--recommends', action='append',
                       help='translate given requirements into Debian '
                            'dependencies and add them to ${python3:Recommends}')
+    parser.add_option('--recommends-section', action='append',
+                      help='translate requirements from given section into Debian '
+                           'dependencies and add them to ${python3:Recommends}')
     parser.add_option('--suggests', action='append',
                       help='translate given requirements into Debian '
+                           'dependencies and add them to ${python3:Suggests}')
+    parser.add_option('--suggests-section', action='append',
+                      help='translate requirements from given section into Debian '
                            'dependencies and add them to ${python3:Suggests}')
     parser.add_option('--requires', action='append',
                       help='translate requirements from given file into Debian '

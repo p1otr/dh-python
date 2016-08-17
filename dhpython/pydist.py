@@ -189,14 +189,19 @@ def guess_dependency(impl, req, version=None, bdep=None):
     # return pname
 
 
-def parse_pydep(impl, fname, bdep=None):
+def parse_pydep(impl, fname, bdep=None, options=None,
+                depends_sec=None, recommends_sec=None, suggests_sec=None):
+    depends_sec = depends_sec or []
+    recommends_sec = recommends_sec or []
+    suggests_sec = suggests_sec or []
+
     public_dir = PUBLIC_DIR_RE[impl].match(fname)
     ver = None
     if public_dir and public_dir.groups() and len(public_dir.group(1)) != 1:
         ver = public_dir.group(1)
 
-    result = []
-    modified = optional_section = False
+    result = {'depends': [], 'recommends': [], 'suggests': []}
+    modified = section = False
     processed = []
     with open(fname, 'r', encoding='utf-8') as fp:
         for line in fp:
@@ -205,13 +210,25 @@ def parse_pydep(impl, fname, bdep=None):
                 processed.append(line)
                 continue
             if line.startswith('['):
-                optional_section = True
-            if optional_section:
+                section = line[1:-1].strip()
                 processed.append(line)
                 continue
+            if section:
+                if section in depends_sec:
+                    result_key = 'depends'
+                elif section in recommends_sec:
+                    result_key = 'recommends'
+                elif section in suggests_sec:
+                    result_key = 'suggests'
+                else:
+                    processed.append(line)
+                    continue
+            else:
+                result_key = 'depends'
+
             dependency = guess_dependency(impl, line, ver, bdep)
             if dependency:
-                result.append(dependency)
+                result[result_key].append(dependency)
                 modified = True
             else:
                 processed.append(line)

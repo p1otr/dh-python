@@ -11,10 +11,13 @@ class FakeOptions:
     def __init__(self, **kwargs):
         opts = {
             'depends': (),
+            'depends_section': (),
             'guess_deps': False,
             'recommends': (),
+            'recommends_section': (),
             'requires': (),
             'suggests': (),
+            'suggests_section': (),
             'vrange': None,
         }
         opts.update(kwargs)
