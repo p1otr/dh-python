@@ -154,9 +154,12 @@ def guess_dependency(impl, req, version=None, bdep=None):
                 v = _translate(req_d['version'], item['rules'], item['standard'])
                 return "%s (%s %s)" % (item['dependency'], req_d['operator'], v)
             else:
-                if item['dependency'] in bdep and bdep[item['dependency']][None]:
-                    # TODO: handle architecture specific dependencies from build depends ("None" below)
-                    return "{} ({})".format(item['dependency'], bdep[item['dependency']][None])
+                if item['dependency'] in bdep:
+                    if None in bdep[item['dependency']] and bdep[item['dependency']][None]:
+                        return "{} ({})".format(item['dependency'], bdep[item['dependency']][None])
+                    # if arch in bdep[item['dependency']]:
+                    # TODO: handle architecture specific dependencies from build depends
+                    #       (current architecture is needed here)
                 return item['dependency']
 
     # search for Egg metadata file or directory (using dpkg -S)

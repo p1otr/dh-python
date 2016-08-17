@@ -31,7 +31,7 @@ parse_dep = re.compile('''[,\s]*
     \s*
     \(?(?P<version>[>=<]+(?!!)\s*[^\)]+)?\)?
     \s*
-    (?P<arch>\[[^\]]+\])?
+    (?:\[(?P<arch>[^\]]+)\])?
     ''', re.VERBOSE).match
 
 
@@ -140,8 +140,13 @@ class DebHelper:
                 details = parse_dep(dep2)
                 if details:
                     details = details.groupdict()
-                    self.build_depends.setdefault(details['name'],
-                                                  {})[details['arch']] = details['version']
+                    if details['arch']:
+                        architectures = details['arch'].split()
+                    else:
+                        architectures = [None]
+                    for arch in architectures:
+                        self.build_depends.setdefault(details['name'],
+                                                      {})[arch] = details['version']
 
         fp.close()
         log.debug('source=%s, binary packages=%s', self.source_name,
