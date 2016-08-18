@@ -29,7 +29,7 @@ log = logging.getLogger('dhpython')
 parse_dep = re.compile('''[,\s]*
     (?P<name>[^ ]+)
     \s*
-    \(?(?P<version>[>=<]+(?!!)\s*[^\)]+)?\)?
+    \(?(?P<version>([>=<]{2,}|=)\s*[^\)]+)?\)?
     \s*
     (?:\[(?P<arch>[^\]]+)\])?
     ''', re.VERBOSE).match
