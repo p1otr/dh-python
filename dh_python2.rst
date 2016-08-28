@@ -188,11 +188,20 @@ OPTIONS
 --depends=DEPENDS	translate given requirements into Debian dependencies
   and add them to ${python:Depends}. Use it for missing items in requires.txt
 
+--depends-sections=SECTIONS	translate requirements from given sections of
+  requres.txt file into Debian dependencies and add them to ${python:Depends}.
+
 --recommends=RECOMMENDS		translate given requirements into Debian dependencies
   and add them to ${python:Recommends}
 
+--recommends-sections=SECTIONS	translate requirements from given sections of
+  requres.txt file into Debian dependencies and add them to ${python:Recommends}.
+
 --suggests=SUGGESTS	translate given requirements into Debian dependencies
   and add them to ${python:Suggests}
+
+--suggests-sections=SECTIONS	translate requirements from given sections of
+  requres.txt file into Debian dependencies and add them to ${python:Suggests}.
 
 --requires=FILENAME	translate requirements from given file(s) into Debian
   dependencies and add them to ${python:Depends}

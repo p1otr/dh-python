@@ -21,16 +21,17 @@
 import logging
 import re
 from os import makedirs, chmod
-from os.path import exists, join, dirname
+from os.path import basename, exists, join, dirname
+from sys import argv
 from dhpython import DEPENDS_SUBSTVARS, PKG_NAME_TPLS, RT_LOCATIONS, RT_TPLS
 
 log = logging.getLogger('dhpython')
 parse_dep = re.compile('''[,\s]*
     (?P<name>[^ ]+)
     \s*
-    \(?(?P<version>[>=<]+\s*[^\)]+)?\)?
+    \(?(?P<version>([>=<]{2,}|=)\s*[^\)]+)?\)?
     \s*
-    (?P<arch>\[[^\]]+\])?
+    (?:\[(?P<arch>[^\]]+)\])?
     ''', re.VERBOSE).match
 
 
@@ -139,8 +140,13 @@ class DebHelper:
                 details = parse_dep(dep2)
                 if details:
                     details = details.groupdict()
-                    self.build_depends.setdefault(details['name'],
-                                                  {})[details['arch']] = details['version']
+                    if details['arch']:
+                        architectures = details['arch'].split()
+                    else:
+                        architectures = [None]
+                    for arch in architectures:
+                        self.build_depends.setdefault(details['name'],
+                                                      {})[arch] = details['version']
 
         fp.close()
         log.debug('source=%s, binary packages=%s', self.source_name,
@@ -191,7 +197,7 @@ class DebHelper:
                         if tpl not in data and tpl not in new_data:
                             new_data += "\n%s" % tpl
                 if new_data:
-                    data += '\n# Automatically added by dhpython:' +\
+                    data += '\n# Automatically added by {}:'.format(basename(argv[0])) +\
                             '{}\n# End automatically added section\n'.format(new_data)
                     fp = open(fn, 'w', encoding='utf-8')
                     fp.write(data)

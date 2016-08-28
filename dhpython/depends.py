@@ -224,12 +224,19 @@ class Dependencies:
                     args += " -X '%s'" % pattern.replace("'", r"'\''")
                 self.rtscript((private_dir, args))
 
+        section_options = {
+            'depends_sec': options.depends_section,
+            'recommends_sec': options.recommends_section,
+            'suggests_sec': options.suggests_section,
+        }
         if options.guess_deps:
             for fn in stats['requires.txt']:
                 # TODO: should options.recommends and options.suggests be
                 # removed from requires.txt?
-                for i in parse_pydep(self.impl, fn, bdep=self.bdep):
-                    self.depend(i)
+                deps = parse_pydep(self.impl, fn, bdep=self.bdep, **section_options)
+                [self.depend(i) for i in deps['depends']]
+                [self.recommend(i) for i in deps['recommends']]
+                [self.suggest(i) for i in deps['suggests']]
             for fpath in stats['egg-info']:
                 with open(fpath, 'r', encoding='utf-8') as fp:
                     for line in fp:
@@ -254,7 +261,9 @@ class Dependencies:
                 if not exists(fpath):
                     log.warn('cannot find requirements file: %s', fn)
                     continue
-            for i in parse_pydep(self.impl, fpath, bdep=self.bdep):
-                self.depend(i)
+            deps = parse_pydep(self.impl, fpath, bdep=self.bdep, **section_options)
+            [self.depend(i) for i in deps['depends']]
+            [self.recommend(i) for i in deps['recommends']]
+            [self.suggest(i) for i in deps['suggests']]
 
         log.debug(self)
