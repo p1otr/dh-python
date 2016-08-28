@@ -4,7 +4,7 @@ dh-python (2.20160818~bpo8+1) jessie-backports; urgency=medium
   * Update default and supported Python versions
   * Add some Jessie packages to fallback files
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 17 Jun 2016 22:56:50 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 28 Aug 2016 21:37:36 +0200
 
 dh-python (2.20160818) unstable; urgency=medium
 
