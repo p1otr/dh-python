@@ -18,6 +18,7 @@ pyasn1 pypy-pyasn1
 pyparsing pypy-pyparsing
 pyzmq pypy-zmq
 rply pypy-rply
+schema pypy-schema
 simplejson pypy-simplejson
 six pypy-six
 sqlparse pypy-sqlparse
