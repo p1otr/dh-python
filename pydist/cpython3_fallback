@@ -71,6 +71,7 @@ Logbook python3-logbook
 MDP python3-mdp
 MIDIUtil python3-midiutil
 MPD_sima mpd-sima
+Magic_file_extensions python3-magic
 Mako python3-mako
 Markdown python3-markdown
 MarkupSafe python3-markupsafe
@@ -105,7 +106,7 @@ PyPDF2 python3-pypdf2
 PyPump python3-pypump
 PyRSS2Gen python3-pyrss2gen
 PySDL2 python3-sdl2
-PySocks python3-socks
+PySocks python3-pysocks
 PyStemmer python3-stemmer
 PyTango python3-pytango
 PyUtilib python3-pyutilib
@@ -137,6 +138,7 @@ SecretStorage python3-secretstorage
 Shapely python3-shapely
 Signaller python3-signaller
 SimPy python3-simpy
+SocksiPy_branch python3-socksipy
 SoftLayer python3-softlayer
 SoundFile python3-soundfile
 Sphinx python3-sphinx
@@ -464,6 +466,7 @@ djoser python3-djoser
 djvubind djvubind
 dkimpy python3-dkim
 dnspython python3-dnspython
+dnspython3 python3-dnspython
 dnsq python3-dnsq
 doc8 python3-doc8
 docker_py python3-docker
@@ -578,6 +581,7 @@ gphoto2_cffi python3-gphoto2cffi
 gramps gramps
 graphite_api graphite-api
 graypy python3-graypy
+greenio python3-greenio
 greenlet python3-greenlet
 gssapi python3-gssapi
 gsw python3-gsw
@@ -703,6 +707,7 @@ lmdb python3-lmdb
 lmfit python3-lmfit
 lockfile python3-lockfile
 logging_tree python3-logging-tree
+logilab_astng python3-logilab-astng
 logilab_common python3-logilab-common
 logutils python3-logutils
 louis python3-louis
@@ -931,6 +936,7 @@ pySFML python3-sfml
 pyScss python3-pyscss
 py_enigma python3-enigma
 py_moneyed python3-moneyed
+py_bcrypt python3-bcrypt
 py_postgresql python3-postgresql
 pyacoustid python3-acoustid
 pyapi_gitlab python3-gitlab
@@ -961,6 +967,7 @@ pyftpdlib python3-pyftpdlib
 pygccxml python3-pygccxml
 pygeoif python3-pygeoif
 pygit2 python3-pygit2
+pyflakes pyflakes
 pygobject python3-gi
 pygpgme python3-gpgme
 pygrace python3-pygrace

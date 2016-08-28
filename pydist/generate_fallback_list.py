@@ -34,7 +34,7 @@ if '--ubuntu' in sys.argv and DistroInfo:
     SOURCE = 'http://archive.ubuntu.com/ubuntu/dists/%s/Contents-amd64.gz' % \
              DistroInfo('ubuntu').devel()
 else:
-    SOURCE = 'http://ftp.debian.org/debian/dists/unstable/main/Contents-amd64.gz'
+    SOURCE = 'http://ftp.debian.org/debian/dists/jessie/main/Contents-amd64.gz'
 
 IGNORED_PKGS = {'python-setuptools', 'python3-setuptools', 'pypy-setuptools'}
 DEFAULTS = {
