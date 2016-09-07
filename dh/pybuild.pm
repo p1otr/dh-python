@@ -117,6 +117,7 @@ sub pybuild_commands {
 
 		my @py2opts = ('pybuild', "--$step");
 		my @py3opts = ('pybuild', "--$step");
+		my @pypyopts = ('pybuild', "--$step");
 
 		if ($step == 'test' and $ENV{'PYBUILD_TEST_PYTEST'} ne '1' and
 		       			$ENV{'PYBUILD_TEST_NOSE'} ne '1' and
@@ -133,6 +134,12 @@ sub pybuild_commands {
 				push @py3opts, '--test-pytest'}
 			elsif (grep {$_ eq 'python3-nose'} @deps and $ENV{'PYBUILD_TEST_NOSE'} ne '0') {
 				push @py3opts, '--test-nose'}
+			if (grep {$_ eq 'pypy-tox'} @deps and $ENV{'PYBUILD_TEST_TOX'} ne '0') {
+				push @pypyopts, '--test-tox'}
+			elsif (grep {$_ eq 'pypy-pytest'} @deps and $ENV{'PYBUILD_TEST_PYTEST'} ne '0') {
+				push @pypyopts, '--test-pytest'}
+			elsif (grep {$_ eq 'pypy-nose'} @deps and $ENV{'PYBUILD_TEST_NOSE'} ne '0') {
+				push @pypyopts, '--test-nose'}
 		}
 
 		my $pyall = 0;
@@ -185,7 +192,7 @@ sub pybuild_commands {
 
 		# PyPy
 		if ($this->{pypydef} and grep {$_ eq 'pypy'} @deps) {
-			push @result, ['pybuild', "--$step", '-i', 'pypy', '-p', $this->{pypydef}, @options];
+			push @result, [@pypyopts, '-i', 'pypy', '-p', $this->{pypydef}, @options];
 		}
 	}
 	if (!@result) {
