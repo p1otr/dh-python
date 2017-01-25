@@ -60,6 +60,14 @@ def main(cfg):
         env['https_proxy'] = 'https://127.0.0.1:9/'
     elif not env['https_proxy']:
         del env['https_proxy']  # some tools don't like empty var.
+    try:
+        # Set _PYTHON_HOST_PLATFORM to ensure debugging symbols on, f.e. i386
+        # emded a constant name regardless of the 32/64-bit kernel.
+        env.setdefault(
+            '_PYTHON_HOST_PLATFORM',
+            '{env[DEB_TARGET_ARCH_OS]}-{env[DEB_TARGET_ARCH]}'.format(env=env))
+    except KeyError:
+        pass
 
     if cfg.system:
         certainty = 99
