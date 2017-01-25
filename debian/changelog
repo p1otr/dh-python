@@ -11,6 +11,8 @@ dh-python (2.201609XX) UNRELEASED; urgency=medium
   * dh_python{2,3}:
     - do not drop "module" from extension name if the name is "module",
       i.e. without prefix (closes: 841148)
+    - add --accept-upstream-versions option. Thanks to Malte Forkel for the
+      patch (also closes: 847387 as it now parses minimum/maximum version)
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 07 Sep 2016 22:39:27 +0200
 
