@@ -5,6 +5,9 @@ dh-python (2.201609XX) UNRELEASED; urgency=medium
       dependency is set
   * dh_python{2,3} manpage: remove "s" suffix from *-section options
     to match the actual option name and --help output (closes: 847304)
+  * dh_python{2,3}:
+    - do not drop "module" from extension name if the name is "module",
+      i.e. without prefix (closes: 841148)
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 07 Sep 2016 22:39:27 +0200
 
