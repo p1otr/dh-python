@@ -185,6 +185,9 @@ OPTIONS
   not just the ones provided by the package (i.e. do not pass the --package
   parameter to pycompile/pyclean)
 
+--accept-upstream-versions	accept upstream versions while translating
+  Python dependencies into Debian ones
+
 --depends=DEPENDS	translate given requirements into Debian dependencies
   and add them to ${python:Depends}. Use it for missing items in requires.txt
 

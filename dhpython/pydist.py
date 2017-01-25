@@ -22,6 +22,7 @@
 import logging
 import os
 import re
+from functools import partial
 from os.path import exists, isdir, join
 from subprocess import PIPE, Popen
 from dhpython import PKG_PREFIX_MAP, PUBLIC_DIR_RE,\
@@ -116,7 +117,8 @@ def load(impl):
     return result
 
 
-def guess_dependency(impl, req, version=None, bdep=None):
+def guess_dependency(impl, req, version=None, bdep=None,
+                     accept_upstream_versions=False):
     bdep = bdep or {}
     log.debug('trying to find dependency for %s (python=%s)',
               req, version)
@@ -203,6 +205,10 @@ def parse_pydep(impl, fname, bdep=None, options=None,
     if public_dir and public_dir.groups() and len(public_dir.group(1)) != 1:
         ver = public_dir.group(1)
 
+    guess_deps = partial(guess_dependency, impl=impl, version=ver, bdep=bdep,
+                         accept_upstream_versions=getattr(
+                             options, 'accept_upstream_versions', False))
+
     result = {'depends': [], 'recommends': [], 'suggests': []}
     modified = section = False
     processed = []
@@ -229,7 +235,7 @@ def parse_pydep(impl, fname, bdep=None, options=None,
             else:
                 result_key = 'depends'
 
-            dependency = guess_dependency(impl, line, ver, bdep)
+            dependency = guess_deps(req=line)
             if dependency:
                 result[result_key].append(dependency)
                 modified = True

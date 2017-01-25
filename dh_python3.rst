@@ -166,6 +166,9 @@ OPTIONS
   not just the ones provided by the package (i.e. do not pass the --package
   parameter to py3compile/py3clean)
 
+--accept-upstream-versions	accept upstream versions while translating
+  Python dependencies into Debian ones
+
 --depends=DEPENDS	translate given requirements into Debian dependencies
   and add them to ${python3:Depends}. Use it for missing items in requires.txt
 

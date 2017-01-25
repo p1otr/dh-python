@@ -19,6 +19,7 @@
 # THE SOFTWARE.
 
 import logging
+from functools import partial
 from os.path import exists, join
 from dhpython import PKG_PREFIX_MAP, MINPYCDEP
 from dhpython.pydist import parse_pydep, guess_dependency
@@ -229,6 +230,8 @@ class Dependencies:
             'recommends_sec': options.recommends_section,
             'suggests_sec': options.suggests_section,
         }
+        guess_deps = partial(guess_dependency, impl=self.impl, bdep=self.bdep,
+                             accept_upstream_versions=options.accept_upstream_versions)
         if options.guess_deps:
             for fn in stats['requires.txt']:
                 # TODO: should options.recommends and options.suggests be
@@ -242,17 +245,17 @@ class Dependencies:
                     for line in fp:
                         if line.startswith('Requires: '):
                             req = line[10:].strip()
-                            self.depend(guess_dependency(self.impl, req, bdep=self.bdep))
+                            self.depend(guess_deps(req=req))
 
         # add dependencies from --depends
         for item in options.depends or []:
-            self.depend(guess_dependency(self.impl, item, bdep=self.bdep))
+            self.depend(guess_deps(req=item))
         # add dependencies from --recommends
         for item in options.recommends or []:
-            self.recommend(guess_dependency(self.impl, item, bdep=self.bdep))
+            self.recommend(guess_deps(req=item))
         # add dependencies from --suggests
         for item in options.suggests or []:
-            self.suggest(guess_dependency(self.impl, item, bdep=self.bdep))
+            self.suggest(guess_deps(req=item))
         # add dependencies from --requires
         for fn in options.requires or []:
             fpath = join('debian', self.package, fn)
