@@ -1,4 +1,4 @@
-dh-python (2.201609XX) UNRELEASED; urgency=medium
+dh-python (2.20170125) unstable; urgency=medium
 
   * pybuild.pm:
     - enable --test-{nose,pytest,tox} if appropriate pypy-* build
@@ -14,7 +14,7 @@ dh-python (2.201609XX) UNRELEASED; urgency=medium
     - add --accept-upstream-versions option. Thanks to Malte Forkel for the
       patch (also closes: 847387 as it now parses minimum/maximum version)
 
- -- Piotr Ożarowski <piotr@debian.org>  Wed, 07 Sep 2016 22:39:27 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Wed, 25 Jan 2017 15:47:18 +0100
 
 dh-python (2.20160818) unstable; urgency=medium
 
