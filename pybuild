@@ -49,10 +49,9 @@ def main(cfg):
         nocheck = 'nocheck' in environ['DEB_BUILD_OPTIONS']
 
     env = environ.copy()
-    if 'LC_ALL' not in env:
-        env['LC_ALL'] = 'C.UTF-8'
-    if 'no_proxy' not in env:
-        env['no_proxy'] = 'localhost'
+    # set some defaults in environ to make the build reproducible
+    env.setdefault('LC_ALL', 'C.UTF-8')
+    env.setdefault('no_proxy', 'localhost')
     if 'http_proxy' not in env:
         env['http_proxy'] = 'http://127.0.0.1:9/'
     elif not env['http_proxy']:
