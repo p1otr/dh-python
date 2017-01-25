@@ -3,6 +3,8 @@ dh-python (2.201609XX) UNRELEASED; urgency=medium
   * pybuild.pm:
     - enable --test-{nose,pytest,tox} if appropriate pypy-* build
       dependency is set
+  * dh_python{2,3} manpage: remove "s" suffix from *-section options
+    to match the actual option name and --help output (closes: 847304)
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 07 Sep 2016 22:39:27 +0200
 
