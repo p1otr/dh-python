@@ -21,7 +21,7 @@ QUICK GUIDE FOR MAINTAINERS
 
  * if necessary, describe supported Python 3 versions via X-Python3-Version field
    in debian/control,
- * build depends on dh-python
+ * build depend on dh-python
  * build-depend on python3 or python3-all or python3-all-dev,
  * build module/application using its standard build system,
    remember to build extensions for all supported Python 3 versions (loop over
