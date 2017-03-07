@@ -21,7 +21,7 @@ QUICK GUIDE FOR MAINTAINERS
 
  * if necessary, describe supported Python versions via X-Python-Version field
    in debian/control,
- * build depends on dh-python
+ * build depend on dh-python
  * build-depend on python or python-all or python-all-dev (>= 2.6.6-3~),
  * build module/application using its standard build system,
    remember to build extensions for all supported Python versions (loop over
@@ -185,22 +185,25 @@ OPTIONS
   not just the ones provided by the package (i.e. do not pass the --package
   parameter to pycompile/pyclean)
 
+--accept-upstream-versions	accept upstream versions while translating
+  Python dependencies into Debian ones
+
 --depends=DEPENDS	translate given requirements into Debian dependencies
   and add them to ${python:Depends}. Use it for missing items in requires.txt
 
---depends-sections=SECTIONS	translate requirements from given sections of
+--depends-section=SECTION	translate requirements from given sections of
   requres.txt file into Debian dependencies and add them to ${python:Depends}.
 
 --recommends=RECOMMENDS		translate given requirements into Debian dependencies
   and add them to ${python:Recommends}
 
---recommends-sections=SECTIONS	translate requirements from given sections of
+--recommends-section=SECTION	translate requirements from given sections of
   requres.txt file into Debian dependencies and add them to ${python:Recommends}.
 
 --suggests=SUGGESTS	translate given requirements into Debian dependencies
   and add them to ${python:Suggests}
 
---suggests-sections=SECTIONS	translate requirements from given sections of
+--suggests-section=SECTION	translate requirements from given sections of
   requres.txt file into Debian dependencies and add them to ${python:Suggests}.
 
 --requires=FILENAME	translate requirements from given file(s) into Debian

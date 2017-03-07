@@ -1,10 +1,28 @@
-dh-python (2.20160818~bpo8+1) jessie-backports; urgency=medium
+dh-python (2.20170125~bpo8+1) jessie-backports; urgency=medium
 
   * Rebuild for jessie-backports.
   * Update default and supported Python versions
   * Add some Jessie packages to fallback files
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 28 Aug 2016 21:37:36 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 07 Mar 2017 21:47:01 +0100
+
+dh-python (2.20170125) unstable; urgency=medium
+
+  * pybuild.pm:
+    - enable --test-{nose,pytest,tox} if appropriate pypy-* build
+      dependency is set
+  * pybuild: set _PYTHON_HOST_PLATFORM in the environment to ensure debugging
+    symbols (reproducible builds effort). Thanks to Chris Lamb for the patch
+    (closes: 835805)
+  * dh_python{2,3} manpage: remove "s" suffix from *-section options
+    to match the actual option name and --help output (closes: 847304)
+  * dh_python{2,3}:
+    - do not drop "module" from extension name if the name is "module",
+      i.e. without prefix (closes: 841148)
+    - add --accept-upstream-versions option. Thanks to Malte Forkel for the
+      patch (also closes: 847387 as it now parses minimum/maximum version)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Wed, 25 Jan 2017 15:47:18 +0100
 
 dh-python (2.20160818) unstable; urgency=medium
 

@@ -21,7 +21,7 @@ QUICK GUIDE FOR MAINTAINERS
 
  * if necessary, describe supported Python 3 versions via X-Python3-Version field
    in debian/control,
- * build depends on dh-python
+ * build depend on dh-python
  * build-depend on python3 or python3-all or python3-all-dev,
  * build module/application using its standard build system,
    remember to build extensions for all supported Python 3 versions (loop over
@@ -166,22 +166,25 @@ OPTIONS
   not just the ones provided by the package (i.e. do not pass the --package
   parameter to py3compile/py3clean)
 
+--accept-upstream-versions	accept upstream versions while translating
+  Python dependencies into Debian ones
+
 --depends=DEPENDS	translate given requirements into Debian dependencies
   and add them to ${python3:Depends}. Use it for missing items in requires.txt
 
---depends-sections=SECTIONS	translate requirements from given sections of
+--depends-section=SECTION	translate requirements from given sections of
   requres.txt file into Debian dependencies and add them to ${python3:Depends}.
 
 --recommends=RECOMMENDS		translate given requirements into Debian dependencies
   and add them to ${python3:Recommends}
 
---recommends-sections=SECTIONS	translate requirements from given sections of
+--recommends-section=SECTION	translate requirements from given sections of
   requres.txt file into Debian dependencies and add them to ${python3:Recommends}.
 
 --suggests=SUGGESTS	translate given requirements into Debian dependencies
   and add them to ${python3:Suggests}
 
---suggests-sections=SECTIONS	translate requirements from given sections of
+--suggests-section=SECTION	translate requirements from given sections of
   requres.txt file into Debian dependencies and add them to ${python3:Suggests}.
 
 --requires=FILENAME	translate requirements from given file(s) into Debian

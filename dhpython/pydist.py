@@ -22,6 +22,7 @@
 import logging
 import os
 import re
+from functools import partial
 from os.path import exists, isdir, join
 from subprocess import PIPE, Popen
 from dhpython import PKG_PREFIX_MAP, PUBLIC_DIR_RE,\
@@ -54,9 +55,22 @@ REQUIRES_RE = re.compile(r'''
         (?P<operator><=?|>=?|==|!=)
         \s*
         (?P<version>(\w|[-.])+)
+        (?:  # optional interval minimum/maximum version
+            \s*
+            ,
+            \s*
+            (?P<operator2><=?|>=?|==|!=)
+            \s*
+            (?P<version2>(\w|[-.])+)
+        )?
     )?
     \)?  # optional closing parenthesis
     ''', re.VERBOSE)
+DEB_VERS_OPS = {
+    '==': '=',
+    '<':  '<<',
+    '>':  '>>',
+}
 
 
 def validate(fpath):
@@ -116,7 +130,8 @@ def load(impl):
     return result
 
 
-def guess_dependency(impl, req, version=None, bdep=None):
+def guess_dependency(impl, req, version=None, bdep=None,
+                     accept_upstream_versions=False):
     bdep = bdep or {}
     log.debug('trying to find dependency for %s (python=%s)',
               req, version)
@@ -150,9 +165,23 @@ def guess_dependency(impl, req, version=None, bdep=None):
                 # Debian dependency
                 return item['dependency']
             if req_d['version'] and (item['standard'] or item['rules']) and\
-                    req_d['operator'] not in (None, '==', '!='):
+                    req_d['operator'] not in (None, '!='):
+                o = _translate_op(req_d['operator'])
                 v = _translate(req_d['version'], item['rules'], item['standard'])
-                return "%s (%s %s)" % (item['dependency'], req_d['operator'], v)
+                d = "%s (%s %s)" % (item['dependency'], o, v)
+                if req_d['version2'] and req_d['operator2'] not in (None,'!='):
+                    o2 = _translate_op(req_d['operator2'])
+                    v2 = _translate(req_d['version2'], item['rules'], item['standard'])
+                    d += ", %s (%s %s)" % (item['dependency'], o2, v2)
+                return d
+            elif accept_upstream_versions and req_d['version'] and \
+                    req_d['operator'] not in (None,'!='):
+                o = _translate_op(req_d['operator'])
+                d = "%s (%s %s)" % (item['dependency'], o, req_d['version'])
+                if req_d['version2'] and req_d['operator2'] not in (None,'!='):
+                    o2 = _translate_op(req_d['operator2'])
+                    d += ", %s (%s %s)" % (item['dependency'], o2, req_d['version2'])
+                return d
             else:
                 if item['dependency'] in bdep:
                     if None in bdep[item['dependency']] and bdep[item['dependency']][None]:
@@ -203,6 +232,10 @@ def parse_pydep(impl, fname, bdep=None, options=None,
     if public_dir and public_dir.groups() and len(public_dir.group(1)) != 1:
         ver = public_dir.group(1)
 
+    guess_deps = partial(guess_dependency, impl=impl, version=ver, bdep=bdep,
+                         accept_upstream_versions=getattr(
+                             options, 'accept_upstream_versions', False))
+
     result = {'depends': [], 'recommends': [], 'suggests': []}
     modified = section = False
     processed = []
@@ -229,7 +262,7 @@ def parse_pydep(impl, fname, bdep=None, options=None,
             else:
                 result_key = 'depends'
 
-            dependency = guess_dependency(impl, line, ver, bdep)
+            dependency = guess_deps(req=line)
             if dependency:
                 result[result_key].append(dependency)
                 modified = True
@@ -307,3 +340,16 @@ def _translate(version, rules, standard):
     if standard == 'PEP386':
         version = PRE_VER_RE.sub(r'~\g<1>', version)
     return version
+
+
+def _translate_op(operator):
+    """Translate Python version operator into Debian one.
+
+    >>> _translate_op('==')
+    '='
+    >>> _translate_op('<')
+    '<<'
+    >>> _translate_op('<=')
+    '<='
+    """
+    return DEB_VERS_OPS.get(operator, operator)

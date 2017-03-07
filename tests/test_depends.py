@@ -19,6 +19,7 @@ class FakeOptions:
             'suggests': (),
             'suggests_section': (),
             'vrange': None,
+            'accept_upstream_versions': False,
         }
         opts.update(kwargs)
         for k, v in opts.items():

@@ -299,6 +299,9 @@ def main():
                       help='exclude items that match given REGEXPR. You may '
                            'use this option multiple times to build up a list'
                            ' of things to exclude.')
+    parser.add_option('--accept-upstream-versions', action='store_true',
+                      default=False, help='accept upstream versions while '
+                      'translating Python dependencies into Debian ones')
     parser.add_option('--depends', action='append',
                       help='translate given requirements into Debian '
                            'dependencies and add them to ${python:Depends}. '
