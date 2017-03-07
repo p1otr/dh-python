@@ -20,7 +20,7 @@ clean-test%:
 	make -C t$* clean
 
 clean: $(TESTS:%=clean-%)
-	rm -f *\.dsc *\.tar\.gz *\.build *\.changes *\.deb
+	rm -f *\.dsc *\.tar\.gz *\.build *\.changes *\.deb *\.buildinfo
 	@find . -prune -name '*.egg-info' -exec rm -rf '{}' ';' || true
 
 .PHONY: clean

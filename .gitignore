@@ -6,6 +6,8 @@ pydist/cache/
 *\.1
 *\.pyc
 *\.swp
+debhelper-build-stamp
+*\.buildinfo
 *\.deb
 *\.changes
 *\.log
