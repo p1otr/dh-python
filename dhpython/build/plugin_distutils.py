@@ -48,8 +48,9 @@ def create_pydistutils_cfg(func):
                          '[install]\n',
                          'force=1\n',
                          'install-layout=deb\n',
-                         'install-scripts=/usr/bin\n',
+                         'install-scripts=$base/bin\n',
                          'install-lib={}\n'.format(args['install_dir']),
+                         'prefix=/usr\n',
                          '[easy_install]\n',
                          'allow_hosts=None\n']
                 log.debug('pydistutils config file:\n%s', ''.join(lines))
