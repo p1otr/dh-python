@@ -1,3 +1,9 @@
+dh-python (2.20171209) UNRELEASED; urgency=medium
+
+  * When depends on python{3,}-pbr, set PBR_VERSION to upstream version
+
+ -- Ondřej Nový <onovy@debian.org>  Sat, 09 Dec 2017 15:10:20 +0100
+
 dh-python (2.20170125) unstable; urgency=medium
 
   * pybuild.pm:
