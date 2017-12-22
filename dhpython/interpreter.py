@@ -486,11 +486,12 @@ class Interpreter:
 
         >>> Interpreter('python3.1').suggest_pkg_name('foo')
         'python3-foo'
-        >>> Interpreter('python3.4').suggest_pkg_name('foo')
-        'python3-foo'
+        >>> Interpreter('python3.4').suggest_pkg_name('foo_bar')
+        'python3-foo-bar'
         >>> Interpreter('python2.7-dbg').suggest_pkg_name('bar')
         'python-bar-dbg'
         """
+        name = name.replace('_', '-')
         if self.impl == 'pypy':
             return 'pypy-{}'.format(name)
         version = '3' if self.impl == 'cpython3' else ''
