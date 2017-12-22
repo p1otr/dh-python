@@ -1,7 +1,10 @@
+MMLlib pypy-mmllib
 Unidecode pypy-unidecode
 Wand pypy-wand
 appdirs pypy-appdirs
+asn1crypto pypy-asn1crypto
 attrs pypy-attr
+bdist_nsi pypy-bdist-nsi
 beautifulsoup4 pypy-bs4
 dulwich pypy-dulwich
 enum34 pypy-enum34
@@ -16,13 +19,16 @@ libusb1 pypy-libusb1
 mutagen pypy-mutagen
 packaging pypy-packaging
 pretend pypy-pretend
+purl pypy-purl
 py pypy-py
+pyaes pypy-pyaes
 pyasn1 pypy-pyasn1
 pyparsing pypy-pyparsing
 pytest pypy-pytest
 pyzmq pypy-zmq
 rply pypy-rply
 schema pypy-schema
+setuptools_scm pypy-setuptools-scm
 simplejson pypy-simplejson
 six pypy-six
 sqlparse pypy-sqlparse
