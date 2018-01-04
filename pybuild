@@ -286,7 +286,9 @@ def main(cfg):
                     ext_destdir = get_option('ext_destdir', i, version)
                     if ext_destdir:
                         move_matching_files(c['destdir'], ext_destdir,
-                                            get_option('ext_pattern', i, version))
+                                            get_option('ext_pattern', i, version),
+                                            get_option('ext_sub_pattern', i, version),
+                                            get_option('ext_sub_repl', i, version))
         exit(0)
 
     ### all functions for interpreters in batches mode ###
@@ -320,7 +322,9 @@ def main(cfg):
                     ext_destdir = get_option('ext_destdir', i, version)
                     if ext_destdir:
                         move_matching_files(c['destdir'], ext_destdir,
-                                            get_option('ext_pattern', i, version))
+                                            get_option('ext_pattern', i, version),
+                                            get_option('ext_sub_pattern', i, version),
+                                            get_option('ext_sub_repl', i, version))
                 if not nocheck and not is_disabled('test', i, version):
                     run(plugin.test, i, version, c)
     except Exception as err:
@@ -422,6 +426,13 @@ def parse_args(argv):
                       default=environ.get('PYBUILD_EXT_PATTERN', r'\.so(\.[^/]*)?$'),
                       help='regular expression for files that should be moved'
                       ' if --ext-dest-dir is set [default: .so files]')
+    dirs.add_argument('--ext-sub-pattern', action='store', metavar='PATTERN',
+                      default=environ.get('PYBUILD_EXT_SUB_PATTERN'),
+                      help='pattern to change --ext-pattern\'s filename or path')
+    dirs.add_argument('--ext-sub-repl', action='store', metavar='PATTERN',
+                      default=environ.get('PYBUILD_EXT_SUB_REPL'),
+                      help='replacement for match from --ext-sub-pattern,'
+                      ' empty string by default')
     dirs.add_argument('--install-dir', action='store', metavar='DIR',
                       help='installation directory [default: .../dist-packages]')
     dirs.add_argument('--name', action='store',

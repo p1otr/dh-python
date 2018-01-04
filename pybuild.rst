@@ -153,6 +153,11 @@ DIRECTORIES
   --ext-pattern PATTERN
       regular expression for files that should be moved if --ext-dest-dir is set
       [default: `\.so(\.[^/]*)?$`]
+  --ext-sub-pattern PATTERN
+      regular expression for part of path/filename matched in --ext-pattern
+      that should be removed or replaced with --ext-sub-repl
+  --ext-sub-repl PATTERN
+      replacement for matches in --ext-sub-pattern
   --install-dir DIR
       set installation directory [default: .../dist-packages]
   --name NAME

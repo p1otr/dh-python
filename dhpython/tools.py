@@ -67,17 +67,25 @@ def move_file(fpath, dstdir):
         os.rename(fpath, dstdir)
 
 
-def move_matching_files(src, dst, pattern):
+def move_matching_files(src, dst, pattern, sub=None, repl=''):
     """Move files (preserving path) that match given pattern.
 
     move_matching_files('foo/bar/', 'foo/baz/', 'spam/.*\.so$')
     will move foo/bar/a/b/c/spam/file.so to foo/baz/a/b/c/spam/file.so
+
+    :param sub: regular expression for path part that will be replaced with `repl`
+    :param repl: replacement for `sub`
     """
     match = re.compile(pattern).search
+    if sub:
+        sub = re.compile(sub).sub
+        repl = repl or ''
     for root, dirs, filenames in os.walk(src):
         for fn in filenames:
             spath = join(root, fn)
             if match(spath):
+                if sub is not None:
+                    spath = sub(repl, spath)
                 dpath = join(dst, relpath(spath, src))
                 os.renames(spath, dpath)
 
