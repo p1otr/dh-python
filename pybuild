@@ -34,7 +34,7 @@ log = logging.getLogger('dhpython')
 
 def main(cfg):
     log.debug('cfg: %s', cfg)
-    from dhpython import build
+    from dhpython import build, PKG_PREFIX_MAP
     from dhpython.version import Version, build_sorted, get_requested_versions
     from dhpython.interpreter import Interpreter
     from dhpython.tools import execute, move_matching_files
@@ -96,6 +96,19 @@ def main(cfg):
             log.error('cannot detect build system, please use --system option'
                       ' or set PYBUILD_SYSTEM env. variable')
             exit(11)
+
+    if plugin.SUPPORTED_INTERPRETERS is not True:
+        # if versioned interpreter was requested and selected plugin lists
+        # versioned ones as supported: extend list of supported interpreters
+        # with this interpreter
+        tpls = {i for i in plugin.SUPPORTED_INTERPRETERS if '{version}' in i}
+        if tpls:
+            for ipreter in cfg.interpreter:
+                if ipreter[6:9].replace('.', '').isdigit():
+                    ver = ipreter[6:9]
+                    updated = set(tpl.format(version=ver) for tpl in tpls)
+                    updated and plugin.SUPPORTED_INTERPRETERS.update(updated)
+
     for interpreter in cfg.interpreter:
         if plugin.SUPPORTED_INTERPRETERS is not True and interpreter not in plugin.SUPPORTED_INTERPRETERS:
             log.error('interpreter %s not supported by %s', interpreter, plugin)
@@ -107,11 +120,26 @@ def main(cfg):
             print(plugin.NAME)
         exit(0)
 
-    # reversed so that default Python version will be last
     versions = cfg.versions
     if not versions:
-        log.debug('defaulting to all supported Python 3.X versions')
-        versions = list(get_requested_versions('cpython3', available=True))
+        if len(cfg.interpreter) == 1:
+            i = cfg.interpreter[0]
+            if len(i[6:9]) == 3 and i[6:9].replace('.', '').isdigit():
+                # NOTE: python3[6:9] == '3' and we don't want it here,
+                #       ipreter[-3:] doesn't cover pythonX.Y-dbg
+                log.debug('defaulting to version hardcoded in interpreter name')
+                versions = [i[6:9]]
+            else:
+                IMAP = {v: k for k, v in PKG_PREFIX_MAP.items()}
+                if i in IMAP:
+                    versions = build_sorted(get_requested_versions(
+                        IMAP[i], available=True), impl=IMAP[i])
+                if versions and '{version}' not in i:
+                    versions = versions[-1:]  # last one, the default one
+        if not versions:  # still no luck
+            log.debug('defaulting to all supported Python 3.X versions')
+            versions = build_sorted(get_requested_versions(
+                'cpython3', available=True), impl='cpython3')
     versions = [Version(v) for v in versions]
 
     def get_option(name, interpreter=None, version=None, default=None):
