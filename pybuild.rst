@@ -89,6 +89,17 @@ TESTS
         use tox command in test step, remember to add python-tox
         to Build-Depends. Requires tox.ini file
 
+
+testfiles
+~~~~~~~~~
+    Tests are invoked from within build directory to make sure newly built
+    files are tested instead of source files. If test suite requires other files
+    in this directory, you can list them in `debian/pybuild.testfiles` file
+    (you can also use `debian/pybuild-pythonX.testfiles` or
+    `debian/pybuild-pythonX.Y.testfiles`) and files listed there will be copied 
+    before test step and removed before install step.
+    By default only `test` and `tests` directories are copied to build directory.
+
 BUILD SYSTEM ARGUMENTS
 ----------------------
   Additional arguments passed to the build system.

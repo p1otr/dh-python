@@ -23,7 +23,7 @@ from glob import glob1
 from os import remove
 from os.path import exists, isdir, join
 from shutil import rmtree
-from dhpython.build.base import Base, shell_command
+from dhpython.build.base import Base, shell_command, copy_test_files
 
 log = logging.getLogger('dhpython')
 _setup_tpl = 'setup.py|setup-3.py'
@@ -113,6 +113,7 @@ class BuildSystem(Base):
 
     @shell_command
     @create_pydistutils_cfg
+    @copy_test_files()
     def test(self, context, args):
         if not self.cfg.custom_tests:
             fpath = join(args['dir'], args['setup_py'])

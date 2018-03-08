@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from dhpython.build.base import Base, shell_command
+from dhpython.build.base import Base, shell_command, copy_test_files
 
 
 class BuildSystem(Base):
@@ -42,5 +42,6 @@ class BuildSystem(Base):
         return args['args']
 
     @shell_command
+    @copy_test_files()
     def test(self, context, args):
         return args['args'] or super(BuildSystem, self).test(context, args)

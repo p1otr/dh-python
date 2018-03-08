@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from dhpython.build.base import Base, shell_command
+from dhpython.build.base import Base, shell_command, copy_test_files
 
 
 class BuildSystem(Base):
@@ -55,6 +55,7 @@ class BuildSystem(Base):
                 ' -- {args}')
 
     @shell_command
+    @copy_test_files()
     def test(self, context, args):
         return ('dh_auto_test --buildsystem=cmake'
                 ' --builddirectory="{build_dir}"'

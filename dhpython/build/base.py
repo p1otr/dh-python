@@ -24,7 +24,7 @@ from glob import glob1
 from os import remove, walk
 from os.path import exists, isdir, join
 from subprocess import Popen, PIPE
-from shutil import rmtree, copytree
+from shutil import rmtree, copyfile, copytree
 from dhpython.tools import execute
 try:
     from shlex import quote
@@ -36,6 +36,50 @@ except ImportError:
         return "'" + s.replace("'", "'\"'\"'") + "'"
 
 log = logging.getLogger('dhpython')
+
+
+def copy_test_files(dest='{build_dir}',
+                    filelist='{home_dir}/testfiles_to_rm_before_install'):
+
+    def _copy_test_files(func):
+
+        @wraps(func)
+        def __copy_test_files(self, context, args, *oargs, **kwargs):
+            files_to_copy = {'test', 'tests'}
+            # check debian/pybuild_pythonX.Y.testfiles
+            for tpl in ('_{i}{v}', '_{i}{m}', ''):
+                tpl = tpl.format(i=args['interpreter'].name,
+                                 v=args['version'],
+                                 m=args['version'].major)
+                fpath = join(args['dir'], 'debian/pybuild{}.testfiles'.format(tpl))
+                if exists(fpath):
+                    with open(fpath, encoding='utf-8') as fp:
+                        # overwrite files_to_copy if .testfiles file found
+                        files_to_copy = [line.strip() for line in fp.readlines()
+                                         if not line.startswith('#')]
+                        break
+
+            files_to_remove = set()
+            for name in files_to_copy:
+                src_dpath = join(args['dir'], name)
+                dst_dpath = join(dest.format(**args), name.rsplit('/', 1)[-1])
+                if exists(src_dpath):
+                    if not exists(dst_dpath):
+                        if isdir(src_dpath):
+                            copytree(src_dpath, dst_dpath)
+                        else:
+                            copyfile(src_dpath, dst_dpath)
+                        files_to_remove.add(dst_dpath + '\n')
+                    if not args['args'] and 'PYBUILD_TEST_ARGS' not in context['ENV']\
+                       and (self.cfg.test_pytest or self.cfg.test_nose):
+                        args['args'] = name
+            if files_to_remove and filelist:
+                with open(filelist.format(**args), 'a') as fp:
+                    fp.writelines(files_to_remove)
+
+            return func(self, context, args, *oargs, **kwargs)
+        return __copy_test_files
+    return _copy_test_files
 
 
 class Base:
@@ -148,21 +192,8 @@ class Base:
     def build(self, context, args):
         raise NotImplementedError("build method not implemented in %s" % self.NAME)
 
+    @copy_test_files()
     def test(self, context, args):
-        dirs_to_remove = set()
-        for dname in ('test', 'tests'):
-            src_dpath = join(args['dir'], dname)
-            dst_dpath = join(args['build_dir'], dname)
-            if isdir(src_dpath):
-                if not exists(dst_dpath):
-                    copytree(src_dpath, dst_dpath)
-                    dirs_to_remove.add(dst_dpath + '\n')
-                if not args['args'] and 'PYBUILD_TEST_ARGS' not in context['ENV']\
-                   and (self.cfg.test_pytest or self.cfg.test_nose):
-                    args['args'] = dname
-        if dirs_to_remove:
-            with open(join(args['home_dir'], 'build_dirs_to_rm_before_install'), 'w') as fp:
-                fp.writelines(dirs_to_remove)
         if self.cfg.test_nose:
             return 'cd {build_dir}; {interpreter} -m nose {args}'
         elif self.cfg.test_pytest:
