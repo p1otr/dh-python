@@ -1,8 +1,31 @@
-dh-python (2.20171209) UNRELEASED; urgency=medium
+dh-python (3.20180310) UNRELEASED; urgency=medium
 
+  [ Ondřej Nový ]
   * When depends on python{3,}-pbr, set PBR_VERSION to upstream version
 
- -- Ondřej Nový <onovy@debian.org>  Sat, 09 Dec 2017 15:10:20 +0100
+  [ Dirk Thomas ]
+  * Use relative install-scripts path in pybuild's distutils build system
+
+  [ Piotr Ożarowski ]
+  * pybuild:
+    * copy files listed in debian/pybuild.testfiles to build directory before
+      test step and remove them before install step
+    * improve support for building multiple (Python) distributions at once
+      (PYBUILD_NAME=foo dh $@ -Spybuild --sourcedirectory=dir1;
+       PYBUILD_NAME=bar dh $@ -Spybuild --sourcedirectory=dir2)
+    * add --print option to print pybuild's internal parameters
+      (example: `pybuild --print build_dir --interpreter python3`)
+    * add --ext-sub-pattern and --ext-sub-repl options (can be used f.e. to
+      move some files from dist-packages to private directory)
+    * if --name contains underscore, replace it with dash in suggested package
+      names
+    * try a bit harder to guess (if not explicitly requested) interpreter
+      versions to build for, expecially if versioned interpreter was requested
+
+    WARNING: pybuild's internal dir names were changed, use --print if you
+    really have to use these paths in debian/rules
+
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Mar 2018 00:45:36 +0100
 
 dh-python (2.20170125) unstable; urgency=medium
 
