@@ -285,6 +285,8 @@ def main(cfg):
         func = plugin.install
     elif cfg.test_only:
         func = plugin.test
+    elif cfg.print_args:
+        func = plugin.print_args
 
     ### one function for each interpreter at a time mode ###
     if func:
@@ -394,6 +396,8 @@ def parse_args(argv):
                         help='invoke tests for auto-detected build system')
     action.add_argument('--list-systems', action='store_true',
                         help='list available build systems and exit')
+    action.add_argument('--print', action='append', dest='print_args',
+                        help="print pybuild's internal parameters")
 
     arguments = parser.add_argument_group('BUILD SYSTEM ARGS', '''
         Additional arguments passed to the build system.

@@ -71,6 +71,8 @@ ACTION
         invoke tests for auto-detected build system
     --list-systems
         list available build systems and exit
+    --print
+        print pybuild's internal parameters
 
 TESTS
 -----

@@ -184,6 +184,15 @@ class Base:
         log.info(command)
         return execute(command, context['dir'], env, log_file)
 
+    def print_args(self, context, args):
+        cfg = self.cfg
+        if len(cfg.print_args) == 1 and len(cfg.interpreter) == 1 and '{version}' not in cfg.interpreter[0]:
+            i = cfg.print_args[0]
+            print(args.get(i, context.get(i, '')))
+        else:
+            for i in cfg.print_args:
+                print('{} {}: {}'.format(args['interpreter'], i, args.get(i, context.get(i, ''))))
+
 
 def shell_command(func):
 
