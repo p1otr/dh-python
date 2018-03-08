@@ -164,11 +164,18 @@ def main(cfg):
 
     def get_args(context, step, version, interpreter):
         i = interpreter.format(version=version)
-        home_dir = '.pybuild/{}_{}'.format(interpreter.format(version='X.Y'), version)
+        ipreter = Interpreter(i)
+
+        home_dir = [ipreter.impl, str(version)]
+        if ipreter.debug:
+            home_dir.append('dbg')
+        if cfg.name:
+            home_dir.append(cfg.name)
+        home_dir = '.pybuild/{}'.format('_'.join(home_dir))
+
         build_dir = get_option('build_dir', interpreter, version,
                                default=join(home_dir, 'build'))
 
-        ipreter = Interpreter(i)
         destdir = context['destdir'].format(version=version, interpreter=i)
         if cfg.name:
             package = ipreter.suggest_pkg_name(cfg.name)
