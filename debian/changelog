@@ -20,7 +20,7 @@ dh-python (3.20180310) UNRELEASED; urgency=medium
     * if --name contains underscore, replace it with dash in suggested package
       names
     * try a bit harder to guess (if not explicitly requested) interpreter
-      versions to build for, expecially if versioned interpreter was requested
+      versions to build for, especially if versioned interpreter was requested
 
     WARNING: pybuild's internal dir names were changed, use --print if you
     really have to use these paths in debian/rules
