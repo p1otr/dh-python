@@ -101,7 +101,12 @@ def fix_shebang(fpath, replacement=None):
         log.debug('fix_shebang (%s): %s', fpath, err)
         return None
 
-    if not replacement and interpreter.path != '/usr/bin/':  # f.e. /usr/local/* or */bin/env
+    if not replacement and interpreter.version == '2':
+        # we'll drop /usr/bin/python symlink from python package at some point
+        replacement = '/usr/bin/python2'
+        if interpreter.debug:
+            replacement += '-dbg'
+    elif not replacement and interpreter.path != '/usr/bin/':  # f.e. /usr/local/* or */bin/env
         interpreter.path = '/usr/bin'
         replacement = repr(interpreter)
     if replacement:

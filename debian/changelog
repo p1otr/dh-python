@@ -7,6 +7,7 @@ dh-python (3.20180310) UNRELEASED; urgency=medium
   * Use relative install-scripts path in pybuild's distutils build system
 
   [ Piotr Ożarowski ]
+  * dh_python2: rewrite /usr/bin/python shebangs to /usr/bin/python2
   * pybuild:
     * copy files listed in debian/pybuild.testfiles to build directory before
       test step and remove them before install step
