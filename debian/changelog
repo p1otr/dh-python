@@ -1,3 +1,10 @@
+dh-python (3.20180324) UNRELEASED; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/copyright: Use https protocol in Format field
+
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Mar 2018 00:45:36 +0100
+
 dh-python (3.20180313) unstable; urgency=medium
 
   [ Ondřej Nový ]
