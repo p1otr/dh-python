@@ -2,6 +2,7 @@ dh-python (3.20180324) UNRELEASED; urgency=medium
 
   [ Ondřej Nový ]
   * d/copyright: Use https protocol in Format field
+  * d/changelog: Remove trailing whitespaces
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Mar 2018 00:45:36 +0100
 
@@ -124,7 +125,7 @@ dh-python (2.20151103) unstable; urgency=medium
       during test stage (closes: 803242)
   * Move libdpkg-perl from Depends to Suggests. python3 still depends on
     dh-python and we don't want to pull Perl when python3 is intalled
-    (libdpkg-perl is pulled in by debhelper anyway) 
+    (libdpkg-perl is pulled in by debhelper anyway)
   * Add README.rst file
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 03 Nov 2015 23:20:36 +0100
@@ -145,7 +146,7 @@ dh-python (2.20150728) unstable; urgency=medium
 
   * dh_python3: fix module renaming in Python >= 3.5 (SOABI now includes
     MULTIARCH triplet)
-  * pybuild.pm: 
+  * pybuild.pm:
     - fix parsing Build-Depends with comments (closes: 793609, thanks to James
       McCoy for the patch) - new build/runtime dependency: libdpkg-perl
     - enable --test-{nose,pytest,tox} if appropriate build dependency is set
@@ -153,7 +154,7 @@ dh-python (2.20150728) unstable; urgency=medium
     - allow localhost connections (via no_proxy=localhost, thanks to
       Dimitri John Ledkov)
     - do not forward empty http{,s}_proxy env. vars - some tools do not like it
-  * dh_python{2,3} and dh_pypy: skip packages with private modules that 
+  * dh_python{2,3} and dh_pypy: skip packages with private modules that
     do not have apropriate ${*:Depends} substvar in Depends
     (-p/-N in debian/rules to select the right package is no longer needed,
     now you can select the right tool by adding substvar)
@@ -232,7 +233,7 @@ dh-python (1.20141026-1) unstable; urgency=medium
   * Add argparse to Python 3.X's dist fallback (closes: 763200)
   * Ensure that Depends and the likes are written in a stable
     order (closes: 759231, thanks to Jérémy Bobbio for the patch)
-  * Remove dh_python2 diversions while upgrading from bpo package 
+  * Remove dh_python2 diversions while upgrading from bpo package
   * Standards-Version bumped to 3.9.6 (no changes needed)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 26 Oct 2014 23:32:57 +0100
