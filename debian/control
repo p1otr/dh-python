@@ -11,8 +11,8 @@ Build-Depends: debhelper (>= 9), python3-minimal, libpython3-stdlib, libdpkg-per
 # python3-all, python3-all-dbg, python3-all-dev,
 # python-all, python-all-dbg, python-all-dev
 Standards-Version: 3.9.8
-Vcs-Git: https://salsa.debian.org/python-team/defaults/dh-python
-Vcs-Browser: https://salsa.debian.org/python-team/defaults/dh-python.git
+Vcs-Git: https://salsa.debian.org/python-team/tools/dh-python
+Vcs-Browser: https://salsa.debian.org/python-team/tools/dh-python.git
 X-Python3-Version: >= 3.2
 
 Package: dh-python
