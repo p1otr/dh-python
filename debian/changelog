@@ -1,4 +1,4 @@
-dh-python (3.20180310) UNRELEASED; urgency=medium
+dh-python (3.20180313) unstable; urgency=medium
 
   [ Ondřej Nový ]
   * When depends on python{3,}-pbr, set PBR_VERSION to upstream version
@@ -26,7 +26,7 @@ dh-python (3.20180310) UNRELEASED; urgency=medium
     WARNING: pybuild's internal dir names were changed, use --print if you
     really have to use these paths in debian/rules
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 09 Mar 2018 00:45:36 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 13 Mar 2018 23:09:42 +0100
 
 dh-python (2.20170125) unstable; urgency=medium
 
