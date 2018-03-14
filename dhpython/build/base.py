@@ -39,7 +39,8 @@ log = logging.getLogger('dhpython')
 
 
 def copy_test_files(dest='{build_dir}',
-                    filelist='{home_dir}/testfiles_to_rm_before_install'):
+                    filelist='{home_dir}/testfiles_to_rm_before_install',
+                    add_to_args=('test', 'tests')):
 
     def _copy_test_files(func):
 
@@ -71,7 +72,8 @@ def copy_test_files(dest='{build_dir}',
                             copyfile(src_dpath, dst_dpath)
                         files_to_remove.add(dst_dpath + '\n')
                     if not args['args'] and 'PYBUILD_TEST_ARGS' not in context['ENV']\
-                       and (self.cfg.test_pytest or self.cfg.test_nose):
+                       and (self.cfg.test_pytest or self.cfg.test_nose) \
+                       and name in add_to_args:
                         args['args'] = name
             if files_to_remove and filelist:
                 with open(filelist.format(**args), 'a') as fp:
