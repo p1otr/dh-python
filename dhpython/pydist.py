@@ -77,7 +77,7 @@ def validate(fpath):
     """Check if pydist file looks good."""
     with open(fpath, encoding='utf-8') as fp:
         for line in fp:
-            line = line.strip('\r\n')
+            line = line.strip()
             if line.startswith('#') or not line:
                 continue
             if not PYDIST_RE.match(line):
@@ -112,7 +112,7 @@ def load(impl):
     for fpath in to_check:
         with open(fpath, encoding='utf-8') as fp:
             for line in fp:
-                line = line.strip('\r\n')
+                line = line.strip()
                 if line.startswith('#') or not line:
                     continue
                 dist = PYDIST_RE.search(line)
