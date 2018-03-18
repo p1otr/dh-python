@@ -28,13 +28,25 @@ sub new {
 	$this->enforce_in_source_building();
 
 	if (!$ENV{'PYBUILD_INTERPRETERS'}) {
-		$this->{pydef} = `pyversions -vd 2>/dev/null`;
+		if ($ENV{'DEBPYTHON_DEFAULT'}) {
+			$this->{pydef} = $ENV{'DEBPYTHON_DEFAULT'};}
+		else {
+			$this->{pydef} = `pyversions -vd 2>/dev/null`;}
 		$this->{pydef} =~ s/\s+$//;
-		$this->{pyvers} = `pyversions -vr 2>/dev/null`;
+		if ($ENV{'DEBPYTHON_SUPPORTED'}) {
+			$this->{pyvers} = $ENV{'DEBPYTHON_SUPPORTED'};}
+		else {
+			$this->{pyvers} = `pyversions -vr 2>/dev/null`;}
 		$this->{pyvers} =~ s/\s+$//;
-		$this->{py3def} = `py3versions -vd 2>/dev/null`;
+		if ($ENV{'DEBPYTHON3_DEFAULT'}) {
+			$this->{py3def} = $ENV{'DEBPYTHON3_DEFAULT'};}
+		else {
+			$this->{py3def} = `py3versions -vd 2>/dev/null`;}
 		$this->{py3def} =~ s/\s+$//;
-		$this->{py3vers} = `py3versions -vr 2>/dev/null`;
+		if ($ENV{'DEBPYTHON3_SUPPORTED'}) {
+			$this->{py3vers} = $ENV{'DEBPYTHON3_SUPPORTED'};}
+		else {
+			$this->{py3vers} = `py3versions -vr 2>/dev/null`;}
 		$this->{py3vers} =~ s/\s+$//;
 		$this->{pypydef} = `pypy -c 'from sys import pypy_version_info as i; print("%s.%s" % (i.major, i.minor))' 2>/dev/null`;
 		$this->{pypydef} =~ s/\s+$//;
