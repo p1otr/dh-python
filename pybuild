@@ -68,6 +68,13 @@ def main(cfg):
             '{env[DEB_TARGET_ARCH_OS]}-{env[DEB_TARGET_ARCH]}'.format(env=env))
     except KeyError:
         pass
+    # support cross compiling Python 3.X extensions, see #892931
+    if not env.get('_PYTHON_SYSCONFIGDATA_NAME') and env.get('DEB_HOST_ARCH') \
+       and env['DEB_BUILD_ARCH'] != env.get('DEB_HOST_ARCH'):
+        env['_PYTHON_SYSCONFIGDATA_NAME'] = (
+            '_sysconfigdata_m'
+            '_{env[DEB_HOST_ARCH_OS]}'
+            '_{env[DEB_HOST_MULTIARCH]}').format(env=env)
 
     if cfg.system:
         certainty = 99
