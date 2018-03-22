@@ -1,3 +1,10 @@
+dh-python (3.20180319) UNRELEASED; urgency=medium
+
+  * pybuild: fix cross compiling stuff to use dpkg-architecture if available
+    (and move dpkg-dev to Suggests)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 22 Mar 2018 22:00:19 +0100
+
 dh-python (3.20180318) unstable; urgency=medium
 
   [ Ondřej Nový ]

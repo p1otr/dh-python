@@ -18,8 +18,8 @@ X-Python3-Version: >= 3.2
 Package: dh-python
 Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends}, ${python3:Depends}, dpkg-dev
-Suggests: libdpkg-perl
+Depends: ${misc:Depends}, ${python3:Depends}
+Suggests: libdpkg-perl, dpkg-dev
 Breaks:
 # due to /usr/bin/dh_python3 and debhelper files
  python3 (<< 3.3.2-4~)

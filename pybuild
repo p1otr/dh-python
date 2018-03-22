@@ -69,12 +69,18 @@ def main(cfg):
     except KeyError:
         pass
     # support cross compiling Python 3.X extensions, see #892931
-    if not env.get('_PYTHON_SYSCONFIGDATA_NAME') and env.get('DEB_HOST_ARCH') \
-       and env['DEB_BUILD_ARCH'] != env.get('DEB_HOST_ARCH'):
-        env['_PYTHON_SYSCONFIGDATA_NAME'] = (
-            '_sysconfigdata_m'
-            '_{env[DEB_HOST_ARCH_OS]}'
-            '_{env[DEB_HOST_MULTIARCH]}').format(env=env)
+    if not env.get('_PYTHON_SYSCONFIGDATA_NAME') and exists('/usr/bin/dpkg-architecture'):
+        res = execute('/usr/bin/dpkg-architecture')
+        arch_data = {}
+        for line in res['stdout'].splitlines():
+            key, value = line.strip().split('=', 1)
+            arch_data[key] = value
+
+        if arch_data['DEB_BUILD_ARCH'] != arch_data['DEB_HOST_ARCH']:
+            env['_PYTHON_SYSCONFIGDATA_NAME'] = (
+                '_sysconfigdata_m'
+                '_{DEB_HOST_ARCH_OS}'
+                '_{DEB_HOST_MULTIARCH}').format(**arch_data)
 
     if cfg.system:
         certainty = 99
