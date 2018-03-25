@@ -131,6 +131,7 @@ JACK_Client python-jack-client
 JCC jcc
 JPype1 python-jpype
 Jinja2 python-jinja2
+JsonTest python-jsontest
 Kajiki python-kajiki
 Kivy python-kivy
 LEPL python-lepl
@@ -766,6 +767,7 @@ cutadapt python-cutadapt
 cvs2svn cvs2svn
 cvxopt python-cvxopt
 cwiid python-cwiid
+cwltool cwltool
 cwm python-swap
 cycler python-cycler
 cyclone python-cyclone
@@ -795,7 +797,6 @@ demjson python-demjson
 deprecation python-deprecation
 derpconf python-derpconf
 descartes python-descartes
-designate_dashboard python-designate-dashboard
 dexml python-dexml
 dfdatetime python-dfdatetime
 dfvfs python-dfvfs
@@ -893,6 +894,7 @@ django_prometheus python-django-prometheus
 django_pyscss python-django-pyscss
 django_python3_ldap python-django-python3-ldap
 django_q python-django-q
+django_ranged_response python-django-ranged-response
 django_ratelimit python-django-ratelimit
 django_recurrence python-django-recurrence
 django_redis python-django-redis
@@ -931,6 +933,7 @@ djangorestframework_gis python-djangorestframework-gis
 djextdirect python-django-extdirect
 djoser python-djoser
 dkimpy python-dkim
+dkimpy_milter dkimpy-milter
 dnslib python-dnslib
 dnspython python-dnspython
 dnsq python-dnsq
@@ -1531,7 +1534,6 @@ multipletau python-multipletau
 munch python-munch
 munkres python-munkres
 murano_agent murano-agent
-murano_dashboard python-murano-dashboard
 murano_pkg_check python-murano-pkg-check
 musicbrainzngs python-musicbrainzngs
 mutagen python-mutagen
@@ -1569,7 +1571,6 @@ netifaces python-netifaces
 netmiko python-netmiko
 netsnmp_python python-netsnmp
 netsyslog python-netsyslog
-networking_arista python-networking-arista
 networking_l2gw python-networking-l2gw
 networking_mlnx python-networking-mlnx
 networking_ovs_dpdk python-networking-ovs-dpdk
@@ -1802,7 +1803,6 @@ pp python-pp
 pprofile python-pprofile
 preggy python-preggy
 prelude python-prelude
-prelude_correlator prelude-correlator
 prelude_notify prelude-notify
 preludedb python-preludedb
 preprocess preprocess
@@ -1810,7 +1810,6 @@ presage_dbus_service presage-dbus
 presentty presentty
 pretend python-pretend
 prettytable python-prettytable
-prewikka prewikka
 prioritized_methods python-peak.rules
 proboscis python-proboscis
 profitbricks python-profitbricks
@@ -1873,7 +1872,6 @@ pyaff4 python-aff4
 pyalsa python-pyalsa
 pyalsaaudio python-alsaaudio
 pyaml python-pretty-yaml
-pyapi_gitlab python-gitlab
 pyasn1 python-pyasn1
 pyasn1_modules python-pyasn1-modules
 pyassimp python-pyassimp
@@ -2163,6 +2161,7 @@ python_freecontact python-freecontact
 python_gammu python-gammu
 python_geohash python-geohash
 python_gflags python-gflags
+python_gitlab python-gitlab
 python_glanceclient python-glanceclient
 python_glareclient python-glareclient
 python_gnupg python-gnupg
@@ -2400,7 +2399,6 @@ sabyenc python-sabyenc
 sage sagemath-common
 sagenb python-sagenb
 sagenb_export python-sagenb-export
-sahara_dashboard python-sahara-dashboard
 sanlock_python python-sanlock
 sardana python-sardana
 sasmodels python-sasmodels
@@ -2587,7 +2585,6 @@ tagpy python-tagpy
 tahoe_lafs tahoe-lafs
 tails_installer tails-installer
 tap.py python-tap
-tap_as_a_service python-neutron-taas
 taskflow python-taskflow
 taskw python-taskw
 taurus python-taurus
@@ -2664,8 +2661,6 @@ tripleo_image_elements python-tripleo-image-elements
 tritium tritium
 trollius python-trollius
 trollius_redis python-trollius-redis
-trove python-trove
-trove_dashboard python-trove-dashboard
 tryton tryton-client
 ttb ttb
 ttystatus python-ttystatus
@@ -2831,7 +2826,6 @@ yubioath_desktop yubioath-desktop
 yum_metadata_parser python-sqlitecachec
 zabbix_cli zabbix-cli
 zake python-zake
-zaqar_ui python-zaqar-ui
 zc.buildout python-zc.buildout
 zc.customdoctests python-zc.customdoctests
 zc.lockfile python-zc.lockfile
