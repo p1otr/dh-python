@@ -19,6 +19,7 @@ Package: dh-python
 Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends}, ${python3:Depends}
+Recommends: python3-distuils
 Suggests: libdpkg-perl, dpkg-dev
 Breaks:
 # due to /usr/bin/dh_python3 and debhelper files
