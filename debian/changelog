@@ -1,3 +1,10 @@
+dh-python (3.20180519) UNRELEASED; urgency=medium
+
+  * Stop setting minimum python and python3 versions since the minimum version
+    is in all supported releases 
+
+ -- Scott Kitterman <scott@kitterman.com>  Sun, 20 May 2018 14:18:22 -0400
+
 dh-python (3.20180326) unstable; urgency=medium
 
   * pybuild: fix cross compiling stuff to use dpkg-architecture if available
