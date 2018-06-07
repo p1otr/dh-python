@@ -60,6 +60,8 @@ def main(cfg):
         env['https_proxy'] = 'https://127.0.0.1:9/'
     elif not env['https_proxy']:
         del env['https_proxy']  # some tools don't like empty var.
+    if 'DEB_PYTHON_INSTALL_LAYOUT' not in env:
+        env['DEB_PYTHON_INSTALL_LAYOUT'] = 'deb'
     try:
         # Set _PYTHON_HOST_PLATFORM to ensure debugging symbols on, f.e. i386
         # emded a constant name regardless of the 32/64-bit kernel.

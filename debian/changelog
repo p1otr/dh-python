@@ -1,9 +1,13 @@
-dh-python (3.20180519) UNRELEASED; urgency=medium
+dh-python (3.20180607) experimental; urgency=medium
 
+  [ Scott Kitterman ]
   * Stop setting minimum python and python3 versions since the minimum version
     is in all supported releases 
 
- -- Scott Kitterman <scott@kitterman.com>  Sun, 20 May 2018 14:18:22 -0400
+  [ Piotr Ożarowski ]
+  * pybuild: set DEB_PYTHON_INSTALL_LAYOUT to "deb" if it's not set already
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 07 Jun 2018 23:56:25 +0200
 
 dh-python (3.20180326) unstable; urgency=medium
 
