@@ -105,13 +105,14 @@ sub pybuild_commands {
 		push @options, '--dir', $dir;
 	}
 
+	my @deps;
 	if ($ENV{'PYBUILD_INTERPRETERS'}) {
 		push @result, ['pybuild', "--$step", @options];
 	}
 	else {
 		# get interpreter packages from Build-Depends{,-Indep}:
 		# NOTE: possible problems with alternative/versioned dependencies
-		my @deps = $this->python_build_dependencies();
+		@deps = $this->python_build_dependencies();
 
 		# When depends on python{3,}-setuptools-scm, set
 		# SETUPTOOLS_SCM_PRETEND_VERSION to upstream version
@@ -222,7 +223,10 @@ sub pybuild_commands {
 		}
 	}
 	if (!@result) {
-		die('E: Please add apropriate interpreter package to Build-Depends, see pybuild(1) for details')
+		use Data::Dumper;
+		die('E: Please add apropriate interpreter package to Build-Depends, see pybuild(1) for details.' .
+		    'this: ' . Dumper($this) .
+		    'deps: ' . Dumper(\@deps));
 	}
 	return @result;
 }
