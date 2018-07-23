@@ -209,7 +209,7 @@ OPTIONS
 --requires=FILENAME	translate requirements from given file(s) into Debian
   dependencies and add them to ${python:Depends}
 
---namespace	use this option (multiple time if necessary) if
+--namespace=NAME	use this option (multiple time if necessary) if
   namespace_packages.txt is not complete
 
 --ignore-namespace	ignore Egg's namespace declaration and
