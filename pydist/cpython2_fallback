@@ -41,7 +41,7 @@ Catwalk python-catwalk
 CedarBackup2 cedar-backup2
 Cerealizer python-cerealizer
 Chameleon python-chameleon
-Cheetah python-cheetah
+Cheetah3 python-cheetah
 CherryPy python-cherrypy
 CherryTree cherrytree
 ClusterShell python-clustershell
@@ -88,7 +88,6 @@ Flask_FlatPages python-flask-flatpages
 Flask_Gravatar python-flask-gravatar
 Flask_HTMLmin python-flask-htmlmin
 Flask_HTTPAuth python-flask-httpauth
-Flask_LDAPConn python-flask-ldapconn
 Flask_Limiter python-flask-limiter
 Flask_Migrate python-flask-migrate
 Flask_OldSessions python-flask-oldsessions
@@ -180,6 +179,7 @@ MyghtyUtils python-myghtyutils
 NavAdd trac-navadd
 Nevow python-nevow
 Nik4 nik4
+Nuitka nuitka
 OWSLib python-owslib
 OdooRPC python-odoorpc
 OdtExportPlugin trac-odtexport
@@ -244,6 +244,7 @@ PyRRD python-pyrrd
 PyRSS2Gen python-pyrss2gen
 PySAL python-pysal
 PySDL2 python-sdl2
+PySPH python-pysph
 PySide python-pyside
 PySocks python-socks
 PyStaticConfiguration python-staticconf
@@ -255,7 +256,7 @@ PyVISA_py python-pyvisa-py
 PyVTK python-pyvtk
 PyVirtualDisplay python-pyvirtualdisplay
 PyWavelets python-pywt
-PyWebDAV python-webdav
+PyWebDAV3 python-webdav
 PyX python-pyx
 PyXB python-pyxb
 PyYAML python-yaml
@@ -298,7 +299,6 @@ SimPy python-simpy
 SimpleTAL python-simpletal
 SocksipyChain python-socksipychain
 SoftLayer python-softlayer
-Sonata sonata
 SoundFile python-soundfile
 Sphinx python-sphinx
 Sponge python-sponge
@@ -358,39 +358,6 @@ Werkzeug python-werkzeug
 Whoosh python-whoosh
 WikiTableMacro trac-wikitablemacro
 Willow python-willow
-XStatic python-xstatic
-XStatic_Angular python-xstatic-angular
-XStatic_Angular_Bootstrap python-xstatic-angular-bootstrap
-XStatic_Angular_Cookies python-xstatic-angular-cookies
-XStatic_Angular_FileUpload python-xstatic-angular-fileupload
-XStatic_Angular_Gettext python-xstatic-angular-gettext
-XStatic_Angular_Mock python-xstatic-angular-mock
-XStatic_Angular_Schema_Form python-xstatic-angular-schema-form
-XStatic_Angular_lrdragndrop python-xstatic-angular-lrdragndrop
-XStatic_Bootstrap_Datepicker python-xstatic-bootstrap-datepicker
-XStatic_Bootstrap_SCSS python-xstatic-bootstrap-scss
-XStatic_D3 python-xstatic-d3
-XStatic_Font_Awesome python-xstatic-font-awesome
-XStatic_Hogan python-xstatic-hogan
-XStatic_JQuery.Bootstrap.Wizard python-xstatic-jquery.bootstrap.wizard
-XStatic_JQuery.TableSorter python-xstatic-jquery.tablesorter
-XStatic_JQuery.quicksearch python-xstatic-jquery.quicksearch
-XStatic_JQuery_Migrate python-xstatic-jquery-migrate
-XStatic_JSEncrypt python-xstatic-jsencrypt
-XStatic_Jasmine python-xstatic-jasmine
-XStatic_Magic_Search python-xstatic-magic-search
-XStatic_QUnit python-xstatic-qunit
-XStatic_Rickshaw python-xstatic-rickshaw
-XStatic_Spin python-xstatic-spin
-XStatic_bootswatch python-xstatic-bootswatch
-XStatic_jQuery python-xstatic-jquery
-XStatic_jquery_ui python-xstatic-jquery-ui
-XStatic_mdi python-xstatic-mdi
-XStatic_objectpath python-xstatic-objectpath
-XStatic_roboto_fontface python-xstatic-roboto-fontface
-XStatic_smart_table python-xstatic-smart-table
-XStatic_term.js python-xstatic-term.js
-XStatic_tv4 python-xstatic-tv4
 XlsxWriter python-xlsxwriter
 Yapsy python-yapsy
 ZConfig python-zconfig
@@ -399,7 +366,6 @@ ZSI python-zsi
 ZooKeeper python-zookeeper
 _tifffile python-tifffile
 aafigure python-aafigure
-abstract_rendering python-abstract-rendering
 acme python-acme
 acora python-acora
 actdiag python-actdiag
@@ -434,7 +400,6 @@ app_catalog_ui python-app-catalog-ui
 apparmor python-apparmor
 appdirs python-appdirs
 applicationinsights python-applicationinsights
-apprecommender apprecommender
 apptools python-apptools
 apsw python-apsw
 apt_xapian_index apt-xapian-index
@@ -474,6 +439,7 @@ astroML_addons python-astroml-addons
 astroid python-astroid
 astroplan python-astroplan
 astropy python-astropy
+astropy_healpix python-astropy-healpix
 astropy_helpers python-astropy-helpers
 astroquery python-astroquery
 astroscrappy python-astroscrappy
@@ -619,13 +585,12 @@ bsddb3 python-bsddb3
 btchip_python python-btchip
 btest btest
 bugs_everywhere bugs-everywhere
-buildbot buildbot
-buildbot_slave buildbot-slave
 bumps python-bumps
 bunch python-bunch
 burn burn
 burrito python-burrito
 buzhug python-buzhug
+bx_python python-bx
 bz2file python-bz2file
 bzr python-bzrlib
 bzr_builddeb bzr-builddeb
@@ -672,6 +637,7 @@ certifi python-certifi
 cf_python python-cf
 cffi python-cffi
 cfflib python-cfflib
+cftime python-cftime
 cgcloud_core python-cgcloud-core
 cgcloud_lib python-cgcloud-lib
 chaco python-chaco
@@ -711,7 +677,6 @@ cobra python-cobra
 codegen python-codegen
 codicefiscale python-codicefiscale
 cogent python-cogent
-colander python-colander
 colorama python-colorama
 coloredlogs python-coloredlogs
 colorlog python-colorlog
@@ -779,6 +744,7 @@ daemonize python-daemonize
 dap python-dap
 darts.util.lru python-darts.lib.utils.lru
 datalad python-datalad
+datrie python-datrie
 dbf python-dbf
 dblatex dblatex
 dcmstack python-dcmstack
@@ -838,7 +804,6 @@ django_bitfield python-django-bitfield
 django_bootstrap_form python-bootstrapform
 django_braces python-django-braces
 django_cas_client python-django-casclient
-django_celery python-django-celery
 django_celery_transactions python-django-celery-transactions
 django_classy_tags python-django-classy-tags
 django_compat python-django-compat
@@ -989,6 +954,7 @@ enum34 python-enum34
 envisage python-envisage
 envparse python-envparse
 enzyme python-enzyme
+epc python-epc
 ephem python-ephem
 epigrass epigrass
 epoptes epoptes
@@ -1058,6 +1024,7 @@ flower python-flower
 flufl.bounce python-flufl.bounce
 flufl.enum python-flufl.enum
 flufl.password python-flufl.password
+fluids python-fluids
 flup python-flup
 fmcs python-fmcs
 fonttools python-fonttools
@@ -1112,7 +1079,6 @@ gcovr gcovr
 gdata python-gdata
 gdmodule python-gd
 gear python-gear
-genbackupdata genbackupdata
 geneagrapher geneagrapher
 genty python-genty
 geographiclib python-geographiclib
@@ -1162,7 +1128,6 @@ gphoto2_cffi python-gphoto2cffi
 gps python-gps
 gpxpy python-gpxpy
 gpyfft python-gpyfft
-gquilt gquilt
 grabserial grabserial
 grapefruit python-grapefruit
 graphite_web graphite-web
@@ -1195,7 +1160,6 @@ hachoir_urwid python-hachoir-urwid
 hachoir_wx python-hachoir-wx
 hacking python-hacking
 halberd python-halberd
-happybase python-happybase
 haproxy_log_analysis python-haproxy-log-analysis
 hashids python-hashids
 hdf5storage python-hdf5storage
@@ -1211,7 +1175,6 @@ hiredis python-hiredis
 hiro python-hiro
 hkdf python-hkdf
 hl7 python-hl7
-horizon python-django-horizon
 hp3parclient python-hp3parclient
 hpack python-hpack
 hplefthandclient python-hplefthandclient
@@ -1274,7 +1237,6 @@ ipaserver python-ipaserver
 ipatests python-ipatests
 ipcalc python-ipcalc
 ipdb python-ipdb
-ipp python-libtrace
 ipykernel python-ipykernel
 ipython python-ipython
 ipython_genutils python-ipython-genutils
@@ -1301,7 +1263,6 @@ jdcal python-jdcal
 jedi python-jedi
 jeepyb jeepyb
 jellyfish python-jellyfish
-jenkins_job_builder python-jenkins-job-builder
 jenkinsapi python-jenkinsapi
 jinja2_time python-jinja2-time
 jira python-jira
@@ -1316,6 +1277,7 @@ json_schema_validator python-json-schema-validator
 json_tricks python-json-tricks
 jsondiff python-jsondiff
 jsonext python-jsonext
+jsonhyperschema_codec python-jsonhyperschema-codec
 jsonpatch python-jsonpatch
 jsonpath_rw python-jsonpath-rw
 jsonpath_rw_ext python-jsonpath-rw-ext
@@ -1357,6 +1319,7 @@ kiki kiki
 kineticsTools python-kineticstools
 kitchen python-kitchen
 kiwi python-kiwi
+kiwisolver python-kiwisolver
 kjbuckets python-kjbuckets
 klaus python-klaus
 klein python-klein
@@ -1366,18 +1329,16 @@ kombu python-kombu
 kopano python-kopano
 kopano_backup kopano-backup
 kopano_presence kopano-presence
+kopano_spamd kopano-spamd
 kubernetes python-kubernetes
 l20n python-l20n
 laditools python-laditools
 lamson python-lamson
 landslide python-landslide
 langdetect python-langdetect
-larch python-larch
 latexcodec python-latexcodec
 launchpadlib python-launchpadlib
 lava_coordinator lava-coordinator
-lava_dispatcher lava-dispatcher
-lava_server lava-server
 lava_tool lava-tool
 lavapdu lavapdu-daemon
 lazr.config python-lazr.config
@@ -1388,7 +1349,6 @@ lazr.uri python-lazr.uri
 lazy_object_proxy python-lazy-object-proxy
 lazyarray python-lazyarray
 ldap3 python-ldap3
-ldappool python-ldappool
 ldif3 python-ldif3
 ledger_autosync ledger-autosync
 legit legit
@@ -1447,7 +1407,6 @@ mailman_api mailman-api
 mailmanclient python-mailmanclient
 mailnag mailnag
 mandrill python-mandrill
-manila_ui python-manila-ui
 manuel python-manuel
 mapbox_vector_tile python-mapbox-vector-tile
 mapdamage mapdamage
@@ -1491,12 +1450,10 @@ mipp python-mipp
 misaka python-misaka
 mistral_lib python-mistral-lib
 mistune python-mistune
-mlbviewer mlbviewer
 mne python-mne
 mnemonic python-mnemonic
 mock python-mock
 mocker python-mocker
-mockito python-mockito
 mockldap python-mockldap
 mockupdb python-mockupdb
 mod_python libapache2-mod-python
@@ -1514,7 +1471,6 @@ moosic moosic
 more_itertools python-more-itertools
 morris python-morris
 motor python-motor
-mousetrap gnome-mousetrap
 mox python-mox
 mox3 python-mox3
 mozilla_devscripts mozilla-devscripts
@@ -1551,9 +1507,9 @@ napalm_fortios python-napalm-fortios
 napalm_ios python-napalm-ios
 napalm_iosxr python-napalm-iosxr
 napalm_junos python-napalm-junos
-natkit python-libtrace
 natsort python-natsort
 naturalsort python-naturalsort
+nb2plots python-nb2plots
 nbconvert python-nbconvert
 nbformat python-nbformat
 nbsphinx python-nbsphinx
@@ -1571,13 +1527,10 @@ netifaces python-netifaces
 netmiko python-netmiko
 netsnmp_python python-netsnmp
 netsyslog python-netsyslog
-networking_l2gw python-networking-l2gw
-networking_mlnx python-networking-mlnx
 networking_ovs_dpdk python-networking-ovs-dpdk
 networkx python-networkx
 neuroshare python-neuroshare
 neutron python-neutron
-neutron_lbaas python-neutron-lbaas
 neutron_lib python-neutron-lib
 nglister nglister
 ngs python-ngs
@@ -1630,7 +1583,6 @@ ofxparse python-ofxparse
 olefile python-olefile
 ooolib_python python-ooolib
 opcua python-opcua
-openbabel python-openbabel
 openopt python-openopt
 openpyxl python-openpyxl
 opensesame opensesame
@@ -1769,17 +1721,16 @@ pika_pool python-pika-pool
 pilkit python-pilkit
 pip python-pip
 pipedviewer python-ferret
-pius pius
 pjsua python-pjproject
 pkgconfig python-pkgconfig
 pkginfo python-pkginfo
 pkpgcounter pkpgcounter
 plasTeX python-plastex
 plaso plaso
-pldns python-libtrace
+plaster python-plaster
+plaster_pastedeploy python-plaster-pastedeploy
 plip plip
 plotly python-plotly
-plt python-libtrace
 pluggy python-pluggy
 pluginbase python-pluginbase
 plumbum python-plumbum
@@ -1815,7 +1766,6 @@ proboscis python-proboscis
 profitbricks python-profitbricks
 progress python-progress
 progressbar python-progressbar
-proliantutils python-proliantutils
 prometheus_client python-prometheus-client
 prompt_toolkit python-prompt-toolkit
 protobix python-protobix
@@ -1849,6 +1799,7 @@ pyDoubles python-pydoubles
 pyEOS python-pyeos
 pyExcelerator python-excelerator
 pyFAI python-pyfai
+pyFFTW python-pyfftw
 pyFlow python-pyflow
 pyIOSXR python-pyiosxr
 pyLibravatar python-libravatar
@@ -1881,7 +1832,6 @@ pybloomfiltermmap python-pybloomfiltermmap
 pyblosxom pyblosxom
 pybridge pybridge
 pybtex python-pybtex
-pybugz bugz
 pycadf python-pycadf
 pycairo python-cairo
 pycalendar python-pycalendar
@@ -1894,6 +1844,7 @@ pychm python-chm
 pyclamav python-pyclamav
 pyclips python-clips
 pycoast python-pycoast
+pycodcif python-pycodcif
 pycodestyle python-pycodestyle
 pycollada python-collada
 pycorrfit pycorrfit
@@ -1908,7 +1859,7 @@ pydbus python-pydbus
 pydds python-pydds
 pydenticon python-pydenticon
 pydhcplib python-pydhcplib
-pydicom python-dicom
+pydicom python-pydicom
 pydl python-pydl
 pydns python-dns
 pydoctor python-pydoctor
@@ -1921,7 +1872,6 @@ pyeapi python-pyeapi
 pyeclib python-pyeclib
 pyee python-pyee
 pyelftools python-pyelftools
-pyelliptic python-pyelliptic
 pyenchant python-enchant
 pyentropy python-pyentropy
 pyepl python-pyepl
@@ -1982,7 +1932,6 @@ pylibssh2 python-libssh2
 pylint pylint
 pylint_celery python-pylint-celery
 pylint_common python-pylint-common
-pylint_django python-pylint-django
 pylint_flask python-pylint-flask
 pylint_plugin_utils python-pylint-plugin-utils
 pylirc python-pylirc
@@ -2007,7 +1956,6 @@ pymvpa2 python-mvpa2
 pymzml python-pymzml
 pynag python-pynag
 pynast pynast
-pyneighborhood pyneighborhood
 pyngus python-pyngus
 pynids python-nids
 pynifti python-nifti
@@ -2042,6 +1990,7 @@ pyrad python-pyrad
 pyraf python-pyraf
 pyramid python-pyramid
 pyramid_beaker python-pyramid-beaker
+pyramid_chameleon python-pyramid-chameleon
 pyramid_jinja2 python-pyramid-jinja2
 pyramid_multiauth python-pyramid-multiauth
 pyramid_tm python-pyramid-tm
@@ -2091,9 +2040,9 @@ pyte python-pyte
 pytest python-pytest
 pytest_bdd python-pytest-bdd
 pytest_benchmark python-pytest-benchmark
-pytest_catchlog python-pytest-catchlog
 pytest_cookies python-pytest-cookies
 pytest_cov python-pytest-cov
+pytest_cython python-pytest-cython
 pytest_django python-pytest-django
 pytest_expect python-pytest-expect
 pytest_forked python-pytest-forked
@@ -2176,7 +2125,6 @@ python_instagram python-instagram
 python_iptables python-iptables
 python_ironic_inspector_client python-ironic-inspector-client
 python_ironicclient python-ironicclient
-python_jenkins python-jenkins
 python_k8sclient python-k8sclient
 python_karborclient python-karborclient
 python_keyczar python-keyczar
@@ -2184,6 +2132,7 @@ python_keystoneclient python-keystoneclient
 python_ldap python-ldap
 python_libdiscid python-libdiscid
 python_libguess python-libguess
+python_libnmap python-libnmap
 python_libpisock python-pisock
 python_librtmp python-librtmp
 python_libtorrent python-libtorrent
@@ -2246,7 +2195,6 @@ python_twitter python-twitter
 python_u2flib_server python-u2flib-server
 python_unshare python-unshare
 python_vagrant python-vagrant
-python_watcher python-watcher
 python_watcherclient python-watcherclient
 python_xapp python-xapp
 python_xlib python-xlib
@@ -2273,7 +2221,6 @@ pyviennacl python-pyviennacl
 pyvmomi python-pyvmomi
 pyvo python-pyvo
 pyvorbis python-pyvorbis
-pywapi python-pywapi
 pywbem python-pywbem
 pywps python-pywps
 pyxattr python-pyxattr
@@ -2300,7 +2247,6 @@ quantities python-quantities
 quark_sphinx_theme python-quark-sphinx-theme
 queuelib python-queuelib
 quisk quisk
-quodlibet exfalso
 rabbitvcs rabbitvcs-core
 radio_beam python-radio-beam
 radiotray radiotray
@@ -2365,7 +2311,6 @@ rhn python-rhn
 ricky python-ricky
 ripe.atlas.cousteau python-ripe-atlas-cousteau
 ripe.atlas.sagan python-ripe-atlas-sagan
-ripe.atlas.tools ripe-atlas-tools
 rjsmin python-rjsmin
 rlp python-rlp
 robot_detection python-robot-detection
@@ -2381,7 +2326,6 @@ rospkg python-rospkg
 rows python-rows
 rply python-rply
 rpm python-rpm
-rpy python-rpy
 rpy2 python-rpy2
 rrdtool python-rrdtool
 rsa python-rsa
@@ -2442,6 +2386,7 @@ setoptconf python-setoptconf
 setproctitle python-setproctitle
 setuptools_git python-setuptools-git
 setuptools_scm python-setuptools-scm
+sexpdata python-sexpdata
 sfepy python-sfepy
 sftp_cloudfs sftpcloudfs
 sgp4 python-sgp4
@@ -2516,6 +2461,7 @@ sphinxcontrib_seqdiag python-sphinxcontrib.seqdiag
 sphinxcontrib_spelling python-sphinxcontrib.spelling
 sphinxcontrib_websupport python-sphinxcontrib.websupport
 sphinxcontrib_youtube python-sphinxcontrib.youtube
+sphinxtesters python-sphinxtesters
 spoon python-spoon
 sprox python-sprox
 sptest python-sptest
@@ -2556,7 +2502,6 @@ subprocess32 python-subprocess32
 subunit2sql python-subunit2sql
 subvertpy python-subvertpy
 suds_jurko python-suds
-summain summain
 sunlight python-sunlight
 sunpy python-sunpy
 supervisor supervisor
@@ -2610,6 +2555,7 @@ testrepository python-testrepository
 testresources python-testresources
 testscenarios python-testscenarios
 testtools python-testtools
+texext python-texext
 textile python-textile
 texttable python-texttable
 tftpy python-tftpy
@@ -2641,7 +2587,6 @@ totalopenstation totalopenstation
 tqdm python-tqdm
 traceback2 python-traceback2
 tracer python-tracer
-tracing python-tracing
 traitlets python-traitlets
 traits python-traits
 traitsui python-traitsui
@@ -2656,13 +2601,11 @@ treetime python-treetime
 treq python-treq
 trezor python-trezor
 trimage trimage
-tripleo_heat_templates python-tripleo-heat-templates
 tripleo_image_elements python-tripleo-image-elements
 tritium tritium
 trollius python-trollius
 trollius_redis python-trollius-redis
 tryton tryton-client
-ttb ttb
 ttystatus python-ttystatus
 tunigo python-tunigo
 turnin_ng turnin-ng
@@ -2728,13 +2671,12 @@ vinetto vinetto
 virtaal virtaal
 virtualbricks virtualbricks
 virtualenv python-virtualenv
-virtualenv_clone virtualenv-clone
+virtualenv_clone python-virtualenv-clone
 virtualenvwrapper virtualenvwrapper
 visionegg python-visionegg
 vispy python-vispy
 vizigrep vizigrep
 vmdebootstrap vmdebootstrap
-vmware_nsx python-vmware-nsx
 vobject python-vobject
 volatility volatility
 voluptuous python-voluptuous
@@ -2772,7 +2714,6 @@ whois python-whois
 whyteboard whyteboard
 wicd python-wicd
 widgetsnbextension python-widgetsnbextension
-wikipediafs wikipediafs
 winpdb winpdb
 wit python-wit
 wokkel python-wokkel
@@ -2791,6 +2732,7 @@ wxmpl python-wxmpl
 x2go python-x2go
 xapian_haystack python-xapian-haystack
 xappy python-xappy
+xarray python-xarray
 xattr python-xattr
 xcffib python-xcffib
 xdo python-xdo
@@ -2806,7 +2748,6 @@ xml_marshaller python-xmlmarshaller
 xmlbuilder python-xmlbuilder
 xmldiff xmldiff
 xmltodict python-xmltodict
-xmms2tray xmms2tray
 xopen python-xopen
 xpra xpra
 xtermcolor python-xtermcolor
@@ -2840,6 +2781,7 @@ zhpy python-zhpy
 zim zim
 zinnia_python python-zinnia
 zipstream python-zipstream
+zodbpickle python-zodbpickle
 zope.authentication python-zope.authentication
 zope.browser python-zope.browser
 zope.cachedescriptors python-zope.cachedescriptors
@@ -2866,6 +2808,6 @@ zope.testbrowser python-zope.testbrowser
 zope.testing python-zope.testing
 zope.testrunner python-zope.testrunner
 zope.traversing python-zope.traversing
-zxcvbn_python python-zxcvbn
+zxcvbn python-zxcvbn
 zyne zyne
 zzzeeksphinx python-zzzeeksphinx

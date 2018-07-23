@@ -3,6 +3,7 @@ Unidecode pypy-unidecode
 Wand pypy-wand
 appdirs pypy-appdirs
 asn1crypto pypy-asn1crypto
+atomicwrites pypy-atomicwrites
 attrs pypy-attr
 bdist_nsi pypy-bdist-nsi
 beautifulsoup4 pypy-bs4
@@ -19,6 +20,7 @@ ipaddress pypy-ipaddress
 iso8601 pypy-iso8601
 json_tricks pypy-json-tricks
 libusb1 pypy-libusb1
+more_itertools pypy-more-itertools
 mutagen pypy-mutagen
 packaging pypy-packaging
 pluggy pypy-pluggy
@@ -38,3 +40,4 @@ setuptools_scm pypy-setuptools-scm
 simplejson pypy-simplejson
 six pypy-six
 sqlparse pypy-sqlparse
+zodbpickle pypy-zodbpickle
