@@ -1,5 +1,7 @@
 dh-python (3.20180712) UNRELEASED; urgency=medium
 
+  * dh-python depends on python3-distutils (as most package that use dh-python
+    would have to depend on it anyway, closes: 894203)
   * dh_python{2,3}:
     - fix \.so.* symlink renaming for non-default Python versions
       (closes: 739500, 903698)

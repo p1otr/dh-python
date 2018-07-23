@@ -17,8 +17,9 @@ Vcs-Browser: https://salsa.debian.org/python-team/tools/dh-python
 Package: dh-python
 Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends}, ${python3:Depends}
-Recommends: python3-distutils
+Depends: ${misc:Depends}, ${python3:Depends},
+# depend on distutils to avoid adding it to Build-Depends in other packages
+ python3-distutils | python3 (<< 3.6.5~rc1-1)
 Suggests: libdpkg-perl, dpkg-dev
 Breaks:
 # due to /usr/bin/dh_python3 and debhelper files
