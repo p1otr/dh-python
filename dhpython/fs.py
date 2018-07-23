@@ -67,6 +67,8 @@ def share_files(srcdir, dstdir, interpreter, options):
     """Try to move as many files from srcdir to dstdir as possible."""
     for i in os.listdir(srcdir):
         fpath1 = join(srcdir, i)
+        if not exists(fpath1):  # removed in rename_ext
+            continue
         if not options.no_ext_rename and splitext(i)[-1] == '.so':
             # try to rename extension here as well (in :meth:`scan` info about
             # Python version is gone)
