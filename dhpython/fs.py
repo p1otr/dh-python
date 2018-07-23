@@ -18,9 +18,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import difflib
 import logging
 import os
 import re
+import sys
 from filecmp import cmp as cmpfile
 from os.path import exists, isdir, islink, join, realpath, split, splitext
 from shutil import rmtree
@@ -91,6 +93,16 @@ def share_files(srcdir, dstdir, interpreter, options):
             share_files(fpath1, fpath2, interpreter, options)
         elif cmpfile(fpath1, fpath2, shallow=False):
             os.remove(fpath1)
+        else:
+            # The files differed so we cannot collapse them.
+            log.warn('Paths differ: %s and %s', fpath1, fpath2)
+            if options.verbose and not i.endswith('.so'):
+                with open(fpath1) as fp1:
+                    fromlines = fp1.readlines()
+                with open(fpath2) as fp2:
+                    tolines = fp2.readlines()
+                diff = difflib.unified_diff(fromlines, tolines, fpath1, fpath2)
+                sys.stderr.writelines(diff)
 
     try:
         os.removedirs(srcdir)
