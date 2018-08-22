@@ -197,7 +197,7 @@ class Base:
     @copy_test_files()
     def test(self, context, args):
         if self.cfg.test_nose:
-            return 'cd {build_dir}; {interpreter} -m nose {args}'
+            return 'cd {build_dir}; {interpreter} -m nose -v {args}'
         elif self.cfg.test_pytest:
             return 'cd {build_dir}; {interpreter} -m pytest {args}'
         elif self.cfg.test_tox:

@@ -1,3 +1,9 @@
+dh-python (3.20180822) UNRELEASED; urgency=medium
+
+  * Enable verbose mode for nose to comply with Debian Policy 4.2.0
+
+ -- Ondřej Nový <onovy@debian.org>  Wed, 22 Aug 2018 15:59:25 +0200
+
 dh-python (3.20180723) unstable; urgency=medium
 
   * dh-python depends on python3-distutils (as most package that use dh-python
