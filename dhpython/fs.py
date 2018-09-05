@@ -159,9 +159,9 @@ class Scan:
                 if root.endswith('-packages'):
                     if version is not None:
                         self.result['public_vers'].add(version)
-                    for name in ('test', 'tests'):
-                        if name in dirs:
-                            log.debug('removing dist-packages/%s (too common name)', name)
+                    for name in dirs:
+                        if name in ('test', 'tests') or name.startswith('.'):
+                            log.debug('removing dist-packages/%s', name)
                             rmtree(join(root, name))
                             dirs.remove(name)
             else:
