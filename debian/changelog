@@ -4,7 +4,8 @@ dh-python (3.20180822) UNRELEASED; urgency=medium
   * Enable verbose mode for nose to comply with Debian Policy 4.2.0
 
   [ Piotr Ożarowski ]
-  * dh_python*: remove .../dist-packages/.foo directories
+  * dh_python*: remove .../dist-packages/.foo directories (.cache,
+    .pytest_cache, etc.)
 
  -- Ondřej Nový <onovy@debian.org>  Wed, 22 Aug 2018 15:59:25 +0200
 
