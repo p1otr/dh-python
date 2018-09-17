@@ -88,7 +88,7 @@ private dirs
 ~~~~~~~~~~~~
 `/usr/share/foo`, `/usr/share/games/foo`, `/usr/lib/foo` and
 `/usr/lib/games/foo` private directories are scanned for Python files
-by default (where `foo` is binary package name). If your package is shipping
+by default (where `foo` is binary package name). If your package ships
 Python files in some other directory, add another dh_python2 call in
 debian/rules with directory name as an argument - you can use different set of
 options in this call. If you need to change options (f.e. a list of supported
