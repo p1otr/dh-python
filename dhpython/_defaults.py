@@ -27,11 +27,11 @@ from subprocess import Popen, PIPE
 
 SUPPORTED = {
     'cpython2': [(2, 7)],
-    'cpython3': [(3, 6)],
+    'cpython3': [(3, 5)],
     'pypy': [(4, 0)]}
 DEFAULT = {
     'cpython2': (2, 7),
-    'cpython3': (3, 6),
+    'cpython3': (3, 5),
     'pypy': (4, 0)}
 
 log = logging.getLogger('dhpython')

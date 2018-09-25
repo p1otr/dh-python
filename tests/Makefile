@@ -4,7 +4,7 @@
 # Note that all these packages have to be installed during tests
 export DEBPYTHON_DEFAULT=2.7
 export DEBPYTHON_SUPPORTED=2.7
-export DEBPYTHON3_DEFAULT=3.6
+export DEBPYTHON3_DEFAULT=3.5
 export DEBPYTHON3_SUPPORTED=3.4,3.5,3.6
 
 # enable or disable tests here:
