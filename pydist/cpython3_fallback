@@ -12,6 +12,7 @@ Beaker python3-beaker
 Bottleneck python3-bottleneck
 Brlapi python3-brlapi
 Brotli python3-brotli
+CCColUtils python3-cccolutils
 CDApplet cairo-dock-dbus-plug-in-interface-python
 CDBashApplet cairo-dock-dbus-plug-in-interface-python
 CMOR python3-cmor
@@ -36,6 +37,7 @@ DSV python3-dsv
 Decopy decopy
 DendroPy python3-dendropy
 Django python3-django
+DoubleRatchet python3-doubleratchet
 EasyProcess python3-easyprocess
 EbookLib python3-ebooklib
 EditorConfig python3-editorconfig
@@ -79,6 +81,7 @@ GaussSum gausssum
 Genshi python3-genshi
 GeoAlchemy2 python3-geoalchemy2
 GeoIP python3-geoip
+Geophar geophar
 Ghost.py python3-ghost
 GitPython python3-git
 GladTeX python3-gleetex
@@ -89,7 +92,9 @@ Gyoto_lorene python3-gyoto
 Gyoto_std python3-gyoto
 HTSeq python3-htseq
 HeapDict python3-heapdict
+HyperKitty python3-django-hyperkitty
 IBMQuantumExperience python3-ibmquantumexperience
+IMDbPY python3-imdbpy
 IPy python3-ipy
 JACK_Client python3-jack-client
 JPype1 python3-jpype
@@ -101,6 +106,7 @@ Kivy python3-kivy
 Kyoto_Cabinet python3-kyotocabinet
 LEPL python3-lepl
 Lasagne python3-lasagne
+Lektor lektor
 LibAppArmor python3-libapparmor
 Logbook python3-logbook
 MDP python3-mdp
@@ -120,6 +126,7 @@ MutatorMath python3-mutatormath
 NEURON python3-neuron
 Nautilus_scripts_manager nautilus-scripts-manager
 Nuitka nuitka
+OMEMO python3-omemo
 OSMAlchemy python3-osmalchemy
 OWSLib python3-owslib
 OdooRPC python3-odoorpc
@@ -136,11 +143,14 @@ PuLP python3-pulp
 Pweave python3-pweave
 PyAVM python3-pyavm
 PyAudio python3-pyaudio
+PyBluez python3-bluez
 PyChromecast python3-pychromecast
 PyDispatcher python3-pydispatch
+PyGObject python3-gi
 PyGithub python3-github
 PyGreSQL python3-pygresql
 PyHamcrest python3-hamcrest
+PyHoca_CLI pyhoca-cli
 PyICU python3-icu
 PyJWT python3-jwt
 PyKCS11 python3-pykcs11
@@ -213,6 +223,7 @@ TkinterTreectrl python3-tktreectrl
 Twisted python3-twisted
 URLObject python3-urlobject
 Unidecode python3-unidecode
+UnknownHorizons unknown-horizons
 WALinuxAgent waagent
 WSME python3-wsme
 WTForms python3-wtforms
@@ -222,6 +233,8 @@ WebTest python3-webtest
 Werkzeug python3-werkzeug
 Whoosh python3-whoosh
 Willow python3-willow
+X3DH python3-x3dh
+XEdDSA python3-xeddsa
 XStatic python3-xstatic
 XStatic_Angular python3-xstatic-angular
 XStatic_Angular_Bootstrap python3-xstatic-angular-bootstrap
@@ -230,10 +243,13 @@ XStatic_Angular_FileUpload python3-xstatic-angular-fileupload
 XStatic_Angular_Gettext python3-xstatic-angular-gettext
 XStatic_Angular_Mock python3-xstatic-angular-mock
 XStatic_Angular_Schema_Form python3-xstatic-angular-schema-form
+XStatic_Angular_UUID python3-xstatic-angular-uuid
+XStatic_Angular_Vis python3-xstatic-angular-vis
 XStatic_Angular_lrdragndrop python3-xstatic-angular-lrdragndrop
 XStatic_Bootstrap_Datepicker python3-xstatic-bootstrap-datepicker
 XStatic_Bootstrap_SCSS python3-xstatic-bootstrap-scss
 XStatic_D3 python3-xstatic-d3
+XStatic_FileSaver python3-xstatic-filesaver
 XStatic_Font_Awesome python3-xstatic-font-awesome
 XStatic_Hogan python3-xstatic-hogan
 XStatic_JQuery.Bootstrap.Wizard python3-xstatic-jquery.bootstrap.wizard
@@ -241,7 +257,9 @@ XStatic_JQuery.TableSorter python3-xstatic-jquery.tablesorter
 XStatic_JQuery.quicksearch python3-xstatic-jquery.quicksearch
 XStatic_JQuery_Migrate python3-xstatic-jquery-migrate
 XStatic_JSEncrypt python3-xstatic-jsencrypt
+XStatic_JS_Yaml python3-xstatic-js-yaml
 XStatic_Jasmine python3-xstatic-jasmine
+XStatic_Json2yaml python3-xstatic-json2yaml
 XStatic_Magic_Search python3-xstatic-magic-search
 XStatic_QUnit python3-xstatic-qunit
 XStatic_Rickshaw python3-xstatic-rickshaw
@@ -275,6 +293,7 @@ agate python3-agate
 agate_dbf python3-agatedbf
 agate_excel python3-agateexcel
 agate_sql python3-agatesql
+aioamqp python3-aioamqp
 aiocoap python3-aiocoap
 aiodns python3-aiodns
 aiofiles python3-aiofiles
@@ -286,6 +305,7 @@ aiomeasures python3-aiomeasures
 aiopg python3-aiopg
 aioprocessing python3-aioprocessing
 aioredis python3-aioredis
+aiosasl python3-aiosasl
 aiosmtpd python3-aiosmtpd
 aioxmlrpc python3-aioxmlrpc
 aiozmq python3-aiozmq
@@ -319,6 +339,7 @@ apt_clone apt-clone
 apt_venv apt-venv
 argcomplete python3-argcomplete
 argh python3-argh
+argon2_cffi python3-argon2
 args python3-args
 ariba ariba
 arpy python3-arpy
@@ -333,6 +354,7 @@ asgi_redis python3-asgi-redis
 asgiref python3-asgiref
 asn1crypto python3-asn1crypto
 astLib python3-astlib
+asteval python3-asteval
 astor python3-astor
 astral python3-astral
 astroML python3-astroml
@@ -360,6 +382,7 @@ authres python3-authres
 autobahn python3-autobahn
 automaton python3-automaton
 autopep8 python3-autopep8
+autoradio autoradio
 autosuspend autosuspend
 avro_python3 python3-avro
 aws_requests_auth python3-aws-requests-auth
@@ -420,6 +443,7 @@ azure_servicemanagement_legacy python3-azure
 azure_storage python3-azure-storage
 b2 backblaze-b2
 babelfish python3-babelfish
+backdoor_factory backdoor-factory
 backports.tempfile python3-backports.tempfile
 backports.weakref python3-backports.weakref
 backup2swift python3-backup2swift
@@ -437,6 +461,7 @@ bcc python3-bpfcc
 bcdoc python3-bcdoc
 bcolz python3-bcolz
 bcrypt python3-bcrypt
+bdfproxy bdfproxy
 bdist_nsi python3-bdist-nsi
 beanbag python3-beanbag
 beautifulsoup4 python3-bs4
@@ -466,6 +491,7 @@ bitbucket_api python3-bitbucket-api
 bitcoin python3-bitcoin
 bitstring python3-bitstring
 bitstruct python3-bitstruct
+black black
 bleach python3-bleach
 blessed python3-blessed
 blessings python3-blessings
@@ -490,6 +516,7 @@ braceexpand python3-braceexpand
 braintree python3-braintree
 breathe python3-breathe
 brebis brebis
+breezy python3-breezy
 bro_pkg bro-pkg
 bsddb3 python3-bsddb3
 btchip_python python3-btchip
@@ -509,6 +536,7 @@ cached_property python3-cached-property
 cachetools python3-cachetools
 caffeine caffeine
 cairocffi python3-cairocffi
+caldav python3-caldav
 canmatrix python3-canmatrix
 canonicaljson python3-canonicaljson
 cappuccino cappuccino
@@ -517,6 +545,7 @@ case python3-case
 cassandra_driver python3-cassandra
 castellan python3-castellan
 catfish catfish
+catkin_lint python3-catkin-lint
 catkin_pkg python3-catkin-pkg
 cbor python3-cbor
 ccdproc python3-ccdproc
@@ -524,6 +553,7 @@ cclib python3-cclib
 cdiff python3-cdiff
 cdist cdist
 cdo python3-cdo
+cecilia cecilia
 ceilometer python3-ceilometer
 ceilometermiddleware python3-ceilometermiddleware
 celery python3-celery
@@ -543,6 +573,7 @@ certbot_dns_sakuracloud python3-certbot-dns-sakuracloud
 certbot_nginx python3-certbot-nginx
 certifi python3-certifi
 cffi python3-cffi
+cfgrib python3-cfgrib
 cftime python3-cftime
 changelog python3-changelog
 channels python3-django-channels
@@ -584,6 +615,7 @@ colorclass python3-colorclass
 coloredlogs python3-coloredlogs
 colorlog python3-colorlog
 colormap python3-colormap
+colormath python3-colormath
 colorspacious python3-colorspacious
 colour python3-colour
 commando python3-commando
@@ -609,6 +641,7 @@ cppman cppman
 cracklib python3-cracklib
 cram python3-cram
 crank python3-crank
+crcelk python3-crcelk
 crcmod python3-crcmod
 croniter python3-croniter
 cryptography python3-cryptography
@@ -632,6 +665,7 @@ cvxopt python3-cvxopt
 cycler python3-cycler
 cymruwhois python3-cymruwhois
 cypari2 python3-cypari2
+cyvcf2 python3-cyvcf2
 d2to1 python3-d2to1
 daemonize python3-daemonize
 daiquiri python3-daiquiri
@@ -653,6 +687,7 @@ debdry debdry
 debiancontributors python3-debiancontributors
 debmake debmake
 debocker debocker
+debspawn debspawn
 debtags debtags
 debtcollector python3-debtcollector
 decorator python3-decorator
@@ -660,10 +695,12 @@ defcon python3-defcon
 defer python3-defer
 defusedxml python3-defusedxml
 demjson python3-demjson
+depinfo python3-depinfo
 deprecation python3-deprecation
 descartes python3-descartes
 designate python3-designate
 designate_dashboard python3-designate-dashboard
+devpi_common python3-devpi-common
 devscripts devscripts
 dexml python3-dexml
 dfdatetime python3-dfdatetime
@@ -692,6 +729,7 @@ django_allauth python3-django-allauth
 django_appconf python3-django-appconf
 django_assets python3-django-assets
 django_auth_ldap python3-django-auth-ldap
+django_auto_one_to_one python3-django-auto-one-to-one
 django_axes python3-django-axes
 django_babel python3-django-babel
 django_background_tasks python3-django-background-tasks
@@ -699,6 +737,7 @@ django_bitfield python3-django-bitfield
 django_bootstrap_form python3-bootstrapform
 django_braces python3-django-braces
 django_cas_client python3-django-casclient
+django_cas_server python3-django-cas-server
 django_celery_beat python3-django-celery-beat
 django_celery_results python3-django-celery-results
 django_celery_transactions python3-django-celery-transactions
@@ -709,6 +748,7 @@ django_contact_form python3-django-contact-form
 django_cors_headers python3-django-cors-headers
 django_countries python3-django-countries
 django_crispy_forms python3-django-crispy-forms
+django_csp python3-django-csp
 django_dbconn_retry python3-django-dbconn-retry
 django_debug_toolbar python3-django-debug-toolbar
 django_dirtyfields python3-django-dirtyfields
@@ -737,6 +777,7 @@ django_js_reverse python3-django-js-reverse
 django_jsonfield python3-django-jsonfield
 django_ldapdb python3-django-ldapdb
 django_macaddress python3-django-macaddress
+django_mailman3 python3-django-mailman3
 django_maintenancemode python3-django-maintenancemode
 django_markupfield python3-django-markupfield
 django_memoize python3-django-memoize
@@ -798,10 +839,10 @@ django_xmlrpc python3-django-xmlrpc
 djangocms_admin_style python3-djangocms-admin-style
 djangorestframework python3-djangorestframework
 djangorestframework_gis python3-djangorestframework-gis
+djangosaml2 python3-django-saml2
 djoser python3-djoser
 djvubind djvubind
 dkimpy python3-dkim
-dna_jellyfish python3-dna-jellyfish
 dns_lexicon python3-lexicon
 dnsdiag dnsdiag
 dnslib python3-dnslib
@@ -824,6 +865,7 @@ drf_extensions python3-djangorestframework-extensions
 drf_generators python3-djangorestframework-generators
 drf_haystack python3-djangorestframework-haystack
 drizzle python3-drizzle
+drms python3-drms
 dropbox python3-dropbox
 drslib python3-drslib
 dtcwt python3-dtcwt
@@ -849,6 +891,7 @@ envparse python3-envparse
 enzyme python3-enzyme
 epc python3-epc
 ephem python3-ephem
+epoptes epoptes
 esmre python3-esmre
 et_xmlfile python3-et-xmlfile
 etcd3gw python3-etcd3gw
@@ -860,11 +903,12 @@ exabgp python3-exabgp
 exam python3-exam
 execnet python3-execnet
 exotel python3-exotel
-expeyes python-expeyes
+expeyes python3-expeyes
 expiringdict python3-expiringdict
 extras python3-extras
 eyeD3 python3-eyed3
 fabio python3-fabio
+fabulous python3-fabulous
 factory_boy python3-factory-boy
 fades fades
 fail2ban fail2ban
@@ -885,11 +929,13 @@ feed2exec feed2exec
 feedgenerator python3-feedgenerator
 feedparser python3-feedparser
 fenics_dijitso python3-dijitso
+fenics_dolfin python3-dolfin
 fenics_ffc python3-ffc
 fenics_fiat python3-fiat
 fenics_instant python3-instant
 fenics_ufl python3-ufl
 fenrir_screenreader fenrir
+fido2 python3-fido2
 file_encryptor python3-file-encryptor
 filelock python3-filelock
 first python3-first
@@ -916,10 +962,12 @@ flufl.lock python3-flufl.lock
 flufl.testing python3-flufl.testing
 fluids python3-fluids
 fontMath python3-fontmath
+fontPens python3-fontpens
 fontmake python3-fontmake
 fonttools python3-fonttools
 formiko formiko
 fparser python3-fparser
+fpylll python3-fpylll
 freedom_maker freedom-maker
 freezegun python3-freezegun
 frozendict python3-frozendict
@@ -948,12 +996,14 @@ gbulb python3-gbulb
 gcalcli gcalcli
 gccjit python3-gccjit
 gcircle python3-ferret
+gcovr gcovr
 gear python3-gear
 genty python3-genty
 geographiclib python3-geographiclib
 geoip2 python3-geoip2
 geojson python3-geojson
 geolinks python3-geolinks
+geomet python3-geomet
 geopandas python3-geopandas
 geopy python3-geopy
 germinate python3-germinate
@@ -983,6 +1033,7 @@ gmpy2 python3-gmpy2
 gnocchi python3-gnocchi
 gnocchiclient python3-gnocchiclient
 gnome_gmail gnome-gmail
+gnuplotlib python3-gnuplotlib
 google_api_python_client python3-googleapi
 google_apputils python3-google-apputils
 google_auth python3-google-auth
@@ -1000,6 +1051,8 @@ graphviz python3-graphviz
 graypy python3-graypy
 greenlet python3-greenlet
 grokevt grokevt
+grpcio python3-grpcio
+grpcio_tools python3-grpc-tools
 gssapi python3-gssapi
 gsw python3-gsw
 gtimelog gtimelog
@@ -1024,6 +1077,7 @@ hashID hashid
 hashids python3-hashids
 hbmqtt python3-hbmqtt
 hdf5storage python3-hdf5storage
+hdmedians python3-hdmedians
 healpy python3-healpy
 heat python3-heat
 heat_dashboard python3-heat-dashboard
@@ -1072,6 +1126,7 @@ ijson python3-ijson
 imageio python3-imageio
 imagesize python3-imagesize
 imaplib2 python3-imaplib2
+imbalanced_learn python3-imblearn
 imexam python3-imexam
 img2pdf python3-img2pdf
 impass impass
@@ -1092,6 +1147,7 @@ invoke python3-invoke
 iotop iotop
 iowait python3-iowait
 ipdb python3-ipdb
+ipfix python3-ipfix
 ipp python3-libtrace
 ipykernel python3-ipykernel
 ipython python3-ipython
@@ -1115,6 +1171,9 @@ itango python3-itango
 itsdangerous python3-itsdangerous
 itypes python3-itypes
 iva iva
+ivulncheck_api ivulncheck-api
+ivulncheck_client ivulncheck-client
+ivulncheck_web ivulncheck-web
 jaraco.itertools python3-jaraco.itertools
 jdcal python3-jdcal
 jedi python3-jedi
@@ -1171,6 +1230,7 @@ klaus python3-klaus
 klein python3-klein
 kombu python3-kombu
 kubernetes python3-kubernetes
+kylin_display_switch kylin-display-switch
 kytos_utils kytos-utils
 l20n python3-l20n
 langdetect python3-langdetect
@@ -1202,6 +1262,7 @@ libi8x python3-libi8x
 libnacl python3-libnacl
 libnatpmp python3-libnatpmp
 librecaptcha python3-librecaptcha
+librouteros python3-librouteros
 libsass python3-libsass
 libtmux python3-libtmux
 libusb1 python3-libusb1
@@ -1237,6 +1298,7 @@ lttngust python3-lttngust
 lupa python3-lupa
 lxml python3-lxml
 lz4 python3-lz4
+lzstring python3-lzstring
 m3u8 python3-m3u8
 macaroonbakery python3-macaroonbakery
 macholib python3-macholib
@@ -1268,6 +1330,7 @@ memory_profiler python3-memory-profiler
 memprof python3-memprof
 menulibre menulibre
 meshio python3-meshio
+meson meson
 metaconfig python3-metaconfig
 microversion_parse python3-microversion-parse
 mido python3-mido
@@ -1289,6 +1352,7 @@ mockldap python3-mockldap
 mockupdb python3-mockupdb
 model_mommy python3-model-mommy
 modem_cmd modem-cmd
+moksha.common python3-moksha.common
 molotov python3-molotov
 monajat python3-monajat
 monasca_statsd python3-monasca-statsd
@@ -1296,6 +1360,7 @@ mongoengine python3-mongoengine
 monotonic python3-monotonic
 montage_wrapper python3-montage-wrapper
 more_itertools python3-more-itertools
+morph python3-morph
 morris python3-morris
 motor python3-motor
 mousetrap gnome-mousetrap
@@ -1308,6 +1373,7 @@ mpmath python3-mpmath
 mps_youtube mps-youtube
 mrtparse python3-mrtparse
 msgpack python3-msgpack
+mshr python3-mshr
 msrest python3-msrest
 msrestazure python3-msrestazure
 mugshot mugshot
@@ -1318,6 +1384,7 @@ multipletau python3-multipletau
 munch python3-munch
 munkres python3-munkres
 murano python3-murano
+murano_agent murano-agent
 murano_dashboard python3-murano-dashboard
 murano_pkg_check python3-murano-pkg-check
 musicbrainzngs python3-musicbrainzngs
@@ -1326,6 +1393,7 @@ mwclient python3-mwclient
 mwparserfromhell python3-mwparserfromhell
 mygpoclient python3-mygpoclient
 mypy python3-mypy
+mypy_extensions python3-mypy
 mysql_connector_python python3-mysql.connector
 mysqlclient python3-mysqldb
 nagiosplugin python3-nagiosplugin
@@ -1348,6 +1416,7 @@ netfilter python3-netfilter
 netifaces python3-netifaces
 netmiko python3-netmiko
 networking_arista python3-networking-arista
+networking_bagpipe python3-networking-bagpipe
 networking_baremetal python3-ironic-neutron-agent
 networking_bgpvpn python3-networking-bgpvpn
 networking_l2gw python3-networking-l2gw
@@ -1391,6 +1460,7 @@ numexpr python3-numexpr
 numpy python3-numpy
 numpy_stl python3-stl
 numpydoc python3-numpydoc
+numpysane python3-numpysane
 nwdiag python3-nwdiag
 nyx nyx
 oauth python3-oauth
@@ -1399,6 +1469,8 @@ oauthlib python3-oauthlib
 objgraph python3-objgraph
 obsub python3-obsub
 ocrmypdf ocrmypdf
+octavia python3-octavia
+octavia_dashboard python3-octavia-dashboard
 odfpy python3-odf
 odoo oca-core
 offtrac python3-offtrac
@@ -1437,6 +1509,7 @@ onioncircuits onioncircuits
 onionshare onionshare
 opcua python3-opcua
 openalpr python3-openalpr
+openidc_client python3-python-openidc-client
 openpyxl python3-openpyxl
 openscap_daemon openscap-daemon
 openshot_qt openshot-qt
@@ -1452,6 +1525,7 @@ orderedmultidict python3-orderedmultidict
 os_api_ref python3-os-api-ref
 os_brick python3-os-brick
 os_client_config python3-os-client-config
+os_faults python3-os-faults
 os_service_types python3-os-service-types
 os_testr python3-os-testr
 os_traits python3-os-traits
@@ -1459,6 +1533,7 @@ os_vif python3-os-vif
 os_win python3-os-win
 os_xenapi python3-os-xenapi
 osc_lib python3-osc-lib
+osc_placement python3-osc-placement
 oslo.cache python3-oslo.cache
 oslo.concurrency python3-oslo.concurrency
 oslo.config python3-oslo.config
@@ -1509,6 +1584,7 @@ parso python3-parso
 partd python3-partd
 pass_git_helper pass-git-helper
 passlib python3-passlib
+patator patator
 path.py python3-path
 path_and_address python3-path-and-address
 pathspec python3-pathspec
@@ -1530,8 +1606,10 @@ peewee python3-peewee
 pefile python3-pefile
 pep8 python3-pep8
 pep8_naming python3-pep8-naming
+percol percol
 periodictable python3-periodictable
 persepolis persepolis
+persist_queue python3-persist-queue
 persistent python3-persistent
 petsc4py python3-petsc4py
 pex python3-pex
@@ -1542,6 +1620,7 @@ pgmagick python3-pgmagick
 pgpdump python3-pgpdump
 pgq python3-pgq
 pgspecial python3-pgspecial
+pgzero python3-pgzero
 phonenumbers python3-phonenumbers
 photocollage photocollage
 photofilmstrip photofilmstrip
@@ -1554,9 +1633,9 @@ pika python3-pika
 pika_pool python3-pika-pool
 pilkit python3-pilkit
 pip python3-pip
+pipdeptree python3-pipdeptree
 pipedviewer python3-ferret
 pipsi pipsi
-pius pius
 pkgconfig python3-pkgconfig
 pkginfo python3-pkginfo
 plainbox python3-plainbox
@@ -1572,12 +1651,16 @@ pluginbase python3-pluginbase
 plumbum python3-plumbum
 ply python3-ply
 podcastparser python3-podcastparser
+poezio poezio
+poliastro python3-poliastro
 polib python3-polib
 policyd_rate_limit policyd-rate-limit
+port_for python3-port-for
 portalocker python3-portalocker
 portpicker python3-portpicker
 positional python3-positional
 posix_ipc python3-posix-ipc
+postorius python3-django-postorius
 power python3-power
 powerline_gitstatus python3-powerline-gitstatus
 powerline_status python3-powerline
@@ -1592,6 +1675,7 @@ preludedb python3-preludedb
 pretend python3-pretend
 prettytable python3-prettytable
 prewikka prewikka
+priority python3-priority
 proboscis python3-proboscis
 profitbricks python3-profitbricks
 progress python3-progress
@@ -1639,7 +1723,9 @@ py_ubjson python3-ubjson
 py_zipkin python3-py-zipkin
 pyacoustid python3-acoustid
 pyaes python3-pyaes
+pyagentx python3-pyagentx
 pyalsa python3-pyalsa
+pyalsaaudio python3-alsaaudio
 pyaml python3-pretty-yaml
 pyasn1 python3-pyasn1
 pyasn1_modules python3-pyasn1-modules
@@ -1695,13 +1781,13 @@ pygeoip python3-pygeoip
 pygerrit2 python3-pygerrit2
 pyghmi python3-pyghmi
 pygit2 python3-pygit2
-pygobject python3-gi
 pygpu python3-pygpu
 pygrace python3-pygrace
 pygraphviz python3-pygraphviz
 pygrib python3-grib
 pygtail python3-pygtail
 pygtkspellcheck python3-gtkspellcheck
+pygtrie python3-pygtrie
 pyicloud python3-pyicloud
 pyinfra pyinfra
 pyinotify python3-pyinotify
@@ -1734,6 +1820,7 @@ pymummer python3-pymummer
 pymzml python3-pymzml
 pyngus python3-pyngus
 pynmea2 python3-nmea2
+pynwb python3-pynwb
 pynzb python3-pynzb
 pyo python3-pyo
 pyocr python3-pyocr
@@ -1803,6 +1890,7 @@ pytest_cython python3-pytest-cython
 pytest_django python3-pytest-django
 pytest_doctestplus python3-pytest-doctestplus
 pytest_expect python3-pytest-expect
+pytest_flask python3-pytest-flask
 pytest_forked python3-pytest-forked
 pytest_helpers_namespace python3-pytest-helpers-namespace
 pytest_httpbin python3-pytest-httpbin
@@ -1836,6 +1924,7 @@ python_axolotl python3-axolotl
 python_axolotl_curve25519 python3-axolotl-curve25519
 python_barbicanclient python3-barbicanclient
 python_bitcoinlib python3-bitcoinlib
+python_blazarclient python3-blazarclient
 python_bugzilla python3-bugzilla
 python_can python3-can
 python_casacore python3-casacore
@@ -1876,6 +1965,7 @@ python_heatclient python3-heatclient
 python_hglib python3-hglib
 python_hpilo python3-hpilo
 python_igraph python3-igraph
+python_ilorest_library python3-ilorest
 python_instagram python3-instagram
 python_iptables python3-iptables
 python_ironic_inspector_client python3-ironic-inspector-client
@@ -1891,6 +1981,7 @@ python_libnmap python3-libnmap
 python_librtmp python3-librtmp
 python_libtorrent python3-libtorrent
 python_ly python3-ly
+python_lzo python3-lzo
 python_magic python3-magic
 python_magnumclient python3-magnumclient
 python_manilaclient python3-manilaclient
@@ -1906,6 +1997,7 @@ python_networkmanager python3-networkmanager
 python_neutronclient python3-neutronclient
 python_nmap python3-nmap
 python_novaclient python3-novaclient
+python_novnc python3-novnc
 python_octaviaclient python3-octaviaclient
 python_openflow python3-openflow
 python_openid_cla python3-openid-cla
@@ -1918,6 +2010,7 @@ python_potr python3-potr
 python_prctl python3-prctl
 python_pskc python3-pskc
 python_ptrace python3-ptrace
+python_qinlingclient python3-qinlingclient
 python_qpid_proton python3-qpid-proton
 python_redmine python3-redmine
 python_rtmidi python3-rtmidi
@@ -1940,6 +2033,7 @@ python_termstyle python3-termstyle
 python_troveclient python3-troveclient
 python_twitter python3-twitter
 python_u2flib_server python3-u2flib-server
+python_uinput python3-uinput
 python_utils python3-python-utils
 python_vagrant python3-vagrant
 python_vitrageclient python3-vitrageclient
@@ -2043,6 +2137,7 @@ restless python3-restless
 restructuredtext_lint python3-restructuredtext-lint
 retrying python3-retrying
 retweet retweet
+rfc3161ng python3-rfc3161ng
 rfc3986 python3-rfc3986
 rhythmbox_ampache rhythmbox-ampache
 ripe.atlas.cousteau python3-ripe-atlas-cousteau
@@ -2071,11 +2166,13 @@ rstr python3-rstr
 rtslib_fb python3-rtslib-fb
 rtv rtv
 ruamel.yaml python3-ruamel.yaml
+rubber rubber
 ruffus python3-ruffus
 rules python3-django-rules
 ryu python3-ryu
 s3cmd s3cmd
 s3transfer python3-s3transfer
+s_tui s-tui
 sadisplay python3-sadisplay
 safeeyes safeeyes
 sagenb_export python3-sagenb-export
@@ -2084,6 +2181,7 @@ sahara_dashboard python3-sahara-dashboard
 salt salt-common
 salt_pepper salt-pepper
 sasmodels python3-sasmodels
+sbws sbws
 scales python3-scales
 scapy python3-scapy
 schedule python3-schedule
@@ -2109,7 +2207,9 @@ semantic_version python3-semantic-version
 semver python3-semver
 sen sen
 senlin python3-senlin
+senlin_dashboard python3-senlin-dashboard
 sentinels python3-sentinels
+sentinelsat python3-sentinelsat
 sepolicy python3-sepolicy
 seqdiag python3-seqdiag
 seqmagick seqmagick
@@ -2150,8 +2250,10 @@ slip.dbus python3-slip-dbus
 slixmpp python3-slixmpp
 smartypants python3-smartypants
 smmap2 python3-smmap
+smoke_zephyr python3-smoke-zephyr
 smstrade python3-smstrade
 snakemake snakemake
+snappergui snapper-gui
 snimpy python3-snimpy
 snowballstemmer python3-snowballstemmer
 snuggs python3-snuggs
@@ -2165,6 +2267,7 @@ sortedcollections python3-sortedcollections
 sortedcontainers python3-sortedcontainers
 spake2 python3-spake2
 sparse python3-sparse
+spectra python3-spectra
 spectral_cube python3-spectral-cube
 specutils python3-specutils
 speedtest_cli speedtest-cli
@@ -2172,15 +2275,18 @@ spf_engine postfix-policyd-spf-python
 spglib python3-spglib
 sphere python3-sphere
 sphinx_argparse python3-sphinx-argparse
+sphinx_autobuild python3-sphinx-autobuild
 sphinx_autorun python3-sphinx-autorun
 sphinx_bootstrap_theme python3-sphinx-bootstrap-theme
 sphinx_celery python3-sphinx-celery
+sphinx_feature_classification python3-sphinx-feature-classification
 sphinx_gallery python3-sphinx-gallery
 sphinx_intl sphinx-intl
 sphinx_paramlinks python3-sphinx-paramlinks
 sphinx_rtd_theme python3-sphinx-rtd-theme
 sphinx_testing python3-sphinx-testing
 sphinxcontrib_actdiag python3-sphinxcontrib.actdiag
+sphinxcontrib_apidoc python3-sphinxcontrib.apidoc
 sphinxcontrib_autoprogram python3-sphinxcontrib.autoprogram
 sphinxcontrib_bibtex python3-sphinxcontrib.bibtex
 sphinxcontrib_blockdiag python3-sphinxcontrib.blockdiag
@@ -2190,6 +2296,7 @@ sphinxcontrib_nwdiag python3-sphinxcontrib.nwdiag
 sphinxcontrib_pecanwsme python3-sphinxcontrib-pecanwsme
 sphinxcontrib_plantuml python3-sphinxcontrib.plantuml
 sphinxcontrib_programoutput python3-sphinxcontrib.programoutput
+sphinxcontrib_restbuilder python3-sphinxcontrib.restbuilder
 sphinxcontrib_rubydomain python3-sphinxcontrib.rubydomain
 sphinxcontrib_seqdiag python3-sphinxcontrib.seqdiag
 sphinxcontrib_spelling python3-sphinxcontrib.spelling
@@ -2199,6 +2306,7 @@ sphinxtesters python3-sphinxtesters
 spoon python3-spoon
 spur python3-spur
 spyder python3-spyder
+spyder_kernels python3-spyder-kernels
 spyder_line_profiler python3-spyder-line-profiler
 spyder_memory_profiler python3-spyder-memory-profiler
 spyder_reports python3-spyder-reports
@@ -2224,6 +2332,7 @@ stepic stepic
 stestr python3-stestr
 stevedore python3-stevedore
 stomp.py python3-stomp
+stomper python3-stomper
 stopit python3-stopit
 straight.plugin python3-straight.plugin
 streamlink python3-streamlink
@@ -2266,6 +2375,7 @@ tenacity python3-tenacity
 termcolor python3-termcolor
 terminado python3-terminado
 terminaltables python3-terminaltables
+termineter termineter
 test_server python3-test-server
 testfixtures python3-testfixtures
 testing.common.database python3-testing.common.database
@@ -2282,6 +2392,7 @@ texttable python3-texttable
 thonny thonny
 thriftpy python3-thriftpy
 tinycss python3-tinycss
+tinycss2 python3-tinycss2
 tinyrpc python3-tinyrpc
 tkSnack python3-tksnack
 tldextract python3-tldextract
@@ -2305,6 +2416,7 @@ tosca_parser python3-tosca-parser
 tox tox
 tqdm python3-tqdm
 traceback2 python3-traceback2
+trafficserver_exporter prometheus-trafficserver-exporter
 traitlets python3-traitlets
 traits python3-traits
 transaction python3-transaction
@@ -2428,6 +2540,7 @@ twine twine
 twitterwatch twitterwatch
 twodict python3-twodict
 twython python3-twython
+txWS python3-txws
 txZMQ python3-txzmq
 txaio python3-txaio
 txfixtures python3-txfixtures
@@ -2446,8 +2559,11 @@ udatetime python3-udatetime
 udiskie udiskie
 ufo2ft python3-ufo2ft
 ufoLib python3-ufolib
+ufoLib2 python3-ufolib2
+ufonormalizer python3-ufonormalizer
 ufw ufw
 ujson python3-ujson
+ulmo python3-ulmo
 unattended_upgrades unattended-upgrades
 uncertainties python3-uncertainties
 undertime undertime
@@ -2466,6 +2582,7 @@ urwidtrees python3-urwidtrees
 usagestats python3-usagestats
 uvloop python3-uvloop
 validictory python3-validictory
+variety variety
 vatnumber python3-vatnumber
 vcrpy python3-vcr
 vcstools python3-vcstools
@@ -2512,6 +2629,7 @@ whichcraft python3-whichcraft
 whitenoise python3-whitenoise
 whois python3-whois
 widgetsnbextension python3-widgetsnbextension
+wikitrans python3-wikitrans
 wither python3-wither
 wlc wlc
 wokkel python3-wokkel
@@ -2526,6 +2644,7 @@ wsproto python3-wsproto
 wstool python3-wstool
 wtf_peewee python3-wtf-peewee
 wxPython python3-wxgtk4.0
+x2go python3-x2go
 xandikos xandikos
 xapers xapers
 xapian_haystack python3-xapian-haystack
@@ -2555,6 +2674,8 @@ yokadi yokadi
 youtube_dl youtube-dl
 yowsup2 python3-yowsup
 yt python3-yt
+yubikey_manager python3-yubikey-manager
+zVMCloudConnector python3-zvmcloudconnector
 zake python3-zake
 zaqar python3-zaqar
 zaqar_ui python3-zaqar-ui

@@ -2,6 +2,7 @@ MMLlib pypy-mmllib
 Unidecode pypy-unidecode
 Wand pypy-wand
 appdirs pypy-appdirs
+argon2_cffi pypy-argon2
 asn1crypto pypy-asn1crypto
 atomicwrites pypy-atomicwrites
 attrs pypy-attr
@@ -40,4 +41,6 @@ setuptools_scm pypy-setuptools-scm
 simplejson pypy-simplejson
 six pypy-six
 sqlparse pypy-sqlparse
+stem pypy-stem
+vanguards vanguards
 zodbpickle pypy-zodbpickle
