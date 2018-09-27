@@ -7,6 +7,10 @@ dh-python (3.20180822) UNRELEASED; urgency=medium
   * dh_python*:
     - remove .../dist-packages/.foo directories (.cache, .pytest_cache, etc.)
     - install debian/python{,3}-foo.bcep files into /usr/share/python{,3}/bcep/ 
+  * dh_python3: generated postinst files will bytecompile for pypy3 if
+    /usr/bin/pypy3compile is available (py3clean will remove pypy3 generated
+    .pyc files so prerm doesn't require any changes).
+    PyPy3 support is still a WIP so pypy3compile errors are ignored for now.
 
  -- Ondřej Nový <onovy@debian.org>  Wed, 22 Aug 2018 15:59:25 +0200
 
