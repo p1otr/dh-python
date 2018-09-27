@@ -117,6 +117,26 @@ Examples:
  * ``*.pth`` removes .pth files from .../dist-packages/
  * ``bar/baz.py 3.2`` removes .../python3.2/dist-packages/bar/baz.py
 
+bcep files
+~~~~~~~~~~
+Byte-compilation exception patterns can be described in these files. Use it if
+you want py3compile to skip specific files. This is the only way to skip .py
+files in …/dist-packages/ directory (as `--exclude` passed to py3compile in
+postinst is not used in rtupdate scripts and thus this option cannot be used
+for non-private modules).
+
+``re|-3.6|/usr/lib/python3/dist-packages/jinja2|.*/async(foo|bar).py``
+will skip byte-compilation of `asyncfoo.py` and `asyncbar.py` in
+`/usr/lib/python3/dist-packages/jinja2/` directory for each interpreter that
+doesn't support `async` keyword (introduced in Python 3.6).
+
+If you want to skip byte-compilation in a subdirectory for all interpreters, use:
+``dir|-4.0|/usr/lib/python3/dist-packages/foo/tests/``.
+VERSION_RANGE (`-4.0` in the example) is described in `README.PyDist` file.
+
+`debian/python3-foo.bcep` file from source package will be included in the
+binary package as `/usr/share/python3/bcep/python3-foo.bcep`
+
 overriding supported / default Python versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you want to override system's list of supported Python versions or the
@@ -156,11 +176,12 @@ OPTIONS
 
 -N NO_PACKAGE, --no-package=NO_PACKAGE	do not act on the specified package
 
--V VRANGE	specify list of supported Python 3 versions. See
+-V VERSION_RANGE	specify list of supported Python 3 versions. See
   py3compile(1) for examples
 
 -X REGEXPR, --exclude=REGEXPR	exclude items that match given REGEXPR. You may
-  use this option multiple times to build up a list of things to exclude.
+  use this option multiple times to build up a list of things to exclude from
+  byte-compilation in private dirs. See also `bcep files`.
 
 --compile-all	compile all files from given private directory in postinst/rtupdate
   not just the ones provided by the package (i.e. do not pass the --package
