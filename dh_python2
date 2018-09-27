@@ -505,6 +505,12 @@ def main():
                 if not exists(dstdir):
                     os.makedirs(dstdir)
                 fcopy(pydist_file, join(dstdir, package))
+        bcep_file = join('debian', "%s.bcep" % package)
+        if exists(bcep_file):
+            dstdir = join('debian', package, 'usr/share/python/bcep/')
+            if not exists(dstdir):
+                os.makedirs(dstdir)
+            fcopy(bcep_file, join(dstdir, package))
 
         # namespace feature - recreate __init__.py files at install time
         if options.ignore_namespace:
@@ -533,6 +539,7 @@ def main():
             os.rmdir(pyshared)
 
     dh.save()
+
 
 if __name__ == '__main__':
     main()

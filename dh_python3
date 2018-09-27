@@ -266,8 +266,15 @@ def main():
                 if not exists(dstdir):
                     os.makedirs(dstdir)
                 fcopy(pydist_file, join(dstdir, package))
+        bcep_file = join('debian', "%s.bcep" % package)
+        if exists(bcep_file):
+            dstdir = join('debian', package, 'usr/share/python3/bcep/')
+            if not exists(dstdir):
+                os.makedirs(dstdir)
+            fcopy(bcep_file, join(dstdir, package))
 
     dh.save()
+
 
 if __name__ == '__main__':
     main()
