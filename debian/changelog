@@ -1,4 +1,4 @@
-dh-python (3.20180822) UNRELEASED; urgency=medium
+dh-python (3.20180927) unstable; urgency=medium
 
   [ Ondřej Nový ]
   * Enable verbose mode for nose to comply with Debian Policy 4.2.0
@@ -12,7 +12,7 @@ dh-python (3.20180822) UNRELEASED; urgency=medium
     .pyc files so prerm doesn't require any changes).
     PyPy3 support is still a WIP so pypy3compile errors are ignored for now.
 
- -- Ondřej Nový <onovy@debian.org>  Wed, 22 Aug 2018 15:59:25 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 27 Sep 2018 22:40:56 +0200
 
 dh-python (3.20180723) unstable; urgency=medium
 
