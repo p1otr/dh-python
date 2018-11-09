@@ -52,7 +52,7 @@ REQUIRES_RE = re.compile(r'''
     \s*
     \(?  # optional parenthesis
     (?:  # optional minimum/maximum version
-        (?P<operator><=?|>=?|==|!=)
+        (?P<operator><=?|>=?|==|!=|~=)
         \s*
         (?P<version>(\w|[-.])+)
         (?:  # optional interval minimum/maximum version
@@ -70,6 +70,7 @@ DEB_VERS_OPS = {
     '==': '=',
     '<':  '<<',
     '>':  '>>',
+    '~=': '>=',
 }
 
 
@@ -139,7 +140,7 @@ def guess_dependency(impl, req, version=None, bdep=None,
         version = Version(version)
 
     # some upstreams have weird ideas for distribution name...
-    name, rest = re.compile('([^!><= \(\)\[]+)(.*)').match(req).groups()
+    name, rest = re.compile('([^!><=~ \(\)\[]+)(.*)').match(req).groups()
     # TODO: check stdlib and dist-packaged for name.py and name.so files
     req = safe_name(name) + rest
 
@@ -173,6 +174,10 @@ def guess_dependency(impl, req, version=None, bdep=None,
                     o2 = _translate_op(req_d['operator2'])
                     v2 = _translate(req_d['version2'], item['rules'], item['standard'])
                     d += ", %s (%s %s)" % (item['dependency'], o2, v2)
+                elif req_d['operator'] == '~=':
+                    o2 = '<<'
+                    v2 = _translate(_max_compatible(req_d['version']), item['rules'], item['standard'])
+                    d += ", %s (%s %s)" % (item['dependency'], o2, v2)
                 return d
             elif accept_upstream_versions and req_d['version'] and \
                     req_d['operator'] not in (None,'!='):
@@ -181,6 +186,9 @@ def guess_dependency(impl, req, version=None, bdep=None,
                 if req_d['version2'] and req_d['operator2'] not in (None,'!='):
                     o2 = _translate_op(req_d['operator2'])
                     d += ", %s (%s %s)" % (item['dependency'], o2, req_d['version2'])
+                elif req_d['operator'] == '~=':
+                    o2 = '<<'
+                    d += ", %s (%s %s)" % (item['dependency'], o2, _max_compatible(req_d['version']))
                 return d
             else:
                 if item['dependency'] in bdep:
@@ -303,6 +311,32 @@ def _pl2py(pattern):
     foo\g<3>
     """
     return GROUP_RE.sub(r'\\g<\1>', pattern)
+
+
+def _max_compatible(version):
+    """Return the maximum version compatible with `version` in PEP440 terms,
+    used by ~= requires version specifiers.
+
+    https://www.python.org/dev/peps/pep-0440/#compatible-release
+
+    >>> _max_compatible('2.2')
+    '3'
+    >>> _max_compatible('1.4.5')
+    '1.5'
+    >>> _max_compatible('1.3.alpha4')
+    '2'
+    >>> _max_compatible('2.1.3.post5')
+    '2.2'
+
+    """
+    v = Version(version)
+    v.serial = None
+    v.releaselevel = None
+    if v.micro is not None:
+        v.micro = None
+        return str(v + 1)
+    v.minor = None
+    return str(v + 1)
 
 
 def _translate(version, rules, standard):

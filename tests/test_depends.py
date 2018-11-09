@@ -130,3 +130,25 @@ class TestRequiresPyPy(DependenciesTestCase):
 
     def test_depends_on_baz(self):
         self.assertIn('pypy-baz (>= 1.0)', self.d.depends)
+
+
+class TestRequiresCompatible(DependenciesTestCase):
+    options = FakeOptions(guess_deps=True)
+    pydist = {
+        'bar': 'python3-bar',
+        'baz': {'dependency': 'python3-baz', 'standard': 'PEP386'},
+        'quux': {'dependency': 'python3-quux', 'standard': 'PEP386'},
+    }
+    requires = {
+        'debian/foo/usr/lib/python3/dist-packages/foo.egg-info/requires.txt': (
+            'bar',
+            'baz ~= 1.0',
+            'quux',
+        ),
+    }
+
+    def test_depends_on_bar(self):
+        self.assertIn('python3-bar', self.d.depends)
+
+    def test_depends_on_baz(self):
+        self.assertIn('python3-baz (>= 1.0), python3-baz (<< 2)', self.d.depends)
