@@ -124,6 +124,7 @@ sub pybuild_commands {
 			my $version = @{$changelog}[0]->get_version();
 			$version =~ s/-[^-]+$//;  # revision
 			$version =~ s/^\d+://;    # epoch
+			$version =~ s/~/-/;       # ignore tilde versions
 			$ENV{'SETUPTOOLS_SCM_PRETEND_VERSION'} = $version;
 		}
 
