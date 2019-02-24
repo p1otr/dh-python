@@ -154,7 +154,7 @@ sub pybuild_commands {
 				push @py2opts, '--test-pytest'}
 			elsif (grep {$_ eq 'python-nose'} @deps and $ENV{'PYBUILD_TEST_NOSE'} ne '0') {
 				push @py2opts, '--test-nose'}
-			if (grep {$_ eq 'python3-tox'} @deps and $ENV{'PYBUILD_TEST_TOX'} ne '0') {
+			if (grep {$_ eq 'tox'} @deps and $ENV{'PYBUILD_TEST_TOX'} ne '0') {
 				push @py3opts, '--test-tox'}
 			elsif (grep {$_ eq 'python3-pytest'} @deps and $ENV{'PYBUILD_TEST_PYTEST'} ne '0') {
 				push @py3opts, '--test-pytest'}
