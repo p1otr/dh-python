@@ -7,7 +7,7 @@ invokes various build systems for requested Python versions in order to build mo
 ----------------------------------------------------------------------------------------------------
 
 :Manual section: 1
-:Author: Piotr Ożarowski, 2012-2013
+:Author: Piotr Ożarowski, 2012-2019
 
 SYNOPSIS
 ========
@@ -16,15 +16,29 @@ SYNOPSIS
 DEBHELPER COMMAND SEQUENCER INTEGRATION
 =======================================
 * build depend on `dh-python`,
-* build depend on `python3-all`, `python-all-dbg`, `pypy`, etc.
-  (for all supported Python interpreters, pybuild will use it to create
-  a list of interpreters to build for),
+* build depend on all supported Python interpreters, pybuild will use it to create
+  a list of interpreters to build for.  
+  Recognized dependencies:
+
+   - `python3-all-dev` - for Python extensions that work with Python 3.X interpreters,
+   - `python3-all-dbg` - as above, add this one if you're building -dbg packages,
+   - `python3-all` - for Python modules that work with Python 3.X interpreters,
+   - `python3-dev` - builds an extension for default Python 3.X interpreter
+     (useful for private extensions, use python3-all-dev for public ones),
+   - `python3` - as above, used if headers files are not needed to build private module,
+   - `python-all-dev` - for Python extensions that work with obsolete Python 2.X interpreters,
+   - `python-all-dbg` - as above, add this one if you're building -dbg packages,
+   - `python-all` - for Python modules that work with obsolete Python 2.X interpreters,
+   - `pypy` - for PyPy 2.X interpreter.
+
 * add `--buildsystem=pybuild` to dh's arguments in debian/rules,
 * if more than one binary package is build:
   add debian/python-foo.install files, or
   `export PYBUILD_NAME=modulename` (modulename will be used to guess binary
   package prefixes), or
   `export PYBUILD_DESTDIR` env. variables in debian/rules
+* add `--with=python3` or `--with=python3,python2,pypy` to dh's arguments in debian/rules
+  (see proper helper's manpage for more details)
 
 debian/rules file example::
 
