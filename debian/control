@@ -20,7 +20,7 @@ Multi-Arch: foreign
 Depends: ${misc:Depends}, ${python3:Depends},
 # depend on distutils to avoid adding it to Build-Depends in other packages
  python3-distutils | python3 (<< 3.6.5~rc1-1)
-Provides: dh-sequence-python3, dh-sequence-pypy
+Provides: dh-sequence-python3, dh-sequence-pypy, dh-sequence-python2
 Suggests: libdpkg-perl, dpkg-dev
 Breaks:
 # due to /usr/bin/dh_python3 and debhelper files
