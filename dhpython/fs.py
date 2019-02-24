@@ -71,6 +71,9 @@ def share_files(srcdir, dstdir, interpreter, options):
         fpath1 = join(srcdir, i)
         if not exists(fpath1):  # removed in rename_ext
             continue
+        if i.endswith('.pyc'):  # f.e. when tests were invoked on installed files
+            os.remove(fpath1)
+            continue
         if not options.no_ext_rename and splitext(i)[-1] == '.so':
             # try to rename extension here as well (in :meth:`scan` info about
             # Python version is gone)
