@@ -39,7 +39,7 @@ DEBHELPER COMMAND SEQUENCER INTEGRATION
   `export PYBUILD_DESTDIR` env. variables in debian/rules
 * add `--with=python3` or `--with=python3,python2,pypy` to dh's arguments in debian/rules
   (see proper helper's manpage for more details) or add `dh-sequence-python3`
-  (`dh-sequence-python2` for Python 2.X, `dh-sequence-pypy` for PyPy) to Build-Depemds
+  (`dh-sequence-python2` for Python 2.X, `dh-sequence-pypy` for PyPy) to Build-Depends
 
 debian/rules file example::
 
