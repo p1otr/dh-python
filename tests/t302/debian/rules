@@ -22,5 +22,7 @@ override_dh_auto_install:
 	for ver in $(PYTHONS); do\
 	  python$$ver setup.py install --root=debian/python3-foo;\
 	done
+	mkdir -p debian/python3-foo/usr/include/python$(DEBPYTHON3_DEFAULT)/
+	touch debian/python3-foo/usr/include/python$(DEBPYTHON3_DEFAULT)/foo.h
 
 override_dh_auto_clean:

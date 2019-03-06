@@ -1,4 +1,4 @@
-# Copyright © 2013 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2013-2019 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +63,17 @@ def fix_locations(package, interpreter, versions, options):
                     os.removedirs(srcdir)
                 except OSError:
                     pass
+
+        # move files from /usr/include/pythonX.Y/ to …/pythonX.Ym/
+        srcdir = "debian/%s%s" % (package, interpreter.symlinked_include_dir)
+        if srcdir and isdir(srcdir):
+            dstdir = "debian/%s%s" % (package, interpreter.include_dir)
+            log.debug('moving files from %s to %s', srcdir, dstdir)
+            share_files(srcdir, dstdir, interpreter, options)
+            try:
+                os.removedirs(srcdir)
+            except OSError:
+                pass
 
 
 def share_files(srcdir, dstdir, interpreter, options):

@@ -405,6 +405,31 @@ class Interpreter:
         return result
 
     @property
+    def symlinked_include_dir(self):
+        """Return path to symlinked include directory.
+
+        >>> Interpreter('python3.7').symlinked_include_dir
+        '/usr/include/python3.7'
+        """
+        if self.impl in ('cpython2', 'pypy') or self.debug \
+           or self.version << '3.3':
+            # these interpreters do not provide sumlink,
+            # others provide it in libpython3.X-dev
+            return
+        try:
+            result = self._get_config()[2]
+            if result:
+                if result.endswith('m'):
+                    return result[:-1]
+                else:
+                    # there's include_dir, but no "m"
+                    return
+        except Exception:
+            result = '/usr/include/{}'.format(self.name)
+            log.debug('cannot get include path', exc_info=True)
+        return result
+
+    @property
     def library_file(self):
         """Return libfoo.so file path."""
         if self.impl == 'pypy':
