@@ -62,27 +62,25 @@ def main(cfg):
         del env['https_proxy']  # some tools don't like empty var.
     if 'DEB_PYTHON_INSTALL_LAYOUT' not in env:
         env['DEB_PYTHON_INSTALL_LAYOUT'] = 'deb'
-    try:
-        # Set _PYTHON_HOST_PLATFORM to ensure debugging symbols on, f.e. i386
-        # emded a constant name regardless of the 32/64-bit kernel.
-        env.setdefault(
-            '_PYTHON_HOST_PLATFORM',
-            '{env[DEB_TARGET_ARCH_OS]}-{env[DEB_TARGET_ARCH]}'.format(env=env))
-    except KeyError:
-        pass
-    # support cross compiling Python 3.X extensions, see #892931
-    if not env.get('_PYTHON_SYSCONFIGDATA_NAME') and exists('/usr/bin/dpkg-architecture'):
+
+    arch_data = {}
+    if exists('/usr/bin/dpkg-architecture'):
         res = execute('/usr/bin/dpkg-architecture')
-        arch_data = {}
         for line in res['stdout'].splitlines():
             key, value = line.strip().split('=', 1)
             arch_data[key] = value
 
+        # Set _PYTHON_HOST_PLATFORM to ensure debugging symbols on, f.e. i386
+        # emded a constant name regardless of the 32/64-bit kernel.
+        env.setdefault(
+            '_PYTHON_HOST_PLATFORM',
+            '{DEB_TARGET_ARCH_OS}-{DEB_TARGET_ARCH}'.format(**arch_data))
+
         if arch_data['DEB_BUILD_ARCH'] != arch_data['DEB_HOST_ARCH']:
-            env['_PYTHON_SYSCONFIGDATA_NAME'] = (
-                '_sysconfigdata_m'
-                '_{DEB_HOST_ARCH_OS}'
-                '_{DEB_HOST_MULTIARCH}').format(**arch_data)
+            # support cross compiling Python 3.X extensions, see #892931
+            env.setdefault('_PYTHON_SYSCONFIGDATA_NAME',
+                           ('_sysconfigdata_m_{DEB_HOST_ARCH_OS}'
+                            '_{DEB_HOST_MULTIARCH}').format(**arch_data))
 
     if cfg.system:
         certainty = 99
@@ -217,16 +215,21 @@ def main(cfg):
             'home_dir': abspath(home_dir)})
         if interpreter == 'pypy':
             args['install_dir'] = '/usr/lib/pypy/dist-packages/'
+        pp = context['ENV'].get('PYTHONPATH')
+        pp = pp.split(':') if pp else []
         if step in {'build', 'test'}:
-            pp = context['ENV'].get('PYTHONPATH')
-            pp = pp.split(':') if pp else []
             if step == 'test':
                 args['test_dir'] = join(args['destdir'], args['install_dir'].lstrip('/'))
                 if args['test_dir'] not in pp:
                     pp.append(args['test_dir'])
             if args['build_dir'] not in pp:
                 pp.append(args['build_dir'])
-            args['PYTHONPATH'] = ':'.join(pp)
+        # cross compilation support for Python 2.x
+        if (version.major == 2 and
+            arch_data.get('DEB_BUILD_ARCH') != arch_data.get('DEB_HOST_ARCH')):
+            pp.insert(0, ('/usr/lib/python{0}/plat-{1[DEB_HOST_MULTIARCH]}'
+                         ).format(version, arch_data))
+        args['PYTHONPATH'] = ':'.join(pp)
 
         if not exists(args['build_dir']):
             makedirs(args['build_dir'])
