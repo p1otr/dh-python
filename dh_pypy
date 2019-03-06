@@ -35,7 +35,7 @@ from dhpython.version import supported, default, Version, VersionRange
 from dhpython.pydist import validate as validate_pydist
 from dhpython.fs import fix_locations, Scan
 from dhpython.option import Option
-from dhpython.tools import pyremove
+from dhpython.tools import pyremove, parse_ns, remove_ns
 
 # initialize script
 logging.basicConfig(format='%(levelname).1s: dh_pypy '
@@ -120,10 +120,14 @@ def main():
     parser.add_option('--requires', action='append',
                       help='translate requirements from given file into Debian '
                            'dependencies and add them to ${pypy:Depends}')
+    parser.add_option('--namespace', action='append', dest='namespaces',
+                      help='recreate __init__.py files for given namespaces at install time')
     parser.add_option('--shebang',
                       help='use given command as shebang in scripts')
     parser.add_option('--ignore-shebangs', action='store_true', default=False,
                       help='do not translate shebangs into Debian dependencies')
+    parser.add_option('--ignore-namespace', action='store_true', default=False,
+                      help="ignore Egg's namespace_packages.txt file and --namespace option")
     parser.add_option('--no-dbg-cleaning', action='store_false',
                       dest='clean_dbg_pkg', default=True,
                       help='do not remove files from debug packages')
@@ -262,6 +266,27 @@ def main():
                 if not exists(dstdir):
                     os.makedirs(dstdir)
                 fcopy(pydist_file, join(dstdir, package))
+
+        # namespace feature - recreate __init__.py files at install time
+        if options.ignore_namespace:
+            nsp = None
+        else:
+            nsp = parse_ns(stats['nsp.txt'], options.namespaces)
+        # note that pypycompile/pypyclean is already added to maintainer scripts
+        # and it should remain there even if __init__.py was the only .py file
+        if nsp:
+            try:
+                nsp = remove_ns(Interpreter('pypy'), package, nsp,
+                                stats['public_vers'])
+            except (IOError, OSError) as e:
+                log.error('cannot remove __init__.py from package: %s', e)
+                exit(6)
+        if nsp:
+            dstdir = join('debian', package, 'usr/share/pypy/ns/')
+            if not exists(dstdir):
+                os.makedirs(dstdir)
+            with open(join(dstdir, package), 'a', encoding='utf-8') as fp:
+                fp.writelines("%s\n" % i for i in sorted(nsp))
 
     dh.save()
 

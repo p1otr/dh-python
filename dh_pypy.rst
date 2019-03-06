@@ -60,6 +60,15 @@ versioned dependencies (and assuming that the *pypy-bar* package provides
 the *pybar* Python module), in most cases it will be sufficient to put the line
 ``pybar pypy-bar; PEP386`` into either of the above files.
 
+namespace feature
+~~~~~~~~~~~~~~~~~
+dh_pypy parses Egg's namespace_packages.txt files (in addition to
+--namespace command line argument(s)) and drops empty __init__.py files from
+binary package. pypycompile will regenerate them at install time and pypyclean
+will remove them at uninstall time (if they're no longer used in installed
+packages). It's still a good idea to provide __init__.py file in one of
+binary packages (even if all other packages use this feature).
+
 private dirs
 ~~~~~~~~~~~~
 `/usr/share/foo`, `/usr/share/games/foo`, `/usr/lib/foo` and
