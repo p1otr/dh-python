@@ -24,7 +24,7 @@ import os
 import re
 import sys
 from filecmp import cmp as cmpfile
-from os.path import exists, isdir, islink, join, realpath, split, splitext
+from os.path import lexists, exists, isdir, islink, join, realpath, split, splitext
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 from dhpython import MULTIARCH_DIR_TPL
@@ -69,7 +69,7 @@ def share_files(srcdir, dstdir, interpreter, options):
     """Try to move as many files from srcdir to dstdir as possible."""
     for i in os.listdir(srcdir):
         fpath1 = join(srcdir, i)
-        if not exists(fpath1):  # removed in rename_ext
+        if not lexists(fpath1):  # removed in rename_ext
             continue
         if i.endswith('.pyc'):  # f.e. when tests were invoked on installed files
             os.remove(fpath1)
