@@ -11,7 +11,9 @@ dh-python (3.20190307) UNRELEASED; urgency=medium
     in 912909!
 
   [ Helmut Grohne ]
-  * pybuild: make it easier to cross-build Python 2 extensions (closes: 901759)
+  * pybuild:
+    - make it easier to cross-build Python 2 extensions (closes: 901759)
+    - use DEB_HOST_ARCH{,_OS} instead of DEB_TARGET_ARCH{,_OS} (closes: 912892)
 
     Thanks also to Dima Kogan for patches, including the one adding more
     debug info.
