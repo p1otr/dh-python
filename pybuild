@@ -74,7 +74,7 @@ def main(cfg):
         # emded a constant name regardless of the 32/64-bit kernel.
         env.setdefault(
             '_PYTHON_HOST_PLATFORM',
-            '{DEB_TARGET_ARCH_OS}-{DEB_TARGET_ARCH}'.format(**arch_data))
+            '{DEB_HOST_ARCH_OS}-{DEB_HOST_ARCH}'.format(**arch_data))
 
         if arch_data['DEB_BUILD_ARCH'] != arch_data['DEB_HOST_ARCH']:
             # support cross compiling Python 3.X extensions, see #892931
