@@ -13,7 +13,7 @@ dh-python (3.20190307) UNRELEASED; urgency=medium
   [ Helmut Grohne ]
   * pybuild: make it easier to cross-build Python 2 extensions (closes: 901759)
 
-    Thanks also to Dima Kogan for patches, includig the one adding more
+    Thanks also to Dima Kogan for patches, including the one adding more
     debug info.
 
   [ Samuel Thibault ]
@@ -29,7 +29,7 @@ dh-python (3.20190307) UNRELEASED; urgency=medium
   * dh-python now provides dh-sequence-python3, dh-sequence-python2
     and dh-sequence-pypy packages (to be used in debhelper >= 12)
   * Update tests to use 3.7 as default/supported Python 3.X (closes: 914998)
-  * dh_pypy: add namespce support: new options: --namespace, --ignore-namespace
+  * dh_pypy: add namespace support: new options: --namespace, --ignore-namespace
     and parsing namespace_packages.txt by default (closes: 920899)
   * dh_python3: move files from /usr/include/python3.X/ to
     /usr/include/python3.Xm/ for Python 3.X >= 3.3 (closes: 923048)
