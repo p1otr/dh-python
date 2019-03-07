@@ -1,3 +1,41 @@
+dh-python (3.20190307) UNRELEASED; urgency=medium
+
+  [ Antoine Beaupré ]
+  * Ignore tilde version numbers which crash setuptools-scm (closes: 915408)
+
+  [ Agustin Henze ]
+  * Use current locale for encoding the output process while checking
+    libpython's version extension file is linked to (closes: 901000, 912909)
+
+    Thanks also to Zack Weinberg for different patch solving this issue
+    in 912909!
+
+  [ Helmut Grohne ]
+  * pybuild: make it easier to cross-build Python 2 extensions (closes: 901759)
+
+    Thanks also to Dima Kogan for patches, includig the one adding more
+    debug info.
+
+  [ Samuel Thibault ]
+  * Fix handling broken symlinks while renaming extension files
+    (closes: 903698).
+
+  [ Nicolas Dandrimont ]
+  * Support "Compatible release" version specifiers ("~=") in the requires
+    parser (closes: 913338).
+
+  [ Piotr Ożarowski ]
+  * pybuild.pm: follow python3-tox → tox (unfortunate) rename
+  * dh-python now provides dh-sequence-python3, dh-sequence-python2
+    and dh-sequence-pypy packages (to be used in debhelper >= 12)
+  * Update tests to use 3.7 as default/supported Python 3.X (closes: 914998)
+  * dh_pypy: add namespce support: new options: --namespace, --ignore-namespace
+    and parsing namespace_packages.txt by default (closes: 920899)
+  * dh_python3: move files from /usr/include/python3.X/ to
+    /usr/include/python3.Xm/ for Python 3.X >= 3.3 (closes: 923048)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 07 Mar 2019 12:59:50 +0100
+
 dh-python (3.20180927) unstable; urgency=medium
 
   [ Ondřej Nový ]
