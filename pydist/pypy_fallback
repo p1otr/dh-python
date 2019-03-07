@@ -6,12 +6,15 @@ argon2_cffi pypy-argon2
 asn1crypto pypy-asn1crypto
 atomicwrites pypy-atomicwrites
 attrs pypy-attr
+backports.functools_lru_cache pypy-backports.functools-lru-cache
 bdist_nsi pypy-bdist-nsi
 beautifulsoup4 pypy-bs4
+confget pypy-confget
 coverage pypy-coverage
 dulwich pypy-dulwich
 enum34 pypy-enum34
 fastimport pypy-fastimport
+feature_check pypy-feature-check
 flaky pypy-flaky
 funcsigs pypy-funcsigs
 genty pypy-genty
@@ -24,6 +27,7 @@ libusb1 pypy-libusb1
 more_itertools pypy-more-itertools
 mutagen pypy-mutagen
 packaging pypy-packaging
+pathlib2 pypy-pathlib2
 pluggy pypy-pluggy
 pretend pypy-pretend
 purl pypy-purl
@@ -36,10 +40,12 @@ pytest pypy-pytest
 pyzmq pypy-zmq
 rawkit pypy-rawkit
 rply pypy-rply
+scandir pypy-scandir
 schema pypy-schema
 setuptools_scm pypy-setuptools-scm
 simplejson pypy-simplejson
 six pypy-six
+soupsieve pypy-soupsieve
 sqlparse pypy-sqlparse
 stem pypy-stem
 vanguards vanguards
