@@ -1,4 +1,4 @@
-dh-python (3.20190307) UNRELEASED; urgency=medium
+dh-python (3.20190307) unstable; urgency=medium
 
   [ Antoine Beaupré ]
   * Ignore tilde version numbers which crash setuptools-scm (closes: 915408)
@@ -37,7 +37,7 @@ dh-python (3.20190307) UNRELEASED; urgency=medium
     /usr/include/python3.Xm/ for Python 3.X >= 3.3 (closes: 923048)
   * Standards-Version is 4.3.0 now (no changes needed)
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 07 Mar 2019 12:59:50 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 07 Mar 2019 22:00:17 +0100
 
 dh-python (3.20180927) unstable; urgency=medium
 
