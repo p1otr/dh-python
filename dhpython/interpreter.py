@@ -21,7 +21,7 @@
 import logging
 import os
 import re
-from os.path import join, split
+from os.path import exists, join, split
 from dhpython import INTERPRETER_DIR_TPLS, PUBLIC_DIR_RE, OLD_SITE_DIRS
 
 SHEBANG_RE = re.compile(r'''
@@ -550,9 +550,13 @@ class Interpreter:
 
     def _execute(self, command, version=None, cache=True):
         version = Version(version or self.version)
-        command = "{} -c '{}'".format(self._vstr(version), command.replace("'", "\'"))
+        exe = "{}{}".format(self.path, self._vstr(version))
+        command = "{} -c '{}'".format(exe, command.replace("'", "\'"))
         if cache and command in self.__class__._cache:
             return self.__class__._cache[command]
+        if not exists(exe):
+            raise Exception("cannot execute command due to missing "
+                            "interpreter: %s" % exe)
 
         output = execute(command)
         if output['returncode'] != 0:
