@@ -1,3 +1,10 @@
+dh-python (3.20190308) unstable; urgency=medium
+
+  * so2pyver: add a fallback to UTF-8 if locale.getdefaultlocale() returns None
+    closes: 923990
+
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 08 Mar 2019 08:23:50 +0100
+
 dh-python (3.20190307) unstable; urgency=medium
 
   [ Antoine Beaupré ]
