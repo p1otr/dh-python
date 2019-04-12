@@ -40,6 +40,13 @@ Interpreter = None
 class Version:
     def __init__(self, value=None, major=None, minor=None, micro=None,
                  releaselevel=None, serial=None):
+        """Construct a new instance.
+
+        >>> Version(major=0, minor=0, micro=0, releaselevel=0, serial=0)
+        Version('0.0')
+        >>> Version('0.0')
+        Version('0.0')
+        """
         if isinstance(value, (tuple, list)):
             value = '.'.join(str(i) for i in value)
         if isinstance(value, Version):
@@ -58,7 +65,7 @@ class Version:
             if name != 'releaselevel' and value is not None:
                 value = int(value)
             setattr(self, name, value)
-        if not self.major:
+        if self.major is None:
             raise ValueError('major component is required')
 
     def __str__(self):
