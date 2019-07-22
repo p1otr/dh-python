@@ -11,6 +11,7 @@ clean:
 	find . -name '*.py[co]' -delete
 	find . -name __pycache__ -type d | xargs rm -rf
 	rm -f .coverage $(MANPAGES)
+	rm -rf .pybuild
 
 dist:
 	git archive --format=tar --prefix=dh-python-$(VERSION)/ HEAD \
