@@ -1,4 +1,4 @@
-dh-python (3.20190722) UNRELEASED; urgency=medium
+dh-python (4.20190722) unstable; urgency=medium
 
   * Build-depend on python3-docutils to build manpages
     (reintroduces circular dependencies problem, but makes Python 2.X removal
@@ -6,7 +6,7 @@ dh-python (3.20190722) UNRELEASED; urgency=medium
   * Use debhelper compat level 12
   * Standards-Version is 4.4.0 now (no changes needed)
 
- -- Piotr Ożarowski <piotr@debian.org>  Mon, 22 Jul 2019 17:21:43 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 22 Jul 2019 17:40:36 +0200
 
 dh-python (3.20190308) unstable; urgency=medium
 
