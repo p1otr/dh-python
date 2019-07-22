@@ -1,6 +1,9 @@
 dh-python (3.20190722) UNRELEASED; urgency=medium
 
   * Standards-Version is 4.4.0 now (no changes needed)
+  * Build-depend on python3-docutils to build manpages
+    (reintroduces circular dependencies problem, but makes Python 2.X removal
+    a bit easier) 
 
  -- Piotr Ożarowski <piotr@debian.org>  Mon, 22 Jul 2019 17:21:43 +0200
 
