@@ -12,7 +12,7 @@ check:
 	grep -q '\-V 2.6 /usr/share/foo' debian/foo/usr/share/python/runtime.d/foo.rtupdate
 	grep -q '/usr/share/foo \-V 2.6' debian/foo/DEBIAN/postinst
 	# /env removed from shebang 
-	grep -q '#! /usr/bin/python' debian/foo/usr/share/bar/bar.py
+	grep -q '#! /usr/bin/python2' debian/foo/usr/share/bar/bar.py
 	# /local removed from shebang 
-	grep -q '#! /usr/bin/python' debian/foo/usr/share/foo/baz.py
+	grep -q '#! /usr/bin/python2' debian/foo/usr/share/foo/baz.py
 	grep -q '#! /usr/bin/python2.6' debian/foo/usr/share/foo/foo.py

@@ -42,7 +42,7 @@ class Dependencies:
         if impl == 'cpython3':
             self.ipkg_tpl = 'python3-dbg' if dbgpkg else 'python3'
         elif impl == 'cpython2':
-            self.ipkg_tpl = 'python-dbg' if dbgpkg else 'python'
+            self.ipkg_tpl = 'python2-dbg' if dbgpkg else 'python2'
         elif impl == 'pypy':
             self.ipkg_tpl = 'pypy-dbg' if dbgpkg else 'pypy'
             self.ipkg_vtpl = 'pypy%s-dbg' if dbgpkg else 'pypy%s'
@@ -55,6 +55,9 @@ class Dependencies:
 
         self.python_dev_in_bd = 'python-dev' in bdep or\
                                 'python-all-dev' in bdep or\
+                                'python2-dev' in bdep or\
+                                'python2-all-dev' in bdep or\
+                                'python2.7-dev' in bdep or\
                                 'python3-dev' in bdep or\
                                 'python3-all-dev' in bdep
 

@@ -25,7 +25,7 @@ PKG_PREFIX_MAP = {'cpython2': 'python',
                   'pypy': 'pypy'}
 
 # minimum version required for compile/clean scripts:
-MINPYCDEP = {'cpython2': 'python:any',
+MINPYCDEP = {'cpython2': 'python2:any',
              'cpython3': 'python3:any',
              'pypy': 'pypy'}
 
