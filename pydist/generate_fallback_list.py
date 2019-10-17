@@ -37,21 +37,22 @@ else:
     SOURCE = 'http://ftp.debian.org/debian/dists/unstable/main/Contents-amd64.gz'
 
 IGNORED_PKGS = {'python-setuptools', 'python3-setuptools', 'pypy-setuptools'}
-DEFAULTS = {
-    'cpython2': [
-        'python python\n',
-        'setuptools python-pkg-resources\n',
-        'wsgiref python (>= 2.5) | python-wsgiref\n',
-        'argparse python (>= 2.7) | python-argparse\n',
+OVERRIDES = {
+    'cpython2': {
+        'python': 'python',
+        'setuptools': 'python-pkg-resources',
+        'wsgiref': 'python (>= 2.5) | python-wsgiref',
+        'argparse': 'python (>= 2.7) | python-argparse',
         # not recognized due to .pth file (egg-info is in PIL/ and not in *-packages/)
-        'pil python-pil\n',
-        'Pillow python-pil\n'],
-    'cpython3': [
-        'pil python3-pil\n',
-        'Pillow python3-pil\n',
-        'setuptools python3-pkg-resources\n',
-        'argparse python3 (>= 3.2)\n'],
-    'pypy': []
+        'pil': 'python-pil',
+        'Pillow': 'python-pil'},
+    'cpython3': {
+        'pil': 'python3-pil',
+        'Pillow': 'python3-pil',
+        'pylint': 'pylint',
+        'setuptools': 'python3-pkg-resources',
+        'argparse': 'python3 (>= 3.2)'},
+    'pypy': {}
 }
 
 public_egg = re.compile(r'''
@@ -134,8 +135,11 @@ for line in data.splitlines():
 
 for impl, details in result.items():
     with open('{}_fallback'.format(impl), 'w') as fp:
-        result = DEFAULTS[impl]
-        if result:
-            fp.writelines(result)
-        result = sorted('{} {}\n'.format(egg, pkg) for egg, pkg in details.items())
-        fp.writelines(result)
+        overrides = OVERRIDES[impl]
+        lines = []
+        for egg, value in overrides.items():
+            lines.append('{} {}\n'.format(egg, value))
+        lines.extend(
+            '{} {}\n'.format(egg, pkg) for egg, pkg in details.items() if egg not in overrides
+        )
+        fp.writelines(sorted(lines))
