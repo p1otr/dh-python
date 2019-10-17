@@ -1,3 +1,12 @@
+dh-python (4.20191017) unstable; urgency=medium
+
+  * dh_python2: generate python2 dependencies instead of python ones
+    (to make "python" package removal a bit easier)
+  * generate pylint dependencies instead of pylint3 (Python 3.X files moved to
+    new binary package)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 17 Oct 2019 22:26:10 +0200
+
 dh-python (4.20190722) unstable; urgency=medium
 
   * Build-depend on python3-docutils to build manpages
