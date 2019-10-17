@@ -16,3 +16,6 @@ check:
 	#grep -q Depends:.*python2.6 debian/foo/DEBIAN/control
 	grep -q '\-V 2.6 /usr/share/foo' debian/foo/usr/share/python/runtime.d/foo.rtupdate
 	grep -q '/usr/share/foo \-V 2.6' debian/foo/DEBIAN/postinst
+	# python2 shebang
+	grep -q Depends:.*python2 debian/foo/DEBIAN/control
+	grep -q '#! /usr/bin/python2' debian/foo/usr/bin/egg

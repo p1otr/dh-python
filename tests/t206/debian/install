@@ -4,3 +4,4 @@ bar.py /usr/share/bar25/
 spam.py /usr/share/bar25/
 baz.py /usr/share/baz24/
 spam.py /usr/share/baz24/
+egg /usr/bin/
