@@ -197,7 +197,7 @@ class DebHelper:
                         if tpl not in data and tpl not in new_data:
                             new_data += "\n%s" % tpl
                 if new_data:
-                    data += '\n# Automatically added by {}:'.format(basename(argv[0])) +\
+                    data += '\n# Automatically added by {}'.format(basename(argv[0])) +\
                             '{}\n# End automatically added section\n'.format(new_data)
                     fp = open(fn, 'w', encoding='utf-8')
                     fp.write(data)
