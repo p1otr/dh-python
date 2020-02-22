@@ -15,4 +15,4 @@ Enhances: ${python3:Enhances}
 Breaks: ${python3:Breaks}
 Provides: ${python3:Provides}
 Description: foo to rule them all
- exemple package #1
+ example package #1

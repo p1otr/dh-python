@@ -466,7 +466,7 @@ class Interpreter:
             return
         if info['debug'] and self.debug is False:
             # do not change Python 2.X extensions already marked as debug
-            # (the other way arround is acceptable)
+            # (the other way around is acceptable)
             return
         if info['soabi'] and info['multiarch']:
             # already tagged, nothing we can do here

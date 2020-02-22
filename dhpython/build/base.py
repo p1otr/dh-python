@@ -114,9 +114,9 @@ class Base:
     @classmethod
     def is_usable(cls):
         for command in cls.REQUIRED_COMMANDS:
-            proces = Popen(['which', command], stdout=PIPE, stderr=PIPE)
-            out, err = proces.communicate()
-            if proces.returncode != 0:
+            process = Popen(['which', command], stdout=PIPE, stderr=PIPE)
+            out, err = process.communicate()
+            if process.returncode != 0:
                 raise Exception("missing command: %s" % command)
 
     def detect(self, context):

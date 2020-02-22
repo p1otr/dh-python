@@ -10,4 +10,4 @@ Package: foo
 Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends}
 Description: example 4 - shebangs
- exemple package #4 - shebang related tests
+ example package #4 - shebang related tests

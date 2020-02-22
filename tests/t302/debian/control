@@ -15,4 +15,4 @@ Enhances: ${python3:Enhances}
 Breaks: ${python3:Breaks}
 Provides: ${python3:Provides}
 Description: package with public and private Python 3 extension
- exemple package #3 - Python extensions
+ example package #3 - Python extensions

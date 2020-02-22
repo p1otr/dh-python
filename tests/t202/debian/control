@@ -15,4 +15,4 @@ Suggests: ${python:Suggests}
 Enhances: ${python:Enhances}
 Breaks: ${python:Breaks}
 Description: foo to rule them all
- exemple package #2
+ example package #2

@@ -16,4 +16,4 @@ Breaks: ${python:Breaks}
 Provides: ${python:Provides}
 XB-Python-Version: ${python:Versions}
 Description: foo to rule them all
- exemple package #3 - Python extension
+ example package #3 - Python extension

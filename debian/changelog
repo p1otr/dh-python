@@ -283,7 +283,7 @@ dh-python (2.20150728) unstable; urgency=medium
       Dimitri John Ledkov)
     - do not forward empty http{,s}_proxy env. vars - some tools do not like it
   * dh_python{2,3} and dh_pypy: skip packages with private modules that
-    do not have apropriate ${*:Depends} substvar in Depends
+    do not have appropriate ${*:Depends} substvar in Depends
     (-p/-N in debian/rules to select the right package is no longer needed,
     now you can select the right tool by adding substvar)
   * generate_fallback_list.py: add support for --ubuntu (requires
@@ -299,7 +299,7 @@ dh-python (2.20150719) unstable; urgency=medium
   * dh_python{2,3}:
     - remove empty directories (closes: 761028)
     - remove "test" and "tests" directories from dist-packages/
-      (packages should ship tests in /usr/share/ or under thier own namespace)
+      (packages should ship tests in /usr/share/ or under their own namespace)
   * Make private dir autoscript snippets output in a determinstic order
     (closes: 792436, thanks to Chris Lamb for the patch)
   * Clarify purpose of .pydist files (closes: 778633, thanks to Nikolaus Rath

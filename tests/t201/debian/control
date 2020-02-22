@@ -18,4 +18,4 @@ Breaks: foo,
 Provides: ${python:Provides}
 XB-Python-Version: ${python:Versions}
 Description: foo to rule them all
- exemple package #1
+ example package #1

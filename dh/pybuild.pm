@@ -224,7 +224,7 @@ sub pybuild_commands {
 	}
 	if (!@result) {
 		use Data::Dumper;
-		die('E: Please add apropriate interpreter package to Build-Depends, see pybuild(1) for details.' .
+		die('E: Please add appropriate interpreter package to Build-Depends, see pybuild(1) for details.' .
 		    'this: ' . Dumper($this) .
 		    'deps: ' . Dumper(\@deps));
 	}
