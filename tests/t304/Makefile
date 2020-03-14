@@ -13,3 +13,6 @@ check:
 	# /local removed from shebang 
 	grep -q '#! /usr/bin/python3' debian/foo/usr/share/foo/baz.py
 	grep -q '#! /usr/bin/python3.4' debian/foo/usr/share/foo/foo.py
+	# make sure /usr/share/doc/ is ignored
+	grep -q -v "py3compile -p foo /usr/share/doc"\
+		debian/foo/DEBIAN/postinst
