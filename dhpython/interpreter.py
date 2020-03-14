@@ -307,8 +307,8 @@ class Interpreter:
         >>> i = Interpreter('python')
         >>> i.cache_file('foo.py', Version('3.1'))
         'foo.pyc'
-        >>> i.cache_file('bar/foo.py', '3.7')
-        'bar/__pycache__/foo.cpython-37.pyc'
+        >>> i.cache_file('bar/foo.py', '3.8')
+        'bar/__pycache__/foo.cpython-38.pyc'
         """
         version = Version(version or self.version)
         last_char = 'o' if '-O' in self.options else 'c'
@@ -333,8 +333,8 @@ class Interpreter:
         """Return Python magic tag (used in __pycache__ dir to tag files).
 
         >>> i = Interpreter('python')
-        >>> i.magic_tag(version='3.7')
-        'cpython-37'
+        >>> i.magic_tag(version='3.8')
+        'cpython-38'
         """
         version = Version(version or self.version)
         if self.impl.startswith('cpython') and version << Version('3.2'):
@@ -376,8 +376,8 @@ class Interpreter:
 
         >>> Interpreter('python2.7').include_dir
         '/usr/include/python2.7'
-        >>> Interpreter('python3.7-dbg').include_dir
-        '/usr/include/python3.7dm'
+        >>> Interpreter('python3.8-dbg').include_dir
+        '/usr/include/python3.8d'
         """
         if self.impl == 'pypy':
             return '/usr/lib/pypy/include'
@@ -391,12 +391,16 @@ class Interpreter:
         result = '/usr/include/{}'.format(self.name)
         version = self.version
         if self.debug:
-            if version << '3.3':
+            if version >= '3.8':
+                result += 'd'
+            elif version << '3.3':
                 result += '_d'
             else:
                 result += 'dm'
         else:
-            if version >> '3.2':
+            if version >= '3.8':
+                pass
+            elif version >> '3.2':
                 result += 'm'
             elif version == '3.2':
                 result += 'mu'
@@ -408,9 +412,11 @@ class Interpreter:
 
         >>> Interpreter('python3.7').symlinked_include_dir
         '/usr/include/python3.7'
+        >>> Interpreter('python3.8').symlinked_include_dir
+
         """
         if self.impl in ('cpython2', 'pypy') or self.debug \
-           or self.version << '3.3':
+           or self.version >> '3.7' or self.version << '3.3':
             # these interpreters do not provide sumlink,
             # others provide it in libpython3.X-dev
             return
@@ -420,8 +426,7 @@ class Interpreter:
                 if result.endswith('m'):
                     return result[:-1]
                 else:
-                    # there's include_dir, but no "m"
-                    return
+                    return result
         except Exception:
             result = '/usr/include/{}'.format(self.name)
             log.debug('cannot get include path', exc_info=True)
@@ -509,7 +514,7 @@ class Interpreter:
 
         >>> Interpreter('python3.1').suggest_pkg_name('foo')
         'python3-foo'
-        >>> Interpreter('python3.7').suggest_pkg_name('foo_bar')
+        >>> Interpreter('python3.8').suggest_pkg_name('foo_bar')
         'python3-foo-bar'
         >>> Interpreter('python2.7-dbg').suggest_pkg_name('bar')
         'python-bar-dbg'
