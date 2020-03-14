@@ -72,9 +72,10 @@ def main(cfg):
 
         # Set _PYTHON_HOST_PLATFORM to ensure debugging symbols on, f.e. i386
         # emded a constant name regardless of the 32/64-bit kernel.
-        env.setdefault(
-            '_PYTHON_HOST_PLATFORM',
-            '{DEB_HOST_ARCH_OS}-{DEB_HOST_ARCH}'.format(**arch_data))
+        host_platform = '{DEB_HOST_ARCH_OS}-{DEB_HOST_ARCH}'.format(**arch_data)
+        # it's not called amd64 in Python
+        host_platform = host_platform.replace('amd64', 'x86_64')
+        env.setdefault( '_PYTHON_HOST_PLATFORM', host_platform)
 
         if arch_data['DEB_BUILD_ARCH'] != arch_data['DEB_HOST_ARCH']:
             # support cross compiling Python 3.X extensions, see #892931
