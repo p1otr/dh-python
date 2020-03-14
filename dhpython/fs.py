@@ -182,8 +182,7 @@ class Scan:
                 self.current_private_dir = self.check_private_dir(root)
                 if not self.current_private_dir:
                     # i.e. not a public dir and not a private dir
-                    is_bin_dir = self.is_bin_dir(root)
-                    if is_bin_dir:
+                    if self.is_bin_dir(root):
                         self.handle_bin_dir(root, file_names)
                     else:  # not a public, private or bin directory
                         # continue with a subdirectory
