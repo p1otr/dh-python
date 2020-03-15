@@ -97,6 +97,9 @@ TESTS
     --test-nose
         use nose module in test step, remember to add python-nose and/or
         python3-nose to Build-Depends
+    --test-nose2
+        use nose2 module in test step, remember to add python-nose2 and/or
+        python3-nose2 to Build-Depends
     --test-pytest
         use pytest module in test step, remember to add python-pytest and/or
         python3-pytest to Build-Depends

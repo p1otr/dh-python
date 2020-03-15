@@ -477,6 +477,9 @@ def parse_args(argv):
     tests.add_argument('--test-nose', action='store_true',
                        default=environ.get('PYBUILD_TEST_NOSE') == '1',
                        help='use nose module in --test step')
+    tests.add_argument('--test-nose2', action='store_true',
+                       default=environ.get('PYBUILD_TEST_NOSE2') == '1',
+                       help='use nose2 module in --test step')
     tests.add_argument('--test-pytest', action='store_true',
                        default=environ.get('PYBUILD_TEST_PYTEST') == '1',
                        help='use pytest module in --test step')
@@ -536,7 +539,7 @@ def parse_args(argv):
             versions.extend(version.split())
         args.versions = versions
 
-    if args.test_nose or args.test_pytest or args.test_tox\
+    if args.test_nose or rgs.test_nose2 or args.test_pytest or args.test_tox\
        or args.system == 'custom':
         args.custom_tests = True
     else:

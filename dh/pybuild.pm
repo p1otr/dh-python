@@ -147,18 +147,23 @@ sub pybuild_commands {
 		my @pypyopts = ('pybuild', "--$step");
 
 		if ($step == 'test' and $ENV{'PYBUILD_TEST_PYTEST'} ne '1' and
+		       			$ENV{'PYBUILD_TEST_NOSE2'} ne '1' and
 		       			$ENV{'PYBUILD_TEST_NOSE'} ne '1' and
 		       			$ENV{'PYBUILD_TEST_TOX'} ne '1') {
 			if (grep {$_ eq 'python-tox'} @deps and $ENV{'PYBUILD_TEST_TOX'} ne '0') {
 				push @py2opts, '--test-tox'}
 			elsif (grep {$_ eq 'python-pytest'} @deps and $ENV{'PYBUILD_TEST_PYTEST'} ne '0') {
 				push @py2opts, '--test-pytest'}
+			elsif (grep {$_ eq 'python-nose2'} @deps and $ENV{'PYBUILD_TEST_NOSE2'} ne '0') {
+				push @py2opts, '--test-nose2'}
 			elsif (grep {$_ eq 'python-nose'} @deps and $ENV{'PYBUILD_TEST_NOSE'} ne '0') {
 				push @py2opts, '--test-nose'}
 			if (grep {$_ eq 'tox'} @deps and $ENV{'PYBUILD_TEST_TOX'} ne '0') {
 				push @py3opts, '--test-tox'}
 			elsif (grep {$_ eq 'python3-pytest'} @deps and $ENV{'PYBUILD_TEST_PYTEST'} ne '0') {
 				push @py3opts, '--test-pytest'}
+			elsif (grep {$_ eq 'python3-nose2'} @deps and $ENV{'PYBUILD_TEST_NOSE2'} ne '0') {
+				push @py3opts, '--test-nose2'}
 			elsif (grep {$_ eq 'python3-nose'} @deps and $ENV{'PYBUILD_TEST_NOSE'} ne '0') {
 				push @py3opts, '--test-nose'}
 			if (grep {$_ eq 'pypy-tox'} @deps and $ENV{'PYBUILD_TEST_TOX'} ne '0') {
