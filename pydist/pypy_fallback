@@ -14,7 +14,6 @@ funcsigs pypy-funcsigs
 hypothesis pypy-hypothesis
 importlib_metadata pypy-importlib-metadata
 ipaddress pypy-ipaddress
-libusb1 pypy-libusb1
 more_itertools pypy-more-itertools
 mutagen pypy-mutagen
 packaging pypy-packaging
@@ -23,6 +22,7 @@ pluggy pypy-pluggy
 pretend pypy-pretend
 py pypy-py
 pyasn1 pypy-pyasn1
+pyfakefs pypy-pyfakefs
 pyparsing pypy-pyparsing
 pytest pypy-pytest
 rawkit pypy-rawkit
