@@ -51,6 +51,7 @@ def main(cfg):
     env = environ.copy()
     # set some defaults in environ to make the build reproducible
     env.setdefault('LC_ALL', 'C.UTF-8')
+    env.setdefault('CCACHE_DIR', abspath('.pybuild/ccache'))
     env.setdefault('no_proxy', 'localhost')
     if 'http_proxy' not in env:
         env['http_proxy'] = 'http://127.0.0.1:9/'
