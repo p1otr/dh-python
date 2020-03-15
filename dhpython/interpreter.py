@@ -426,7 +426,8 @@ class Interpreter:
                 if result.endswith('m'):
                     return result[:-1]
                 else:
-                    return result
+                    # there's include_dir, but no "m"
+                    return
         except Exception:
             result = '/usr/include/{}'.format(self.name)
             log.debug('cannot get include path', exc_info=True)
