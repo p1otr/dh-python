@@ -65,15 +65,16 @@ def fix_locations(package, interpreter, versions, options):
                     pass
 
         # move files from /usr/include/pythonX.Y/ to …/pythonX.Ym/
-        srcdir = "debian/%s%s" % (package, interpreter.symlinked_include_dir)
-        if srcdir and isdir(srcdir):
-            dstdir = "debian/%s%s" % (package, interpreter.include_dir)
-            log.debug('moving files from %s to %s', srcdir, dstdir)
-            share_files(srcdir, dstdir, interpreter, options)
-            try:
-                os.removedirs(srcdir)
-            except OSError:
-                pass
+        if interpreter.symlinked_include_dir:
+            srcdir = "debian/%s%s" % (package, interpreter.symlinked_include_dir)
+            if srcdir and isdir(srcdir):
+                dstdir = "debian/%s%s" % (package, interpreter.include_dir)
+                log.debug('moving files from %s to %s', srcdir, dstdir)
+                share_files(srcdir, dstdir, interpreter, options)
+                try:
+                    os.removedirs(srcdir)
+                except OSError:
+                    pass
 
 
 def share_files(srcdir, dstdir, interpreter, options):

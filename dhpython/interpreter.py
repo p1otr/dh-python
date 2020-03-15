@@ -417,7 +417,7 @@ class Interpreter:
         """
         if self.impl in ('cpython2', 'pypy') or self.debug \
            or self.version >> '3.7' or self.version << '3.3':
-            # these interpreters do not provide sumlink,
+            # these interpreters do not provide symlink,
             # others provide it in libpython3.X-dev
             return
         try:
