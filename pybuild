@@ -75,12 +75,12 @@ def main(cfg):
         host_platform = '{DEB_HOST_ARCH_OS}-{DEB_HOST_ARCH}'.format(**arch_data)
         # it's not called amd64 in Python
         host_platform = host_platform.replace('amd64', 'x86_64')
-        env.setdefault( '_PYTHON_HOST_PLATFORM', host_platform)
+        env.setdefault('_PYTHON_HOST_PLATFORM', host_platform)
 
         if arch_data['DEB_BUILD_ARCH'] != arch_data['DEB_HOST_ARCH']:
             # support cross compiling Python 3.X extensions, see #892931
             env.setdefault('_PYTHON_SYSCONFIGDATA_NAME',
-                           ('_sysconfigdata_m_{DEB_HOST_ARCH_OS}'
+                           ('_sysconfigdata__{DEB_HOST_ARCH_OS}'
                             '_{DEB_HOST_MULTIARCH}').format(**arch_data))
 
     if cfg.system:
@@ -232,6 +232,16 @@ def main(cfg):
             pp.insert(0, ('/usr/lib/python{0}/plat-{1[DEB_HOST_MULTIARCH]}'
                          ).format(version, arch_data))
         env['PYTHONPATH'] = ':'.join(pp)
+        # cross compilation support for Python <= 3.8 (see above)
+        if version.major == 3:
+            name = '_PYTHON_SYSCONFIGDATA_NAME'
+            value = env.get(name, context['ENV'].get(name, ''))
+            if version << '3.8' and value.startswith('_sysconfigdata_')\
+               and not value.startswith('_sysconfigdata_m'):
+                value = env[name] = "_sysconfigdata_m%s" % value[15:]
+            # update default from main() for -dbg interpreter
+            if value and ipreter.debug and not value.startswith('_sysconfigdata_d'):
+                env[name] = "_sysconfigdata_d%s" % value[15:]
         args['ENV'] = env
 
         if not exists(args['build_dir']):
