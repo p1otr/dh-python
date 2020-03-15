@@ -216,7 +216,8 @@ def main(cfg):
             'home_dir': abspath(home_dir)})
         if interpreter == 'pypy':
             args['install_dir'] = '/usr/lib/pypy/dist-packages/'
-        pp = context['ENV'].get('PYTHONPATH')
+        env = dict(args.get('ENV', {}))
+        pp = env.get('PYTHONPATH', context['ENV'].get('PYTHONPATH'))
         pp = pp.split(':') if pp else []
         if step in {'build', 'test'}:
             if step == 'test':
@@ -230,7 +231,8 @@ def main(cfg):
             arch_data.get('DEB_BUILD_ARCH') != arch_data.get('DEB_HOST_ARCH')):
             pp.insert(0, ('/usr/lib/python{0}/plat-{1[DEB_HOST_MULTIARCH]}'
                          ).format(version, arch_data))
-        args['PYTHONPATH'] = ':'.join(pp)
+        env['PYTHONPATH'] = ':'.join(pp)
+        args['ENV'] = env
 
         if not exists(args['build_dir']):
             makedirs(args['build_dir'])
@@ -257,11 +259,9 @@ def main(cfg):
     def run(func, interpreter, version, context):
         step = func.__func__.__name__
         args = get_args(context, step, version, interpreter)
-        if 'PYTHONPATH' in args:
-            env = dict(context['ENV'])
-            env['PYTHONPATH'] = args['PYTHONPATH']
-        else:
-            env = context['ENV']
+        env = dict(context['ENV'])
+        if 'ENV' in args:
+            env.update(args['ENV'])
 
         before_cmd = get_option('before_{}'.format(step), interpreter, version)
         if before_cmd:

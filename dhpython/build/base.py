@@ -209,11 +209,9 @@ class Base:
         if log_file is False and self.cfg.really_quiet:
             log_file = None
         command = command.format(**args)
-        if 'PYTHONPATH' in args:
-            env = dict(context['ENV'])
-            env['PYTHONPATH'] = args['PYTHONPATH']
-        else:
-            env = context['ENV']
+        env = dict(context['ENV'])
+        if 'ENV' in args:
+            env.update(args['ENV'])
         log.info(command)
         return execute(command, context['dir'], env, log_file)
 
