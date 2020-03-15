@@ -1,3 +1,22 @@
+dh-python (4.20200315) unstable; urgency=medium
+
+  [ Piotr Ożarowski ]
+  * Adjust for Python 3.8
+    - fix setting _PYTHON_SYSCONFIGDATA_NAME (closes: 948320)
+    - update tests (closes: 952122)
+  * Add dh-python to Depends in autopkgtest (closes: 947789)
+  * pybuild: add support for nose2. Enable by adding python3-nose2 to
+    Build-Depends or --test-nose2 option or PYBUILD_TEST_NOSE2=1 env. var.
+    (closes: 950912)
+
+  [ Simon Ruggier ]
+  * Fix a problem in handling ranges with no minimum
+  
+  [ Matthias Klose ]
+  * Fix setting _PYTHON_HOST_PLATFORM (closes: 948319)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 15 Mar 2020 20:46:09 +0100
+
 dh-python (4.20191017) unstable; urgency=medium
 
   * dh_python2: generate python2 dependencies instead of python ones
