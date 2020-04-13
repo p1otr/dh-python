@@ -5,6 +5,7 @@ dh-python (4.20200410) UNRELEASED; urgency=medium
   * Update dh-python for removal of python3.7 from supported python3 versions
     (closes: #956190)
     - Drop python3.7 from dhpython/_versions.py supported versions
+    - Disable obsolete doctest in dhpython/interpreter.py
 
  -- Scott Kitterman <scott@kitterman.com>  Fri, 10 Apr 2020 15:45:14 -0400
 

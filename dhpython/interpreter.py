@@ -410,8 +410,8 @@ class Interpreter:
     def symlinked_include_dir(self):
         """Return path to symlinked include directory.
 
-        >>> Interpreter('python3.7').symlinked_include_dir
-        '/usr/include/python3.7'
+        #>>> Interpreter('python3.7').symlinked_include_dir
+        #'/usr/include/python3.7'
         >>> Interpreter('python3.8').symlinked_include_dir
 
         """
