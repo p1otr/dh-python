@@ -27,7 +27,7 @@ from subprocess import Popen, PIPE
 
 SUPPORTED = {
     'cpython2': [(2, 7)],
-    'cpython3': [(3, 7), (3, 8)],
+    'cpython3': [(3, 8)],
     'pypy': [(4, 0)]}
 DEFAULT = {
     'cpython2': (2, 7),
