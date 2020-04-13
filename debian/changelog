@@ -1,3 +1,10 @@
+dh-python (4.20200410) UNRELEASED; urgency=medium
+
+  * Add new pybuild plugin to enable flit built packages to build using
+    pyproject.toml instead of distutils/setuptools setup.py
+
+ -- Scott Kitterman <scott@kitterman.com>  Fri, 10 Apr 2020 15:45:14 -0400
+
 dh-python (4.20200315) unstable; urgency=medium
 
   [ Piotr Ożarowski ]

@@ -227,6 +227,38 @@ disable examples
   action for all python3 interpreters, all actions for version 2.4, and
   all actions for pypy
 
+
+PLUGINS
+-------
+pybuild supports multiple build system plugins.  By default it is
+automatically selected.  These systems are currently supported::
+
+* distutils (most commonly used)
+* cmake
+* flit
+* custom
+
+flit plugin
+~~~~~~~~~~~
+The flit plugin can be used to build Debian packages based on PEP 517
+metadata in `pyproject.toml` when flit is the upstream build system.  These
+can be identified by the presence of a `build-backend = "flit_core.buildapi"`
+element in `pyproject.toml`.  The flit plugin only supports python3.  To use
+this plugin::
+
+* build depend on `flit` and either
+* build depend on `python3-toml` so flit can be automatically selected or
+* add `export PYBUILD_SYSTEM=flit` to debian/rules to manually select
+
+debian/rules file example::
+
+    #! /usr/bin/make -f
+    export PYBUILD_NAME=foo
+    export PYBUILD_SYSTEM=flit (needed if python3-toml is not installed)
+    %:
+    	dh $@ --with python3 --buildsystem=pybuild
+
+
 SEE ALSO
 ========
 * dh_python2(1)
