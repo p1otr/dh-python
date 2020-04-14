@@ -4,5 +4,5 @@ Depends: python-all-dev, python3-all-dev, python-all-dbg, python3-all-dbg, pypy,
 
 Tests: nosetests
 Depends: python3-nose, python-all, python-all-dbg, python3-all, python3-all-dbg, pypy,
-         dh-python
+         dh-python, flit
 Restrictions: allow-stderr

@@ -30,7 +30,11 @@ try:
 except ModuleNotFoundError:
     # Plugin still works, only needed for autodetection
     pass
-from flit.install import Installer
+try:
+    from flit.install import Installer
+except ImportError:
+    Installer = object
+
 from dhpython.build.base import Base
 
 log = logging.getLogger('dhpython')
@@ -94,6 +98,9 @@ class BuildSystem(Base):
         :return: 0 <= certainty <= 100
         :rtype: int
         """
+        if Installer is object:
+            return 0
+
         result = super().detect(context)
         try:
             if toml.decoder.load(
