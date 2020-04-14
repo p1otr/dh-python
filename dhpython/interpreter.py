@@ -408,13 +408,7 @@ class Interpreter:
 
     @property
     def symlinked_include_dir(self):
-        """Return path to symlinked include directory.
-
-        #>>> Interpreter('python3.7').symlinked_include_dir
-        #'/usr/include/python3.7'
-        >>> Interpreter('python3.8').symlinked_include_dir
-
-        """
+        """Return path to symlinked include directory."""
         if self.impl in ('cpython2', 'pypy') or self.debug \
            or self.version >> '3.7' or self.version << '3.3':
             # these interpreters do not provide symlink,
