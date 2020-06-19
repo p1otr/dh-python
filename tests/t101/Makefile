@@ -1,11 +1,6 @@
 #!/usr/bin/make -f
 include ../common.mk
 
-all: run check
-
-run: clean
-	dpkg-buildpackage -b -us -uc
-
 check:
 	test -f debian/pypy-foo/usr/lib/pypy/dist-packages/foo.py
 	test ! -d debian/pypy-foo/usr/lib/pypy/site-packages

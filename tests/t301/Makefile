@@ -1,12 +1,6 @@
 #!/usr/bin/make -f
 include ../common.mk
 
-all: run check
-
-
-run: clean
-	dpkg-buildpackage -b -us -uc
-
 check:
 	grep -qe "Depends: .*python3\(:any\)\? (<< 3.9)" debian/python3-foo/DEBIAN/control
 	grep -q "Recommends: .*python3-mako" debian/python3-foo/DEBIAN/control
