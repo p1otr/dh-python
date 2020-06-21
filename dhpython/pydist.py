@@ -1,4 +1,4 @@
-# Copyright © 2010-2013 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2010-2020 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,11 @@ import re
 from functools import partial
 from os.path import exists, isdir, join
 from subprocess import PIPE, Popen
+
+if __name__ == '__main__':
+    import sys
+    sys.path.append(os.path.abspath(join(os.path.dirname(__file__), '..')))
+
 from dhpython import PKG_PREFIX_MAP, PUBLIC_DIR_RE,\
     PYDIST_DIRS, PYDIST_OVERRIDES_FNAMES, PYDIST_DPKG_SEARCH_TPLS
 from dhpython.version import get_requested_versions, Version
@@ -387,3 +392,18 @@ def _translate_op(operator):
     '<='
     """
     return DEB_VERS_OPS.get(operator, operator)
+
+
+if __name__ == '__main__':
+    impl = os.environ.get('IMPL', 'cpython3')
+    for i in sys.argv[1:]:
+        if os.path.isfile(i):
+            try:
+                print(', '.join(parse_pydep(impl, i)['depends']))
+            except Exception as err:
+                log.error('%s: cannot guess (%s)', i, err)
+        else:
+            try:
+                print(guess_dependency(impl, i) or '')
+            except Exception as err:
+                log.error('%s: cannot guess (%s)', i, err)
