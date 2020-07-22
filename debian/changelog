@@ -1,11 +1,16 @@
 dh-python (4.20200413) UNRELEASED; urgency=medium
 
+  [ Scott Kitterman ]
   * Add new pybuild plugin to enable flit built packages to build using
     pyproject.toml instead of distutils/setuptools setup.py
   * Update dh-python for removal of python3.7 from supported python3 versions
     (closes: #956190)
     - Drop python3.7 from dhpython/_versions.py supported versions
     - Disable obsolete doctest in dhpython/interpreter.py
+
+  [ Piotr Ożarowski ]
+  * pybuild.pm: add support for python2.7 and python2.7-dbg in Build-Depends
+    (closes: 949372), note that python2 and python2-dbg are not supported
 
  -- Scott Kitterman <scott@kitterman.com>  Fri, 10 Apr 2020 15:45:14 -0400
 

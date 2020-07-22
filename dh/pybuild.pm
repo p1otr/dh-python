@@ -193,10 +193,11 @@ sub pybuild_commands {
 			}
 		}
 		if ($this->{pydef}) {
-			if (not $pyall and grep {$_ eq 'python' or $_ eq 'python-dev'} @deps) {
+			if (not $pyall and grep {$_ eq 'python' or $_ eq 'python-dev' or
+				       		 $_ eq 'python2.7' or $_ eq 'python2.7-dev'} @deps) {
 				push @result, [@py2opts, '-i', $i, '-p', $this->{pydef}, @options];
 			}
-			if (not $pyalldbg and grep {$_ eq 'python-dbg'} @deps) {
+			if (not $pyalldbg and grep {$_ eq 'python-dbg' or $_ eq 'python2.7-dbg'} @deps) {
 				push @result, [@py2opts, '-i', "$i-dbg", '-p', $this->{pydef}, @options];
 			}
 		}
