@@ -19,13 +19,14 @@ DESCRIPTION
 QUICK GUIDE FOR MAINTAINERS
 ---------------------------
 
+ * build depend on dh-python
+ * build-depend on python3 (Python application) or python3-all (Python module)
+   or python3-all-dev (Python extension),
  * if necessary, describe supported Python 3 versions via X-Python3-Version field
    in debian/control,
- * build depend on dh-python
- * build-depend on python3 or python3-all or python3-all-dev,
- * build module/application using its standard build system,
-   remember to build extensions for all supported Python 3 versions (loop over
-   ``py3versions -vr``),
+ * build module/application using its standard build system (pybuild wrapper
+   recommended, see pybuild.1 for more details), remember to build extensions
+   for all supported Python 3 versions (loop over ``py3versions -vr``),
  * install files to the *standard* locations, add `--install-layout=deb` to
    setup.py's install command if your package is using distutils,
  * add `python3` to dh's --with option, or:
