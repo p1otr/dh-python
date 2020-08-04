@@ -24,7 +24,9 @@ Provides: dh-sequence-python3, dh-sequence-pypy, dh-sequence-python2
 Suggests: libdpkg-perl, dpkg-dev
 Breaks:
 # due to /usr/bin/dh_python3 and debhelper files
- python3 (<< 3.3.2-4~)
+ python3 (<< 3.3.2-4~),
+# due to /usr/bin/dh_python2 and debhelper files
+ python
 Replaces: python3 (<< 3.3.2-4~)
 Description: Debian helper tools for packaging Python libraries and applications
  This package contains:

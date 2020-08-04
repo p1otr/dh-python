@@ -1,4 +1,4 @@
-dh-python (4.20200413) UNRELEASED; urgency=medium
+dh-python (4.20200413) unstable; urgency=medium
 
   [ Scott Kitterman ]
   * Add new pybuild plugin to enable flit built packages to build using
@@ -11,8 +11,10 @@ dh-python (4.20200413) UNRELEASED; urgency=medium
   [ Piotr Ożarowski ]
   * pybuild.pm: add support for python2.7 and python2.7-dbg in Build-Depends
     (closes: 949372), note that python2 and python2-dbg are not supported
+  * ship Python 2's debhelper files (postinst-pycompile, prerm-pyclean and
+    python2.pm) now that python package is no longer available (closes: 966832)
 
- -- Scott Kitterman <scott@kitterman.com>  Fri, 10 Apr 2020 15:45:14 -0400
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 04 Aug 2020 09:52:13 +0200
 
 dh-python (4.20200315) unstable; urgency=medium
 
