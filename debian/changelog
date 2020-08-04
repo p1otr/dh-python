@@ -13,6 +13,7 @@ dh-python (4.20200413) unstable; urgency=medium
     (closes: 949372), note that python2 and python2-dbg are not supported
   * ship Python 2's debhelper files (postinst-pycompile, prerm-pyclean and
     python2.pm) now that python package is no longer available (closes: 966832)
+  * Standards-Version is 4.5.0 now (no changes needed)
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 04 Aug 2020 09:52:13 +0200
 
