@@ -8,7 +8,8 @@ export DEBPYTHON3_DEFAULT=3.8
 export DEBPYTHON3_SUPPORTED=3.7,3.8
 
 # enable or disable tests here:
-TESTS := test101 test201 test202 test203 test204 test205 test206 test207 test301 test302 test303 test304
+#TESTS := test101 test201 test202 test203 test204 test205 test206 test207 test301 test302 test303 test304
+TESTS := test101 test301 test302 test303 test304
 
 all: $(TESTS)
 
