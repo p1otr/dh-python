@@ -18,11 +18,9 @@ VirtualMailManager vmm
 archivemail archivemail
 argparse python (>= 2.7) | python-argparse
 brian python-brian
-chirp chirp
 cinfony python-cinfony
 closure_linter closure-linter
 configparser python-configparser
-coverage python-coverage
 dbus_python python-dbus
 dhcpy6d dhcpy6d
 dipy python-dipy
@@ -55,7 +53,6 @@ nose python-nose
 numpy python-numpy
 olefile python-olefile
 openopt python-openopt
-paleomix paleomix
 peframe peframe
 pglistener pglistener
 piggyphoto python-piggyphoto
@@ -73,9 +70,7 @@ pygame python-pygame
 pygame_sdl2 python-pygame-sdl2
 pymetar python-pymetar
 pynast pynast
-pytc python-pytc
 python python
-python_ntlm python-ntlm
 python_passfd python-passfd
 python_unshare python-unshare
 pytz python-tz
@@ -96,6 +91,5 @@ vizigrep vizigrep
 vland vland
 vmdebootstrap vmdebootstrap
 voluptuous python-voluptuous
-wicd python-wicd
 wsgiref python (>= 2.5) | python-wsgiref
 xxdiff_scripts xxdiff-scripts
