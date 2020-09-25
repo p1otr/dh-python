@@ -1,9 +1,9 @@
-dh-python (4.20200805) UNRELEASED; urgency=medium
+dh-python (4.20200925) unstable; urgency=medium
 
   * Add Breaks/Replaces python2 to ease upgrades with python2 (closes: 968046)
   * Disable Python 2.X tests by default (closes: 968193)
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 25 Sep 2020 12:28:56 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 25 Sep 2020 12:35:52 +0200
 
 dh-python (4.20200804) unstable; urgency=medium
 
