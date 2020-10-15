@@ -103,8 +103,8 @@ class BuildSystem(Base):
 
         result = super().detect(context)
         try:
-            if toml.decoder.load(
-                    'pyproject.toml')['build-system']['build-backend'] == \
+            pyproject = toml.decoder.load('pyproject.toml')
+            if pyproject.get('build-system', {}).get('build-backend') == \
                     'flit_core.buildapi':
                 result += 45
             else:
