@@ -1,7 +1,6 @@
 Wand pypy-wand
 appdirs pypy-appdirs
 asn1crypto pypy-asn1crypto
-configparser pypy-configparser
 coverage pypy-coverage
 enum34 pypy-enum34
 fastimport pypy-fastimport
