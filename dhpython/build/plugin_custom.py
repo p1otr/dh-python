@@ -27,6 +27,7 @@ class BuildSystem(Base):
 
     @shell_command
     def clean(self, context, args):
+        super(BuildSystem, self).clean(context, args)
         return args['args']
 
     @shell_command
