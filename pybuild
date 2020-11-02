@@ -333,6 +333,7 @@ def main(cfg):
         step = func.__func__.__name__
         if step == 'test' and nocheck:
             exit(0)
+        failure = False
         for i in cfg.interpreter:
             ipreter = Interpreter(interpreter.format(version=versions[0]))
             iversions = build_sorted(versions, impl=ipreter.impl)
@@ -351,7 +352,11 @@ def main(cfg):
                 except Exception as err:
                     log.error('%s: plugin %s failed with: %s',
                               step, plugin.NAME, err, exc_info=cfg.verbose)
-                    exit(13)
+                    # try to build/test other interpreters/versions even if
+                    # one of them fails to make build logs more verbose:
+                    failure = True
+                    if step not in ('build', 'test'):
+                        exit(13)
                 if step == 'install':
                     ext_destdir = get_option('ext_destdir', i, version)
                     if ext_destdir:
@@ -359,6 +364,9 @@ def main(cfg):
                                             get_option('ext_pattern', i, version),
                                             get_option('ext_sub_pattern', i, version),
                                             get_option('ext_sub_repl', i, version))
+        if failure:
+            # exit with a non-zero return code if at least one build/test failed
+            exit(13)
         exit(0)
 
     ### all functions for interpreters in batches mode ###
