@@ -70,6 +70,7 @@ class BuildSystem(Base):
                       'requirements.txt': 1,
                       'PKG-INFO': 10,
                       '*.egg-info': 10}
+    CLEAN_FILES = Base.CLEAN_FILES | {'build'}
 
     def detect(self, context):
         result = super(BuildSystem, self).detect(context)
@@ -83,8 +84,6 @@ class BuildSystem(Base):
     @create_pydistutils_cfg
     def clean(self, context, args):
         super(BuildSystem, self).clean(context, args)
-        dpath = join(context['dir'], 'build')
-        isdir(dpath) and rmtree(dpath)
         if exists(args['interpreter'].binary()):
             return '{interpreter} {setup_py} clean {args}'
         return 0  # no need to invoke anything

@@ -84,6 +84,7 @@ class BuildSystem(Base):
     SUPPORTED_INTERPRETERS = {'python3', 'python{version}'}
     REQUIRED_FILES = ['pyproject.toml']
     OPTIONAL_FILES = {}
+    CLEAN_FILES = Base.CLEAN_FILES | {'build'}
 
     def detect(self, context):
         """Return certainty level that this plugin describes the right build
@@ -122,8 +123,6 @@ class BuildSystem(Base):
 
     def clean(self, context, args):
         super().clean(context, args)
-        dpath = join(context['dir'], 'build')
-        isdir(dpath) and shutil.rmtree(dpath)
         if exists(args['interpreter'].binary()):
             log.debug("removing '%s' (and everything under it)",
                       args['build_dir'])

@@ -104,6 +104,8 @@ class Base:
     OPTIONAL_FILES = {}
     SUPPORTED_INTERPRETERS = {'python', 'python3', 'python-dbg', 'python3-dbg',
                               'python{version}', 'python{version}-dbg'}
+    # files and directories to remove during clean step (other than .pyc):
+    CLEAN_FILES = {'.pytest_cache', '.coverage'}
 
     def __init__(self, cfg):
         self.cfg = cfg
@@ -164,6 +166,19 @@ class Base:
                     rmtree(tox_dir)
                 except Exception:
                     log.debug('cannot remove %s', tox_dir)
+
+        for fn in self.CLEAN_FILES:
+            path = join(context['dir'], fn)
+            if isdir(path):
+                try:
+                    rmtree(path)
+                except Exception:
+                    log.debug('cannot remove %s', path)
+            elif exists(path):
+                try:
+                    remove(path)
+                except Exception:
+                    log.debug('cannot remove %s', path)
 
         for root, dirs, file_names in walk(context['dir']):
             for name in dirs:

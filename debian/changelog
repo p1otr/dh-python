@@ -4,6 +4,9 @@ dh-python (4.20201102) UNRELEASED; urgency=medium
     file (closes: 97052)
   * Try to build/test other interpreters/versions even if one of them fails to
     make build logs a bit more verbose (closes: 943334)
+  * Remove .pytest_cache and .coverage in pybuild's clean step (closes: 967898)
+    Custom plugins now invoke Base.clean() as well (i.e. PyTest files,
+    build dir and all .pyc files are removed like in other plugins)
 
  -- Piotr Ożarowski <piotr@debian.org>  Mon, 02 Nov 2020 21:40:03 +0100
 
