@@ -50,9 +50,7 @@ def create_pydistutils_cfg(func):
                          'install-layout=deb\n',
                          'install-scripts=$base/bin\n',
                          'install-lib={}\n'.format(args['install_dir']),
-                         'prefix=/usr\n',
-                         '[easy_install]\n',
-                         'allow_hosts=None\n']
+                         'prefix=/usr\n']
                 log.debug('pydistutils config file:\n%s', ''.join(lines))
                 fp.writelines(lines)
         context['ENV']['HOME'] = args['home_dir']
