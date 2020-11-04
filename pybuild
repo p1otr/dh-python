@@ -47,6 +47,8 @@ def main(cfg):
     nocheck = False
     if 'DEB_BUILD_OPTIONS' in environ:
         nocheck = 'nocheck' in environ['DEB_BUILD_OPTIONS']
+    if not nocheck and 'DEB_BUILD_PROFILES' in environ:
+        nocheck = 'nocheck' in environ['DEB_BUILD_PROFILES']
 
     env = environ.copy()
     # set some defaults in environ to make the build reproducible

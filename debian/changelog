@@ -1,3 +1,10 @@
+dh-python (4.20201104) UNRELEASED; urgency=medium
+
+  * DEB_BUILD_PROFILES=nocheck will skip test step in pybuild
+    (just like DEB_BUILD_OPTIONS=nocheck already does)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
+
 dh-python (4.20201102) unstable; urgency=medium
 
   [ Antonio Terceiro ]
