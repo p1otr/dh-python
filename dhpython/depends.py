@@ -187,7 +187,7 @@ class Dependencies:
                     log.info('dependency on %s (from shebang) ignored'
                              ' - it\'s not supported anymore', vtpl % v)
             # /usr/bin/python{,3} shebang → add python{,3} to Depends
-            if any(True for i in details.get('shebangs', []) if i.version is None):
+            if any(True for i in details.get('shebangs', []) if i.version is None or i.version.minor is None):
                 self.depend(tpl_ma)
 
             extensions = False
