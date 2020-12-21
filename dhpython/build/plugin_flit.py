@@ -25,6 +25,7 @@ import os
 import os.path as osp
 from pathlib import Path
 import shutil
+import fileinput
 try:
     import toml
 except ModuleNotFoundError:
@@ -76,6 +77,11 @@ class DebianInstaller(Installer):
             log.info("Installing scripts to %s", dirs['scripts'])
 
         self.write_dist_info(dirs['purelib'])
+        # Remove build path from RECORD files
+        records = Path(dirs['purelib']).glob("*.dist-info/RECORD")
+        with fileinput.input(files=records, inplace=True) as record:
+            for line in record:
+                print(line.replace(destdir, ''), end='')
         log.info("Writing dist-info %s", dirs['purelib'])
 
 
