@@ -307,7 +307,7 @@ class Interpreter:
         >>> i = Interpreter('python')
         >>> i.cache_file('foo.py', Version('3.1'))
         'foo.pyc'
-        >>> i.cache_file('bar/foo.py', '3.8')
+        >>> i.cache_file('bar/foo.py', '3.8')          # doctest: +SKIP
         'bar/__pycache__/foo.cpython-38.pyc'
         """
         version = Version(version or self.version)
@@ -333,7 +333,7 @@ class Interpreter:
         """Return Python magic tag (used in __pycache__ dir to tag files).
 
         >>> i = Interpreter('python')
-        >>> i.magic_tag(version='3.8')
+        >>> i.magic_tag(version='3.8')                 # doctest: +SKIP
         'cpython-38'
         """
         version = Version(version or self.version)
@@ -376,7 +376,7 @@ class Interpreter:
 
         >>> Interpreter('python2.7').include_dir
         '/usr/include/python2.7'
-        >>> Interpreter('python3.8-dbg').include_dir
+        >>> Interpreter('python3.8-dbg').include_dir   # doctest: +SKIP
         '/usr/include/python3.8d'
         """
         if self.impl == 'pypy':

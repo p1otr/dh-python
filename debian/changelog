@@ -1,3 +1,11 @@
+dh-python (4.20201102+nmu1) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Don't fail tests just because the default python gets hardcoded
+    (Closes: #975536)
+
+ -- Paul Gevers <elbrus@debian.org>  Sat, 27 Feb 2021 19:51:37 +0100
+
 dh-python (4.20201102) unstable; urgency=medium
 
   [ Antonio Terceiro ]
