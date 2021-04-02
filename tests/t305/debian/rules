@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=none
+
+override_dh_auto_install:
+	dh_auto_install
+	mkdir -p debian/foo5e/usr/share/foo/
+	echo "#! /usr/bin/env $(shell py3versions -d)\n\"/usr/bin/env DEFAULT_PYTHON shebang\"" > debian/foo5e/usr/share/foo/foo5e
+	chmod +x debian/foo5e/usr/share/foo/foo5e
+	mkdir -p debian/foo5f/usr/share/foo/
+	echo "#! /usr/bin/$(shell py3versions -d)\n\"/usr/bin/DEFAULT_PYTHON shebang\"" > debian/foo5f/usr/share/foo/foo5f
+	chmod +x debian/foo5f/usr/share/foo/foo5f
+
+override_dh_install:
+	dh_install
+	DH_VERBOSE=1 ../../dh_python3 /usr/share/foo
+
+clean:
+	dh_clean

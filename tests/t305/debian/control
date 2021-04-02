@@ -1,0 +1,43 @@
+Source: foo
+Section: misc
+Priority: optional
+Maintainer: Maximilian Engelhardt <maxi@daemonizer.de>
+Build-Depends: debhelper (>= 12.9)
+Build-Depends-Indep: python3
+Standards-Version: 4.5.1
+
+Package: foo5a
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: example 5a - private shebangs
+ example package #5 - shebang related tests in private dirs
+
+Package: foo5b
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: example 5b - private shebangs
+ example package #5 - shebang related tests in private dirs
+
+Package: foo5c
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: example 5c - private shebangs
+ example package #5 - shebang related tests in private dirs
+
+Package: foo5d
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: example 5d - private shebangs
+ example package #5 - shebang related tests in private dirs
+
+Package: foo5e
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: example 5e - private shebangs
+ example package #5 - shebang related tests in private dirs
+
+Package: foo5f
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: example 5f - private shebangs
+ example package #5 - shebang related tests in private dirs
