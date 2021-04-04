@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --buildsystem=none
+
+override_dh_install:
+	dh_install
+	DH_VERBOSE=1 ../../dh_python3
+
+override_dh_auto_build:
+	python3 setup.py build
+
+override_dh_auto_install:
+	python3 setup.py install --root=debian/foo/ --install-lib=/usr/share/foo/python
