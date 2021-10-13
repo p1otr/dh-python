@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from fnmatch import fnmatch
 from pathlib import Path
 import csv
 import logging
@@ -77,6 +78,9 @@ class DebianInstaller(Installer):
 
         log.info("Writing dist-info %s", dirs['purelib'])
         self.write_dist_info(dirs['purelib'])
+        # Remove direct_url.json - contents are not useful or reproduceable
+        for path in Path(dirs['purelib']).glob("*.dist-info/direct_url.json"):
+            path.unlink()
         # Remove build path from RECORD files
         for path in Path(dirs['purelib']).glob("*.dist-info/RECORD"):
             with open(path) as f:
@@ -86,6 +90,8 @@ class DebianInstaller(Installer):
                 writer = csv.writer(f)
                 for path, hash_, size in records:
                     path = path.replace(destdir, '')
+                    if fnmatch(path, "*.dist-info/direct_url.json"):
+                        continue
                     writer.writerow([path, hash_, size])
 
 
