@@ -19,7 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from os.path import exists, isdir, join
 from pathlib import Path
 import fileinput
 import logging
@@ -129,10 +128,10 @@ class BuildSystem(Base):
 
     def clean(self, context, args):
         super().clean(context, args)
-        if exists(args['interpreter'].binary()):
+        if osp.exists(args['interpreter'].binary()):
             log.debug("removing '%s' (and everything under it)",
                       args['build_dir'])
-            isdir(args['build_dir']) and shutil.rmtree(args['build_dir'])
+            osp.isdir(args['build_dir']) and shutil.rmtree(args['build_dir'])
         return 0  # no need to invoke anything
 
     def configure(self, context, args):
