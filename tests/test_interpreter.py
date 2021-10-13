@@ -198,6 +198,49 @@ class TestInterpreter(unittest.TestCase):
         self.assertIsNone(i.check_extname('foo.abi3.so'))
         self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/baz.cpython-38d-MYARCH.so')
 
+    @unittest.skipUnless(exists('/usr/bin/python3.9'), 'python3.9 is not installed')
+    def test_python39(self):
+        i = Interpreter('python3.9')
+        self.assertEqual(i.soabi(), 'cpython-39')
+        self.assertEqual(i.check_extname('foo.so'), r'foo.cpython-39-MYARCH.so')
+        self.assertIsNone(i.check_extname('foo.cpython-32m.so'))  # different version
+        self.assertIsNone(i.check_extname('foo.cpython-39-OTHER.so'))  # different architecture
+        self.assertEqual(i.check_extname('foo.cpython-39.so'), r'foo.cpython-39-MYARCH.so')
+        self.assertIsNone(i.check_extname('foo.abi3.so'))
+        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/baz.cpython-39-MYARCH.so')
+
+    @unittest.skipUnless(exists('/usr/bin/python3.9-dbg'), 'python3.9-dbg is not installed')
+    def test_python39dbg(self):
+        i = Interpreter('python3.9-dbg')
+        self.assertEqual(i.soabi(), 'cpython-39d')
+        self.assertEqual(i.check_extname('foo.so'), r'foo.cpython-39d-MYARCH.so')
+        self.assertIsNone(i.check_extname('foo.cpython-32m.so'))  # different version
+        self.assertIsNone(i.check_extname('foo.cpython-39-OTHER.so'))  # different architecture
+        self.assertIsNone(i.check_extname('foo.abi3.so'))
+        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/baz.cpython-39d-MYARCH.so')
+
+    @unittest.skipUnless(exists('/usr/bin/python3.10'), 'python3.10 is not installed')
+    def test_python310(self):
+        i = Interpreter('python3.10')
+        self.assertEqual(i.soabi(), 'cpython-310')
+        self.assertEqual(i.check_extname('foo.so'), r'foo.cpython-310-MYARCH.so')
+        self.assertIsNone(i.check_extname('foo.cpython-32m.so'))  # different version
+        self.assertIsNone(i.check_extname('foo.cpython-310-OTHER.so'))  # different architecture
+        self.assertEqual(i.check_extname('foo.cpython-310.so'), r'foo.cpython-310-MYARCH.so')
+        self.assertIsNone(i.check_extname('foo.abi3.so'))
+        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/baz.cpython-310-MYARCH.so')
+
+    @unittest.skipUnless(exists('/usr/bin/python3.10-dbg'), 'python3.10-dbg is not installed')
+    def test_python310dbg(self):
+        i = Interpreter('python3.10-dbg')
+        self.assertEqual(i.soabi(), 'cpython-310d')
+        self.assertEqual(i.check_extname('foo.so'), r'foo.cpython-310d-MYARCH.so')
+        self.assertIsNone(i.check_extname('foo.cpython-32m.so'))  # different version
+        self.assertIsNone(i.check_extname('foo.cpython-310-OTHER.so'))  # different architecture
+        self.assertIsNone(i.check_extname('foo.abi3.so'))
+        self.assertEqual(i.check_extname('foo/bar/bazmodule.so'), r'foo/bar/baz.cpython-310d-MYARCH.so')
+
+
     def test_version(self):
         i = Interpreter(impl='cpython2')
         self.assertEqual(str(i), 'python')
