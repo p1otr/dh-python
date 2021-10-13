@@ -19,13 +19,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import logging
 from os.path import exists, isdir, join
+from pathlib import Path
+import fileinput
+import logging
 import os
 import os.path as osp
-from pathlib import Path
 import shutil
-import fileinput
 try:
     import toml
 except ModuleNotFoundError:
