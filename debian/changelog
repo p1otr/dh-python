@@ -1,7 +1,12 @@
 dh-python (4.20201104) UNRELEASED; urgency=medium
 
+  [ Piotr Ożarowski ]
   * DEB_BUILD_PROFILES=nocheck will skip test step in pybuild
     (just like DEB_BUILD_OPTIONS=nocheck already does)
+
+  [ Stefano Rivera ]
+  * Add support for 2-digit python minor versions (3.10). Parse sonames and
+    generate dependencies, correctly. Thanks Graham Inggs.
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 

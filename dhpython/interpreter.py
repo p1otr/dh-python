@@ -44,7 +44,7 @@ EXTFILE_RE = re.compile(r'''
         (?P<soabi>
             (?P<impl>cpython|pypy)
             -
-            (?P<ver>\d{2})
+            (?P<ver>\d{2,})
             (?P<flags>[a-z]*)
         )?
         (?:

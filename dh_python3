@@ -57,7 +57,7 @@ class Scanner(Scan):
         tagver = tagver.groupdict()['ver']
         if tagver is None:
             return
-        tagver = Version("%s.%s" % (tagver[0], tagver[1]))
+        tagver = Version("%s.%s" % (tagver[0], tagver[1:]))
         return tagver
 
 
