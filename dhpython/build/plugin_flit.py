@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 
 from pathlib import Path
-import fileinput
+import csv
 import logging
 import os
 import os.path as osp
@@ -78,10 +78,15 @@ class DebianInstaller(Installer):
         log.info("Writing dist-info %s", dirs['purelib'])
         self.write_dist_info(dirs['purelib'])
         # Remove build path from RECORD files
-        records = Path(dirs['purelib']).glob("*.dist-info/RECORD")
-        with fileinput.input(files=records, inplace=True) as record:
-            for line in record:
-                print(line.replace(destdir, ''), end='')
+        for path in Path(dirs['purelib']).glob("*.dist-info/RECORD"):
+            with open(path) as f:
+                reader = csv.reader(f)
+                records = list(reader)
+            with open(path, 'w') as f:
+                writer = csv.writer(f)
+                for path, hash_, size in records:
+                    path = path.replace(destdir, '')
+                    writer.writerow([path, hash_, size])
 
 
 class BuildSystem(Base):
