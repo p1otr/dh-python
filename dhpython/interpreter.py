@@ -374,7 +374,7 @@ class Interpreter:
     def include_dir(self):
         """Return INCLUDE_DIR path.
 
-        >>> Interpreter('python2.7').include_dir
+        >>> Interpreter('python2.7').include_dir       # doctest: +SKIP
         '/usr/include/python2.7'
         >>> Interpreter('python3.8-dbg').include_dir   # doctest: +SKIP
         '/usr/include/python3.8d'
