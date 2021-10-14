@@ -2,6 +2,9 @@
 %:
 	dh $@ --buildsystem=python_distutils
 
+override_dh_auto_build:
+override_dh_auto_install:
+
 override_dh_install:
 	dh_install
 	DH_VERBOSE=1 ../../dh_python3
