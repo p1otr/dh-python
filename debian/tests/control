@@ -1,8 +1,24 @@
 Tests: dh-python
-Depends: python-all-dev, python3-all-dev, python-all-dbg, python3-all-dbg, pypy,
-         build-essential, fakeroot, debhelper, dh-python, libjs-jquery
+Depends:
+ build-essential,
+ debhelper,
+ dh-python,
+ fakeroot,
+ libjs-jquery,
+ pypy,
+ python-all-dbg,
+ python-all-dev,
+ python3-all-dbg,
+ python3-all-dev
 
 Tests: nosetests
-Depends: python3-nose, python-all, python-all-dbg, python3-all, python3-all-dbg, pypy,
-         dh-python, flit
+Depends:
+ dh-python,
+ flit,
+ pypy,
+ python-all,
+ python-all-dbg,
+ python3-all,
+ python3-all-dbg,
+ python3-nose
 Restrictions: allow-stderr
