@@ -8,9 +8,7 @@ clean:
 	dh_clean
 
 override_dh_auto_test:
-	#make tests
-	# FIXME: enable above line once python3 doesn't depend on dh-python anymore
-	# (i.e. there are no circular dependencies)
+	make tests
 
 override_dh_auto_install:
 	DESTDIR=debian/dh-python PREFIX=/usr make install manpages

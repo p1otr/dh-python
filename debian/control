@@ -3,13 +3,13 @@ Section: python
 Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
 Uploaders: Stefano Rivera <stefanor@debian.org>
-Build-Depends: debhelper-compat (= 12), python3-minimal, libpython3-stdlib, libdpkg-perl,
+Build-Depends: debhelper-compat (= 12),
+ python3-minimal, libpython3-stdlib, libdpkg-perl,
 # provides rst2man command (use python-docutils to avoid circular deps):
  python3-docutils,
-# used by tests: (disabled to avoid circular deps with python3)
-# python3-nose,
-# python3-all, python3-all-dbg, python3-all-dev,
-# python-all, python-all-dbg, python-all-dev
+# used by tests:
+ python3-all, python3-all-dbg, python3-all-dev,
+ python3-nose
 Standards-Version: 4.5.0
 Vcs-Git: https://salsa.debian.org/python-team/tools/dh-python.git
 Vcs-Browser: https://salsa.debian.org/python-team/tools/dh-python

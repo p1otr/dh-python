@@ -13,6 +13,7 @@ dh-python (4.20201104) UNRELEASED; urgency=medium
   * Add integration test coverage for pybuild and flit.
   * flit: Remove direct_url.json from .dist-info, not reproducible and
     doesn't contain any useful information.
+  * Re-enable package build-time test suite.
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 
