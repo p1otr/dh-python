@@ -10,3 +10,5 @@ sed -i "s/\.\.\/\.\.\/debian\///g" t*/debian/rules
 sed -i "s/\.\.\/\.\.\/dh_py/\/usr\/share\/dh-python\/dh_py/g" t*/debian/rules
 sed -i "s/\.\.\/\.\.\///g" t*/debian/rules
 make all 2>&1
+# Extra tests that require setuptools
+make testpb01 2>&1

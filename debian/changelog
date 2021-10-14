@@ -10,6 +10,7 @@ dh-python (4.20201104) UNRELEASED; urgency=medium
   * Version Breaks: python to allow dh-python to be co-installed with
     python-is-python2, thanks Stephen Kitt.
   * Remove build path from RECORD files, thanks Philip Rinn (closes: 969352)
+  * Add a test case that covers pybuild.
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 

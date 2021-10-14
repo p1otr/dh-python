@@ -9,7 +9,8 @@ Depends:
  python-all-dbg,
  python-all-dev,
  python3-all-dbg,
- python3-all-dev
+ python3-all-dev,
+ python3-setuptools
 
 Tests: nosetests
 Depends:
