@@ -3,7 +3,7 @@ Section: misc
 Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
 Build-Depends: debhelper (>= 7.0.50~)
-Build-Depends-Indep: python
+Build-Depends-Indep: python2.7
 Standards-Version: 3.9.1
 
 Package: foo
