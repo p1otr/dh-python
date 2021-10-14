@@ -3,6 +3,7 @@ Depends:
  build-essential,
  debhelper,
  dh-python,
+ flit,
  fakeroot,
  libjs-jquery,
  pypy,
@@ -10,7 +11,8 @@ Depends:
  python-all-dev,
  python3-all-dbg,
  python3-all-dev,
- python3-setuptools
+ python3-setuptools,
+ python3-toml
 
 Tests: nosetests
 Depends:

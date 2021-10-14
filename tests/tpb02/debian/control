@@ -1,0 +1,16 @@
+Source: foo
+Section: python
+Priority: optional
+Maintainer: Piotr Ożarowski <piotr@debian.org>
+Build-Depends: debhelper-compat (= 12)
+ , flit
+ , python3-all
+ , python3-toml
+# , dh-python
+Standards-Version: 3.9.4
+
+Package: python3-foo
+Architecture: all
+Depends: ${python3:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: package with public CPython modules
+ example package #1
