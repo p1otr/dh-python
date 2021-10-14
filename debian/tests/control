@@ -3,16 +3,14 @@ Depends:
  build-essential,
  debhelper,
  dh-python,
- flit,
  fakeroot,
  libjs-jquery,
  pypy,
  python-all-dbg,
  python-all-dev,
  python3-all-dbg,
- python3-all-dev,
- python3-setuptools,
- python3-toml
+ python3-all-dev
+Restrictions: allow-stderr
 
 Tests: nosetests
 Depends:
@@ -24,4 +22,16 @@ Depends:
  python3-all,
  python3-all-dbg,
  python3-nose
+Restrictions: allow-stderr
+
+Tests: pybuild
+Depends:
+ build-essential,
+ debhelper,
+ dh-python,
+ flit,
+ fakeroot,
+ python3-all,
+ python3-setuptools,
+ python3-toml
 Restrictions: allow-stderr

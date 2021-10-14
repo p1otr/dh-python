@@ -1,0 +1,2 @@
+#!/bin/sh
+exec debian/tests/run-installed testpb01 testpb02

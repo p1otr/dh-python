@@ -1,14 +1,2 @@
 #!/bin/sh
-
-set -eu
-cp -r tests "$AUTOPKGTEST_TMP"
-cd "$AUTOPKGTEST_TMP/tests"
-sed -i "s/\.\.\/\.\.\/debian/\/usr\/share\/python3/g" common.mk
-sed -i "s/\.\.\/\.\.\/dhpython/\/usr\/share\/dh-python\/dhpython/g" common.mk
-sed -i "s/PYTHONPATH=\.\.\/\.\.\//PYTHONPATH=\/usr\/share\/python3/g" t*/debian/rules
-sed -i "s/\.\.\/\.\.\/debian\///g" t*/debian/rules
-sed -i "s/\.\.\/\.\.\/dh_py/\/usr\/share\/dh-python\/dh_py/g" t*/debian/rules
-sed -i "s/\.\.\/\.\.\///g" t*/debian/rules
-make all 2>&1
-# Extra tests that require setuptools and flit
-make testpb01 testpb02 2>&1
+exec debian/tests/run-installed
