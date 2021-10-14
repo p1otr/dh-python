@@ -1,0 +1,3 @@
+#!/bin/sh
+# Skipped: test201 test203
+exec debian/tests/run-installed test202 test204 test205 test206 test207

@@ -6,10 +6,19 @@ Depends:
  fakeroot,
  libjs-jquery,
  pypy,
- python-all-dbg,
- python-all-dev,
  python3-all-dbg,
  python3-all-dev
+Restrictions: allow-stderr
+
+Tests: dh-python2
+Depends:
+ build-essential,
+ debhelper,
+ dh-python,
+ fakeroot,
+ libjs-jquery,
+ python-all-dbg,
+ python-all-dev
 Restrictions: allow-stderr
 
 Tests: nosetests
