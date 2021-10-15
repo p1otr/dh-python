@@ -23,6 +23,10 @@ dh-python (4.20201104) UNRELEASED; urgency=medium
   * Generate python3:Depends from Requires-Dist entries in .dist-info (e.g.
     flit packages). (closes: 987296)
   * Suggest: flit, python3-toml. (closes: 987236)
+  * Architecture-qualify py*compile and py*clean calls in maintainer scripts,
+    for architecture-specific Python packages. This allows co-installation
+    (and even concurrent unpacking) of different architectures of a package.
+    (closes: 991146)
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 

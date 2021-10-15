@@ -7,8 +7,10 @@ TRIPLET=.$(DEB_HOST_MULTIARCH)
 endif
 
 check:
-	grep -q "pycompile -p python-foo /usr/lib/python-foo -V $(DPY)"\
+	grep -q "pycompile -p python-foo:$(DEB_HOST_ARCH) /usr/lib/python-foo -V $(DPY)"\
 		debian/python-foo/DEBIAN/postinst
+	grep -q "pyclean -p python-foo:$(DEB_HOST_ARCH) /usr/lib/python-foo -V $(DPY)"\
+		debian/python-foo/DEBIAN/prerm
 	test -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/bar$(TRIPLET).so
 	test ! -f debian/python-foo/usr/share/pyshared/foo/bar.so
 	test ! -f debian/python-foo/usr/share/pyshared/foo/bar$(TRIPLET).so

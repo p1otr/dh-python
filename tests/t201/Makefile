@@ -13,6 +13,7 @@ check:
 	grep -qe "Depends: .*python2\(:any\)\? (<<" debian/python-foo/DEBIAN/control
 	[ "`readlink debian/python-foo/usr/lib/python$(DPY)/dist-packages/foo/absolute_link_to_tmp`" = "/tmp" ]
 	[ "`readlink debian/python-foo/usr/lib/python$(DPY)/dist-packages/foo/link_to_parent_dir`" = ".." ]
+	grep -q 'pycompile -p python-foo\s*$$' debian/python-foo/DEBIAN/postinst
 
 clean: clean-common
 	rm -rf lib/Foo.egg-info

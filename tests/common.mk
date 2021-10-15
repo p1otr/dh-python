@@ -7,6 +7,7 @@ export DEBPYTHON3_SUPPORTED ?= $(shell python3 ../../dhpython/_defaults.py suppo
 export DEBPYPY_DEFAULT ?= $(shell python3 ../../dhpython/_defaults.py default pypy)
 export DEBPYPY_SUPPORTED ?= $(shell python3 ../../dhpython/_defaults.py supported pypy)
 export DEB_HOST_MULTIARCH=my_multiarch-triplet
+export DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
 all: run check
 

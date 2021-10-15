@@ -12,8 +12,8 @@ check:
 	grep -q foo debian/python-foo/usr/share/python/ns/python-foo
 	grep -q bar.baz debian/python-foo/usr/share/python/ns/python-foo
 	grep -q keep_this_one debian/python-foo/usr/share/python/ns/python-foo && false || true
-	grep -q "pycompile -p python-foo" debian/python-foo/DEBIAN/postinst
-	grep -q "pyclean -p python-foo" debian/python-foo/DEBIAN/prerm
+	grep -q "pycompile -p python-foo\s*$$" debian/python-foo/DEBIAN/postinst
+	grep -q "pyclean -p python-foo\s*$$" debian/python-foo/DEBIAN/prerm
 	# test pycompile
 #	DESTDIR=debian/python-foo/ ../../pycompile -v debian/python-foo/usr/lib/
 #	set -e; for i in remove_this_one bar bar/baz;\

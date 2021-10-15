@@ -2,8 +2,11 @@
 include ../common.mk
 
 check:
-	grep -q "py3compile -p python3-foo /usr/lib/python3-foo"\
+	grep -q "py3compile -p python3-foo:$(DEB_HOST_ARCH) /usr/lib/python3-foo"\
 		debian/python3-foo/DEBIAN/postinst
+	grep -q "pypy3compile -p python3-foo:$(DEB_HOST_ARCH) /usr/lib/python3-foo"\
+		debian/python3-foo/DEBIAN/postinst
+	grep -q "py3clean -p python3-foo:$(DEB_HOST_ARCH)" debian/python3-foo/DEBIAN/prerm
 	[ "`find debian/python3-foo/usr/lib/python3/dist-packages/foo -name 'bar.cpython-*.so'`" != "" ]
 	# test if moved from include/python3.X/ to include/python3.Xm/ (for Python << 3.8)
 	#test -f debian/python3-foo/usr/include/python$(DEBPYTHON3_DEFAULT)m/foo.h

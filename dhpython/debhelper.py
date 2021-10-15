@@ -20,7 +20,7 @@
 
 import logging
 import re
-from os import makedirs, chmod
+from os import makedirs, chmod, environ
 from os.path import basename, exists, join, dirname
 from sys import argv
 from dhpython import DEPENDS_SUBSTVARS, PKG_NAME_TPLS, RT_LOCATIONS, RT_TPLS
@@ -191,8 +191,11 @@ class DebHelper:
                         if self.options.compile_all and args:
                             # TODO: should args be checked to contain dir name?
                             tpl = tpl.replace('-p #PACKAGE#', '')
-                        else:
+                        elif settings['arch'] == 'all':
                             tpl = tpl.replace('#PACKAGE#', package)
+                        else:
+                            arch = environ['DEB_HOST_ARCH']
+                            tpl = tpl.replace('#PACKAGE#', '%s:%s' % (package, arch))
                         tpl = tpl.replace('#ARGS#', i)
                         if tpl not in data and tpl not in new_data:
                             new_data += "\n%s" % tpl
