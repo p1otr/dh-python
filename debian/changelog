@@ -17,6 +17,7 @@ dh-python (4.20201104) UNRELEASED; urgency=medium
   * Run the python2.7 dh_python2 tests in an autopkgtest.
   * Replaced references to python with python2.7 in the test suite
     (closes: 956191)
+  * Update pydist fallback database.
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 
