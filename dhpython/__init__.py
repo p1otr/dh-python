@@ -75,9 +75,11 @@ PYDIST_OVERRIDES_FNAMES = {
     'pypy': 'debian/pypydist-overrides'}
 
 PYDIST_DPKG_SEARCH_TPLS = {
-    'cpython2': "*/{}-?*\.egg-info | grep '/python2\../\|/pyshared/'",
-    'cpython3': '*python3/*/{}-?*\.egg-info',
-    'pypy': '*/pypy/dist-packages/{}-?*\.egg-info'}
+    # implementation: (dpkg -S query, regex filter)
+    'cpython2': ('*/{}-?*.egg-info', r'/python2\../|/pyshared/'),
+    'cpython3': ('*python3/*/{}-?*.egg-info', None),
+    'pypy': ('*/pypy/dist-packages/{}-?*.egg-info', None),
+}
 
 # DebHelper related
 DEPENDS_SUBSTVARS = {

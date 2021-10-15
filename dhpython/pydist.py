@@ -205,11 +205,12 @@ def guess_dependency(impl, req, version=None, bdep=None,
                 return item['dependency']
 
     # search for Egg metadata file or directory (using dpkg -S)
-    query = PYDIST_DPKG_SEARCH_TPLS[impl].format(ci_regexp(safe_name(name)))
+    dpkg_query_tpl, regex_filter = PYDIST_DPKG_SEARCH_TPLS[impl]
+    dpkg_query = dpkg_query_tpl.format(ci_regexp(safe_name(name)))
 
-    log.debug("invoking dpkg -S %s", query)
-    process = Popen("/usr/bin/dpkg -S %s" % query,
-                    shell=True, stdout=PIPE, stderr=PIPE)
+    log.debug("invoking dpkg -S %s", dpkg_query)
+    process = Popen(('/usr/bin/dpkg', '-S', dpkg_query),
+                    stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
     if process.returncode == 0:
         result = set()
@@ -217,9 +218,14 @@ def guess_dependency(impl, req, version=None, bdep=None,
         for line in stdout.split('\n'):
             if not line.strip():
                 continue
-            result.add(line.split(':')[0])
+            pkg, path = line.split(':', 1)
+            if regex_filter and not re.search(regex_filter, path):
+                continue
+            result.add(pkg)
         if len(result) > 1:
             log.error('more than one package name found for %s dist', name)
+        elif not result:
+            log.debug('dpkg -S did not find package for %s', name)
         else:
             return result.pop()
     else:
