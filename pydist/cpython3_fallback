@@ -252,7 +252,10 @@ PyPrind python3-pyprind
 PyPump python3-pypump
 PyQRCode python3-pyqrcode
 PyQSO pyqso
+PyQt5 python3-pyqt5
 PyQt5_sip python3-pyqt5.sip
+PyQtWebEngine python3-pyqt5.qtwebengine
+PyQt_Qwt python3-pyqt5.qwt
 PyQt_builder python3-pyqtbuild
 PyRSS2Gen python3-pyrss2gen
 PySDL2 python3-sdl2
@@ -281,6 +284,7 @@ Pypubsub python3-pubsub
 Pyro4 python3-pyro4
 PythonQwt python3-qwt
 QDarkStyle python3-qdarkstyle
+QScintilla python3-pyqt5.qsci
 QtAwesome python3-qtawesome
 QtPy python3-qtpy
 Quamash python3-quamash
@@ -451,6 +455,7 @@ aiorwlock python3-aiorwlock
 aiosasl python3-aiosasl
 aiosmtpd python3-aiosmtpd
 aiosmtplib python3-aiosmtplib
+aiosqlite python3-aiosqlite
 aiostream python3-aiostream
 aiowsgi python3-aiowsgi
 aioxmlrpc python3-aioxmlrpc
@@ -1036,6 +1041,7 @@ confget python3-confget
 configobj python3-configobj
 configshell_fb python3-configshell-fb
 confluent_kafka python3-confluent-kafka
+confuse python3-confuse
 congruity congruity
 consonance python3-consonance
 constantly python3-constantly
@@ -1526,6 +1532,8 @@ flatbuffers python3-flatbuffers
 flatlatex python3-flatlatex
 flexmock python3-flexmock
 flickrapi python3-flickrapi
+flit flit
+flit_core flit
 fluent_logger python3-fluent-logger
 flufl.bounce python3-flufl.bounce
 flufl.enum python3-flufl.enum
@@ -1722,6 +1730,7 @@ hacking python3-hacking
 haproxy_log_analysis python3-haproxy-log-analysis
 harmony_discord python3-harmony
 hashID hashid
+hashids python3-hashids
 hbmqtt python3-hbmqtt
 hcloud python3-hcloud
 hdf5storage python3-hdf5storage
@@ -1894,6 +1903,7 @@ jc jc
 jdata python3-jdata
 jdcal python3-jdcal
 jedi python3-jedi
+jeepney python3-jeepney
 jeepyb jeepyb
 jellyfish python3-jellyfish
 jenkins_job_builder python3-jenkins-job-builder
@@ -2155,6 +2165,7 @@ mdtraj python3-mdtraj
 measurement python3-measurement
 mecab_python python3-mecab
 mechanize python3-mechanize
+mediafile python3-mediafile
 meld meld
 meld3 python3-meld3
 meliae python3-meliae
@@ -2464,6 +2475,7 @@ openstackdocstheme python3-openstackdocstheme
 openstacksdk python3-openstacksdk
 opentimestamps python3-opentimestamps
 opentracing python3-opentracing
+openturns python3-openturns
 opentype_sanitizer python3-ots
 opgpcard opgpcard
 optlang python3-optlang
@@ -2680,6 +2692,7 @@ podcastparser python3-podcastparser
 poetry_core python3-poetry-core
 poezio poezio
 pokrok python3-pokrok
+poliastro python3-poliastro
 polib python3-polib
 policyd_rate_limit policyd-rate-limit
 pomegranate python3-pomegranate
@@ -3226,6 +3239,7 @@ python_pam python3-pampy
 python_pcl python3-pcl
 python_periphery python3-periphery
 python_popcon python3-popcon
+python_poppler_qt5 python3-poppler-qt5
 python_potr python3-potr
 python_prctl python3-prctl
 python_pskc python3-pskc
@@ -3496,6 +3510,7 @@ sabyenc3 python3-sabyenc
 sadisplay python3-sadisplay
 safeeyes safeeyes
 sage sagemath-common
+sage_conf sagemath-common
 sagenb_export python3-sagenb-export
 sahara python3-sahara
 sahara_dashboard python3-sahara-dashboard
@@ -3525,6 +3540,7 @@ scikit_image python3-skimage
 scikit_learn python3-sklearn
 scikit_rf python3-scikit-rf
 scipy python3-scipy
+scitrack python3-scitrack
 scoary scoary
 scoop python3-scoop
 scour python3-scour
@@ -3633,6 +3649,7 @@ social_auth_app_django python3-social-django
 social_auth_core python3-social-auth-core
 socketIO_client python3-socketio-client
 socketpool python3-socketpool
+solo_python solo-python
 sop python3-sop
 sopel sopel
 sorl_thumbnail python3-sorl-thumbnail
@@ -3868,6 +3885,7 @@ todoman todoman
 toil toil
 tomahawk python3-tomahawk
 toml python3-toml
+tomli python3-tomli
 tomlkit python3-tomlkit
 toolz python3-toolz
 toot toot
@@ -4046,6 +4064,7 @@ typechecks python3-typechecks
 typed_ast python3-typed-ast
 typedload python3-typedload
 typeguard python3-typeguard
+typer python3-typer
 types_toml python3-types-toml
 types_typed_ast python3-types-typed-ast
 typing_extensions python3-typing-extensions
