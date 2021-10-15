@@ -5,3 +5,4 @@ build-backend = "flit_core.buildapi"
 [tool.flit.metadata]
 module = "foo"
 author = "Stefano Rivera"
+requires = ["toml"]

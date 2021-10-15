@@ -18,6 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import email
 import logging
 from functools import partial
 from os.path import exists, join
@@ -249,6 +250,12 @@ class Dependencies:
                         if line.startswith('Requires: '):
                             req = line[10:].strip()
                             self.depend(guess_deps(req=req))
+            for fpath in stats['dist-info']:
+                with open(fpath, 'r', encoding='utf-8') as fp:
+                    metadata = email.message_from_string(fp.read())
+                requires = metadata.get_all('Requires-Dist', [])
+                for req in requires:
+                    self.depend(guess_deps(req=req))
 
         # add dependencies from --depends
         for item in options.depends or []:

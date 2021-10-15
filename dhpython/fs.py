@@ -146,6 +146,7 @@ class Scan:
         self.options = options
         self.result = {'requires.txt': set(),
                        'egg-info': set(),
+                       'dist-info': set(),
                        'nsp.txt': set(),
                        'shebangs': set(),
                        'public_vers': set(),
@@ -195,6 +196,10 @@ class Scan:
                     rmtree(dpath)
                     dirs.remove(name)
                     continue
+
+            if self.is_dist_dir(root):
+                self.handle_dist_dir(root, file_names)
+                continue
 
             if self.is_egg_dir(root):
                 self.handle_egg_dir(root, file_names)
@@ -420,6 +425,20 @@ class Scan:
                 log.info('renaming %s to %s', name, clean_name)
                 os.rename(fpath, join(root, clean_name))
         self.result['egg-info'].add(join(root, clean_name))
+
+    def is_dist_dir(self, dname):
+        """Check if given directory contains dist-info."""
+        return dname.endswith('.dist-info')
+
+    def handle_dist_dir(self, dpath, file_names):
+        path, dname = dpath.rsplit('/', 1)
+        if self.is_dbg_package and self.options.clean_dbg_pkg:
+            rmtree(dpath)
+            return
+
+        if file_names:
+            if 'METADATA' in file_names:
+                self.result['dist-info'].add(join(dpath, 'METADATA'))
 
     def cleanup(self):
         if self.is_dbg_package and self.options.clean_dbg_pkg:
