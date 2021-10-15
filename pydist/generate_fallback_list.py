@@ -74,7 +74,7 @@ public_egg = re.compile(r'''
             (lib/pypy/dist-packages)
         )
     )
-    /[^/]*\.egg-info
+    /[^/]*\.(dist|egg)-info
 ''', re.VERBOSE).match
 
 skip_sensible_names = True if '--skip-sensible-names' in sys.argv else False
@@ -128,7 +128,7 @@ for line in data.splitlines():
     match = public_egg(path)
     if match:
         egg_name = [i.split('-', 1)[0] for i in path.split('/')
-                    if i.endswith('.egg-info')][0]
+                    if i.endswith(('.egg-info', '.dist-info'))][0]
         if egg_name.endswith('.egg'):
             egg_name = egg_name[:-4]
 

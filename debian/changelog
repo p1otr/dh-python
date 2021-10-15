@@ -18,6 +18,8 @@ dh-python (4.20201104) UNRELEASED; urgency=medium
   * Replaced references to python with python2.7 in the test suite
     (closes: 956191)
   * Update pydist fallback database.
+  * Recognise Debian-packaged python modules from .dist-info directories as
+    well as .egg-info.
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 
