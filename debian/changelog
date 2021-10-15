@@ -22,6 +22,7 @@ dh-python (4.20201104) UNRELEASED; urgency=medium
     well as .egg-info.
   * Generate python3:Depends from Requires-Dist entries in .dist-info (e.g.
     flit packages). (closes: 987296)
+  * Suggest: flit, python3-toml. (closes: 987236)
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 
