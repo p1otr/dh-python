@@ -31,10 +31,15 @@ from os.path import dirname, exists, isdir, join, split
 from urllib.request import urlopen
 
 if '--ubuntu' in sys.argv and DistroInfo:
-    SOURCE = 'http://archive.ubuntu.com/ubuntu/dists/%s/Contents-amd64.gz' % \
-             DistroInfo('ubuntu').devel()
+    SOURCES = [
+        'http://archive.ubuntu.com/ubuntu/dists/%s/Contents-amd64.gz' %
+        DistroInfo('ubuntu').devel(),
+    ]
 else:
-    SOURCE = 'http://ftp.debian.org/debian/dists/unstable/main/Contents-amd64.gz'
+    SOURCES = [
+        'http://ftp.debian.org/debian/dists/unstable/main/Contents-all.gz',
+        'http://ftp.debian.org/debian/dists/unstable/main/Contents-amd64.gz',
+    ]
 
 IGNORED_PKGS = {'python-setuptools', 'python3-setuptools', 'pypy-setuptools'}
 OVERRIDES = {
@@ -81,19 +86,23 @@ else:
     sys.path.append('/usr/share/dh-python/dhpython/')
 from dhpython.pydist import sensible_pname
 
+data = ''
 if not isdir('cache'):
     mkdir('cache')
-cache_fpath = join('cache', split(SOURCE)[-1])
-if not exists(cache_fpath):
-    data = urlopen(SOURCE).read()
-    with open(cache_fpath, 'wb') as fp:
-        fp.write(data)
-else:
-    data = open(cache_fpath, 'rb').read()
-try:
-    data = str(decompress(data), encoding='UTF-8')
-except UnicodeDecodeError as e:  # Ubuntu
-    data = str(decompress(data), encoding='ISO-8859-15')
+for source in SOURCES:
+    cache_fpath = join('cache', split(source)[-1])
+    if not exists(cache_fpath):
+        with urlopen(source) as fp:
+            source_data = fp.read()
+        with open(cache_fpath, 'wb') as fp:
+            fp.write(source_data)
+    else:
+        with open(cache_fpath, 'rb') as fp:
+            source_data = fp.read()
+    try:
+        data += str(decompress(source_data), encoding='UTF-8')
+    except UnicodeDecodeError as e:  # Ubuntu
+        data += str(decompress(source_data), encoding='ISO-8859-15')
 
 result = {
     'cpython2': {},
