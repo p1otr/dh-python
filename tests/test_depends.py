@@ -52,6 +52,7 @@ class DependenciesTestCase(unittest.TestCase):
     pydist = {}
     stats = {
         'compile': False,
+        'dist-info': set(),
         'egg-info': set(),
         'ext_no_version': set(),
         'ext_vers': set(),
@@ -62,24 +63,35 @@ class DependenciesTestCase(unittest.TestCase):
         'shebangs': set(),
     }
     requires = {}
+    dist_info_metadata = {}
     options = FakeOptions()
 
     def setUp(self):
         self.d = Dependencies(self.pkg, self.impl)
 
         stats = deepcopy(self.stats)
+        write_files = {}
         if self.requires:
+            for fn, lines in self.requires.items():
+                write_files[fn] = lines
+                stats['requires.txt'].add(fn)
+
+        if self.dist_info_metadata:
+            for fn, lines in self.dist_info_metadata.items():
+                write_files[fn] = lines
+                stats['dist-info'].add(fn)
+
+        if write_files:
             self.tempdir = TemporaryDirectory()
             self.addCleanup(self.tempdir.cleanup)
             old_wd = os.getcwd()
             os.chdir(self.tempdir.name)
             self.addCleanup(os.chdir, old_wd)
 
-            for fn, lines in self.requires.items():
-                os.makedirs(os.path.dirname(fn))
-                with open(fn, 'w') as f:
-                    f.write('\n'.join(lines))
-                stats['requires.txt'].add(fn)
+        for fn, lines in write_files.items():
+            os.makedirs(os.path.dirname(fn))
+            with open(fn, 'w') as f:
+                f.write('\n'.join(lines))
 
         cleanup = prime_pydist(self.impl, self.pydist)
         self.addCleanup(cleanup)
@@ -152,3 +164,25 @@ class TestRequiresCompatible(DependenciesTestCase):
 
     def test_depends_on_baz(self):
         self.assertIn('python3-baz (>= 1.0), python3-baz (<< 2)', self.d.depends)
+
+
+class TestRequiresDistPython3(DependenciesTestCase):
+    options = FakeOptions(guess_deps=True)
+    pydist = {
+        'bar': 'python3-bar',
+        'baz': {'dependency': 'python3-baz', 'standard': 'PEP386'},
+        'quux': {'dependency': 'python3-quux', 'standard': 'PEP386'},
+    }
+    dist_info_metadata = {
+        'debian/foo/usr/lib/python3/dist-packages/foo.dist-info/METEDATA': (
+            'Requires-Dist: bar',
+            'Requires-Dist: baz >= 1.0',
+            'Requires-Dist: quux',
+        ),
+    }
+
+    def test_depends_on_bar(self):
+        self.assertIn('python3-bar', self.d.depends)
+
+    def test_depends_on_baz(self):
+        self.assertIn('python3-baz (>= 1.0)', self.d.depends)
