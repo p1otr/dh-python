@@ -1,4 +1,4 @@
-dh-python (5.20211016) UNRELEASED; urgency=medium
+dh-python (5.20211016) unstable; urgency=medium
 
   [ Piotr Ożarowski ]
   * DEB_BUILD_PROFILES=nocheck will skip test step in pybuild
@@ -36,7 +36,7 @@ dh-python (5.20211016) UNRELEASED; urgency=medium
     (closes: 980310)
   * flit: Run test suites. (closes: 994281)
 
- -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
+ -- Stefano Rivera <stefanor@debian.org>  Sat, 16 Oct 2021 08:01:30 -0700
 
 dh-python (4.20201102+nmu1) unstable; urgency=medium
 
