@@ -83,8 +83,7 @@ def main(cfg):
         if arch_data['DEB_BUILD_ARCH'] != arch_data['DEB_HOST_ARCH']:
             # support cross compiling Python 3.X extensions, see #892931
             env.setdefault('_PYTHON_SYSCONFIGDATA_NAME',
-                           ('_sysconfigdata__{DEB_HOST_ARCH_OS}'
-                            '_{DEB_HOST_MULTIARCH}').format(**arch_data))
+                           '_sysconfigdata__' + arch_data["DEB_HOST_MULTIARCH"])
 
     if cfg.system:
         certainty = 99

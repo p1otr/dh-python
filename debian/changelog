@@ -27,6 +27,8 @@ dh-python (4.20201104) UNRELEASED; urgency=medium
     for architecture-specific Python packages. This allows co-installation
     (and even concurrent unpacking) of different architectures of a package.
     (closes: 991146, 770265, 812228)
+  * Update _PYTHON_SYSCONFIGDATA_NAME export for cross-builds, thanks Helmut
+    Grohne. (closes: 968213)
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 
