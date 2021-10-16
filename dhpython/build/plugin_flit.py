@@ -36,7 +36,7 @@ try:
 except ImportError:
     Installer = object
 
-from dhpython.build.base import Base
+from dhpython.build.base import Base, shell_command
 
 log = logging.getLogger('dhpython')
 
@@ -166,3 +166,7 @@ class BuildSystem(Base):
                                           args['destdir'],
                                           args['install_dir'])
         return 0  # Not needed for flit'
+
+    @shell_command
+    def test(self, context, args):
+        return super().test(context, args)
