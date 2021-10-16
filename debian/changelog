@@ -1,3 +1,10 @@
+dh-python (5.20211016.1) UNRELEASED; urgency=medium
+
+  * Unset DH_INTERNAL_OPTIONS= in the package-building test suites, to fix
+    FTBFS on the arch:all buildd.
+
+ -- Stefano Rivera <stefanor@debian.org>  Sat, 16 Oct 2021 13:17:58 -0700
+
 dh-python (5.20211016) unstable; urgency=medium
 
   [ Piotr Ożarowski ]
