@@ -1,4 +1,4 @@
-dh-python (4.20201104) UNRELEASED; urgency=medium
+dh-python (5.20211016) UNRELEASED; urgency=medium
 
   [ Piotr Ożarowski ]
   * DEB_BUILD_PROFILES=nocheck will skip test step in pybuild
