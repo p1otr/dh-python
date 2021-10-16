@@ -31,6 +31,9 @@ dh-python (4.20201104) UNRELEASED; urgency=medium
     Grohne. (closes: 968213)
   * Parse Build-Depends with a :any suffix correctly, thanks Maximilian
     Engelhardt. (closes: 980303)
+  * Generate a dependency on python3 in dh_python3 when there's a script
+    installed with a python3 shebang, thanks Maximilian Engelhardt.
+    (closes: 980310)
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 04 Nov 2020 11:46:16 +0100
 
