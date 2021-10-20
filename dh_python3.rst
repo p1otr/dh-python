@@ -40,10 +40,12 @@ NOTES
 
 dependencies
 ~~~~~~~~~~~~
-dh_python3 tries to translate Python dependencies from the `requires.txt` file
-to Debian dependencies. In many cases, this works without any additional
-configuration because dh_python3 comes with a build-in mapping of Python module
-names to Debian packages that is periodically regenerated from the Debian
+dh_python3 tries to translate Python dependencies from `Requires-Dist`
+entries in `dist-info` or `requires.txt` contents in `egg-info` to
+Debian dependencies.
+In many cases, this works without any additional configuration because
+dh_python3 comes with a build-in mapping of Python module names to
+Debian packages that is periodically regenerated from the Debian
 archive. By default, the version information in the Python dependencies is
 discarded. If you want dh_python3 to generate more strict dependencies (e.g. to
 avoid ABI problems), or if the automatic mapping does not work correctly for

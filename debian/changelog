@@ -1,3 +1,9 @@
+dh-python (5.20211016.2) UNRELEASED; urgency=medium
+
+  * dh_python3(1): Clarify where the dependencies come from. (closes: 930950)
+
+ -- Stefano Rivera <stefanor@debian.org>  Tue, 19 Oct 2021 17:35:26 -0700
+
 dh-python (5.20211016.1) unstable; urgency=medium
 
   * Unset DH_INTERNAL_OPTIONS= in the package-building test suites, to fix
