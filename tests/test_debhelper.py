@@ -41,8 +41,8 @@ CONTROL = [
     ' baz (>= 1.0)',
     'X-Python3-Version: >= 3.1, << 3.10',
     '',
-    'Package: python3-foo',
     'Architecture: all',
+    'Package: python3-foo',
     'Depends: ${python3:Depends}',
     '',
     'Package: python3-foo-ext',
@@ -75,7 +75,7 @@ class TestControlBlockParsing(DebHelperTestCase):
         })
 
     def test_parses_XPV(self):
-        self.assertEqual(self.dh.python_version.strip(), '>= 3.1, << 3.10')
+        self.assertEqual(self.dh.python_version, '>= 3.1, << 3.10')
 
     def test_parses_packages(self):
         self.assertEqual(list(self.dh.packages.keys()),
@@ -134,5 +134,4 @@ class TestControlBlockParsingPy2(DebHelperTestCase):
     impl = 'cpython2'
 
     def test_parses_packages(self):
-        raise unittest.SkipTest('Known failure')
         self.assertEqual(list(self.dh.packages.keys()), ['python-foo'])

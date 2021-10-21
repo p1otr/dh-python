@@ -43,10 +43,6 @@ class DebHelper:
         self.packages = {}
         self.build_depends = {}
         self.python_version = None
-        source_section = True
-        binary_package = None
-        build_depends_line = ''
-        inside_bdepends_field = False
         # Note that each DebHelper instance supports ONE interpreter type only
         # it's not possible to mix cpython2, cpython3 and pypy here
         self.impl = impl
@@ -61,81 +57,51 @@ class DebHelper:
         skip_pkgs = options.no_package
 
         try:
-            fp = open('debian/control', 'r', encoding='utf-8')
+            with open('debian/control', 'r', encoding='utf-8') as fp:
+                paragraphs = [{}]
+                field = None
+                for lineno, line in enumerate(fp, 1):
+                    if line.startswith('#'):
+                        continue
+                    if not line.strip():
+                        paragraphs.append({})
+                        field = None
+                        continue
+                    if line[0].isspace():  # Continuation
+                        paragraphs[-1][field] += line.rstrip()
+                        continue
+                    if not ':' in line:
+                        raise Exception(
+                            'Unable to parse line %i in debian/control: %s'
+                            % (lineno, line))
+                    field, value = line.split(':', 1)
+                    field = field.lower()
+                    paragraphs[-1][field] = value.strip()
         except IOError:
             raise Exception('cannot find debian/control file')
 
-        for line in fp:
-            if line.startswith('#'):
-                continue
-            if not line.strip():
-                source_section = False
-                binary_package = None
-                inside_depends_field = False
-                continue
-            line_l = line.lower()  # field names are case-insensitive
-            if binary_package:
-                if binary_package not in self.packages:
-                    continue
-                if line_l.startswith('architecture:'):
-                    arch = line[13:].strip()
-                    if options.arch is False and arch != 'all' or\
-                       options.arch is True and arch == 'all':
-                        # TODO: check also if arch matches current architecture:
-                        del self.packages[binary_package]
-                    else:
-                        self.packages[binary_package]['arch'] = arch
-                    continue
-                if not binary_package.startswith(PKG_NAME_TPLS[impl]):
-                    # package doesn't have common prefix (python-, python3-, pypy-)
-                    # so lets check if Depends contains appropriate substvar
-                    if line_l.startswith('depends:'):
-                        if substvar in line:
-                            continue
-                        inside_depends_field = True
-                    elif inside_depends_field:  # multiline continuation
-                        if not line.startswith((' ', '\t')):
-                            inside_depends_field = False
-                            log.debug('skipping package %s (missing %s in Depends)',
-                                      binary_package, substvar)
-                            del self.packages[binary_package]
-                        elif substvar in line:
-                            inside_depends_field = None
-            elif line_l.startswith('package:'):
-                binary_package = line[8:].strip()
-                if skip_tpl and binary_package.startswith(skip_tpl):
-                    log.debug('skipping package: %s', binary_package)
-                    continue
-                if pkgs and binary_package not in pkgs:
-                    continue
-                if skip_pkgs and binary_package in skip_pkgs:
-                    continue
-                self.packages[binary_package] = {'substvars': {},
-                                                 'autoscripts': {},
-                                                 'rtupdates': [],
-                                                 'arch': 'any'}
-            elif line_l.startswith('source:'):
-                self.source_name = line[7:].strip()
-            elif source_section and self.impl == 'cpython3' and line_l.startswith('x-python3-version:'):
-                self.python_version = line[18:]
-                if len(self.python_version.split(',')) > 2:
-                    raise ValueError('too many arguments provided for X-Python3-Version: min and max only.')
-            elif source_section and self.impl == 'cpython2':
-                if line_l.startswith('xs-python-version:'):
-                    if not self.python_version:
-                        self.python_version = line[18:].strip()
-                if line_l.startswith('x-python-version:'):
-                    self.python_version = line[17:].strip()
-            elif source_section and line_l.startswith(('build-depends:', 'build-depends-indep:')):
-                inside_bdepends_field = True
-                build_depends_line += ',' + line.split(':', 1)[1].strip(', \t\n')
-            elif inside_bdepends_field:  # multiline continuation
-                if not line.startswith((' ', '\t', '#')):
-                    inside_bdepends_field = False
-                elif not line.strip().startswith('#'):
-                    build_depends_line += ',' + line.strip(', \t\n')
+        if len(paragraphs) < 2:
+            raise Exception('Unable to parse debian/control, found less than '
+                            '2 paragraphs')
 
-        for dep1 in build_depends_line.strip(', \t').split(','):
+        self.source_name = paragraphs[0]['source']
+        if self.impl == 'cpython3' and 'x-python3-version' in paragraphs[0]:
+            self.python_version = paragraphs[0]['x-python3-version']
+            if len(self.python_version.split(',')) > 2:
+                raise ValueError('too many arguments provided for '
+                                 'X-Python3-Version: min and max only.')
+        elif self.impl == 'cpython2':
+            if 'x-python-version' in paragraphs[0]:
+                self.python_version = paragraphs[0]['x-python-version']
+            elif 'xs-python-version' in paragraphs[0]:
+                self.python_version = paragraphs[0]['xs-python-version']
+
+        build_depends = []
+        for field in ('build-depends', 'build-depends-indep'):
+            if field in paragraphs[0]:
+                build_depends.append(paragraphs[0][field])
+        build_depends = ', '.join(build_depends)
+        for dep1 in build_depends.split(','):
             for dep2 in dep1.split('|'):
                 details = parse_dep(dep2)
                 if details:
@@ -145,8 +111,41 @@ class DebHelper:
                     else:
                         architectures = [None]
                     for arch in architectures:
-                        self.build_depends.setdefault(details['name'],
-                                                      {})[arch] = details['version']
+                        self.build_depends.setdefault(
+                            details['name'], {})[arch] = details['version']
+
+        for paragraph_no, paragraph in enumerate(paragraphs[1:], 2):
+            if 'package' not in paragraph:
+                raise Exception('Unable to parse debian/control, paragraph %i '
+                                'missing Package field' % paragraph_no)
+            binary_package = paragraph['package']
+            if skip_tpl and binary_package.startswith(skip_tpl):
+                log.debug('skipping package: %s', binary_package)
+                continue
+            if pkgs and binary_package not in pkgs:
+                continue
+            if skip_pkgs and binary_package in skip_pkgs:
+                continue
+            pkg = {
+                'substvars': {},
+                'autoscripts': {},
+                'rtupdates': [],
+                'arch': paragraph['architecture'],
+            }
+            if (options.arch is False and pkg['arch'] != 'all' or
+                    options.arch is True and pkg['arch'] == 'all'):
+                # TODO: check also if arch matches current architecture:
+                continue
+
+            if not binary_package.startswith(PKG_NAME_TPLS[impl]):
+                # package doesn't have common prefix (python-, python3-, pypy-)
+                # so lets check if Depends contains appropriate substvar
+                if substvar not in paragraph.get('depends', ''):
+                    log.debug('skipping package %s (missing %s in Depends)',
+                              binary_package, substvar)
+                    continue
+            # Operate on binary_package
+            self.packages[binary_package] = pkg
 
         fp.close()
         log.debug('source=%s, binary packages=%s', self.source_name,
