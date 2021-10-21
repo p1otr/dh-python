@@ -97,7 +97,8 @@ class DebHelper:
                 self.python_version = paragraphs[0]['xs-python-version']
 
         build_depends = []
-        for field in ('build-depends', 'build-depends-indep'):
+        for field in ('build-depends', 'build-depends-indep',
+                      'build-depends-arch'):
             if field in paragraphs[0]:
                 build_depends.append(paragraphs[0][field])
         build_depends = ', '.join(build_depends)
