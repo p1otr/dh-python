@@ -3,6 +3,8 @@ dh-python (5.20211022) UNRELEASED; urgency=medium
   * pybuild distutils plugin: Use underscore separated keys in
     pydistutils.cfg, following setuptools 54.1's deprecation of
     dash-separation.
+  * dhpython/debhelper.py: Don't consider two blank lines to be an empty
+    paragraph. (closes: 996995)
 
  -- Stefano Rivera <stefanor@debian.org>  Thu, 21 Oct 2021 20:18:48 -0700
 

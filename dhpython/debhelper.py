@@ -64,8 +64,9 @@ class DebHelper:
                     if line.startswith('#'):
                         continue
                     if not line.strip():
-                        paragraphs.append({})
-                        field = None
+                        if paragraphs[-1]:
+                            paragraphs.append({})
+                            field = None
                         continue
                     if line[0].isspace():  # Continuation
                         paragraphs[-1][field] += line.rstrip()

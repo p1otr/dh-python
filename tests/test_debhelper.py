@@ -55,6 +55,7 @@ CONTROL = [
     'Architecture: all',
     'Depends: ${python:Depends}',
     '',
+    '',
     'Package: foo',
     'Architecture: all',
     'Depends: ${python3:Depends}',
