@@ -1,7 +1,5 @@
 dh-python (5.20211022) UNRELEASED; urgency=medium
 
-  * pybuild: Avoid calling deprecated "setup.py test", instead use unittest
-    discover. (closes: #982298)
   * pybuild distutils plugin: Use underscore separated keys in
     pydistutils.cfg, following setuptools 54.1's deprecation of
     dash-separation.
