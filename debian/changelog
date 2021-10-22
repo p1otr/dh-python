@@ -1,10 +1,10 @@
-dh-python (5.20211022.1) UNRELEASED; urgency=medium
+dh-python (5.20211022.1) unstable; urgency=medium
 
   * dhpython/debhelper.py: Ignore trailing newlines in debian/control
     (closes: 996995)
   * Add test cases for broken failed debian/control parsing.
 
- -- Stefano Rivera <stefanor@debian.org>  Fri, 22 Oct 2021 12:48:40 -0700
+ -- Stefano Rivera <stefanor@debian.org>  Fri, 22 Oct 2021 13:13:43 -0700
 
 dh-python (5.20211022) unstable; urgency=medium
 
