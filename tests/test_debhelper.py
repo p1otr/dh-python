@@ -14,12 +14,14 @@ class DebHelperTestCase(unittest.TestCase):
         'package': [],
         'no_package': [],
     }
+    parse_control = True
 
-    def setUp(self):
+    def build_options(self):
         options = self.default_options.copy()
         options.update(self.options)
-        options = type('Options', (object,), options)
+        return type('Options', (object,), options)
 
+    def setUp(self):
         self.tempdir = TemporaryDirectory()
         self.addCleanup(self.tempdir.cleanup)
 
@@ -30,7 +32,8 @@ class DebHelperTestCase(unittest.TestCase):
         os.mkdir('debian')
         with open('debian/control', 'w') as f:
             f.write('\n'.join(self.control))
-        self.dh = DebHelper(options, impl=self.impl)
+        if self.parse_control:
+            self.dh = DebHelper(self.build_options(), impl=self.impl)
 
 
 CONTROL = [
@@ -138,3 +141,33 @@ class TestControlBlockParsingPy2(DebHelperTestCase):
 
     def test_parses_packages(self):
         self.assertEqual(list(self.dh.packages.keys()), ['python-foo'])
+
+
+class TestControlNoBinaryPackages(DebHelperTestCase):
+    control = [
+        'Source: foo-src',
+        'Build-Depends: python3-all',
+        '',
+    ]
+    parse_control = False
+
+    def test_throws_error(self):
+        msg = ('Unable to parse debian/control, found less than 2 paragraphs')
+        with self.assertRaisesRegex(Exception, msg):
+            DebHelper(self.build_options())
+
+
+class TestControlMissingPackage(DebHelperTestCase):
+    control = [
+        'Source: foo-src',
+        'Build-Depends: python3-all',
+        '',
+        'Architecture: all',
+    ]
+    parse_control = False
+
+    def test_parses_packages(self):
+        msg = ('Unable to parse debian/control, paragraph 2 missing Package '
+               'field')
+        with self.assertRaisesRegex(Exception, msg):
+            DebHelper(self.build_options())
