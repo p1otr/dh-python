@@ -59,6 +59,8 @@ CONTROL = [
     'Package: foo',
     'Architecture: all',
     'Depends: ${python3:Depends}',
+    '',
+    '',
 ]
 
 class TestControlBlockParsing(DebHelperTestCase):

@@ -81,6 +81,10 @@ class DebHelper:
         except IOError:
             raise Exception('cannot find debian/control file')
 
+        # Trailing new lines?
+        if not paragraphs[-1]:
+            paragraphs.pop()
+
         if len(paragraphs) < 2:
             raise Exception('Unable to parse debian/control, found less than '
                             '2 paragraphs')
