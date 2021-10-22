@@ -44,12 +44,12 @@ def create_pydistutils_cfg(func):
                 lines = ['[clean]\n',
                          'all=1\n',
                          '[build]\n',
-                         'build-lib={}\n'.format(args['build_dir']),
+                         'build_lib={}\n'.format(args['build_dir']),
                          '[install]\n',
                          'force=1\n',
-                         'install-layout=deb\n',
-                         'install-scripts=$base/bin\n',
-                         'install-lib={}\n'.format(args['install_dir']),
+                         'install_layout=deb\n',
+                         'install_scripts=$base/bin\n',
+                         'install_lib={}\n'.format(args['install_dir']),
                          'prefix=/usr\n']
                 log.debug('pydistutils config file:\n%s', ''.join(lines))
                 fp.writelines(lines)
