@@ -112,10 +112,4 @@ class BuildSystem(Base):
     @create_pydistutils_cfg
     @copy_test_files()
     def test(self, context, args):
-        if not self.cfg.custom_tests:
-            fpath = join(args['dir'], args['setup_py'])
-            with open(fpath, 'rb') as fp:
-                if fp.read().find(b'test_suite') > 0:
-                    # TODO: is that enough to detect if test target is available?
-                    return '{interpreter} {setup_py} test {args}'
         return super(BuildSystem, self).test(context, args)
