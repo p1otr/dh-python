@@ -1,3 +1,9 @@
+dh-python (5.20211022.2) UNRELEASED; urgency=medium
+
+  * Add tpb03 - a test covering pybuild building Python 2 and 3 packages.
+
+ -- Stefano Rivera <stefanor@debian.org>  Sun, 24 Oct 2021 18:43:33 -0700
+
 dh-python (5.20211022.1) unstable; urgency=medium
 
   * dhpython/debhelper.py: Ignore trailing newlines in debian/control

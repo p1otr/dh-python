@@ -44,3 +44,17 @@ Depends:
  python3-setuptools,
  python3-toml
 Restrictions: allow-stderr
+
+Tests: pybuild-py2
+Depends:
+ build-essential,
+ debhelper,
+ dh-python,
+ fakeroot,
+ python-all,
+ python-ply,
+ python-setuptools,
+ python3-all,
+ python3-ply,
+ python3-setuptools
+Restrictions: allow-stderr
