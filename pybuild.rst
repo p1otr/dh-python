@@ -258,6 +258,28 @@ debian/rules file example::
     %:
     	dh $@ --with python3 --buildsystem=pybuild
 
+ENVIRONMENT
+===========
+
+As described above in OPTIONS, pybuild can be configured by `PYBUILD_`
+prefixed environment variables.
+
+Tests are skipped if `nocheck` is in the `DEB_BUILD_OPTIONS` or
+`DEB_BUILD_PROFILES` environment variables.
+
+`DESTDIR` provides a default a default value to the `--dest-dir` option.
+
+Pybuild will export `http_proxy=http://127.0.0.1:9/`,
+`https_proxy=https://127.0.0.1:9/`, and `no_proxy=localhost` to
+hopefully block attempts by the package's build-system to access the
+Internet.
+If network access to a loopback interface is needed and blocked by this,
+export empty `http_proxy` and `https_proxy` variables before calling
+pybuild.
+
+If not set, `LC_ALL`, `CCACHE_DIR`, `DEB_PYTHON_INSTALL_LAYOUT`,
+`_PYTHON_HOST_PLATFORM`, `_PYTHON_SYSCONFIGDATA_NAME`, will all be set
+to appropriate values, before calling the package's build script.
 
 SEE ALSO
 ========
