@@ -1,4 +1,4 @@
-dh-python (5.20211022.2) UNRELEASED; urgency=medium
+dh-python (5.20211105) unstable; urgency=medium
 
   * Add tpb03 - a test covering pybuild building Python 2 and 3 packages.
   * Document pybuild environment variables in pybuild(1) (closes: #997469)
@@ -11,7 +11,7 @@ dh-python (5.20211022.2) UNRELEASED; urgency=medium
   * pybuild tox plugin: Use tox --sitepackages to use Debian packages to
     resolve test dependencies (closes: 960048)
 
- -- Stefano Rivera <stefanor@debian.org>  Sun, 24 Oct 2021 18:43:33 -0700
+ -- Stefano Rivera <stefanor@debian.org>  Fri, 05 Nov 2021 00:44:25 -0700
 
 dh-python (5.20211022.1) unstable; urgency=medium
 
