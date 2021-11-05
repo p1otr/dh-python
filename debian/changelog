@@ -2,6 +2,7 @@ dh-python (5.20211022.2) UNRELEASED; urgency=medium
 
   * Add tpb03 - a test covering pybuild building Python 2 and 3 packages.
   * Document pybuild environment variables in pybuild(1) (closes: #997469)
+  * pybuild: Only generate --test-* dependencies in the test target.
 
  -- Stefano Rivera <stefanor@debian.org>  Sun, 24 Oct 2021 18:43:33 -0700
 

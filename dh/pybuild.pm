@@ -146,7 +146,7 @@ sub pybuild_commands {
 		my @py3opts = ('pybuild', "--$step");
 		my @pypyopts = ('pybuild', "--$step");
 
-		if ($step == 'test' and $ENV{'PYBUILD_TEST_PYTEST'} ne '1' and
+		if ($step eq 'test' and $ENV{'PYBUILD_TEST_PYTEST'} ne '1' and
 		       			$ENV{'PYBUILD_TEST_NOSE2'} ne '1' and
 		       			$ENV{'PYBUILD_TEST_NOSE'} ne '1' and
 		       			$ENV{'PYBUILD_TEST_TOX'} ne '1') {
