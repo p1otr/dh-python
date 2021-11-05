@@ -223,7 +223,7 @@ class Base:
             pydistutils_cfg = join(args['home_dir'], '.pydistutils.cfg')
             if exists(pydistutils_cfg):
                 remove(pydistutils_cfg)
-            return 'cd {build_dir}; tox -c {dir}/tox.ini -e py{version.major}{version.minor}'
+            return 'cd {build_dir}; tox -c {dir}/tox.ini --sitepackages -e py{version.major}{version.minor}'
         elif args['version'] == '2.7' or args['version'] >> '3.1' or args['interpreter'] == 'pypy':
             return 'cd {build_dir}; {interpreter} -m unittest discover -v {args}'
 
