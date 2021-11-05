@@ -5,6 +5,9 @@ dh-python (5.20211022.2) UNRELEASED; urgency=medium
   * pybuild: Only generate --test-* dependencies in the test target.
   * pybuild: Fix tox autodetection, broken since it was renamed from
     python3-tox.
+  * pybuild tox plugin: Delete pydistutils.cfg before calling tox, to avoid
+    breaking it. Switching keys to underscores in 5.20211022 brought them to
+    pip's attention, and it tried to install to /usr. (closes: 997485, 998581)
 
  -- Stefano Rivera <stefanor@debian.org>  Sun, 24 Oct 2021 18:43:33 -0700
 

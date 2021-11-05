@@ -42,7 +42,8 @@ Depends:
  fakeroot,
  python3-all,
  python3-setuptools,
- python3-toml
+ python3-toml,
+ tox
 Restrictions: allow-stderr
 
 Tests: pybuild-py2
