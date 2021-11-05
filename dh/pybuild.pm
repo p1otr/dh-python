@@ -245,7 +245,7 @@ sub python_build_dependencies {
 	if ($c->load('debian/control')) {
 		for my $field (grep /^Build-Depends/, keys %{$c}) {
 			my $builddeps = $c->{$field};
-			while ($builddeps =~ /(?:^|[\s,])((pypy|python)[0-9\.]*(-[^\s,\(]+)?)(?:[\s,\(]|$)/g) {
+			while ($builddeps =~ /(?:^|[\s,])((pypy|python|tox)[0-9\.]*(-[^\s,\(]+)?)(?:[\s,\(]|$)/g) {
 				my $dep = $1;
 				$dep =~ s/:any$//;
 				if ($dep) {push @result, $dep};
