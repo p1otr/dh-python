@@ -1,9 +1,9 @@
-dh-python (5.20211114) UNRELEASED; urgency=medium
+dh-python (5.20211114) unstable; urgency=medium
 
   * Avoid the dependency on python-ply for testpb03, this was removed in
     Ubuntu, already.
 
- -- Stefano Rivera <stefanor@debian.org>  Sun, 14 Nov 2021 17:27:28 -0800
+ -- Stefano Rivera <stefanor@debian.org>  Sun, 14 Nov 2021 17:41:28 -0800
 
 dh-python (5.20211105) unstable; urgency=medium
 
