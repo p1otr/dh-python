@@ -53,9 +53,7 @@ Depends:
  dh-python,
  fakeroot,
  python-all,
- python-ply,
  python-setuptools,
  python3-all,
- python3-ply,
  python3-setuptools
 Restrictions: allow-stderr
