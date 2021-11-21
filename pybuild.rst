@@ -195,6 +195,7 @@ DIRECTORIES
       use this name to guess destination directories
       (depending on interpreter, "foo" sets debian/python-foo,
       debian/python3-foo, debian/python3-foo-dbg, etc.)
+      This overrides --dest-dir.
 
 variables that can be used in `DIR`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

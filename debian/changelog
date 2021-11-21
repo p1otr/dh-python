@@ -1,3 +1,9 @@
+dh-python (5.20211115) UNRELEASED; urgency=medium
+
+  * Document that pybuild --name overrides --dest-dir.
+
+ -- Stefano Rivera <stefanor@debian.org>  Sun, 21 Nov 2021 09:32:04 -0400
+
 dh-python (5.20211114) unstable; urgency=medium
 
   * Avoid the dependency on python-ply for testpb03, this was removed in
