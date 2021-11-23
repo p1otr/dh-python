@@ -19,12 +19,13 @@
 # THE SOFTWARE.
 
 import difflib
+import hashlib
 import logging
 import os
 import re
 import sys
 from filecmp import cmp as cmpfile
-from os.path import lexists, exists, isdir, islink, join, realpath, split, splitext
+from os.path import lexists, exists, getsize, isdir, islink, join, realpath, split, splitext
 from shutil import rmtree
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 from dhpython import MULTIARCH_DIR_TPL
@@ -79,6 +80,7 @@ def fix_locations(package, interpreter, versions, options):
 
 def share_files(srcdir, dstdir, interpreter, options):
     """Try to move as many files from srcdir to dstdir as possible."""
+    wheel_merged = False
     for i in os.listdir(srcdir):
         fpath1 = join(srcdir, i)
         if not lexists(fpath1):  # removed in rename_ext
@@ -111,6 +113,16 @@ def share_files(srcdir, dstdir, interpreter, options):
         elif i.endswith(('.abi3.so', '.abi4.so')) and interpreter.parse_public_dir(srcdir):
             log.warning('%s differs from previous one, removing anyway (%s)', i, srcdir)
             os.remove(fpath1)
+        elif srcdir.endswith(".dist-info"):
+            # dist-info file that differs... try merging
+            if i == "WHEEL":
+                wheel_merged |= merge_WHEEL(fpath1, fpath2)
+                os.remove(fpath1)
+            elif i == "RECORD":
+                merge_RECORD(fpath1, fpath2)
+                os.remove(fpath1)
+            else:
+                log.warn("No merge driver for dist-info file ", i)
         else:
             # The files differed so we cannot collapse them.
             log.warn('Paths differ: %s and %s', fpath1, fpath2)
@@ -122,10 +134,86 @@ def share_files(srcdir, dstdir, interpreter, options):
                 diff = difflib.unified_diff(fromlines, tolines, fpath1, fpath2)
                 sys.stderr.writelines(diff)
 
+    if wheel_merged:
+        fix_merged_RECORD(dstdir)
     try:
         os.removedirs(srcdir)
     except OSError:
         pass
+
+
+## Functions to merge parts of the .dist-info metadata directory together
+
+def missing_lines(src, dst):
+    # find all the lines in the text file src that are not in dst
+    with open(dst) as fh:
+        current = {k: None for k in fh.readlines()}
+
+    missing = []
+    with open(src) as fh:
+        for line in fh.readlines():
+            if line not in current:
+                missing.append(line)
+
+    return missing
+
+
+def merge_WHEEL(src, dst):
+    # merge the source .dist-info/WHEEL file into the destination
+    # Note that after editing the WHEEL file, the sha256 included in
+    # the .dist-info/RECORD file will be incorrect and will need fixing
+    # using the fix_merged_RECORD() function.
+    log.debug("Merging WHEEL file %s into %s", src, dst)
+    missing = missing_lines(src, dst)
+    with open(dst, "at") as fh:
+        for line in missing:
+            if line.startswith("Tag: "):
+                fh.write(line)
+            else:
+                log.warn("WHEEL merge discarded line %s", line)
+
+    return len(missing)
+
+
+def merge_RECORD(src, dst):
+    # merge the source .dist-info/RECORD file into the destination
+    log.debug("Merging RECORD file %s into %s", src, dst)
+    missing = missing_lines(src, dst)
+
+    with open(dst, "at") as fh:
+        for line in missing:
+            fh.write(line)
+
+    return len(missing)
+
+
+def fix_merged_RECORD(distdir):
+    # After merging the .dist-info/WHEEL file, the sha256 recorded for it
+    # will be wrong in .dist-info/RECORD, so edit that file to ensure
+    # that it is fixed. The output is sorted for reproducibility.
+    log.debug("Fixing RECORD file in %s", distdir)
+    record_path = join(distdir, "RECORD")
+    wheel_path = join(distdir, "WHEEL")
+    wheel_dir = split(split(record_path)[0])[1]
+    wheel_relpath = join(wheel_dir, "WHEEL")
+
+    with open(wheel_path, "rb") as fh:
+        wheel_sha256 = hashlib.sha256(fh.read()).hexdigest();
+    wheel_size = getsize(wheel_path)
+
+    contents = [
+        "{name},sha256={sha256sum},{size}\n".format(
+            name=wheel_relpath,
+            sha256sum=wheel_sha256,
+            size=wheel_size,
+        )]
+    with open(record_path) as fh:
+        for line in fh.readlines():
+            if not line.startswith(wheel_relpath):
+                contents.append(line)
+    # now write out the updated record
+    with open(record_path, "wt") as fh:
+        fh.writelines(sorted(contents))
 
 
 class Scan:
