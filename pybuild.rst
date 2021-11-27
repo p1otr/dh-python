@@ -46,7 +46,7 @@ debian/rules file example::
  #! /usr/bin/make -f
  export PYBUILD_NAME=foo
  %:
-  	dh $@ --with python2,python3 --buildsystem=pybuild
+  	dh $@ --with python3 --buildsystem=pybuild
 
 OPTIONS
 =======
@@ -91,8 +91,7 @@ ACTION
 
 TESTS
 -----
-    unittest's discover from standard library (available in Python 2.7 and
-    >= 3.2) is used in test step by default.
+    unittest's discover from standard library is used in test step by default.
 
     --test-nose
         use nose module in test step, remember to add python-nose and/or
@@ -219,9 +218,9 @@ LIMITATIONS
 
 disable examples
 ~~~~~~~~~~~~~~~~
-* `--disable test/python2.5-dbg` - disables tests for python2.5-dbg
-* `--disable '2.4 2.7'` - disables all actions for version 2.4 and 2.7
-* `PYBUILD_DISABLE_python2=1` - disables all actions for Python 2.X
+* `--disable test/python3.9-dbg` - disables tests for python3.9-dbg
+* `--disable '3.8 3.9'` - disables all actions for version 3.8 and 3.9
+* `PYBUILD_DISABLE=python3.9` - disables all actions for Python 3.9
 * `PYBUILD_DISABLE_python3.3=test` - disables tests for Python 3.3
 * `PYBUILD_DISABLE=test/python3.3` - same as above
 * `PYBUILD_DISABLE=configure/python3 2.4 pypy` - disables configure
