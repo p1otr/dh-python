@@ -1,6 +1,7 @@
 dh-python (5.20211115) UNRELEASED; urgency=medium
 
   * Document that pybuild --name overrides --dest-dir.
+  * Use Python 3 examples in the manpage, thanks Louis-Philippe Véronneau.
 
  -- Stefano Rivera <stefanor@debian.org>  Sun, 21 Nov 2021 09:32:04 -0400
 
