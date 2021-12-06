@@ -145,7 +145,7 @@ def guess_dependency(impl, req, version=None, bdep=None,
         version = Version(version)
 
     # some upstreams have weird ideas for distribution name...
-    name, rest = re.compile('([^!><=~ \(\)\[]+)(.*)').match(req).groups()
+    name, rest = re.compile('([^!><=~ \(\)\[;]+)(.*)').match(req).groups()
     # TODO: check stdlib and dist-packaged for name.py and name.so files
     req = safe_name(name) + rest
 
