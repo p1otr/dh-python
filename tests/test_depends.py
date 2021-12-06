@@ -174,7 +174,7 @@ class TestRequiresDistPython3(DependenciesTestCase):
         'quux': {'dependency': 'python3-quux', 'standard': 'PEP386'},
     }
     dist_info_metadata = {
-        'debian/foo/usr/lib/python3/dist-packages/foo.dist-info/METEDATA': (
+        'debian/foo/usr/lib/python3/dist-packages/foo.dist-info/METADATA': (
             'Requires-Dist: bar',
             'Requires-Dist: baz >= 1.0',
             'Requires-Dist: quux',
