@@ -5,7 +5,10 @@ build-backend = "flit_core.buildapi"
 [tool.flit.metadata]
 module = "foo"
 author = "Stefano Rivera"
-requires = ["toml"]
+requires = [
+    "toml",
+    "importlib-metadata ; python_version < '3.5'"
+]
 
 [tool.flit.metadata.requires-extra]
 test = [

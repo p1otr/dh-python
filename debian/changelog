@@ -4,6 +4,8 @@ dh-python (5.20211115) UNRELEASED; urgency=medium
   * Use Python 3 examples in the manpage, thanks Louis-Philippe Véronneau.
   * Handle dist-info extra sections the same way we do for requirements.txt.
     (closes: 998374)
+  * Add support for environment markers.
+    (closes: 815654, 834133, 922468, 978686)
 
  -- Stefano Rivera <stefanor@debian.org>  Sun, 21 Nov 2021 09:32:04 -0400
 
