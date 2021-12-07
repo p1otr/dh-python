@@ -19,6 +19,7 @@
 # THE SOFTWARE.
 
 
+import email
 import logging
 import os
 import re
@@ -70,6 +71,16 @@ REQUIRES_RE = re.compile(r'''
         )?
     )?
     \)?  # optional closing parenthesis
+EXTRA_RE = re.compile(r'''
+    ;
+    \s*
+    extra
+    \s*
+    ==
+    \s*
+    (?P<quote>['"])
+    (?P<section>[a-zA-Z0-9-_.]+)
+    (?P=quote)
     ''', re.VERBOSE)
 DEB_VERS_OPS = {
     '==': '=',
@@ -290,6 +301,47 @@ def parse_pydep(impl, fname, bdep=None, options=None,
     if modified and public_dir:
         with open(fname, 'w', encoding='utf-8') as fp:
             fp.writelines(i + '\n' for i in processed)
+    return result
+
+
+def parse_requires_dist(impl, fname, bdep=None, options=None, depends_sec=None,
+                        recommends_sec=None, suggests_sec=None):
+    """Extract dependencies from a dist-info/METADATA file"""
+    depends_sec = depends_sec or []
+    recommends_sec = recommends_sec or []
+    suggests_sec = suggests_sec or []
+
+    public_dir = PUBLIC_DIR_RE[impl].match(fname)
+    ver = None
+    if public_dir and public_dir.groups() and len(public_dir.group(1)) != 1:
+        ver = public_dir.group(1)
+
+    guess_deps = partial(guess_dependency, impl=impl, version=ver, bdep=bdep,
+                         accept_upstream_versions=getattr(
+                             options, 'accept_upstream_versions', False))
+    result = {'depends': [], 'recommends': [], 'suggests': []}
+    section = None
+    with open(fname, 'r', encoding='utf-8') as fp:
+        metadata = email.message_from_string(fp.read())
+    requires = metadata.get_all('Requires-Dist', [])
+    for req in requires:
+        m = EXTRA_RE.search(req)
+        if m:
+            section = m.group('section')
+        if section:
+            if section in depends_sec:
+                result_key = 'depends'
+            elif section in recommends_sec:
+                result_key = 'recommends'
+            elif section in suggests_sec:
+                result_key = 'suggests'
+            else:
+                continue
+        else:
+            result_key = 'depends'
+        dependency = guess_deps(req=req)
+        if dependency:
+            result[result_key].append(dependency)
     return result
 
 

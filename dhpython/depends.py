@@ -18,12 +18,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import email
 import logging
 from functools import partial
 from os.path import exists, join
 from dhpython import PKG_PREFIX_MAP, MINPYCDEP
-from dhpython.pydist import parse_pydep, guess_dependency
+from dhpython.pydist import parse_pydep, parse_requires_dist, guess_dependency
 from dhpython.version import default, supported, VersionRange
 
 log = logging.getLogger('dhpython')
@@ -251,11 +250,11 @@ class Dependencies:
                             req = line[10:].strip()
                             self.depend(guess_deps(req=req))
             for fpath in stats['dist-info']:
-                with open(fpath, 'r', encoding='utf-8') as fp:
-                    metadata = email.message_from_string(fp.read())
-                requires = metadata.get_all('Requires-Dist', [])
-                for req in requires:
-                    self.depend(guess_deps(req=req))
+                deps = parse_requires_dist(self.impl, fpath, bdep=self.bdep,
+                                           **section_options)
+                [self.depend(i) for i in deps['depends']]
+                [self.recommend(i) for i in deps['recommends']]
+                [self.suggest(i) for i in deps['suggests']]
 
         # add dependencies from --depends
         for item in options.depends or []:

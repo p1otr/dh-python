@@ -6,3 +6,8 @@ build-backend = "flit_core.buildapi"
 module = "foo"
 author = "Stefano Rivera"
 requires = ["toml"]
+
+[tool.flit.metadata.requires-extra]
+test = [
+    "tox",
+]
