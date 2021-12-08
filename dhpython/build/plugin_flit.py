@@ -27,7 +27,7 @@ import os
 import os.path as osp
 import shutil
 try:
-    import toml
+    import tomli
 except ModuleNotFoundError:
     # Plugin still works, only needed for autodetection
     pass
@@ -120,7 +120,8 @@ class BuildSystem(Base):
 
         result = super().detect(context)
         try:
-            pyproject = toml.decoder.load('pyproject.toml')
+            with open('pyproject.toml') as f:
+                pyproject = tomli.load(f)
             if pyproject.get('build-system', {}).get('build-backend') == \
                     'flit_core.buildapi':
                 result += 45

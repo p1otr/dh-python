@@ -8,6 +8,7 @@ dh-python (5.20211115) UNRELEASED; urgency=medium
     (closes: 815654, 834133, 922468, 978686)
   * Expand on --depends-section=SECTION and similar in dh_python3(1), and
     mention multiple use.
+  * Port to python3-tomli (following the PyPA projects).
 
  -- Stefano Rivera <stefanor@debian.org>  Sun, 21 Nov 2021 09:32:04 -0400
 

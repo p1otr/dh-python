@@ -42,7 +42,7 @@ Depends:
  fakeroot,
  python3-all,
  python3-setuptools,
- python3-toml,
+ python3-tomli,
  tox
 Restrictions: allow-stderr
 

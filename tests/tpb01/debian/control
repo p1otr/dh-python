@@ -5,7 +5,7 @@ Maintainer: Piotr Ożarowski <piotr@debian.org>
 Build-Depends: debhelper-compat (= 12)
  , python3-all
  , python3-setuptools
- , python3-toml
+ , python3-tomli
 # , dh-python
 Standards-Version: 3.9.4
 

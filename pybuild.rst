@@ -247,14 +247,14 @@ element in `pyproject.toml`.  The flit plugin only supports python3.  To use
 this plugin::
 
 * build depend on `flit` and either
-* build depend on `python3-toml` so flit can be automatically selected or
+* build depend on `python3-tomli` so flit can be automatically selected or
 * add `export PYBUILD_SYSTEM=flit` to debian/rules to manually select
 
 debian/rules file example::
 
     #! /usr/bin/make -f
     export PYBUILD_NAME=foo
-    export PYBUILD_SYSTEM=flit (needed if python3-toml is not installed)
+    export PYBUILD_SYSTEM=flit (needed if python3-tomli is not installed)
     %:
     	dh $@ --with python3 --buildsystem=pybuild
 
