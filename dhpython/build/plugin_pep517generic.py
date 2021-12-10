@@ -30,10 +30,12 @@ try:
 except ModuleNotFoundError:
     # Plugin still works, only needed for autodetection
     pass
-
-from installer import install
-from installer.destinations import SchemeDictionaryDestination
-from installer.sources import WheelFile
+try:
+    from installer import install
+    from installer.destinations import SchemeDictionaryDestination
+    from installer.sources import WheelFile
+except ModuleNotFoundError:
+    SchemeDictionaryDestination = WheelFile = install = None
 
 from dhpython.build.base import Base, shell_command
 
@@ -58,6 +60,10 @@ class BuildSystem(Base):
         :return: 0 <= certainty <= 100
         :rtype: int
         """
+        if install is None:
+            # Dependencies are not available
+            return 0
+
         result = super().detect(context)
         try:
             with open('pyproject.toml', 'rb') as f:
