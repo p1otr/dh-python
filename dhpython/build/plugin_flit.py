@@ -120,7 +120,7 @@ class BuildSystem(Base):
 
         result = super().detect(context)
         try:
-            with open('pyproject.toml') as f:
+            with open('pyproject.toml', 'rb') as f:
                 pyproject = tomli.load(f)
             if pyproject.get('build-system', {}).get('build-backend') == \
                     'flit_core.buildapi':
