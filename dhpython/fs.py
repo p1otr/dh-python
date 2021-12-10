@@ -122,7 +122,7 @@ def share_files(srcdir, dstdir, interpreter, options):
                 merge_RECORD(fpath1, fpath2)
                 os.remove(fpath1)
             else:
-                log.warn("No merge driver for dist-info file ", i)
+                log.warn("No merge driver for dist-info file %s", i)
         else:
             # The files differed so we cannot collapse them.
             log.warn('Paths differ: %s and %s', fpath1, fpath2)
