@@ -145,7 +145,7 @@ def share_files(srcdir, dstdir, interpreter, options):
 ## Functions to merge parts of the .dist-info metadata directory together
 
 def missing_lines(src, dst):
-    # find all the lines in the text file src that are not in dst
+    """Find all the lines in the text file src that are not in dst"""
     with open(dst) as fh:
         current = {k: None for k in fh.readlines()}
 
@@ -159,10 +159,12 @@ def missing_lines(src, dst):
 
 
 def merge_WHEEL(src, dst):
-    # merge the source .dist-info/WHEEL file into the destination
-    # Note that after editing the WHEEL file, the sha256 included in
-    # the .dist-info/RECORD file will be incorrect and will need fixing
-    # using the fix_merged_RECORD() function.
+    """Merge the source .dist-info/WHEEL file into the destination
+
+    Note that after editing the WHEEL file, the sha256 included in
+    the .dist-info/RECORD file will be incorrect and will need fixing
+    using the fix_merged_RECORD() function.
+    """
     log.debug("Merging WHEEL file %s into %s", src, dst)
     missing = missing_lines(src, dst)
     with open(dst, "at") as fh:
@@ -176,7 +178,7 @@ def merge_WHEEL(src, dst):
 
 
 def merge_RECORD(src, dst):
-    # merge the source .dist-info/RECORD file into the destination
+    """Merge the source .dist-info/RECORD file into the destination"""
     log.debug("Merging RECORD file %s into %s", src, dst)
     missing = missing_lines(src, dst)
 
@@ -188,9 +190,12 @@ def merge_RECORD(src, dst):
 
 
 def fix_merged_RECORD(distdir):
-    # After merging the .dist-info/WHEEL file, the sha256 recorded for it
-    # will be wrong in .dist-info/RECORD, so edit that file to ensure
-    # that it is fixed. The output is sorted for reproducibility.
+    """Update the checksum for .dist-info/WHEEL in .dist-info/RECORD
+
+    After merging the .dist-info/WHEEL file, the sha256 recorded for it will be
+    wrong in .dist-info/RECORD, so edit that file to ensure that it is fixed.
+    The output is sorted for reproducibility.
+    """
     log.debug("Fixing RECORD file in %s", distdir)
     record_path = join(distdir, "RECORD")
     wheel_path = join(distdir, "WHEEL")
