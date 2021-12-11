@@ -1,0 +1,13 @@
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry]
+name = "foo"
+description = "an example module"
+version = "0.1"
+authors = ["Stefano Rivera <stefanor@debian.org>"]
+
+[tool.poetry.dependencies]
+tomli = "^1.0.0"
+importlib-metadata = { version="*", python = "<3.5" }
