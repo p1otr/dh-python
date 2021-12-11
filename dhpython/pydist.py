@@ -202,6 +202,7 @@ def guess_dependency(impl, req, version=None, bdep=None,
     req_d = req_d.groupdict()
     name = req_d['name']
     details = data.get(name.lower())
+    env_marker_alts = ''
     if details:
         for item in details:
             if version and version not in item.get('versions', version):
