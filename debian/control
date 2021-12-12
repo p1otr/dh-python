@@ -39,3 +39,15 @@ Description: Debian helper tools for packaging Python libraries and applications
     adds maintainer scripts to byte compile files, etc.
   * dh_pypy - calculates PyPy dependencies for Debian packages,
     adds maintainer scripts to byte compile files, etc.
+
+Package: dh-python-pep517
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ dh-python (= ${source:Version}),
+ python3-build (>> 0.7~),
+ python3-installer,
+ python3-tomli,
+Description: Debian helper tools for packaging Python libraries using PEP517
+ This metapackage depends on the components necessary for building packages
+ with the generic PEP517 build plugin.

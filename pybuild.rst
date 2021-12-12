@@ -269,11 +269,9 @@ and flit plugins in the future.
 To use this plugin::
 
 * build depend on the build tool specified by upstream in
-  `pyproject.toml`, as well as `python3-build`, `python3-installer`.
-* build depend on `python3-tomli` to allow the plugin to automatically
-  be selected (if `setup.py` doesn't exist, and the package doesn't use
-  flit).
-* export `PYBUILD_SYSTEM=pep517generic` to explicitly select the plugin.
+  `pyproject.toml`, as well as `dh-python-pep517`.
+* export `PYBUILD_SYSTEM=pep517generic` to explicitly select the plugin,
+  if it isn't automatically selected.
 
 ENVIRONMENT
 ===========
