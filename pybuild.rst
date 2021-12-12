@@ -236,6 +236,7 @@ automatically selected.  These systems are currently supported::
 * distutils (most commonly used)
 * cmake
 * flit
+* pep517generic
 * custom
 
 flit plugin
@@ -257,6 +258,22 @@ debian/rules file example::
     export PYBUILD_SYSTEM=flit (needed if python3-tomli is not installed)
     %:
     	dh $@ --with python3 --buildsystem=pybuild
+
+pep517generic
+~~~~~~~~~~~~~
+The PEP 517 plugin drives the new standard interface for building Python
+packages, upstream. This is configured via `pyproject.toml`.
+This plugin is still in beta, but it's expected to replace the distutils
+and flit plugins in the future.
+
+To use this plugin::
+
+* build depend on the build tool specified by upstream in
+  `pyproject.toml`, as well as `python3-build`, `python3-installer`.
+* build depend on `python3-tomli` to allow the plugin to automatically
+  be selected (if `setup.py` doesn't exist, and the package doesn't use
+  flit).
+* export `PYBUILD_SYSTEM=pep517generic` to explicitly select the plugin.
 
 ENVIRONMENT
 ===========
