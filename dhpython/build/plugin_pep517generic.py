@@ -66,6 +66,8 @@ class BuildSystem(Base):
             return 0
 
         result = super().detect(context)
+        # Temporarily reduce the threshold while we're in beta
+        result -= 20
 
         # Explicitly requested?
         dh = DebHelper(build_options())
