@@ -122,7 +122,7 @@ class BuildSystem(Base):
                  #FIXME is this the right dest for data?
                 'data': args['build_dir']
             },
-            interpreter=args['interpreter'],
+            interpreter=str(args['interpreter']),
             script_kind='posix',
         )
 
