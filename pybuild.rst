@@ -236,7 +236,7 @@ automatically selected.  These systems are currently supported::
 * distutils (most commonly used)
 * cmake
 * flit
-* pep517generic
+* pep517
 * custom
 
 flit plugin
@@ -259,8 +259,8 @@ debian/rules file example::
     %:
     	dh $@ --with python3 --buildsystem=pybuild
 
-pep517generic
-~~~~~~~~~~~~~
+pep517
+~~~~~~
 The PEP 517 plugin drives the new standard interface for building Python
 packages, upstream. This is configured via `pyproject.toml`.
 This plugin is still in beta, but it's expected to replace the distutils
