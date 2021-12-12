@@ -35,6 +35,18 @@ parse_dep = re.compile('''[,\s]*
     ''', re.VERBOSE).match
 
 
+def build_options(**options):
+    """Build an Options object from kw options"""
+    default_options = {
+        'arch': None,
+        'package': [],
+        'no_package': [],
+    }
+    built_options = default_options
+    built_options.update(options)
+    return type('Options', (object,), built_options)
+
+
 class DebHelper:
     """Reinvents the wheel / some dh functionality (Perl is ugly ;-P)"""
 

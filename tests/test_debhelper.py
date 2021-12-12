@@ -2,24 +2,17 @@ from tempfile import TemporaryDirectory
 import unittest
 import os
 
-from dhpython.debhelper import DebHelper
+from dhpython.debhelper import DebHelper, build_options
 
 
 class DebHelperTestCase(unittest.TestCase):
     impl = 'cpython3'
     control = []
     options = {}
-    default_options = {
-        'arch': None,
-        'package': [],
-        'no_package': [],
-    }
     parse_control = True
 
     def build_options(self):
-        options = self.default_options.copy()
-        options.update(self.options)
-        return type('Options', (object,), options)
+        return build_options(**self.options)
 
     def setUp(self):
         self.tempdir = TemporaryDirectory()
