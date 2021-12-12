@@ -6,7 +6,7 @@ export PYBUILD_NAME=foo
 	dh $@
 
 override_dh_auto_build:
-	../../pybuild --build
+	../../pybuild --build --verbose
 
 override_dh_auto_install:
 	../../pybuild --install
@@ -15,7 +15,7 @@ override_dh_auto_test:
 	../../pybuild --test
 
 override_dh_auto_clean:
-	../../pybuild --clean
+	../../pybuild --clean --verbose
 	rm -rf .pybuild foo.egg-info
 
 override_dh_installinit:

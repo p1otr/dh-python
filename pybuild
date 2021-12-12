@@ -105,6 +105,7 @@ def main(cfg):
                 continue
             tmp_context = {'ENV': env, 'args': {}, 'dir': cfg.dir}
             tmp_certainty = tmp_plugin.detect(tmp_context)
+            log.debug('Plugin %s: certainty %i', Plugin.NAME, tmp_certainty)
             if tmp_certainty and tmp_certainty > certainty:
                 plugin, certainty, context = tmp_plugin, tmp_certainty, tmp_context
         del Plugin
