@@ -13,6 +13,7 @@ check:
 	grep -L 'Depends:.*tox' debian/python3-foo/DEBIAN/control | grep -q control
 	find .pybuild -name test-executed | grep -q test-executed
 	grep -q usr/bin/python3$$ debian/python3-foo/usr/bin/foo
+	find debian/python3-foo/usr/lib/python3/dist-packages/ -name LICENSE | { ! grep -q LICENSE; }
 
 clean:
 	./debian/rules clean

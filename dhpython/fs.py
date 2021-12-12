@@ -80,7 +80,7 @@ def fix_locations(package, interpreter, versions, options):
 
 def share_files(srcdir, dstdir, interpreter, options):
     """Try to move as many files from srcdir to dstdir as possible."""
-    wheel_merged = False
+    cleanup_actions = []
     for i in os.listdir(srcdir):
         fpath1 = join(srcdir, i)
         if not lexists(fpath1):  # removed in rename_ext
@@ -95,6 +95,10 @@ def share_files(srcdir, dstdir, interpreter, options):
             if version and version is not True:
                 fpath1 = Scan.rename_ext(fpath1, interpreter, version)
                 i = split(fpath1)[-1]
+        if srcdir.endswith(".dist-info") and i == "LICENSE":
+            os.remove(fpath1)
+            cleanup_actions.append(remove_license_RECORD)
+            continue
         fpath2 = join(dstdir, i)
         if not isdir(fpath1) and not exists(fpath2):
             # do not rename directories here - all .so files have to be renamed first
@@ -116,7 +120,8 @@ def share_files(srcdir, dstdir, interpreter, options):
         elif srcdir.endswith(".dist-info"):
             # dist-info file that differs... try merging
             if i == "WHEEL":
-                wheel_merged |= merge_WHEEL(fpath1, fpath2)
+                if merge_WHEEL(fpath1, fpath2):
+                    cleanup_actions.append(fix_merged_RECORD)
                 os.remove(fpath1)
             elif i == "RECORD":
                 merge_RECORD(fpath1, fpath2)
@@ -134,8 +139,8 @@ def share_files(srcdir, dstdir, interpreter, options):
                 diff = difflib.unified_diff(fromlines, tolines, fpath1, fpath2)
                 sys.stderr.writelines(diff)
 
-    if wheel_merged:
-        fix_merged_RECORD(dstdir)
+    for action in cleanup_actions:
+        action(dstdir)
     try:
         os.removedirs(srcdir)
     except OSError:
@@ -219,6 +224,19 @@ def fix_merged_RECORD(distdir):
     # now write out the updated record
     with open(record_path, "wt") as fh:
         fh.writelines(sorted(contents))
+
+
+def remove_license_RECORD(distdir):
+    """Remove LICENSE from RECORD"""
+    log.debug("Removing LICENSE from RECORD in %s", distdir)
+    record = join(distdir, "RECORD")
+    parent_dir = split(distdir)[1]
+    lines = []
+    with open(record) as fh:
+        lines = [line for line in fh.readlines()
+                 if not line.startswith(parent_dir + '/LICENSE,')]
+    with open(record, 'wt') as fh:
+        fh.writelines(sorted(lines))
 
 
 class Scan:
