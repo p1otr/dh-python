@@ -109,7 +109,7 @@ class BuildSystem(Base):
         This method uses cls.{REQUIRED}_FILES (pyroject.toml) as well as
         checking to see if build-backend is set to flit_core.buildapi.
 
-        Score is 95 if both are present (to allow manually setting distutils to
+        Score is 85 if both are present (to allow manually setting distutils to
         score higher if set).
 
         :return: 0 <= certainty <= 100
@@ -124,7 +124,7 @@ class BuildSystem(Base):
                 pyproject = tomli.load(f)
             if pyproject.get('build-system', {}).get('build-backend') == \
                     'flit_core.buildapi':
-                result += 45
+                result += 35
             else:
                 # Not a flit built package
                 result = 0
