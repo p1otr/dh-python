@@ -11,3 +11,6 @@ authors = ["Stefano Rivera <stefanor@debian.org>"]
 [tool.poetry.dependencies]
 tomli = "^1.0.0"
 importlib-metadata = { version="*", python = "<3.5" }
+
+[tool.poetry.scripts]
+foo = 'foo:main'
