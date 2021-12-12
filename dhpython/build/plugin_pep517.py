@@ -61,10 +61,6 @@ class BuildSystem(Base):
         :return: 0 <= certainty <= 100
         :rtype: int
         """
-        if install is None:
-            # Dependencies are not available
-            return 0
-
         result = super().detect(context)
         # Temporarily reduce the threshold while we're in beta
         result -= 20
@@ -101,6 +97,9 @@ class BuildSystem(Base):
         return 0  # no need to invoke anything
 
     def configure(self, context, args):
+        if install is None:
+            raise Exception("PEP517 plugin dependencies are not available. "
+                            "Please Build-Depend on dh-python-pep517")
         # No separate configure step
         return 0
 
