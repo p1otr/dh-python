@@ -1,4 +1,4 @@
-dh-python (5.20211115) UNRELEASED; urgency=medium
+dh-python (5.20211213) unstable; urgency=medium
 
   [ Stefano Rivera ]
   * Document that pybuild --name overrides --dest-dir.
@@ -24,7 +24,7 @@ dh-python (5.20211115) UNRELEASED; urgency=medium
     - Adds a new binary package dh-python-pep517, for convenience in selecting
       the plugin.
 
- -- Stefano Rivera <stefanor@debian.org>  Sun, 21 Nov 2021 09:32:04 -0400
+ -- Stefano Rivera <stefanor@debian.org>  Mon, 13 Dec 2021 19:09:53 -0400
 
 dh-python (5.20211114) unstable; urgency=medium
 
