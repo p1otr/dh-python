@@ -1,2 +1,2 @@
 #!/bin/sh
-exec debian/tests/run-installed testpb01 testpb02 testpb04 testpb05
+exec debian/tests/run-installed testpb01 testpb02 testpb04 testpb05 testpb06

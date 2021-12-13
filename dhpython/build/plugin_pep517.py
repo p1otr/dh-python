@@ -124,6 +124,7 @@ class BuildSystem(Base):
                  args['interpreter'])
         destination = SchemeDictionaryDestination(
             {
+                'platlib': args['build_dir'],
                 'purelib': args['build_dir'],
                  #FIXME setuptools would use scripts-X.Y; this could use usr/bin?
                 'scripts': args['build_dir'] + '/scripts-' + str(args['interpreter'].version),
