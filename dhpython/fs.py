@@ -97,7 +97,7 @@ def share_files(srcdir, dstdir, interpreter, options):
                 i = split(fpath1)[-1]
         if srcdir.endswith(".dist-info") and i == "LICENSE":
             os.remove(fpath1)
-            cleanup_actions.append(remove_license_RECORD)
+            cleanup_actions.append((remove_from_RECORD, (i,)))
             continue
         fpath2 = join(dstdir, i)
         if not isdir(fpath1) and not exists(fpath2):
@@ -121,7 +121,7 @@ def share_files(srcdir, dstdir, interpreter, options):
             # dist-info file that differs... try merging
             if i == "WHEEL":
                 if merge_WHEEL(fpath1, fpath2):
-                    cleanup_actions.append(fix_merged_RECORD)
+                    cleanup_actions.append((fix_merged_RECORD, ()))
                 os.remove(fpath1)
             elif i == "RECORD":
                 merge_RECORD(fpath1, fpath2)
@@ -139,8 +139,8 @@ def share_files(srcdir, dstdir, interpreter, options):
                 diff = difflib.unified_diff(fromlines, tolines, fpath1, fpath2)
                 sys.stderr.writelines(diff)
 
-    for action in cleanup_actions:
-        action(dstdir)
+    for action, args in cleanup_actions:
+        action(dstdir, *args)
     try:
         os.removedirs(srcdir)
     except OSError:
@@ -226,15 +226,16 @@ def fix_merged_RECORD(distdir):
         fh.writelines(sorted(contents))
 
 
-def remove_license_RECORD(distdir):
-    """Remove LICENSE from RECORD"""
-    log.debug("Removing LICENSE from RECORD in %s", distdir)
+def remove_from_RECORD(distdir, files):
+    """Remove all specified dist-info files from RECORD"""
+    log.debug("Removing %r from RECORD in %s", files, distdir)
     record = join(distdir, "RECORD")
     parent_dir = split(distdir)[1]
+    names = [join(parent_dir, name) for name in files]
     lines = []
     with open(record) as fh:
         lines = [line for line in fh.readlines()
-                 if not line.startswith(parent_dir + '/LICENSE,')]
+                 if not line.split(',', 1)[0] in names]
     with open(record, 'wt') as fh:
         fh.writelines(sorted(lines))
 
