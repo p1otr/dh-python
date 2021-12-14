@@ -241,6 +241,7 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
         'extra_feature': 'python3-extra-feature',
         'extra_test': 'python3-extra-test',
         'complex_marker': 'python3-complex-marker',
+        'no_markers_2': 'python3-no-markers-2',
     })
     dist_info_metadata = {
         'debian/foo/usr/lib/python3/dist-packages/foo.dist-info/METADATA': (
@@ -303,6 +304,7 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
             "Requires-Dist: extra_test; extra == 'test'",
             "Requires-Dist: complex_marker; os_name != 'windows' "
                 "and implementation_name == 'cpython'",
+            "Requires-Dist: no_markers_2",
         ),
     }
 
@@ -454,6 +456,9 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
     def test_ignores_complex_environment_markers(self):
         self.assertNotIn('python3-complex-marker', self.d.depends)
 
+    def test_depends_on_un_marked_dependency_after_extra(self):
+        self.assertIn('python3-no-markers-2', self.d.depends)
+
 
 class TestEnvironmentMarkersEggInfo(TestEnvironmentMarkersDistInfo):
     dist_info_metadata = None
@@ -540,3 +545,6 @@ class TestEnvironmentMarkersEggInfo(TestEnvironmentMarkersDistInfo):
             "complex_marker",
         ),
     }
+
+    def test_depends_on_un_marked_dependency_after_extra(self):
+        raise unittest.SkipTest('Not possible in requires.txt')

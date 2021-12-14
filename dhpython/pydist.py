@@ -530,15 +530,15 @@ def parse_requires_dist(impl, fname, bdep=None, options=None, depends_sec=None,
         m = EXTRA_RE.search(req)
         if m:
             section = m.group('section')
-        if section:
-            if section in depends_sec:
-                result_key = 'depends'
-            elif section in recommends_sec:
-                result_key = 'recommends'
-            elif section in suggests_sec:
-                result_key = 'suggests'
-            else:
-                continue
+            if section:
+                if section in depends_sec:
+                    result_key = 'depends'
+                elif section in recommends_sec:
+                    result_key = 'recommends'
+                elif section in suggests_sec:
+                    result_key = 'suggests'
+                else:
+                    continue
         else:
             result_key = 'depends'
         dependency = guess_deps(req=req)

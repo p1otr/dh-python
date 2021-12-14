@@ -1,3 +1,9 @@
+dh-python (5.20211214) UNRELEASED; urgency=medium
+
+  * Fix a bug in dist-info extra section parsing, thanks Stuart Prescott.
+
+ -- Stefano Rivera <stefanor@debian.org>  Tue, 14 Dec 2021 09:00:57 -0400
+
 dh-python (5.20211213) unstable; urgency=medium
 
   [ Stefano Rivera ]
