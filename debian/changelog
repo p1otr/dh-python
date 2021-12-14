@@ -1,6 +1,7 @@
 dh-python (5.20211214) UNRELEASED; urgency=medium
 
   * Fix a bug in dist-info extra section parsing, thanks Stuart Prescott.
+  * Remove LICENSE.md from dist-info, as well as LICENSE.
 
  -- Stefano Rivera <stefanor@debian.org>  Tue, 14 Dec 2021 09:00:57 -0400
 

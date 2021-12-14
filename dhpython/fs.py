@@ -95,7 +95,8 @@ def share_files(srcdir, dstdir, interpreter, options):
             if version and version is not True:
                 fpath1 = Scan.rename_ext(fpath1, interpreter, version)
                 i = split(fpath1)[-1]
-        if srcdir.endswith(".dist-info") and i == "LICENSE":
+        if srcdir.endswith(".dist-info") and (
+                i == 'LICENSE' or i.startswith('LICENSE.')):
             os.remove(fpath1)
             cleanup_actions.append((remove_from_RECORD, (i,)))
             continue
