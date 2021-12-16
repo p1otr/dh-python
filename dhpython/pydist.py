@@ -399,6 +399,8 @@ def check_environment_marker_restrictions(req, marker, op, value):
         prev_ver = '.'.join(str(x) for x in prev_ver)
 
         if op == '<':
+            if int_ver <= [3, 0, 0]:
+                return False
             return '| python3 (>> {})'.format(env_ver)
         elif op == '<=':
             return '| python3 (>> {})'.format(next_ver)

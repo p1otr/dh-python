@@ -106,6 +106,14 @@ class DependenciesTestCase(unittest.TestCase):
 
         self.d.parse(stats, self.options)
 
+    def assertNotInDepends(self, pkg):
+        """Assert that pkg doesn't appear *anywhere* in self.d.depends"""
+        for dep in self.d.depends:
+            for alt in dep.split('|'):
+                alt = alt.strip().split('(', 1)[0].strip()
+                if pkg == alt:
+                    raise AssertionError(f'{pkg} appears in {alt}')
+
 
 class TestRequiresCPython3(DependenciesTestCase):
     options = FakeOptions(guess_deps=True)
@@ -216,6 +224,8 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
         'platform_system_windows': 'python3-platform-system-windows',
         'platform_version_lt1': 'python3-platform-version-lt1',
         'platform_version_ge1': 'python3-platform-version-ge1',
+        'python_version_lt3': 'python3-python-version-lt3',
+        'python_version_lt30': 'python3-python-version-lt30',
         'python_version_lt35': 'python3-python-version-lt35',
         'python_version_le35': 'python3-python-version-le35',
         'python_version_ge27': 'python3-python-version-ge27',
@@ -226,6 +236,7 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
         'python_version_aeq35': 'python3-python-version-aeq35',
         'python_version_ceq35': 'python3-python-version-ceq35',
         'python_version_weq35': 'python3-python-version-weq35',
+        'python_version_full_lt300': 'python3-python-version-full-lt300',
         'python_version_full_lt351': 'python3-python-version-full-lt351',
         'python_version_full_le351': 'python3-python-version-full-le351',
         'python_version_full_ge351': 'python3-python-version-full-ge351',
@@ -266,6 +277,8 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
                 "platform_system == 'Windows'",
             "Requires-Dist: platform_version_lt1; platform_version < '1'",
             "Requires-Dist: platform_version_ge1; platform_version >= '1'",
+            "Requires-Dist: python_version_lt3; python_version < '3'",
+            "Requires-Dist: python_version_lt30; python_version < '3.0'",
             "Requires-Dist: python_version_lt35; python_version < '3.5'",
             "Requires-Dist: python_version_le35; python_version <= '3.5'",
             "Requires-Dist: python_version_gt35; python_version > '3.5'",
@@ -276,6 +289,8 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
             "Requires-Dist: python_version_aeq35; python_version === '3.5'",
             "Requires-Dist: python_version_ceq35; python_version ~= '3.5'",
             "Requires-Dist: python_version_weq35; python_version == '3.5.*'",
+            "Requires-Dist: python_version_full_lt300; "
+                "python_full_version < '3.0.0'",
             "Requires-Dist: python_version_full_lt351; "
                 "python_full_version < '3.5.1'",
             "Requires-Dist: python_version_full_le351; "
@@ -317,51 +332,56 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
         self.assertIn('python3-os-posix', self.d.depends)
 
     def test_skips_non_posix_packages(self):
-        self.assertNotIn('python3-os-java', self.d.depends)
+        self.assertNotInDepends('python3-os-java')
 
     def test_depends_on_linux_packages(self):
         self.assertIn('python3-sys-platform-linux', self.d.depends)
 
     def test_skips_darwin_packages(self):
-        self.assertNotIn('python3-sys-platform-darwin', self.d.depends)
+        self.assertNotInDepends('python3-sys-platform-darwin')
 
     def test_depends_on_x86_64_packages_on_x86_64(self):
         if platform.machine() == 'x86_64':
             self.assertIn('python3-platform-machine-x86-64', self.d.depends)
         else:
-            self.assertNotIn('python3-platform-machine-x86-64', self.d.depends)
+            self.assertNotInDepends('python3-platform-machine-x86-64')
 
     def test_depends_on_mips64_packages_on_mips64(self):
         if platform.machine() == 'mips64':
             self.assertIn('python3-platform-machine-mips64', self.d.depends)
         else:
-            self.assertNotIn('python3-platform-machine-mips64', self.d.depends)
+            self.assertNotInDepends('python3-platform-machine-mips64')
 
     def test_depends_on_plat_cpython_packages(self):
         self.assertIn('python3-platform-python-implementation-cpython',
                       self.d.depends)
 
     def test_skips_plat_jython_packages(self):
-        self.assertNotIn('python3-platform-python-implementation-jython',
-                         self.d.depends)
+        self.assertNotInDepends('python3-platform-python-implementation-jython')
 
     def test_skips_release_lt_2_packages(self):
-        self.assertNotIn('python3-platform-release-lt2', self.d.depends)
+        self.assertNotInDepends('python3-platform-release-lt2')
 
     def test_skips_release_gt_2_packages(self):
-        self.assertNotIn('python3-platform-release-ge2', self.d.depends)
+        self.assertNotInDepends('python3-platform-release-ge2')
 
     def test_depends_on_platform_linux_packages(self):
         self.assertIn('python3-platform-system-linux', self.d.depends)
 
     def test_skips_platform_windows_packages(self):
-        self.assertNotIn('python3-platform-system-windows', self.d.depends)
+        self.assertNotInDepends('python3-platform-system-windows')
 
     def test_skips_platfrom_version_lt_1_packages(self):
-        self.assertNotIn('python3-platform-version-lt1', self.d.depends)
+        self.assertNotInDepends('python3-platform-version-lt1')
 
     def test_skips_platform_version_ge_1_packages(self):
-        self.assertNotIn('python3-platform-version-ge1', self.d.depends)
+        self.assertNotInDepends('python3-platform-version-ge1')
+
+    def test_skips_py_version_lt_3_packages(self):
+        self.assertNotInDepends('python3-python-version-lt3')
+
+    def test_skips_py_version_lt_30_packages(self):
+        self.assertNotInDepends('python3-python-version-lt30')
 
     def test_depends_on_py_version_lt_35_packages(self):
         self.assertIn('python3-python-version-lt35 | python3 (>> 3.5)',
@@ -403,6 +423,9 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
         self.assertIn('python3-python-version-weq35 | python3 (<< 3.5) '
                       '| python3 (>> 3.6)', self.d.depends)
 
+    def test_skips_py_version_full_lt_300_packages(self):
+        self.assertNotInDepends('python3-python-version-full-lt300')
+
     def test_depends_on_py_version_full_lt_351_packages(self):
         self.assertIn('python3-python-version-full-lt351 | python3 (>> 3.5.1)',
                       self.d.depends)
@@ -429,7 +452,7 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
 
     def test_skips_py_version_full_aeq_351_packages(self):
         # Can't be represented in Debian depends
-        self.assertNotIn('python3-python-version-full-aeq351', self.d.depends)
+        self.assertNotInDepends('python3-python-version-full-aeq351')
 
     def test_depends_on_py_version_full_ceq_351_packages(self):
         self.assertIn('python3-python-version-full-ceq351 | python3 (<< 3.5.1) '
@@ -457,10 +480,10 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
         self.assertIn('python3-extra-feature', self.d.depends)
 
     def test_skips_extra_test_packages(self):
-        self.assertNotIn('python3-extra-test', self.d.depends)
+        self.assertNotInDepends('python3-extra-test')
 
     def test_ignores_complex_environment_markers(self):
-        self.assertNotIn('python3-complex-marker', self.d.depends)
+        self.assertNotInDepends('python3-complex-marker')
 
     def test_depends_on_un_marked_dependency_after_extra(self):
         self.assertIn('python3-no-markers-2', self.d.depends)
@@ -499,6 +522,10 @@ class TestEnvironmentMarkersEggInfo(TestEnvironmentMarkersDistInfo):
             "platform_version_lt1",
             "[:platform_version >= '1']",
             "platform_version_ge1",
+            "[:python_version < '3']",
+            "python_version_lt3",
+            "[:python_version < '3.0']",
+            "python_version_lt30",
             "[:python_version < '3.5']",
             "python_version_lt35",
             "[:python_version <= '3.5']",
@@ -519,6 +546,8 @@ class TestEnvironmentMarkersEggInfo(TestEnvironmentMarkersDistInfo):
             "python_version_ceq35",
             "[:python_version == '3.5.*']",
             "python_version_weq35",
+            "[:python_full_version < '3.0.0']",
+            "python_version_full_lt300",
             "[:python_full_version < '3.5.1']",
             "python_version_full_lt351",
             "[:python_full_version <= '3.5.1']",
