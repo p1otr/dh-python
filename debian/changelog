@@ -1,3 +1,10 @@
+dh-python (5.20211215) UNRELEASED; urgency=medium
+
+  * Use a consistent distribution name regexp to handle dashed names
+    correctly, thanks Nicolas Dandrimont.
+
+ -- Stefano Rivera <stefanor@debian.org>  Thu, 16 Dec 2021 11:44:12 -0400
+
 dh-python (5.20211214) unstable; urgency=medium
 
   * Fix a bug in dist-info extra section parsing, thanks Stuart Prescott.
