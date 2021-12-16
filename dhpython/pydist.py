@@ -403,8 +403,12 @@ def check_environment_marker_restrictions(req, marker, op, value):
         elif op == '<=':
             return '| python3 (>> {})'.format(next_ver)
         elif op == '>=':
+            if int_ver < [3]:
+                return True
             return '| python3 (<< {})'.format(env_ver)
         elif op == '>':
+            if int_ver < [3]:
+                return True
             return '| python3 (<< {})'.format(next_ver)
         elif op in ('==', '==='):
             # === is arbitrary equality (PEP 440)

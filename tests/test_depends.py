@@ -218,6 +218,7 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
         'platform_version_ge1': 'python3-platform-version-ge1',
         'python_version_lt35': 'python3-python-version-lt35',
         'python_version_le35': 'python3-python-version-le35',
+        'python_version_ge27': 'python3-python-version-ge27',
         'python_version_ge35': 'python3-python-version-ge35',
         'python_version_gt35': 'python3-python-version-gt35',
         'python_version_eq35': 'python3-python-version-eq35',
@@ -268,6 +269,7 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
             "Requires-Dist: python_version_lt35; python_version < '3.5'",
             "Requires-Dist: python_version_le35; python_version <= '3.5'",
             "Requires-Dist: python_version_gt35; python_version > '3.5'",
+            "Requires-Dist: python_version_ge27; python_version >= '2.7'",
             "Requires-Dist: python_version_ge35; python_version >= '3.5'",
             "Requires-Dist: python_version_eq35; python_version == '3.5'",
             "Requires-Dist: python_version_ne35; python_version != '3.5'",
@@ -367,6 +369,10 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
 
     def test_depends_on_py_version_le_35_packages(self):
         self.assertIn('python3-python-version-le35 | python3 (>> 3.6)',
+                      self.d.depends)
+
+    def test_depends_on_py_version_ge_27_packages(self):
+        self.assertIn('python3-python-version-ge27',
                       self.d.depends)
 
     def test_depends_on_py_version_ge_35_packages(self):
@@ -499,6 +505,8 @@ class TestEnvironmentMarkersEggInfo(TestEnvironmentMarkersDistInfo):
             "python_version_le35",
             "[:python_version > '3.5']",
             "python_version_gt35",
+            "[:python_version >= '2.7']",
+            "python_version_ge27",
             "[:python_version >= '3.5']",
             "python_version_ge35",
             "[:python_version == '3.5']",
