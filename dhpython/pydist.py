@@ -40,7 +40,7 @@ from dhpython.tools import memoize
 log = logging.getLogger('dhpython')
 
 PYDIST_RE = re.compile(r"""
-    (?P<name>[A-Za-z][A-Za-z0-9_.\-]*)             # Python distribution name
+    (?P<name>[A-Za-z][A-Za-z0-9_.-]*)            # Python distribution name
     \s*
     (?P<vrange>(?:-?\d\.\d+(?:-(?:\d\.\d+)?)?)?) # version range
     \s*
@@ -53,7 +53,7 @@ PYDIST_RE = re.compile(r"""
     )?
     """, re.VERBOSE)
 REQUIRES_RE = re.compile(r'''
-    (?P<name>[A-Za-z][A-Za-z0-9_.]*)     # Python distribution name
+    (?P<name>[A-Za-z][A-Za-z0-9_.-]*)    # Python distribution name
     \s*
     (?P<enabled_extras>(?:\[[^\]]*\])?)  # ignored for now
     \s*
