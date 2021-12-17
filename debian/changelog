@@ -13,6 +13,7 @@ dh-python (5.20211217) UNRELEASED; urgency=medium
   * Correctly parse "== 1.*" style version constraints. (closes: 981752)
   * Bump Standards-Version to 4.6.0, no changes needed.
   * Declare Rules-Requires-Root: no.
+  * Strip changelog trailing whitespace.
 
  -- Stefano Rivera <stefanor@debian.org>  Fri, 17 Dec 2021 11:40:23 -0400
 
@@ -221,7 +222,7 @@ dh-python (4.20200315) unstable; urgency=medium
 
   [ Simon Ruggier ]
   * Fix a problem in handling ranges with no minimum
-  
+
   [ Matthias Klose ]
   * Fix setting _PYTHON_HOST_PLATFORM (closes: 948319)
 
@@ -240,7 +241,7 @@ dh-python (4.20190722) unstable; urgency=medium
 
   * Build-depend on python3-docutils to build manpages
     (reintroduces circular dependencies problem, but makes Python 2.X removal
-    a bit easier) 
+    a bit easier)
   * Use debhelper compat level 12
   * Standards-Version is 4.4.0 now (no changes needed)
 
@@ -302,7 +303,7 @@ dh-python (3.20180927) unstable; urgency=medium
   [ Piotr Ożarowski ]
   * dh_python*:
     - remove .../dist-packages/.foo directories (.cache, .pytest_cache, etc.)
-    - install debian/python{,3}-foo.bcep files into /usr/share/python{,3}/bcep/ 
+    - install debian/python{,3}-foo.bcep files into /usr/share/python{,3}/bcep/
   * dh_python3: generated postinst files will bytecompile for pypy3 if
     /usr/bin/pypy3compile is available (py3clean will remove pypy3 generated
     .pyc files so prerm doesn't require any changes).
@@ -327,7 +328,7 @@ dh-python (3.20180607) experimental; urgency=medium
 
   [ Scott Kitterman ]
   * Stop setting minimum python and python3 versions since the minimum version
-    is in all supported releases 
+    is in all supported releases
 
   [ Piotr Ożarowski ]
   * pybuild: set DEB_PYTHON_INSTALL_LAYOUT to "deb" if it's not set already
