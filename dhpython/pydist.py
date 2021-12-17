@@ -475,6 +475,12 @@ def parse_pydep(impl, fname, bdep=None, options=None,
                 continue
             if line.startswith('['):
                 m = REQ_SECTIONS_RE.match(line)
+                if not m:
+                    log.info('Skipping section %s, unable to parse header',
+                             line)
+                    processed.append(line)
+                    section = object()
+                    continue
                 section = m.group('section')
                 env_action = True
                 if m.group('environment_marker'):

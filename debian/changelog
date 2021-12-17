@@ -1,6 +1,8 @@
 dh-python (5.20211217) UNRELEASED; urgency=medium
 
   * Ignore environment markers for Python 2.7, our logic is specific to 3.x.
+  * Ignore requires.txt sections with un-parseable section headers.
+    (closes: 1001838)
 
  -- Stefano Rivera <stefanor@debian.org>  Fri, 17 Dec 2021 11:40:23 -0400
 
