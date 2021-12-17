@@ -270,7 +270,7 @@ class TestEnvironmentMarkersDistInfo(DependenciesTestCase):
     dist_info_metadata = {
         'debian/foo/usr/lib/python3/dist-packages/foo.dist-info/METADATA': (
             "Requires-Dist: no_markers",
-            "Requires-Dist: os_posix; os_name == 'posix'",
+            "Requires-Dist: os_posix; (os_name == 'posix')",
             'Requires-Dist: os_java; os_name == "java"',
             "Requires-Dist: sys_platform_linux ; sys_platform == 'linux'",
             "Requires-Dist: sys_platform_darwin;sys_platform == 'darwin'",
@@ -506,7 +506,7 @@ class TestEnvironmentMarkersEggInfo(TestEnvironmentMarkersDistInfo):
     requires = {
         'debian/foo/usr/lib/python3/dist-packages/foo.egg-info/requires.txt': (
             "no_markers",
-            "[:os_name == 'posix']",
+            "[:(os_name == 'posix')]",
             "os_posix",
             '[:os_name == "java"]',
             "os_java",

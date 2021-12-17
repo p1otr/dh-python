@@ -102,6 +102,8 @@ REQ_SECTIONS_RE = re.compile(r'''
     \s*
     (?::
         \s*
+        \(*
+        \s*
         (?P<environment_marker>[a-z_]+)
         \s*
         (?P<environment_marker_op><=?|>=?|[=!~]=|===)
@@ -109,6 +111,8 @@ REQ_SECTIONS_RE = re.compile(r'''
         (?P<environment_marker_quote>['"])
         (?P<environment_marker_value>.*)
         (?P=environment_marker_quote)
+        \s*
+        \)*
         \s*
     )?
     \]
