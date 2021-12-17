@@ -25,7 +25,7 @@ from os.path import dirname
 log = logging.getLogger('dhpython')
 
 plugins = {}
-for i in (i[7:-3] for i in glob1(dirname(__file__), 'plugin_*.py')):
+for i in sorted(i[7:-3] for i in glob1(dirname(__file__), 'plugin_*.py')):
     try:
         module = __import__("dhpython.build.plugin_%s" % i, fromlist=[i])
         module.BuildSystem.NAME = i
