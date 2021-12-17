@@ -4,6 +4,7 @@ dh-python (5.20211217) UNRELEASED; urgency=medium
   * Ignore requires.txt sections with un-parseable section headers.
     (closes: 1001838)
   * Handle extraneous parentheses in requires.txt section headers.
+  * pep517 plugin: Throw an error if an UNKNOWN-*.whl is built.
 
  -- Stefano Rivera <stefanor@debian.org>  Fri, 17 Dec 2021 11:40:23 -0400
 

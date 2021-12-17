@@ -144,6 +144,9 @@ class BuildSystem(Base):
         #   - packaging/tags.py (although it is current-interpreter-centric)
         wheels = Path(args['home_dir']).glob('*.whl')
         for wheel in wheels:
+            if wheel.name.startswith('UNKNOWN'):
+                raise Exception(f'UNKNOWN wheel found: {wheel.name}. Does '
+                                'pyproject.toml specify a build-backend?')
             with WheelFile.open(wheel) as source:
                 install(
                     source=source,
