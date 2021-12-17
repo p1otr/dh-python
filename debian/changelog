@@ -10,6 +10,7 @@ dh-python (5.20211217) UNRELEASED; urgency=medium
   * dh_python*: Don't delete empty directories in private dirs. (closes: 908999)
   * pybuild: Sort plugin list for consistent selection, instead of relying on
     file-system semantics. (closes: 978949)
+  * Correctly parse "== 1.*" style version constraints. (closes: 981752)
 
  -- Stefano Rivera <stefanor@debian.org>  Fri, 17 Dec 2021 11:40:23 -0400
 

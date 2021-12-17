@@ -61,7 +61,7 @@ REQUIRES_RE = re.compile(r'''
     (?:  # optional minimum/maximum version
         (?P<operator><=?|>=?|==|!=|~=)
         \s*
-        (?P<version>(\w|[-.])+)
+        (?P<version>(\w|[-.*])+)
         (?:  # optional interval minimum/maximum version
             \s*
             ,
@@ -234,6 +234,10 @@ def guess_dependency(impl, req, version=None, bdep=None,
                 # no need to translate versions if version is hardcoded in
                 # Debian dependency
                 return item['dependency'] + env_marker_alts
+            if req_d['operator'] == '==' and req_d['version'].endswith('*'):
+                # Translate "== 1.*" to "~= 1.0"
+                req_d['operator'] = '~='
+                req_d['version'] = req_d['version'].replace('*', '0')
             if req_d['version'] and (item['standard'] or item['rules']) and\
                     req_d['operator'] not in (None, '!='):
                 o = _translate_op(req_d['operator'])

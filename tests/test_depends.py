@@ -177,12 +177,14 @@ class TestRequiresCompatible(DependenciesTestCase):
     pydist = {
         'bar': 'python3-bar',
         'baz': {'dependency': 'python3-baz', 'standard': 'PEP386'},
+        'qux': {'dependency': 'python3-qux', 'standard': 'PEP386'},
         'quux': {'dependency': 'python3-quux', 'standard': 'PEP386'},
     }
     requires = {
         'debian/foo/usr/lib/python3/dist-packages/foo.egg-info/requires.txt': (
             'bar',
             'baz ~= 1.1',
+            'qux == 1.*',
             'quux',
         ),
     }
@@ -193,18 +195,23 @@ class TestRequiresCompatible(DependenciesTestCase):
     def test_depends_on_baz(self):
         self.assertIn('python3-baz (>= 1.1), python3-baz (<< 2)', self.d.depends)
 
+    def test_depends_on_qux(self):
+        self.assertIn('python3-qux (>= 1.0), python3-qux (<< 2)', self.d.depends)
+
 
 class TestRequiresDistPython3(DependenciesTestCase):
     options = FakeOptions(guess_deps=True)
     pydist = {
         'bar': 'python3-bar',
         'baz': {'dependency': 'python3-baz', 'standard': 'PEP386'},
+        'qux': {'dependency': 'python3-qux', 'standard': 'PEP386'},
         'quux': {'dependency': 'python3-quux', 'standard': 'PEP386'},
     }
     dist_info_metadata = {
         'debian/foo/usr/lib/python3/dist-packages/foo.dist-info/METADATA': (
             'Requires-Dist: bar',
             'Requires-Dist: baz >= 1.0',
+            'Requires-Dist: qux == 1.*',
             'Requires-Dist: quux ~= 1.1',
         ),
     }
@@ -214,6 +221,10 @@ class TestRequiresDistPython3(DependenciesTestCase):
 
     def test_depends_on_baz(self):
         self.assertIn('python3-baz (>= 1.0)', self.d.depends)
+
+    def test_depends_on_qux(self):
+        self.assertIn('python3-qux (>= 1.0), python3-qux (<< 2)',
+                      self.d.depends)
 
     def test_depends_on_quux(self):
         self.assertIn('python3-quux (>= 1.1), python3-quux (<< 2)',
