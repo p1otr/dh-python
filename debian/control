@@ -29,7 +29,7 @@ Breaks:
 # due to /usr/bin/dh_python2 and debhelper files
  python (<< 2.7.18-2),
  python2 (<< 2.7.18-2)
-Replaces: python3 (<< 3.3.2-4~), python (<< 2.7.18-2), python2 (<< 2.7.18-2) 
+Replaces: python3 (<< 3.3.2-4~), python (<< 2.7.18-2), python2 (<< 2.7.18-2)
 Description: Debian helper tools for packaging Python libraries and applications
  This package contains:
   * pybuild - invokes various build systems for requested Python versions in
