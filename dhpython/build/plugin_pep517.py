@@ -122,12 +122,17 @@ class BuildSystem(Base):
         """ unpack the wheel into pybuild's normal  """
         log.info('Unpacking wheel built for %s with "installer" module',
                  args['interpreter'])
+        # FIXME: setuptools would use scripts-X.Y; this could use usr/bin?
+        scripts = f'{args["build_dir"]}/scripts-{args["interpreter"].version}'
+        if osp.exists(scripts):
+            log.warning('Scripts directory already exists, skipping unpack. '
+                        'Is the Python package being built twice? ')
+            return
         destination = SchemeDictionaryDestination(
             {
                 'platlib': args['build_dir'],
                 'purelib': args['build_dir'],
-                 #FIXME setuptools would use scripts-X.Y; this could use usr/bin?
-                'scripts': args['build_dir'] + '/scripts-' + str(args['interpreter'].version),
+                'scripts': scripts,
                  #FIXME is this the right dest for data?
                 'data': args['build_dir']
             },

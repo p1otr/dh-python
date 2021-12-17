@@ -7,8 +7,10 @@ export PYBUILD_NAME=foo
 
 override_dh_auto_build:
 	../../pybuild --build --verbose
+	../../pybuild --build --verbose
 
 override_dh_auto_install:
+	../../pybuild --install
 	../../pybuild --install
 
 override_dh_auto_test:
