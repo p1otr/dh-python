@@ -1,4 +1,4 @@
-dh-python (5.20211217) UNRELEASED; urgency=medium
+dh-python (5.20211217) unstable; urgency=medium
 
   * Ignore environment markers for Python 2.7, our logic is specific to 3.x.
   * Ignore requires.txt sections with un-parseable section headers.
@@ -15,7 +15,7 @@ dh-python (5.20211217) UNRELEASED; urgency=medium
   * Declare Rules-Requires-Root: no.
   * Strip changelog trailing whitespace.
 
- -- Stefano Rivera <stefanor@debian.org>  Fri, 17 Dec 2021 11:40:23 -0400
+ -- Stefano Rivera <stefanor@debian.org>  Fri, 17 Dec 2021 16:13:38 -0400
 
 dh-python (5.20211216) unstable; urgency=medium
 
