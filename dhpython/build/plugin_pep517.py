@@ -126,7 +126,7 @@ class BuildSystem(Base):
         scripts = f'{args["build_dir"]}/scripts-{args["interpreter"].version}'
         if osp.exists(scripts):
             log.warning('Scripts directory already exists, skipping unpack. '
-                        'Is the Python package being built twice? ')
+                        'Is the Python package being built twice?')
             return
         destination = SchemeDictionaryDestination(
             {
