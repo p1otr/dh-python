@@ -372,7 +372,7 @@ class Scan:
                 if fext == 'py' and self.handle_public_module(fpath) is not False:
                     self.current_result['compile'] = True
 
-            if not dirs:
+            if not dirs and not self.current_private_dir:
                 try:
                     os.removedirs(root)
                 except OSError:

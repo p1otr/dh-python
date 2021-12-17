@@ -8,6 +8,8 @@ override_dh_install:
 	# install also as private extension
 	dh_install debian/python3-foo/usr/local/lib/python3*/dist-packages/foo/bar*.so \
 		/usr/lib/python3-foo/
+	mkdir -p debian/python3-foo/usr/lib/python3/dist-packages/empty-public-dir
+	mkdir -p debian/python3-foo/usr/lib/python3-foo/empty-private-dir
 	DH_VERBOSE=1 ../../dh_python3
 
 comma:=,

@@ -7,6 +7,7 @@ dh-python (5.20211217) UNRELEASED; urgency=medium
   * pep517 plugin: Throw an error if an UNKNOWN-*.whl is built.
   * pep517 plugin: Gracefully skip wheel unpack if it appears to have already
     been unpacked by a package calling build twice.
+  * dh_python*: Don't delete empty directories in private dirs. (closes: 908999)
 
  -- Stefano Rivera <stefanor@debian.org>  Fri, 17 Dec 2021 11:40:23 -0400
 
