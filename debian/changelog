@@ -1,3 +1,9 @@
+dh-python (5.20211217) UNRELEASED; urgency=medium
+
+  * Ignore environment markers for Python 2.7, our logic is specific to 3.x.
+
+ -- Stefano Rivera <stefanor@debian.org>  Fri, 17 Dec 2021 11:40:23 -0400
+
 dh-python (5.20211216) unstable; urgency=medium
 
   * Use a consistent distribution name regexp to handle dashed names

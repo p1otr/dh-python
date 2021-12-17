@@ -215,7 +215,8 @@ def guess_dependency(impl, req, version=None, bdep=None,
                     req,
                     req_d['environment_marker'],
                     req_d['environment_marker_op'],
-                    req_d['environment_marker_value'])
+                    req_d['environment_marker_value'],
+                    impl)
                 if action is False:
                     return
                 elif action is True:
@@ -309,7 +310,7 @@ def guess_dependency(impl, req, version=None, bdep=None,
     # return pname
 
 
-def check_environment_marker_restrictions(req, marker, op, value):
+def check_environment_marker_restrictions(req, marker, op, value, impl):
     """Check wither we should include or skip a dependency based on its
     environment markers.
 
@@ -317,6 +318,10 @@ def check_environment_marker_restrictions(req, marker, op, value):
              False - to skip it
              str   - to append "| foo" to generated dependencies
     """
+    if impl != 'cpython3':
+        log.info('Ignoring environment markers for non-Python 3.x: %s', req)
+        return False
+
     # TODO: Replace with an AST that can handle complex logic
     if ' or ' in value or ' and ' in value:
         log.info('Ignoring complex environment marker: %s', req)
@@ -477,7 +482,8 @@ def parse_pydep(impl, fname, bdep=None, options=None,
                         line,
                         m.group('environment_marker'),
                         m.group('environment_marker_op'),
-                        m.group('environment_marker_value'))
+                        m.group('environment_marker_value'),
+                        impl)
                 processed.append(line)
                 continue
             if section:

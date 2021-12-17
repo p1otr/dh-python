@@ -6,12 +6,24 @@ from pickle import dumps
 from tempfile import TemporaryDirectory
 
 from dhpython.depends import Dependencies
+from dhpython.version import Version
 
 
 def pep386(d):
+    """Mark all pydist entries as being PEP386"""
     for k, v in d.items():
         if isinstance(v, str):
-            d[k] = {'dependency': v, 'standard': 'PEP386'}
+            d[k] = {'dependency': v}
+            d[k].setdefault('standard', 'PEP386')
+    return d
+
+
+def py27(d):
+    """Mark all pydist entries as being for Python 2.7"""
+    for k, v in d.items():
+        if isinstance(v, str):
+            d[k] = {'dependency': v}
+            d[k].setdefault('versions', {Version('2.7')})
     return d
 
 
@@ -585,3 +597,31 @@ class TestEnvironmentMarkersEggInfo(TestEnvironmentMarkersDistInfo):
 
     def test_depends_on_un_marked_dependency_after_extra(self):
         raise unittest.SkipTest('Not possible in requires.txt')
+
+
+class TestEnvironmentMarkers27EggInfo(DependenciesTestCase):
+    options = FakeOptions(guess_deps=True)
+    impl = 'cpython2'
+    requires = {
+        'debian/foo/usr/lib/python2.7/dist-packages/foo.egg-info/requires.txt': (
+            "no_markers",
+            "[:os_name == 'posix']",
+            "os_posix",
+            "[:python_version >= '2.6']",
+            "python_version_ge26",
+        )
+    }
+    pydist = py27({
+        'no_markers': 'python-no-markers',
+        'os_posix': 'python-os-posix',
+        'python_version_ge26': 'python-python-version-ge26',
+    })
+
+    def test_depends_on_unmarked_packages(self):
+        self.assertIn('python-no-markers', self.d.depends)
+
+    def test_ignores_posix_packages(self):
+        self.assertNotInDepends('python-os-posix')
+
+    def test_ignores_pyversion_packages(self):
+        self.assertNotInDepends('python-python-version-ge26')
