@@ -128,7 +128,7 @@ pyremove files
 ~~~~~~~~~~~~~~
 If you want to remove some public modules (i.e. files in .../dist-packages/
 directory) installed by build system (from all supported Python versions or
-only from a subset of these versions), add them to debian/pkg.pyremove file.
+only from a subset of these versions), add them to debian/{pkg-name}.pyremove file.
 
 Examples:
  * ``*.pth`` removes .pth files from .../dist-packages/
