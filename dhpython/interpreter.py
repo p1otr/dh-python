@@ -72,7 +72,7 @@ class Interpreter:
     :type impl: str
     :type options: tuple
     """
-    path = '/usr/bin/'
+    path = os.environ['PYBUILD_SNAKE'] if 'PYBUILD_SNAKE' in os.environ else '/usr/bin/'
     name = 'python'
     version = None
     debug = False
